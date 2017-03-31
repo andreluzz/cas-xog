@@ -29,6 +29,38 @@ This is a way of runnig XOG files in a much more easy way. Using a XOGDrive.xml 
 </xogdriver>
 ```
 
+### XOG Environment example
+```sh<?xml version="1.0" encoding="utf-8"?>
+<xogenvs version="1.0">
+    <global>
+        <var name="xog_path" value="path_to_xog_bat"/>
+    </global>
+    <environments>
+        <env name="Development">
+            <param name="username" value="username"/>
+            <param name="password" value="12345"/>
+            <param name="servername" value="development.server.com"/>
+            <param name="portnumber" value="80"/>
+            <param name="sslenabled" value="false"/>
+        </env>
+        <env name="Quality">
+            <param name="username" value="username"/>
+            <param name="password" value="12345"/>
+            <param name="servername" value="quality.server.com"/>
+            <param name="portnumber" value="80"/>
+            <param name="sslenabled" value="false"/>
+        </env>
+        <env name="Production">
+            <param name="username" value="username"/>
+            <param name="password" value="12345"/>
+            <param name="servername" value="production.server.com"/>
+            <param name="portnumber" value="80"/>
+            <param name="sslenabled" value="false"/>
+        </env>
+    </environments>
+</xogenvs>
+```
+
 ### Todos
 
  - Copy one view to another
