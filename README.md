@@ -1,4 +1,4 @@
-# run-xog
+# cas-xog
 Execute XOG files reading and wrinting in a more easy way
 
 This is a way of runnig XOG files in a much more easy way. Using a XOGDrive.xml file you can define with objects you would like to read and right.
