@@ -30,7 +30,8 @@ This is a way of runnig XOG files in a much more easy way. Using a XOGDrive.xml 
 ```
 
 ### XOG Environment example
-```sh<?xml version="1.0" encoding="utf-8"?>
+```sh
+<?xml version="1.0" encoding="utf-8"?>
 <xogenvs version="1.0">
     <global>
         <var name="xog_path" value="path_to_xog_bat"/>
