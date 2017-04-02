@@ -132,7 +132,7 @@ func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
 		}
 
 		if xogfile.IgnoreReading && action != "write" {
-			fmt.Printf("\n[XOG]Processed %03d/%03d - \033[93mIGNORED\033[0m | transform: NONE | to file: %s", i, total, outputPath)
+			fmt.Printf("\n[XOG]Readed %03d/%03d - \033[93mIGNORED\033[0m | transform: NONE | to file: %s", i, total, outputPath)
 		} else {
 			//check if dir exists
 			_, err1 := os.Stat(outputDir + xogfile.Type)
@@ -152,21 +152,13 @@ func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
 				panic(err)
 			}
 
-			status, statusMessage := helper.Validate(outputPath)
-
-			var removedTags, replacedPartitions bool
+			status, statusMessage := Validate(outputPath)
+			transform := "NONE"
 
 			if status && action != "write" {
-				removedTags = helper.RemoveUnnecessaryTags(outputPath, xogfile.Type)
-				if xogfile.SingleView && xogfile.Type == "views" {
-					helper.SingleView(outputPath, xogfile.Code)
+				if Transform(xogfile, outputPath) {
+					transform = "\033[96mTRUE\033[0m"
 				}
-				replacedPartitions = helper.ReplacePartition(outputPath, xogfile.SourcePartition, xogfile.TargetPartition)
-			}
-
-			transform := "NONE"
-			if removedTags || replacedPartitions || xogfile.SingleView {
-				transform = "\033[96mTRUE\033[0m"
 			}
 
 			if !status {

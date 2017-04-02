@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/xml"
 	"fmt"
+	"io/ioutil"
 	"strconv"
 	"strings"
 	"time"
@@ -15,17 +16,23 @@ type XogRead struct {
 	} `xml:"xogtype"`
 }
 
+type XogDriverFile struct {
+	Code            string `xml:"code,attr"`
+	Path            string `xml:"path,attr"`
+	Type            string `xml:"type,attr"`
+	IgnoreReading   bool   `xml:"ignoreReading,attr"`
+	ObjCode         string `xml:"objectCode,attr"`
+	SourcePartition string `xml:"sourcePartition,attr"`
+	TargetPartition string `xml:"targetPartition,attr"`
+	SingleView      bool   `xml:"singleView,attr"`
+	CopyToView      string `xml:"copyToView,attr"`
+	Attributes      []struct {
+		Code string `xml:"code,attr"`
+	} `xml:"attribute"`
+}
+
 type XogDriver struct {
-	Files []struct {
-		Code            string `xml:"code,attr"`
-		Path            string `xml:"path,attr"`
-		Type            string `xml:"type,attr"`
-		IgnoreReading   bool   `xml:"ignoreReading,attr"`
-		ObjCode         string `xml:"objectCode,attr"`
-		SourcePartition string `xml:"sourcePartition,attr"`
-		TargetPartition string `xml:"targetPartition,attr"`
-		SingleView      bool   `xml:"singleView,attr"`
-	} `xml:"files>file"`
+	Files []XogDriverFile `xml:"files>file"`
 }
 
 type XogEnv struct {
@@ -46,8 +53,7 @@ var global_env_version = "8.0"
 var xog *XogDriver
 var env *XogEnv
 var readDefault *XogRead
-var inputAction, xogDriverPath string
-var helper Helper
+var inputAction string
 
 func main() {
 
@@ -57,10 +63,10 @@ func main() {
 	fmt.Println("--------------------------------------------")
 
 	env = new(XogEnv)
-	xml.Unmarshal(helper.loadFile("xogEnv.xml"), env)
+	xml.Unmarshal(loadFile("xogEnv.xml"), env)
 
 	readDefault = new(XogRead)
-	xml.Unmarshal(helper.loadFile("xogRead.xml"), readDefault)
+	xml.Unmarshal(loadFile("xogRead.xml"), readDefault)
 
 	loadXogDriverFile()
 
@@ -77,13 +83,13 @@ func main() {
 
 func loadXogDriverFile() {
 	//Define xog driver path
-	xogDriverPath = "xogDriver.xml"
+	xogDriverPath := "xogDriver.xml"
 	fmt.Println("")
 	fmt.Print("Enter XOG Driver path [xogDriver.xml]: ")
 	fmt.Scanln(&xogDriverPath)
 
 	xog = new(XogDriver)
-	xml.Unmarshal(helper.loadFile(xogDriverPath), xog)
+	xml.Unmarshal(loadFile(xogDriverPath), xog)
 
 	fmt.Printf("\n[XOG]\033[92mLoaded XOG Driver file\033[0m: %s\n", xogDriverPath)
 }
@@ -134,4 +140,12 @@ func scanActions() bool {
 	fmt.Printf("\n------------------------------\n\n")
 
 	return false
+}
+
+func loadFile(path string) []byte {
+	xmlFile, err := ioutil.ReadFile(path)
+	if err != nil {
+		panic(err)
+	}
+	return xmlFile
 }
