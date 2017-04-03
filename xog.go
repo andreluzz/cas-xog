@@ -173,4 +173,5 @@ func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
 		}
 		i += 1
 	}
+	fmt.Println("")
 }
