@@ -26,13 +26,14 @@ type XogDriverFile struct {
 	TargetPartition string `xml:"targetPartition,attr"`
 	SingleView      bool   `xml:"singleView,attr"`
 	CopyToView      string `xml:"copyToView,attr"`
-	Attributes      []struct {
+	Includes        []struct {
+		Type string `xml:"type,attr"`
 		Code string `xml:"code,attr"`
-	} `xml:"attribute"`
+	} `xml:"include"`
 }
 
 type XogDriver struct {
-	Files []XogDriverFile `xml:"files>file"`
+	Files []XogDriverFile `xml:"file"`
 }
 
 type XogEnv struct {

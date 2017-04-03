@@ -37,20 +37,19 @@ func Transform(xogfile XogDriverFile, path string) bool {
 		header.CreateAttr("version", "8.0")
 	}
 
-	var attributes []string
-	for _, att := range xogfile.Attributes {
-		attributes = append(attributes, att.Code)
-	}
-
-	objectAttributesFiltered := false
+	objectFiltered := false
 	tagsRemoved := RemoveUnnecessaryTags(xogfile.Type)
 	partitionReplaced := ReplacePartition(xogfile.SourcePartition, xogfile.TargetPartition)
 	if xogfile.SingleView && xogfile.Type == "views" {
 		SingleView(xogfile.Code, xogfile.CopyToView)
-		FilterViewsAtributes(attributes)
 	}
-	if len(xogfile.Attributes) > 0 && xogfile.Type == "objects" {
-		objectAttributesFiltered = FilterObjectAtributes(attributes)
+	if len(xogfile.Includes) > 0 && xogfile.Type == "objects" {
+		objectFiltered = FilterObjectAtributes(xogfile)
+	}
+
+	xogOutputElement := doc.FindElement("//XOGOutput")
+	if xogOutputElement != nil {
+		root.RemoveChild(xogOutputElement)
 	}
 
 	doc.Indent(4)
@@ -58,42 +57,65 @@ func Transform(xogfile XogDriverFile, path string) bool {
 		panic(err)
 	}
 
-	return tagsRemoved || partitionReplaced || xogfile.SingleView || objectAttributesFiltered
+	return tagsRemoved || partitionReplaced || xogfile.SingleView || objectFiltered
 }
 
-func FilterViewsAtributes(attributes []string) {
-
-}
-
-func FilterObjectAtributes(attributes []string) bool {
+func FilterObjectAtributes(xogfile XogDriverFile) bool {
 	object := doc.FindElement("//object")
-	codes := strings.Join(attributes, ",")
+	attibutesCodes := ""
+	actionsCodes := ""
+	linksCodes := ""
+
+	for _, i := range xogfile.Includes {
+		switch i.Type {
+		case "attribute":
+			attibutesCodes += i.Code + ";"
+		case "action":
+			actionsCodes += i.Code + ";"
+		case "link":
+			linksCodes += xogfile.Code + "." + i.Code + ";"
+		}
+	}
 
 	if object != nil {
-		//remove unnecessary customAttribute
-		removeTag(object, doc.FindElements("//customAttribute"), "code", codes)
+		//remove customAttribute
+		removeTag(object, doc.FindElements("//customAttribute"), "code", attibutesCodes)
 
-		//remove unnecessary attributeDefault
-		removeTag(object, doc.FindElements("//attributeDefault"), "code", codes)
+		//remove attributeDefault
+		removeTag(object, doc.FindElements("//attributeDefault"), "code", attibutesCodes)
 
-		//remove links
-		links := doc.FindElement("//links")
-		object.RemoveChild(links)
-
-		//remove unnecessary displayMappings
+		//remove displayMappings
 		displayMappings := doc.FindElement("//displayMappings")
 		if displayMappings != nil {
-			removeTag(displayMappings, doc.FindElements("//displayMapping"), "attributeCode", codes)
+			removeTag(displayMappings, doc.FindElements("//displayMapping"), "attributeCode", attibutesCodes)
 		}
 
-		//remove links
-		actions := doc.FindElement("//actions")
-		object.RemoveChild(actions)
-
-		//remove links autonumbering
+		//remove autonumbering
 		autonumbering := doc.FindElement("//autonumbering")
 		if autonumbering != nil {
-			removeTag(autonumbering, doc.FindElements("//attributeAutonumbering"), "code", codes)
+			removeTag(autonumbering, doc.FindElements("//attributeAutonumbering"), "code", attibutesCodes)
+		}
+
+		//remove audit
+		audit := doc.FindElement("//audit")
+		if audit != nil {
+			removeTag(audit, doc.FindElements("//audit/attribute"), "code", attibutesCodes)
+		}
+
+		links := doc.FindElement("//links")
+		if linksCodes == "" {
+			//remove links
+			object.RemoveChild(links)
+		} else {
+			removeTag(links, doc.FindElements("//links/link"), "code", linksCodes)
+		}
+
+		actions := doc.FindElement("//actions")
+		if actionsCodes == "" {
+			//remove actions
+			object.RemoveChild(actions)
+		} else {
+			removeTag(actions, doc.FindElements("//actions/action"), "code", actionsCodes)
 		}
 	}
 
