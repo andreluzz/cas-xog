@@ -1,9 +1,9 @@
 # cas-xog
 Execute XOG files reading and wrinting in a more easy way
 
-This is a way of runnig XOG files in a much more easy way. Using a XOGDrive.xml file you can define with objects you would like to read and right.
+This is a way of runnig XOG files in a much more easy way. Using a XOGDrive.xml file you can define with objects you would like to read and write.
 
-### Description of attributes for <file>:
+### Description of attributes for tag file:
 | TAG | Description |
 | ------ | ------ |
 | code | Code of the object or instances in case of reading instances |
@@ -16,11 +16,15 @@ This is a way of runnig XOG files in a much more easy way. Using a XOGDrive.xml 
 | singleView | Remove all other views leaving only the one that has the same code that was filled |
 | copyToView | Defines the code where the view will be cloned to. Required to use in conjunction with 'singleView' |
 
-### Description of attributes for <include> - use only for type="objects":
+### Description of attributes for tag include:
+
+*Obs.: Available only for type="objects"*
+
 | TAG | Description |
 | ------ | ------ |
 | code | Code of the attribute, link or action for the object |
 | type | Defines what are being readed (attribute, link or action) |
+
 
 
 ### XOG Driver example
@@ -73,11 +77,6 @@ This is a way of runnig XOG files in a much more easy way. Using a XOGDrive.xml 
     </environments>
 </xogenvs>
 ```
-
-### Todos
-
- - Copy one view to another
- - Define what attributes from an object should be readed
 
 License
 ----
