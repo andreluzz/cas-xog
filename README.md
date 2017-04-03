@@ -8,7 +8,7 @@ This is a way of runnig XOG files in a much more easy way. Using a XOGDrive.xml 
 | ------ | ------ |
 | code | Code of the object or instances in case of reading instances |
 | path | Path to the file to be written |
-| type | Type of file being read. Available: objects, views, portlets, pages, processes, lookups |
+| type | Type of file being read. Available: objects, views, portlets, pages, processes, lookups, groups, menus |
 | objectCode | Field to set the object code for views, customobjectinstances |
 | ignoreReading | Sets whether to ignore the read action for this file. The file must be created manually in the '_extra/type' so it can be writen |
 | sourcePartition | Used to define which partition we will read |
@@ -23,8 +23,10 @@ This is a way of runnig XOG files in a much more easy way. Using a XOGDrive.xml 
 | TAG | Description |
 | ------ | ------ |
 | code | Code of the attribute, link or action for the object |
-| type | Defines what are being readed (attribute, link or action) |
-
+| type | Defines what are being readed (object: attribute, link, action) (menu: menuSection, menuLink) |
+| sectionCode | Sets the code of the menu section. Required when type is menuLink |
+| linkPosition | Used to change the position of the link in the target environment |
+| sectionPosition | Used to change the position of the section in the target environment |
 
 
 ### XOG Driver example
@@ -35,6 +37,10 @@ This is a way of runnig XOG files in a much more easy way. Using a XOGDrive.xml 
         <include type="attribute" code="tst_def_compat" />
         <include type="action" code="tst_nova_acao_id" />
         <include type="link" code="tst_novo_link_id" />
+    </file>
+    <file code="application" path="cas_menu_app.xml" type="menus">
+        <include type="menuSection" code="cas_tools" sectionPosition="1000" />
+        <include type="menuLink" code="cas_processes_tabs_page" sectionCode ="cas_tools" linkPosition="1000" sectionPosition="1000" />
     </file>
     <file code="tst_mtz_compat" path="tst_mtz_compat.xml" type="objects" />
     <file code="*" path="tst_mtz_compat_all.xml" type="views" objectCode="tst_mtz_compat" />

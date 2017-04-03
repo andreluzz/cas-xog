@@ -27,8 +27,11 @@ type XogDriverFile struct {
 	SingleView      bool   `xml:"singleView,attr"`
 	CopyToView      string `xml:"copyToView,attr"`
 	Includes        []struct {
-		Type string `xml:"type,attr"`
-		Code string `xml:"code,attr"`
+		Type            string `xml:"type,attr"`
+		Code            string `xml:"code,attr"`
+		SectionCode     string `xml:"sectionCode,attr"`
+		LinkPosition    string `xml:"linkPosition,attr"`
+		SectionPosition string `xml:"sectionPosition,attr"`
 	} `xml:"include"`
 }
 

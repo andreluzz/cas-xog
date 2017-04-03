@@ -38,6 +38,7 @@ func Transform(xogfile XogDriverFile, path string) bool {
 	}
 
 	objectFiltered := false
+	menuFiltered := false
 	tagsRemoved := RemoveUnnecessaryTags(xogfile.Type)
 	partitionReplaced := ReplacePartition(xogfile.SourcePartition, xogfile.TargetPartition)
 	if xogfile.SingleView && xogfile.Type == "views" {
@@ -45,6 +46,9 @@ func Transform(xogfile XogDriverFile, path string) bool {
 	}
 	if len(xogfile.Includes) > 0 && xogfile.Type == "objects" {
 		objectFiltered = FilterObjectAtributes(xogfile)
+	}
+	if len(xogfile.Includes) > 0 && xogfile.Type == "menus" {
+		menuFiltered = FilterMenuItems(xogfile)
 	}
 
 	xogOutputElement := doc.FindElement("//XOGOutput")
@@ -57,7 +61,38 @@ func Transform(xogfile XogDriverFile, path string) bool {
 		panic(err)
 	}
 
-	return tagsRemoved || partitionReplaced || xogfile.SingleView || objectFiltered
+	return tagsRemoved || partitionReplaced || xogfile.SingleView || objectFiltered || menuFiltered
+}
+
+func FilterMenuItems(xogfile XogDriverFile) bool {
+	menu := doc.FindElement("//menu")
+	sectionsCodes := ""
+	linksCodes := ""
+	var cleanSectionLinks []string
+
+	for _, i := range xogfile.Includes {
+		switch i.Type {
+		case "menuSection":
+			sectionsCodes += i.Code + ";"
+		case "menuLink":
+			linksCodes += i.Code + ";"
+			sectionsCodes += i.SectionCode + ";"
+			cleanSectionLinks = append(cleanSectionLinks, i.SectionCode)
+		}
+	}
+
+	if menu != nil {
+		//remove unnecessary sections
+		removeTag(menu, doc.FindElements("//section"), "code", sectionsCodes)
+
+		//remove unnecessary links
+		for index := range cleanSectionLinks {
+			section := doc.FindElement("//section[@code='" + cleanSectionLinks[index] + "']")
+			removeTag(section, doc.FindElements("//section[@code='"+cleanSectionLinks[index]+"']/link"), "pageCode", linksCodes)
+		}
+	}
+
+	return true
 }
 
 func FilterObjectAtributes(xogfile XogDriverFile) bool {
@@ -169,6 +204,10 @@ func RemoveUnnecessaryTags(action string) bool {
 	removeTags = append(removeTags, "partitionModels")
 
 	switch action {
+	case "menus":
+		removeTags = append(removeTags, "objects")
+		removeTags = append(removeTags, "pages")
+		transf = true
 	case "views":
 		removeTags = append(removeTags, "objects")
 		removeTags = append(removeTags, "lookups")
@@ -188,6 +227,14 @@ func RemoveUnnecessaryTags(action string) bool {
 			if e != nil {
 				content.RemoveChild(e)
 			}
+		}
+	}
+
+	if action == "objects" {
+		//remove subobjects
+		object := content.FindElement("//objects/object")
+		for _, e := range doc.FindElements("//objects/object/object") {
+			object.RemoveChild(e)
 		}
 	}
 

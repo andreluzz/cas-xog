@@ -16,6 +16,8 @@
 <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
   <Header version="8.0" action="read" objectType="contentPack" externalSource="NIKU">
     <args name="no_dependencies" value="true" />
+    <args name="exclude_parent" value="true"/>
+    <args name="noparents" value="true"/>
   </Header>
   <ObjectQuery>
     <Filter name="object_code" criteria="EQUALS" />
@@ -77,6 +79,28 @@
   <PageQuery>
     <Filter name="code" criteria="EQUALS" />
   </PageQuery>
+</NikuDataBus>]]></value>
+    </xogtype>
+    <xogtype type="groups">
+        <value><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
+  <Header version="7.5" action="read" objectType="group" externalSource="NIKU">
+    <args name="no_dependencies" value="true" />
+  </Header>
+  <Query>
+    <Filter name="code" criteria="EQUALS" />
+  </Query>
+</NikuDataBus>]]></value>
+    </xogtype>
+    <xogtype type="menus">
+        <value><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
+  <Header version="8.0" action="read" objectType="contentPack" externalSource="NIKU">
+    <args name="no_dependencies" value="true" />
+  </Header>
+  <MenuQuery>
+    <Filter name="code" criteria="EQUALS" />
+  </MenuQuery>
 </NikuDataBus>]]></value>
     </xogtype>
     <xogtype type="customObjectInstances">
