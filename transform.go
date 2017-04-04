@@ -137,6 +137,11 @@ func FilterObjectAtributes(xogfile XogDriverFile) bool {
 			removeTag(audit, doc.FindElements("//audit/attribute"), "code", attibutesCodes)
 		}
 
+		auditElements := audit.ChildElements()
+		if len(auditElements) == 0 {
+			object.RemoveChild(audit)
+		}
+
 		links := doc.FindElement("//links")
 		if linksCodes == "" {
 			//remove links
@@ -177,6 +182,19 @@ func SingleView(viewCode string, copyToView string) {
 			}
 		}
 	}
+
+	//remove unnecessary views from propertyset
+	propertySet := views.SelectElement("propertySet")
+	propertySetCreate := propertySet.SelectElement("create")
+	propertySetUpdate := propertySet.SelectElement("update")
+
+	if propertySetCreate.SelectAttrValue("code", "") == viewCode {
+		propertySet.RemoveChild(propertySetUpdate)
+	} else {
+		propertySet.RemoveChild(propertySetCreate)
+		removeTag(propertySetUpdate, doc.FindElements("//update/view"), "code", viewCode)
+	}
+
 }
 
 func ReplacePartition(source string, target string) bool {
@@ -272,4 +290,88 @@ func Validate(path string) (bool, string) {
 	}
 
 	return status, message
+}
+
+func MergeViews(xogfile XogDriverFile, sourcePath string, targetPath string) (bool, string) {
+	sourceDoc := etree.NewDocument()
+	if err := sourceDoc.ReadFromFile(sourcePath); err != nil {
+		return false, "\033[91mERROR-2\033[0m"
+	}
+	targetDoc := etree.NewDocument()
+	if err := targetDoc.ReadFromFile(targetPath); err != nil {
+		return false, "\033[91mERROR-2\033[0m"
+	}
+
+	viewFieldDescriptorCodes := ""
+	for _, i := range xogfile.Includes {
+		viewFieldDescriptorCodes += i.Code + ";"
+	}
+
+	//remove source unnecessary attributes
+	for _, e := range sourceDoc.FindElements("//viewFieldDescriptor") {
+		code := e.SelectAttrValue("attributeCode", "")
+		if !strings.Contains(viewFieldDescriptorCodes, code) {
+			parent := e.Parent()
+			parent.RemoveChild(e)
+		}
+	}
+
+	for _, i := range xogfile.Includes {
+		//remove attribute from target if exists
+		targetViewFieldDescriptorElement := targetDoc.FindElement("//viewFieldDescriptor[@attributeCode='" + i.Code + "']")
+		if targetViewFieldDescriptorElement != nil {
+			targetColumnElement := targetViewFieldDescriptorElement.Parent()
+			targetColumnElement.RemoveChild(targetViewFieldDescriptorElement)
+		}
+
+		//Get attribute information from source
+		sourceViewFieldDescriptorElement := sourceDoc.FindElement("//viewFieldDescriptor[@attributeCode='" + i.Code + "']")
+		if sourceViewFieldDescriptorElement != nil {
+			sourceColumnElement := sourceViewFieldDescriptorElement.Parent()
+			sourceSectionElement := sourceColumnElement.Parent()
+
+			sourceSectionSequenceAttrValue := sourceSectionElement.SelectAttrValue("sequence", "")
+
+			//Include attribute in target
+			targetSectionElement := targetDoc.FindElement("//section[@sequence='" + sourceSectionSequenceAttrValue + "']")
+			if targetSectionElement != nil {
+				sourceColumnSequenceAttrValue := sourceColumnElement.SelectAttrValue("sequence", "")
+				targetColumnElement := targetSectionElement.FindElement("//column[@sequence='" + sourceColumnSequenceAttrValue + "']")
+				if targetColumnElement != nil {
+					if i.InsertAfter == "" and i.InsertBefore == "" {
+						targetColumnElement.AddChild(sourceViewFieldDescriptorElement)
+					} else {
+						//get all target column elements
+						targetColumnElements := targetColumnElement.ChildElements()
+						//remove elements from column
+						removeTag(targetColumnElement, targetColumnElement.ChildElements(), "attributeCode", "")
+						//insert elements in order
+						for _, e := range targetColumnElements {
+							if i.InsertBefore == e.SelectAttrValue("attributeCode", "") {
+								targetColumnElement.AddChild(sourceViewFieldDescriptorElement)
+							}
+							targetColumnElement.AddChild(e)
+							if i.InsertAfter == e.SelectAttrValue("attributeCode", "") {
+								targetColumnElement.AddChild(sourceViewFieldDescriptorElement)
+							}
+						}
+					}
+				} else {
+					//insert column from source
+					targetSectionElement.AddChild(sourceColumnElement)
+				}
+			} else {
+				//insert section from source
+				targetPropertyElement := targetDoc.FindElement("//property")
+				targetPropertyElement.AddChild(sourceSectionElement)
+			}
+		}
+	}
+
+	targetDoc.Indent(4)
+	if err := targetDoc.WriteToFile(sourcePath); err != nil {
+		panic(err)
+	}
+
+	return true, "\033[92mSUCCESS\033[0m"
 }

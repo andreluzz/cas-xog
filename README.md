@@ -15,6 +15,7 @@ This is a way of runnig XOG files in a much more easy way. Using a XOGDrive.xml 
 | targetPartition | Replace the partition code in the writing file, it is mandatory to use the sourcePartition tag |
 | singleView | Remove all other views leaving only the one that has the same code that was filled |
 | copyToView | Defines the code where the view will be cloned to. Required to use in conjunction with 'singleView' |
+| viewEnvTarget | Defines the target environment to get the destination view attributes. Required to use in conjunction with 'singleView' |
 
 ### Description of attributes for tag include:
 
@@ -25,8 +26,10 @@ This is a way of runnig XOG files in a much more easy way. Using a XOGDrive.xml 
 | code | Code of the attribute, link or action for the object |
 | type | Defines what are being readed (object: attribute, link, action) (menu: menuSection, menuLink) |
 | sectionCode | Sets the code of the menu section. Required when type is menuLink |
-| linkPosition | Used to change the position of the link in the target environment |
-| sectionPosition | Used to change the position of the section in the target environment |
+| linkPosition | Used to change the position of the link in the target. Available only if type is menuLink or menuSection |
+| sectionPosition | Used to change the position of the section in the target. Available only if type is menuLink or menuSection |
+| insertAfter | Used to define the position os the attribute in the view. Available if include type is attribute and file type is views |
+| insertBefore | Used to define the position os the attribute in the view. Available if include type is attribute and file type is views |
 
 
 ### XOG Driver example
@@ -37,6 +40,10 @@ This is a way of runnig XOG files in a much more easy way. Using a XOGDrive.xml 
         <include type="attribute" code="tst_def_compat" />
         <include type="action" code="tst_nova_acao_id" />
         <include type="link" code="tst_novo_link_id" />
+    </file>
+    <file code="ideaProperty" path="idea_edit.xml" type="views" objectCode="idea" sourcePartition="partition10" singleView="true" viewEnvTarget="1">
+        <include type="attribute" code="tst_mtz_compat" insertBefore="name" />
+        <include type="attribute" code="tst_is_compat" insertAfter="name" />
     </file>
     <file code="application" path="cas_menu_app.xml" type="menus">
         <include type="menuSection" code="cas_tools" sectionPosition="1000" />

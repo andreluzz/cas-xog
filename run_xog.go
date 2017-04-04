@@ -26,12 +26,15 @@ type XogDriverFile struct {
 	TargetPartition string `xml:"targetPartition,attr"`
 	SingleView      bool   `xml:"singleView,attr"`
 	CopyToView      string `xml:"copyToView,attr"`
+	ViewEnvTarget   int    `xml:"viewEnvTarget,attr"`
 	Includes        []struct {
 		Type            string `xml:"type,attr"`
 		Code            string `xml:"code,attr"`
 		SectionCode     string `xml:"sectionCode,attr"`
 		LinkPosition    string `xml:"linkPosition,attr"`
 		SectionPosition string `xml:"sectionPosition,attr"`
+		InsertAfter     string `xml:"insertAfter,attr"`
+		InsertBefore    string `xml:"insertBefore,attr"`
 	} `xml:"include"`
 }
 

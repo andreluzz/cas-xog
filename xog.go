@@ -96,13 +96,6 @@ func createReadFilesXOG(xog *XogDriver) {
 }
 
 func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
-	var xog_path = env.GlobalVars[0].Value
-
-	var args [5]string
-	for k, param := range env.Environments[envIndex].Params {
-		args[k] = param.Value
-	}
-
 	var inputDir, outputDir string
 
 	if action == "write" {
@@ -140,16 +133,13 @@ func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
 				_ = os.Mkdir(outputDir+xogfile.Type, os.ModePerm)
 			}
 
-			var out, stderr bytes.Buffer
+			tempOutputPath := ""
 
-			cmd := exec.Command(xog_path, "-username", args[0], "-password", args[1], "-servername", args[2], "-portnumber", args[3], "-sslenabled", args[4], "-input", inputPath, "-output", outputPath)
-			cmd.Stdin = strings.NewReader("some input")
-			cmd.Stdout = &out
-			cmd.Stderr = &stderr
-			err := cmd.Run()
-			if err != nil {
-				fmt.Println(fmt.Sprint(err) + ": " + stderr.String())
-				panic(err)
+			execCommand(envIndex, inputPath, outputPath)
+			if xogfile.Type == "views" && len(xogfile.Includes) > 0 {
+				tempOutputPath = outputDir + xogfile.Type + "/temp_" + xogfile.Path
+				execCommand(xogfile.ViewEnvTarget, inputPath, tempOutputPath)
+				Transform(xogfile, tempOutputPath)
 			}
 
 			status, statusMessage := Validate(outputPath)
@@ -159,10 +149,10 @@ func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
 				if Transform(xogfile, outputPath) {
 					transform = "\033[96mTRUE\033[0m"
 				}
-			}
-
-			if !status {
-				fmt.Println(out.String())
+				if xogfile.Type == "views" && len(xogfile.Includes) > 0 {
+					_, statusMessage = MergeViews(xogfile, outputPath, tempOutputPath)
+					os.Remove(tempOutputPath)
+				}
 			}
 
 			if action != "write" {
@@ -174,4 +164,25 @@ func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
 		i += 1
 	}
 	fmt.Println("")
+}
+
+func execCommand(envIndex int, inputPath string, outputPath string) {
+	var xog_path = env.GlobalVars[0].Value
+
+	var args [5]string
+	for k, param := range env.Environments[envIndex].Params {
+		args[k] = param.Value
+	}
+
+	var out, stderr bytes.Buffer
+
+	cmd := exec.Command(xog_path, "-username", args[0], "-password", args[1], "-servername", args[2], "-portnumber", args[3], "-sslenabled", args[4], "-input", inputPath, "-output", outputPath)
+	cmd.Stdin = strings.NewReader("some input")
+	cmd.Stdout = &out
+	cmd.Stderr = &stderr
+	err := cmd.Run()
+	if err != nil {
+		fmt.Println(fmt.Sprint(err) + ": " + stderr.String())
+		panic(err)
+	}
 }
