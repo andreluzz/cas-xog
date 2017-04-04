@@ -19,7 +19,7 @@ This is a way of runnig XOG files in a much more easy way. Using a XOGDrive.xml 
 
 ### Description of attributes for tag include:
 
-*Obs.: Available only for type="objects"*
+*Obs.: Available only for types: "objects", "views" and "menus"*
 
 | TAG | Description |
 | ------ | ------ |
