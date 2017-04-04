@@ -259,39 +259,6 @@ func RemoveUnnecessaryTags(action string) bool {
 	return transf
 }
 
-func Validate(path string) (bool, string) {
-	if initStatus := initDoc(path); initStatus == false {
-		//ERROR-0: Reading file does not exist
-		return false, "\033[91mERROR-0\033[0m"
-	}
-
-	elem_status := doc.FindElement("//XOGOutput/Status")
-	message := ""
-	status := false
-
-	if elem_status != nil {
-		s := elem_status.SelectAttrValue("state", "unknown")
-		elem_statistics := doc.FindElement("//XOGOutput/Statistics")
-		totalRecords := "0"
-		if elem_statistics != nil {
-			totalRecords = elem_statistics.SelectAttrValue("totalNumberOfRecords", "unknown")
-		}
-		if s == "SUCCESS" && elem_statistics != nil && totalRecords != "0" {
-			message = "\033[92m" + s + "\033[0m"
-			status = true
-		} else {
-			message = "\033[91m" + s + "\033[0m"
-			status = false
-		}
-	} else {
-		//ERROR-1: Output file does not have the XOGOutput Status tag
-		message = "\033[91mERROR-1\033[0m"
-		status = false
-	}
-
-	return status, message
-}
-
 func MergeViews(xogfile XogDriverFile, sourcePath string, targetPath string) (bool, string) {
 	sourceDoc := etree.NewDocument()
 	if err := sourceDoc.ReadFromFile(sourcePath); err != nil {
@@ -374,4 +341,44 @@ func MergeViews(xogfile XogDriverFile, sourcePath string, targetPath string) (bo
 	}
 
 	return true, "\033[92mSUCCESS\033[0m"
+}
+
+func Validate(path string) (bool, string) {
+	if initStatus := initDoc(path); initStatus == false {
+		//ERROR-0: Reading file does not exist
+		return false, "\033[91mERROR-0\033[0m"
+	}
+
+	statusElement := doc.FindElement("//XOGOutput/Status")
+	message := ""
+	status := false
+
+	if statusElement != nil {
+		s := statusElement.SelectAttrValue("state", "UNKNOWN")
+		statisticsElement := doc.FindElement("//XOGOutput/Statistics")
+		totalRecords := "0"
+		if statisticsElement != nil {
+			totalRecords = statisticsElement.SelectAttrValue("totalNumberOfRecords", "UNKNOWN")
+		}
+		if s == "SUCCESS" && statisticsElement != nil && totalRecords != "0" {
+			//validate warning
+			errorInformationElement := doc.FindElement("//ErrorInformation/Severity")
+			if errorInformationElement != nil {
+				message = "\033[93mWARNING\033[0m"
+				status = false
+			} else {
+				message = "\033[92m" + s + "\033[0m"
+				status = true
+			}
+		} else {
+			message = "\033[91m" + s + "\033[0m"
+			status = false
+		}
+	} else {
+		//ERROR-1: Output file does not have the XOGOutput Status tag
+		message = "\033[91mERROR-1\033[0m"
+		status = false
+	}
+
+	return status, message
 }
