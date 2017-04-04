@@ -338,7 +338,7 @@ func MergeViews(xogfile XogDriverFile, sourcePath string, targetPath string) (bo
 				sourceColumnSequenceAttrValue := sourceColumnElement.SelectAttrValue("sequence", "")
 				targetColumnElement := targetSectionElement.FindElement("//column[@sequence='" + sourceColumnSequenceAttrValue + "']")
 				if targetColumnElement != nil {
-					if i.InsertAfter == "" and i.InsertBefore == "" {
+					if i.InsertAfter == "" && i.InsertBefore == "" {
 						targetColumnElement.AddChild(sourceViewFieldDescriptorElement)
 					} else {
 						//get all target column elements
