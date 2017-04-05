@@ -101,7 +101,7 @@ This is a way of runnig XOG files in a much more easy way. Using a XOGDrive.xml 
 TODO
 ----
 * Delete views using complete="true" in view propertySet
-* Remove attribute from view using <remove type="attribute" code="tst_code">
+* Remove attribute from view using tag remove
 * Change view sections order
 
 
