@@ -93,10 +93,10 @@ This is a way of runnig XOG files in a much more easy way. Using a XOGDrive.xml 
 
 ### Description of Errors:
 | ERROR | Description |
-| ------ | ------ |
-| ERROR-0 | Trying to validate a write file that does not exist |
-| ERROR-1 | Output file does not have the XOGOutput Status tag |
-| ERROR-2 | Readed single view attributes from one target environment and trying to write to another target environment |
+| ---------- | ---------- |
+| 0 | Trying to validate a write file that does not exist |
+| 1 | Output file does not have the XOGOutput Status tag |
+| 2 | Readed single view attributes from one target environment and trying to write to another target environment |
 
 
 TODO
