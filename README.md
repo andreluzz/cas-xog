@@ -91,6 +91,21 @@ This is a way of runnig XOG files in a much more easy way. Using a XOGDrive.xml 
 </xogenvs>
 ```
 
+### Description of Errors:
+| ERROR | Description |
+| ------ | ------ |
+| ERROR-0 | Trying to validate a write file that does not exist |
+| ERROR-1 | Output file does not have the XOGOutput Status tag |
+| ERROR-2 | Readed single view attributes from one target environment and trying to write to another target environment |
+
+
+TODO
+----
+
+* Delete views using complete="true" in view propertySet
+* Remove attribute from view using <remove type="attribute" code="tst_code">
+
+
 License
 ----
 

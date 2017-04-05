@@ -133,13 +133,16 @@ func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
 				_ = os.Mkdir(outputDir+xogfile.Type, os.ModePerm)
 			}
 
+			validatedWriteEnvironment := true
+			//validate if viewEnvTarget is defined for the same environment select to write the XOGs
+			if action == "write" && xogfile.Type == "views" && xogfile.SingleView && len(xogfile.Includes) > 0 && xogfile.ViewEnvTarget != envIndex {
+				validatedWriteEnvironment = false
+			}
+
 			tempOutputPath := ""
 
-			execCommand(envIndex, inputPath, outputPath)
-			if xogfile.Type == "views" && len(xogfile.Includes) > 0 {
-				tempOutputPath = outputDir + xogfile.Type + "/temp_" + xogfile.Path
-				execCommand(xogfile.ViewEnvTarget, inputPath, tempOutputPath)
-				Transform(xogfile, tempOutputPath)
+			if validatedWriteEnvironment {
+				execCommand(envIndex, inputPath, outputPath)
 			}
 
 			status, statusMessage := Validate(outputPath)
@@ -149,10 +152,20 @@ func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
 				if Transform(xogfile, outputPath) {
 					transform = "\033[96mTRUE\033[0m"
 				}
-				if xogfile.Type == "views" && len(xogfile.Includes) > 0 {
+				if xogfile.Type == "views" && xogfile.SingleView && len(xogfile.Includes) > 0 {
+					//read file from view environment target
+					tempOutputPath = outputDir + xogfile.Type + "/temp_" + xogfile.Path
+					execCommand(xogfile.ViewEnvTarget, inputPath, tempOutputPath)
+					//Transform view to include the new attributes
+					Transform(xogfile, tempOutputPath)
 					_, statusMessage = MergeViews(xogfile, outputPath, tempOutputPath)
 					os.Remove(tempOutputPath)
 				}
+			}
+
+			if !validatedWriteEnvironment {
+				//ERROR-02: readed from one environment and trying to write to another environment
+				statusMessage = "\033[91mERROR-2\033[0m"
 			}
 
 			if action != "write" {

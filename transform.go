@@ -135,11 +135,11 @@ func FilterObjectAtributes(xogfile XogDriverFile) bool {
 		audit := doc.FindElement("//audit")
 		if audit != nil {
 			removeTag(audit, doc.FindElements("//audit/attribute"), "code", attibutesCodes)
-		}
 
-		auditElements := audit.ChildElements()
-		if len(auditElements) == 0 {
-			object.RemoveChild(audit)
+			auditElements := audit.ChildElements()
+			if len(auditElements) == 0 {
+				object.RemoveChild(audit)
+			}
 		}
 
 		links := doc.FindElement("//links")
@@ -167,12 +167,14 @@ func SingleView(viewCode string, copyToView string) {
 	content := root.SelectElement("contentPack")
 	views := content.SelectElement("views")
 
-	for _, e := range doc.FindElements("//property") {
-		code := e.SelectAttrValue("code", "")
-		if viewCode != code {
-			views.RemoveChild(e)
-		} else {
-			if copyToView != "" {
+	removeTag(views, doc.FindElements("//property"), "code", viewCode)
+	removeTag(views, doc.FindElements("//filter"), "code", viewCode)
+	removeTag(views, doc.FindElements("//list"), "code", viewCode)
+
+	if copyToView != "" {
+		for _, e := range views.ChildElements() {
+			code := e.SelectAttrValue("code", "")
+			if viewCode == code {
 				e.CreateAttr("code", copyToView)
 				if strings.Contains(copyToView, "Create") {
 					e.CreateAttr("type", "create")
@@ -283,20 +285,16 @@ func MergeViews(xogfile XogDriverFile, sourcePath string, targetPath string) (bo
 		}
 	}
 
-	for _, i := range xogfile.Includes {
-		//remove attribute from target if exists
-		targetViewFieldDescriptorElement := targetDoc.FindElement("//viewFieldDescriptor[@attributeCode='" + i.Code + "']")
-		if targetViewFieldDescriptorElement != nil {
-			targetColumnElement := targetViewFieldDescriptorElement.Parent()
-			targetColumnElement.RemoveChild(targetViewFieldDescriptorElement)
-		}
+	var viewType = ""
+	includedNewSection := false
 
+	for _, i := range xogfile.Includes {
 		//Get attribute information from source
 		sourceViewFieldDescriptorElement := sourceDoc.FindElement("//viewFieldDescriptor[@attributeCode='" + i.Code + "']")
+
 		if sourceViewFieldDescriptorElement != nil {
 			sourceColumnElement := sourceViewFieldDescriptorElement.Parent()
 			sourceSectionElement := sourceColumnElement.Parent()
-
 			sourceSectionSequenceAttrValue := sourceSectionElement.SelectAttrValue("sequence", "")
 
 			//Include attribute in target
@@ -329,8 +327,38 @@ func MergeViews(xogfile XogDriverFile, sourcePath string, targetPath string) (bo
 				}
 			} else {
 				//insert section from source
-				targetPropertyElement := targetDoc.FindElement("//property")
-				targetPropertyElement.AddChild(sourceSectionElement)
+				viewType = sourceSectionElement.Parent().Tag
+				targetViewElement := targetDoc.FindElement("//" + viewType)
+				targetViewElement.AddChild(sourceSectionElement)
+				includedNewSection = true
+			}
+		}
+	}
+
+	//change sections to the correct order if a new one was included
+	if includedNewSection {
+		targetViewElement := targetDoc.FindElement("//" + viewType)
+		targetViewElements := targetViewElement.ChildElements()
+		//Remove all child tags
+		for _, e := range targetViewElements {
+			targetViewElement.RemoveChild(e)
+		}
+		//Include tags in the correct order - sections
+		for _, e := range targetViewElements {
+			if e.Tag == "section" {
+				targetViewElement.AddChild(e)
+			}
+		}
+		//Include tags in the correct order - nls
+		for _, e := range targetViewElements {
+			if e.Tag == "nls" {
+				targetViewElement.AddChild(e)
+			}
+		}
+		//Include tags in the correct order - others
+		for _, e := range targetViewElements {
+			if e.Tag != "section" && e.Tag != "nls" {
+				targetViewElement.AddChild(e)
 			}
 		}
 	}
