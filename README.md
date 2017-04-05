@@ -102,6 +102,7 @@ TODO
 ----
 * Delete views using complete="true" in view propertySet
 * Remove attribute from view using <remove type="attribute" code="tst_code">
+* Change view sections order
 
 
 License
