@@ -1,7 +1,7 @@
 # cas-xog
 Execute XOG files reading and wrinting in a more easy way
 
-This is a way of runnig XOG files in a much more easy way. Using a XOGDrive.xml file you can define with objects you would like to read and write.
+This is a new easy way of creating reading and writing XOG files. Using a XOGDrive.xml file you can define with objects you would like to read and write.
 
 ### Description of attributes for tag file:
 | TAG | Description |
@@ -38,7 +38,7 @@ This is a way of runnig XOG files in a much more easy way. Using a XOGDrive.xml 
 | ------ | ------ |
 | sourceSectionPosition | Defines the position of the view in the source environment. Optional for remove action |
 | targetSectionPosition | Defines the position of the view in the target environment |
-| action | Defines the actions that should be executed: replace, update, remove or insert. OBS.: If executing more than one action to the same view organize the sections in the following order: replace, update, remove and insert |
+| action | Defines the actions that should be executed: replace, update, remove or insert. <br/>OBS.: If executing more than one action to the same view organize the sections in the following order: replace, update, remove and insert |
 
 ### Description of attributes for tag attribute:
 
@@ -51,21 +51,22 @@ This is a way of runnig XOG files in a much more easy way. Using a XOGDrive.xml 
 | insertBefore | Defines the code of the attribute in the target to use as reference for positioning. If not set, the attribute will be inserted at the end of the column |
 | remove | Optional attribute, if set as true remove this atribute from target environment. Only available for action update | 
 
+### Description of Errors:
 
-| Description of Errors |
-| ---------- |
-| ERRO-00: Trying to validate a write file that does not exist |
-| ERRO-01: Output file does not have the XOGOutput Status tag |
-| ERRO-02: Trying to write view attributes readed from a different target environment |
-| ERRO-03: Readed single view attributes from one target environment and trying to write to another target environment |
-| ERRO-04: Transform views - source view file does not exists |
-| ERRO-05: Transform views - target view file does not exists |
-| ERRO-06: Transform views - invalid action at section tag |
-| ERRO-07: Transform views - invalid TargetSectionPosition |
-| ERRO-08: Transform views - invalid SourceSectionPosition |
-| ERRO-09: Transform views - action update without attributes |
-| ERRO-10: Transform views - column value invalid, only right or left are available |
-| ERRO-11: Transform views - insertBefore code does not exists in target |
+| Code | Description |
+| ---- | ---------- |
+| <code>ERRO-00</code> | Trying to validate a write file that does not exist |
+| <code>ERRO-01</code> | Output file does not have the XOGOutput Status tag |
+| <code>ERRO-02</code> | Trying to write view attributes readed from a different target environment |
+| <code>ERRO-03</code> | Readed single view attributes from one target environment and trying to write to another target environment |
+| <code>ERRO-04</code> | Transform views - source view file does not exists |
+| <code>ERRO-05</code> | Transform views - target view file does not exists |
+| <code>ERRO-06</code> | Transform views - invalid action at section tag |
+| <code>ERRO-07</code> | Transform views - invalid TargetSectionPosition |
+| <code>ERRO-08</code> | Transform views - invalid SourceSectionPosition |
+| <code>ERRO-09</code> | Transform views - action update without attributes |
+| <code>ERRO-10</code> | Transform views - column value invalid, only right or left are available |
+| <code>ERRO-11</code> | Transform views - insertBefore code does not exists in target |
 
 
 ### XOG Driver example
