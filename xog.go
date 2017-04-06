@@ -25,67 +25,9 @@ func createReadFilesXOG(xog *XogDriver) {
 
 	for _, xogfile := range xog.Files {
 
-		status := ""
-		path := "_read/" + xogfile.Type + "/" + xogfile.Path
-
-		if xogfile.IgnoreReading {
-			status = "\033[93mIGNORED\033[0m"
-		} else {
-			//check if dir exists
-			_, dir_err := os.Stat("_read/" + xogfile.Type)
-			if os.IsNotExist(dir_err) {
-				_ = os.Mkdir("_read/"+xogfile.Type, os.ModePerm)
-			}
-
-			doc := etree.NewDocument()
-			if err := doc.ReadFromString(xogTypes[xogfile.Type]); err != nil {
-				panic(err)
-			}
-
-			code := xogfile.Code
-			if xogfile.Type == "lookups" {
-				code = strings.ToUpper(code)
-			}
-
-			filterCode := doc.FindElement("//Filter[@name='code']")
-			if filterCode != nil {
-				filterCode.SetText(code)
-			}
-			filterObjectCode := doc.FindElement("//Filter[@name='object_code']")
-			if filterObjectCode != nil {
-				switch xogfile.Type {
-				case "objects":
-					filterObjectCode.SetText(xogfile.Code)
-				default:
-					filterObjectCode.SetText(xogfile.ObjCode)
-				}
-			}
-			filterInstanceCode := doc.FindElement("//Filter[@name='instanceCode']")
-			if filterInstanceCode != nil {
-				filterInstanceCode.SetText(code)
-			}
-			filterInstanceObjectCode := doc.FindElement("//Filter[@name='objectCode']")
-			if filterInstanceObjectCode != nil {
-				filterInstanceObjectCode.SetText(xogfile.ObjCode)
-			}
-			filterPartition := doc.FindElement("//Filter[@name='partition_code']")
-			if filterPartition != nil {
-				if xogfile.SourcePartition == "" {
-					e := filterPartition.Parent()
-					e.RemoveChild(filterPartition)
-				} else {
-					filterPartition.SetText(xogfile.SourcePartition)
-				}
-			}
-
-			status = "\033[92mSUCCESS\033[0m"
-
-			doc.Indent(4)
-			err := doc.WriteToFile(path)
-			if err != nil {
-				status = "\033[91mFAILURE\033[0m"
-			}
-
+		status, path := createReadFile(xogfile, xogTypes, false)
+		if xogfile.Type == "views" && xogfile.TargetPartition != "" && xogfile.SingleView {
+			status, _ = createReadFile(xogfile, xogTypes, true)
 		}
 
 		fmt.Printf("\n[XOG]Created read file %03d/%03d - %s | to file: %s", i, total, status, path)
@@ -93,6 +35,80 @@ func createReadFilesXOG(xog *XogDriver) {
 		i += 1
 	}
 	fmt.Println("")
+}
+
+func createReadFile(xogfile XogDriverFile, xogTypes map[string]string, createTargetViewReadXOG bool) (string, string) {
+	status := ""
+	path := "_read/" + xogfile.Type + "/" + xogfile.Path
+	if createTargetViewReadXOG {
+		path = "_read/" + xogfile.Type + "/target_" + xogfile.Path
+	}
+
+	if xogfile.IgnoreReading {
+		status = "\033[93mIGNORED\033[0m"
+	} else {
+		//check if dir exists
+		_, dir_err := os.Stat("_read/" + xogfile.Type)
+		if os.IsNotExist(dir_err) {
+			_ = os.Mkdir("_read/"+xogfile.Type, os.ModePerm)
+		}
+
+		doc := etree.NewDocument()
+		if err := doc.ReadFromString(xogTypes[xogfile.Type]); err != nil {
+			panic(err)
+		}
+
+		code := xogfile.Code
+		if xogfile.Type == "lookups" {
+			code = strings.ToUpper(code)
+		}
+
+		filterCode := doc.FindElement("//Filter[@name='code']")
+		if filterCode != nil {
+			filterCode.SetText(code)
+		}
+		filterObjectCode := doc.FindElement("//Filter[@name='object_code']")
+		if filterObjectCode != nil {
+			switch xogfile.Type {
+			case "objects":
+				filterObjectCode.SetText(xogfile.Code)
+			default:
+				filterObjectCode.SetText(xogfile.ObjCode)
+			}
+		}
+		filterInstanceCode := doc.FindElement("//Filter[@name='instanceCode']")
+		if filterInstanceCode != nil {
+			filterInstanceCode.SetText(code)
+		}
+		filterInstanceObjectCode := doc.FindElement("//Filter[@name='objectCode']")
+		if filterInstanceObjectCode != nil {
+			filterInstanceObjectCode.SetText(xogfile.ObjCode)
+		}
+		filterPartition := doc.FindElement("//Filter[@name='partition_code']")
+		if filterPartition != nil {
+			if xogfile.SourcePartition == "" {
+				e := filterPartition.Parent()
+				e.RemoveChild(filterPartition)
+			} else {
+				if createTargetViewReadXOG {
+					filterPartition.SetText(xogfile.TargetPartition)
+				} else {
+					filterPartition.SetText(xogfile.SourcePartition)
+				}
+			}
+		}
+
+		status = "\033[92mSUCCESS\033[0m"
+
+		doc.Indent(4)
+		err := doc.WriteToFile(path)
+		if err != nil {
+			status = "\033[91mFAILURE\033[0m"
+		}
+
+	}
+
+	return status, path
 }
 
 func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
@@ -155,6 +171,9 @@ func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
 				if xogfile.Type == "views" && xogfile.SingleView && len(xogfile.Sections) > 0 {
 					//read file from view environment target
 					tempOutputPath = outputDir + xogfile.Type + "/temp_" + xogfile.Path
+					if xogfile.TargetPartition != "" {
+						inputPath = inputDir + xogfile.Type + "/target_" + xogfile.Path
+					}
 					execCommand(xogfile.ViewEnvTarget, inputPath, tempOutputPath)
 					//Transform view to include the new attributes
 					Transform(xogfile, tempOutputPath)
