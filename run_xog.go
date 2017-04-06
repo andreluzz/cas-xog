@@ -16,25 +16,36 @@ type XogRead struct {
 	} `xml:"xogtype"`
 }
 
+type XogViewSection struct {
+	SourceSectionPosition string `xml:"sourceSectionPosition,attr"`
+	TargetSectionPosition string `xml:"targetSectionPosition,attr"`
+	Action                string `xml:"action,attr"`
+	Attributes            []struct {
+		Code         string `xml:"code,attr"`
+		Column       string `xml:"column,attr"`
+		Remove       bool   `xml:"remove,attr"`
+		InsertBefore string `xml:"insertBefore,attr"`
+	} `xml:"attribute"`
+}
+
 type XogDriverFile struct {
-	Code            string `xml:"code,attr"`
-	Path            string `xml:"path,attr"`
-	Type            string `xml:"type,attr"`
-	IgnoreReading   bool   `xml:"ignoreReading,attr"`
-	ObjCode         string `xml:"objectCode,attr"`
-	SourcePartition string `xml:"sourcePartition,attr"`
-	TargetPartition string `xml:"targetPartition,attr"`
-	SingleView      bool   `xml:"singleView,attr"`
-	CopyToView      string `xml:"copyToView,attr"`
-	ViewEnvTarget   int    `xml:"viewEnvTarget,attr"`
+	Code            string           `xml:"code,attr"`
+	Path            string           `xml:"path,attr"`
+	Type            string           `xml:"type,attr"`
+	ObjCode         string           `xml:"objectCode,attr"`
+	SingleView      bool             `xml:"singleView,attr"`
+	CopyToView      string           `xml:"copyToView,attr"`
+	ViewEnvTarget   int              `xml:"viewEnvTarget,attr"`
+	IgnoreReading   bool             `xml:"ignoreReading,attr"`
+	SourcePartition string           `xml:"sourcePartition,attr"`
+	TargetPartition string           `xml:"targetPartition,attr"`
+	Sections        []XogViewSection `xml:"section"`
 	Includes        []struct {
-		Type            string `xml:"type,attr"`
-		Code            string `xml:"code,attr"`
-		SectionCode     string `xml:"sectionCode,attr"`
-		LinkPosition    string `xml:"linkPosition,attr"`
-		SectionPosition string `xml:"sectionPosition,attr"`
-		InsertAfter     string `xml:"insertAfter,attr"`
-		InsertBefore    string `xml:"insertBefore,attr"`
+		Type                  string `xml:"type,attr"`
+		Code                  string `xml:"code,attr"`
+		SectionCode           string `xml:"sectionCode,attr"`
+		LinkPosition          string `xml:"linkPosition,attr"`
+		TargetSectionPosition string `xml:"targetSectionPosition,attr"`
 	} `xml:"include"`
 }
 

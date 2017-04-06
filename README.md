@@ -19,23 +19,53 @@ This is a way of runnig XOG files in a much more easy way. Using a XOGDrive.xml 
 
 ### Description of attributes for tag include:
 
-*Obs.: Available only for types: "objects", "views" and "menus"*
+*Obs.: Available only for types: "objects" and "menus"*
 
 | TAG | Description |
 | ------ | ------ |
 | code | Code of the attribute, link or action for the object |
-| type | Defines what are being readed (object: attribute, link, action) (menu: menuSection, menuLink) |
+| type | Defines what are being readed (view: attribute) (object: attribute, link, action) (menu: menuSection, menuLink) |
 | sectionCode | Sets the code of the menu section. Required when type is menuLink |
 | linkPosition | Used to change the position of the link in the target. Available only if type is menuLink or menuSection |
-| sectionPosition | Used to change the position of the section in the target. Available only if type is menuLink or menuSection |
-| insertAfter | Used to define the position os the attribute in the view. Available if include type is attribute and file type is views |
-| insertBefore | Used to define the position os the attribute in the view. Available if include type is attribute and file type is views |
+| targetSectionPosition | Used to change the position of the section in the target. Available only for file type menus |
+
+
+### Description of attributes for tag section:
+
+*Obs.: Available only for types: "views"*
+
+| TAG | Description |
+| ------ | ------ |
+| sourceSectionPosition | Defines the position of the view in the source environment. Optional for remove action |
+| targetSectionPosition | Defines the position of the view in the target environment |
+| action | Defines the actions that should be executed: replace, update, remove or insert. OBS.: If executing more than one action to the same view organize the sections in the following order: replace, update, remove and insert |
+
+### Description of attributes for tag attribute:
+
+*Obs.: Available only for types: "views" inside tag section*
+
+| TAG | Description |
+| ------ | ------ |
+| code | Code of the attribute |
+| column | Defines if the attribute should be placed in the left or right column. This attribute is required. |
+| insertBefore | Defines the code of the attribute in the target to use as reference for positioning. If not set, the attribute will be inserted at the end of the column |
+| remove | Optional attribute, if set as true remove this atribute from target environment. Only available for action update | 
+
 
 | Description of Errors |
 | ---------- |
-| ERROR-0: Trying to validate a write file that does not exist |
-| ERROR-1: Output file does not have the XOGOutput Status tag |
-| ERROR-2: Readed single view attributes from one target environment and trying to write to another target environment |
+| ERRO-00: Trying to validate a write file that does not exist |
+| ERRO-01: Output file does not have the XOGOutput Status tag |
+| ERRO-02: Trying to write view attributes readed from a different target environment |
+| ERRO-03: Readed single view attributes from one target environment and trying to write to another target environment |
+| ERRO-04: Transform views - source view file does not exists |
+| ERRO-05: Transform views - target view file does not exists |
+| ERRO-06: Transform views - invalid action at section tag |
+| ERRO-07: Transform views - invalid TargetSectionPosition |
+| ERRO-08: Transform views - invalid SourceSectionPosition |
+| ERRO-09: Transform views - action update without attributes |
+| ERRO-10: Transform views - column value invalid, only right or left are available |
+| ERRO-11: Transform views - insertBefore code does not exists in target |
 
 
 ### XOG Driver example
@@ -48,12 +78,18 @@ This is a way of runnig XOG files in a much more easy way. Using a XOGDrive.xml 
         <include type="link" code="tst_novo_link_id" />
     </file>
     <file code="ideaProperty" path="idea_edit.xml" type="views" objectCode="idea" sourcePartition="partition10" singleView="true" viewEnvTarget="1">
-        <include type="attribute" code="tst_mtz_compat" insertBefore="name" />
-        <include type="attribute" code="tst_is_compat" insertAfter="name" />
+        <section sourceSectionPosition="4" targetSectionPosition="4" action="replace" />
+        <section sourceSectionPosition="2" targetSectionPosition="2" action="update" >
+            <attribute code="tst_aval_compat" insertBefore="tst_is_compat" column="left" />
+            <attribute code="tst_is_compat" column="left" />
+            <attribute code="tst_corp_compat" remove="true" />
+        </section>
+        <section targetSectionPosition="3" action="remove" />
+        <section sourceSectionPosition="1" targetSectionPosition="1" action="insert" />
     </file>
     <file code="application" path="cas_menu_app.xml" type="menus">
-        <include type="menuSection" code="cas_tools" sectionPosition="1000" />
-        <include type="menuLink" code="cas_processes_tabs_page" sectionCode ="cas_tools" linkPosition="1000" sectionPosition="1000" />
+        <include type="menuSection" code="cas_tools" targetSectionPosition="1000" />
+        <include type="menuLink" code="cas_processes_tabs_page" sectionCode ="cas_tools" linkPosition="1000" targetSectionPosition="1000" />
     </file>
     <file code="tst_mtz_compat" path="tst_mtz_compat.xml" type="objects" />
     <file code="*" path="tst_mtz_compat_all.xml" type="views" objectCode="tst_mtz_compat" />
@@ -101,8 +137,6 @@ This is a way of runnig XOG files in a much more easy way. Using a XOGDrive.xml 
 TODO
 ----
 * Delete views using complete="true" in view propertySet
-* Remove attribute from view using <remove type="attribute" code="tst_code">
-* Change view sections order
 
 
 License

@@ -135,7 +135,7 @@ func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
 
 			validatedWriteEnvironment := true
 			//validate if viewEnvTarget is defined for the same environment select to write the XOGs
-			if action == "write" && xogfile.Type == "views" && xogfile.SingleView && len(xogfile.Includes) > 0 && xogfile.ViewEnvTarget != envIndex {
+			if action == "write" && xogfile.Type == "views" && xogfile.SingleView && len(xogfile.Sections) > 0 && xogfile.ViewEnvTarget != envIndex {
 				validatedWriteEnvironment = false
 			}
 
@@ -152,7 +152,7 @@ func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
 				if Transform(xogfile, outputPath) {
 					transform = "\033[96mTRUE\033[0m"
 				}
-				if xogfile.Type == "views" && xogfile.SingleView && len(xogfile.Includes) > 0 {
+				if xogfile.Type == "views" && xogfile.SingleView && len(xogfile.Sections) > 0 {
 					//read file from view environment target
 					tempOutputPath = outputDir + xogfile.Type + "/temp_" + xogfile.Path
 					execCommand(xogfile.ViewEnvTarget, inputPath, tempOutputPath)
@@ -164,8 +164,8 @@ func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
 			}
 
 			if !validatedWriteEnvironment {
-				//ERROR-02: readed from one environment and trying to write to another environment
-				statusMessage = "\033[91mERROR-2\033[0m"
+				//Trying to write view attributes readed from a different target environment
+				statusMessage = "\033[91mERRO-02\033[0m"
 			}
 
 			if action != "write" {

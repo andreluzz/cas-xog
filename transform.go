@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/beevik/etree"
+	"strconv"
 	"strings"
 )
 
@@ -16,10 +17,20 @@ func initDoc(path string) bool {
 	return true
 }
 
-func removeTag(parent *etree.Element, elems []*etree.Element, attrCode string, codes string) {
+func removeTagFromParent(parent *etree.Element, elems []*etree.Element, attrCode string, codes string) {
 	for _, e := range elems {
 		code := e.SelectAttrValue(attrCode, "")
 		if !strings.Contains(codes, code) {
+			parent.RemoveChild(e)
+		}
+	}
+}
+
+func removeTags(elems []*etree.Element, attrCode string, codes string) {
+	for _, e := range elems {
+		code := e.SelectAttrValue(attrCode, "")
+		if !strings.Contains(codes, code) {
+			parent := e.Parent()
 			parent.RemoveChild(e)
 		}
 	}
@@ -83,12 +94,12 @@ func FilterMenuItems(xogfile XogDriverFile) bool {
 
 	if menu != nil {
 		//remove unnecessary sections
-		removeTag(menu, doc.FindElements("//section"), "code", sectionsCodes)
+		removeTagFromParent(menu, doc.FindElements("//section"), "code", sectionsCodes)
 
 		//remove unnecessary links
 		for index := range cleanSectionLinks {
 			section := doc.FindElement("//section[@code='" + cleanSectionLinks[index] + "']")
-			removeTag(section, doc.FindElements("//section[@code='"+cleanSectionLinks[index]+"']/link"), "pageCode", linksCodes)
+			removeTagFromParent(section, doc.FindElements("//section[@code='"+cleanSectionLinks[index]+"']/link"), "pageCode", linksCodes)
 		}
 	}
 
@@ -114,27 +125,27 @@ func FilterObjectAtributes(xogfile XogDriverFile) bool {
 
 	if object != nil {
 		//remove customAttribute
-		removeTag(object, doc.FindElements("//customAttribute"), "code", attibutesCodes)
+		removeTagFromParent(object, doc.FindElements("//customAttribute"), "code", attibutesCodes)
 
 		//remove attributeDefault
-		removeTag(object, doc.FindElements("//attributeDefault"), "code", attibutesCodes)
+		removeTagFromParent(object, doc.FindElements("//attributeDefault"), "code", attibutesCodes)
 
 		//remove displayMappings
 		displayMappings := doc.FindElement("//displayMappings")
 		if displayMappings != nil {
-			removeTag(displayMappings, doc.FindElements("//displayMapping"), "attributeCode", attibutesCodes)
+			removeTagFromParent(displayMappings, doc.FindElements("//displayMapping"), "attributeCode", attibutesCodes)
 		}
 
 		//remove autonumbering
 		autonumbering := doc.FindElement("//autonumbering")
 		if autonumbering != nil {
-			removeTag(autonumbering, doc.FindElements("//attributeAutonumbering"), "code", attibutesCodes)
+			removeTagFromParent(autonumbering, doc.FindElements("//attributeAutonumbering"), "code", attibutesCodes)
 		}
 
 		//remove audit
 		audit := doc.FindElement("//audit")
 		if audit != nil {
-			removeTag(audit, doc.FindElements("//audit/attribute"), "code", attibutesCodes)
+			removeTagFromParent(audit, doc.FindElements("//audit/attribute"), "code", attibutesCodes)
 
 			auditElements := audit.ChildElements()
 			if len(auditElements) == 0 {
@@ -147,7 +158,7 @@ func FilterObjectAtributes(xogfile XogDriverFile) bool {
 			//remove links
 			object.RemoveChild(links)
 		} else {
-			removeTag(links, doc.FindElements("//links/link"), "code", linksCodes)
+			removeTagFromParent(links, doc.FindElements("//links/link"), "code", linksCodes)
 		}
 
 		actions := doc.FindElement("//actions")
@@ -155,7 +166,7 @@ func FilterObjectAtributes(xogfile XogDriverFile) bool {
 			//remove actions
 			object.RemoveChild(actions)
 		} else {
-			removeTag(actions, doc.FindElements("//actions/action"), "code", actionsCodes)
+			removeTagFromParent(actions, doc.FindElements("//actions/action"), "code", actionsCodes)
 		}
 	}
 
@@ -167,9 +178,9 @@ func SingleView(viewCode string, copyToView string) {
 	content := root.SelectElement("contentPack")
 	views := content.SelectElement("views")
 
-	removeTag(views, doc.FindElements("//property"), "code", viewCode)
-	removeTag(views, doc.FindElements("//filter"), "code", viewCode)
-	removeTag(views, doc.FindElements("//list"), "code", viewCode)
+	removeTagFromParent(views, doc.FindElements("//property"), "code", viewCode)
+	removeTagFromParent(views, doc.FindElements("//filter"), "code", viewCode)
+	removeTagFromParent(views, doc.FindElements("//list"), "code", viewCode)
 
 	if copyToView != "" {
 		for _, e := range views.ChildElements() {
@@ -194,7 +205,7 @@ func SingleView(viewCode string, copyToView string) {
 		propertySet.RemoveChild(propertySetUpdate)
 	} else {
 		propertySet.RemoveChild(propertySetCreate)
-		removeTag(propertySetUpdate, doc.FindElements("//update/view"), "code", viewCode)
+		removeTagFromParent(propertySetUpdate, doc.FindElements("//update/view"), "code", viewCode)
 	}
 
 }
@@ -264,108 +275,182 @@ func RemoveUnnecessaryTags(action string) bool {
 func MergeViews(xogfile XogDriverFile, sourcePath string, targetPath string) (bool, string) {
 	sourceDoc := etree.NewDocument()
 	if err := sourceDoc.ReadFromFile(sourcePath); err != nil {
-		return false, "\033[91mERROR-2\033[0m"
+		//trying to merge views and source view file does not exists
+		return false, "\033[91mERRO-04\033[0m"
 	}
 	targetDoc := etree.NewDocument()
 	if err := targetDoc.ReadFromFile(targetPath); err != nil {
-		return false, "\033[91mERROR-2\033[0m"
+		//trying to merge views and target view file does not exists
+		return false, "\033[91mERRO-05\033[0m"
 	}
 
-	viewFieldDescriptorCodes := ""
-	for _, i := range xogfile.Includes {
-		viewFieldDescriptorCodes += i.Code + ";"
-	}
+	status := false
+	message := "\033[93WARNING\033[0m"
 
-	//remove source unnecessary attributes
-	for _, e := range sourceDoc.FindElements("//viewFieldDescriptor") {
-		code := e.SelectAttrValue("attributeCode", "")
-		if !strings.Contains(viewFieldDescriptorCodes, code) {
-			parent := e.Parent()
-			parent.RemoveChild(e)
-		}
-	}
-
-	var viewType = ""
-	includedNewSection := false
-
-	for _, i := range xogfile.Includes {
-		//Get attribute information from source
-		sourceViewFieldDescriptorElement := sourceDoc.FindElement("//viewFieldDescriptor[@attributeCode='" + i.Code + "']")
-
-		if sourceViewFieldDescriptorElement != nil {
-			sourceColumnElement := sourceViewFieldDescriptorElement.Parent()
-			sourceSectionElement := sourceColumnElement.Parent()
-			sourceSectionSequenceAttrValue := sourceSectionElement.SelectAttrValue("sequence", "")
-
-			//Include attribute in target
-			targetSectionElement := targetDoc.FindElement("//section[@sequence='" + sourceSectionSequenceAttrValue + "']")
-			if targetSectionElement != nil {
-				sourceColumnSequenceAttrValue := sourceColumnElement.SelectAttrValue("sequence", "")
-				targetColumnElement := targetSectionElement.FindElement("//column[@sequence='" + sourceColumnSequenceAttrValue + "']")
-				if targetColumnElement != nil {
-					if i.InsertAfter == "" && i.InsertBefore == "" {
-						targetColumnElement.AddChild(sourceViewFieldDescriptorElement)
-					} else {
-						//get all target column elements
-						targetColumnElements := targetColumnElement.ChildElements()
-						//remove elements from column
-						removeTag(targetColumnElement, targetColumnElement.ChildElements(), "attributeCode", "")
-						//insert elements in order
-						for _, e := range targetColumnElements {
-							if i.InsertBefore == e.SelectAttrValue("attributeCode", "") {
-								targetColumnElement.AddChild(sourceViewFieldDescriptorElement)
-							}
-							targetColumnElement.AddChild(e)
-							if i.InsertAfter == e.SelectAttrValue("attributeCode", "") {
-								targetColumnElement.AddChild(sourceViewFieldDescriptorElement)
-							}
-						}
-					}
-				} else {
-					//insert column from source
-					targetSectionElement.AddChild(sourceColumnElement)
-				}
-			} else {
-				//insert section from source
-				viewType = sourceSectionElement.Parent().Tag
-				targetViewElement := targetDoc.FindElement("//" + viewType)
-				targetViewElement.AddChild(sourceSectionElement)
-				includedNewSection = true
+	//process replace action
+	for _, s := range xogfile.Sections {
+		if s.Action == "replace" {
+			status, message = processSection(s, targetDoc, sourceDoc)
+			if !status {
+				return status, message
 			}
 		}
 	}
 
-	//change sections to the correct order if a new one was included
-	if includedNewSection {
-		targetViewElement := targetDoc.FindElement("//" + viewType)
-		targetViewElements := targetViewElement.ChildElements()
-		//Remove all child tags
-		for _, e := range targetViewElements {
-			targetViewElement.RemoveChild(e)
-		}
-		//Include tags in the correct order - sections
-		for _, e := range targetViewElements {
-			if e.Tag == "section" {
-				targetViewElement.AddChild(e)
+	//process update actions
+	for _, s := range xogfile.Sections {
+		if s.Action == "update" {
+			status, message = processSection(s, targetDoc, sourceDoc)
+			if !status {
+				return status, message
 			}
 		}
-		//Include tags in the correct order - nls
-		for _, e := range targetViewElements {
-			if e.Tag == "nls" {
-				targetViewElement.AddChild(e)
+	}
+
+	//process remove action
+	for _, s := range xogfile.Sections {
+		if s.Action == "remove" {
+			status, message = processSection(s, targetDoc, sourceDoc)
+			if !status {
+				return status, message
 			}
 		}
-		//Include tags in the correct order - others
-		for _, e := range targetViewElements {
-			if e.Tag != "section" && e.Tag != "nls" {
-				targetViewElement.AddChild(e)
+	}
+
+	//process insert action
+	for _, s := range xogfile.Sections {
+		if s.Action == "insert" {
+			status, message = processSection(s, targetDoc, sourceDoc)
+			if !status {
+				return status, message
 			}
 		}
+	}
+
+	//update target sections sequence value
+	i := 1
+	for _, s := range targetDoc.FindElements("//section") {
+		s.CreateAttr("sequence", strconv.Itoa(i))
+		i += 1
 	}
 
 	targetDoc.Indent(4)
 	if err := targetDoc.WriteToFile(sourcePath); err != nil {
 		panic(err)
+	}
+	return status, message
+}
+
+func processSection(s XogViewSection, targetDoc *etree.Document, sourceDoc *etree.Document) (bool, string) {
+	var sourceSection *etree.Element
+	if s.Action != "remove" {
+		sourceSection = sourceDoc.FindElement("//section[" + s.SourceSectionPosition + "]")
+	}
+
+	if sourceSection == nil {
+		if s.Action != "remove" {
+			//invalid SourceSectionPosition
+			return false, "\033[91mERRO-08\033[0m"
+		}
+	} else {
+		//get all attributes codes from source section
+		var sourceSectionAttributesCodes []string
+		if len(s.Attributes) > 0 {
+			for _, a := range s.Attributes {
+				sourceSectionAttributesCodes = append(sourceSectionAttributesCodes, a.Code)
+			}
+			//remove unnecessary attributes from source section
+			removeTags(sourceSection.FindElements("//viewFieldDescriptor"), "attributeCode", strings.Join(sourceSectionAttributesCodes, ";"))
+		} else {
+			elems := sourceSection.FindElements("//viewFieldDescriptor")
+			if elems != nil {
+				for _, e := range elems {
+					sourceSectionAttributesCodes = append(sourceSectionAttributesCodes, e.SelectAttrValue("attributeCode", ""))
+				}
+			}
+		}
+
+		//remove attributes in target that will be included from source
+		for i := range sourceSectionAttributesCodes {
+			element := targetDoc.FindElement("//viewFieldDescriptor[@attributeCode='" + sourceSectionAttributesCodes[i] + "']")
+			if element != nil {
+				parent := element.Parent()
+				parent.RemoveChild(element)
+			}
+		}
+
+	}
+
+	targetSection := targetDoc.FindElement("//section[" + s.TargetSectionPosition + "]")
+	if targetSection == nil {
+		//invalid TargetSectionPosition for replace or update view
+		if s.Action == "replace" || s.Action == "update" || s.Action == "remove" {
+			return false, "\033[91mERRO-07\033[0m"
+		}
+	}
+
+	switch s.Action {
+	case "remove":
+		parent := targetSection.Parent()
+		parent.RemoveChild(targetSection)
+	case "insert":
+		if targetSection == nil {
+			//If there is no section for TargetSectionPosition insert section as last one
+			targetSection = targetDoc.FindElement("//nls[1]")
+		}
+		parent := targetSection.Parent()
+		parent.InsertChild(targetSection, sourceSection)
+	case "replace":
+		parent := targetSection.Parent()
+		parent.InsertChild(targetSection, sourceSection)
+		parent.RemoveChild(targetSection)
+	case "update":
+		if len(s.Attributes) <= 0 {
+			return false, "\033[91mERRO-09\033[0m"
+		}
+
+		columnLeft := targetSection.FindElement("//column[@sequence='1']")
+		if columnLeft == nil {
+			//Create column if it does not exists
+			columnLeft = targetSection.CreateElement("<column sequence='1' />")
+		}
+		columnRight := targetSection.FindElement("//column[@sequence='2']")
+		if columnRight == nil {
+			//Create column if it does not exists
+			columnRight = targetSection.CreateElement("<column sequence='2' />")
+		}
+
+		for _, a := range s.Attributes {
+			if !a.Remove {
+				attributeElement := sourceSection.FindElement("//viewFieldDescriptor[@attributeCode='" + a.Code + "']")
+				var targetAttribute *etree.Element
+				if a.InsertBefore != "" {
+					targetAttribute = targetSection.FindElement("//viewFieldDescriptor[@attributeCode='" + a.InsertBefore + "']")
+					if targetAttribute == nil {
+						return false, "\033[91mERRO-11\033[0m"
+					}
+				}
+				switch a.Column {
+				case "left":
+					if a.InsertBefore == "" {
+						columnLeft.AddChild(attributeElement)
+					} else {
+						columnLeft.InsertChild(targetAttribute, attributeElement)
+					}
+				case "right":
+					if a.InsertBefore == "" {
+						columnRight.AddChild(attributeElement)
+					} else {
+						columnRight.InsertChild(targetAttribute, attributeElement)
+					}
+				default:
+					return false, "\033[91mERRO-10\033[0m"
+				}
+			}
+		}
+	default:
+		//trying to merge views erro because of an invalid action at section tag
+		return false, "\033[91mERRO-06\033[0m"
 	}
 
 	return true, "\033[92mSUCCESS\033[0m"
@@ -373,8 +458,8 @@ func MergeViews(xogfile XogDriverFile, sourcePath string, targetPath string) (bo
 
 func Validate(path string) (bool, string) {
 	if initStatus := initDoc(path); initStatus == false {
-		//ERROR-0: Reading file does not exist
-		return false, "\033[91mERROR-0\033[0m"
+		//ERRO-00: Reading file does not exist
+		return false, "\033[91mERRO-00\033[0m"
 	}
 
 	statusElement := doc.FindElement("//XOGOutput/Status")
@@ -403,8 +488,8 @@ func Validate(path string) (bool, string) {
 			status = false
 		}
 	} else {
-		//ERROR-1: Output file does not have the XOGOutput Status tag
-		message = "\033[91mERROR-1\033[0m"
+		//ERRO-01: Output file does not have the XOGOutput Status tag
+		message = "\033[91mERRO-01\033[0m"
 		status = false
 	}
 
