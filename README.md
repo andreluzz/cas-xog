@@ -138,6 +138,8 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
 TODO
 ----
 * Delete views using complete="true" in view propertySet
+* Create a way of read all xml files taht can be used as xogDriver and show a list to the user to choose
+* Insert a new tag action in views for reading and writing actions
 
 
 License
