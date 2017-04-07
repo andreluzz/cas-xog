@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"os"
 )
 
 type XogRead struct {
@@ -101,15 +102,33 @@ func main() {
 
 func loadXogDriverFile() {
 	//Define xog driver path
-	xogDriverPath := "xogDriver.xml"
+	var envIndex = 0
+	xogDriverPath := "./drivers/"
+	xogDriverFileList, _ := ioutil.ReadDir(xogDriverPath)
+
+	if len(xogDriverFileList) == 0 {
+		fmt.Printf("\n[\033[91mXOG\033[0m] Drivers not found!\n")
+		os.Exit(0)
+	}
+
 	fmt.Println("")
-	fmt.Print("Enter XOG Driver path [xogDriver.xml]: ")
-	fmt.Scanln(&xogDriverPath)
+	fmt.Println("Available drivers:")
+	for k, f := range xogDriverFileList {
+		fmt.Printf("%d - %s\n", k, f.Name())
+	}
+	fmt.Print("Choose driver [0]: ")
+	var input string = "0"
+	fmt.Scanln(&input)
+
+	envIndex, _ = strconv.Atoi(input)
+
+	xogDriverFileName := xogDriverFileList[envIndex].Name()
+	xogDriverPathFile := xogDriverPath + xogDriverFileName
 
 	xog = new(XogDriver)
-	xml.Unmarshal(loadFile(xogDriverPath), xog)
+	xml.Unmarshal(loadFile(xogDriverPathFile), xog)
 
-	fmt.Printf("\n[XOG]\033[92mLoaded XOG Driver file\033[0m: %s\n", xogDriverPath)
+	fmt.Printf("\n[XOG]\033[92mLoaded XOG Driver file\033[0m: %s\n", xogDriverFileName)
 }
 
 func scanActions() bool {
