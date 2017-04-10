@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/beevik/etree"
 	"strconv"
 	"strings"
@@ -58,9 +59,6 @@ func Transform(xogfile XogDriverFile, path string) bool {
 	if len(xogfile.Includes) > 0 && xogfile.Type == "objects" {
 		objectFiltered = FilterObjectAtributes(xogfile)
 	}
-	if len(xogfile.Includes) > 0 && xogfile.Type == "menus" {
-		menuFiltered = FilterMenuItems(xogfile)
-	}
 
 	xogOutputElement := doc.FindElement("//XOGOutput")
 	if xogOutputElement != nil {
@@ -73,37 +71,6 @@ func Transform(xogfile XogDriverFile, path string) bool {
 	}
 
 	return tagsRemoved || partitionReplaced || xogfile.SingleView || objectFiltered || menuFiltered
-}
-
-func FilterMenuItems(xogfile XogDriverFile) bool {
-	menu := doc.FindElement("//menu")
-	sectionsCodes := ""
-	linksCodes := ""
-	var cleanSectionLinks []string
-
-	for _, i := range xogfile.Includes {
-		switch i.Type {
-		case "menuSection":
-			sectionsCodes += i.Code + ";"
-		case "menuLink":
-			linksCodes += i.Code + ";"
-			sectionsCodes += i.SectionCode + ";"
-			cleanSectionLinks = append(cleanSectionLinks, i.SectionCode)
-		}
-	}
-
-	if menu != nil {
-		//remove unnecessary sections
-		removeTagFromParent(menu, doc.FindElements("//section"), "code", sectionsCodes)
-
-		//remove unnecessary links
-		for index := range cleanSectionLinks {
-			section := doc.FindElement("//section[@code='" + cleanSectionLinks[index] + "']")
-			removeTagFromParent(section, doc.FindElements("//section[@code='"+cleanSectionLinks[index]+"']/link"), "pageCode", linksCodes)
-		}
-	}
-
-	return true
 }
 
 func FilterObjectAtributes(xogfile XogDriverFile) bool {
@@ -272,6 +239,92 @@ func RemoveUnnecessaryTags(action string) bool {
 	return transf
 }
 
+func MergeMenus(xogfile XogDriverFile, sourcePath string, targetPath string) (bool, string) {
+	sourceDoc := etree.NewDocument()
+	if err := sourceDoc.ReadFromFile(sourcePath); err != nil {
+		//trying read source file that does not exists
+		return false, "\033[91mERRO-04\033[0m"
+	}
+	targetDoc := etree.NewDocument()
+	if err := targetDoc.ReadFromFile(targetPath); err != nil {
+		//trying read target file that does not exists
+		return false, "\033[91mERRO-05\033[0m"
+	}
+
+	targetMenuElement := targetDoc.FindElement("//menu")
+
+	//process menus
+	for _, m := range xogfile.Menus {
+		sourceSectionElement := sourceDoc.FindElement("//menu/section[@code='" + m.Code + "']")
+		targetSectionElement := targetMenuElement.FindElement("//section[" + strconv.Itoa(m.TargetPosition) + "]")
+
+		switch m.Action {
+		case "insert":
+			if m.TargetPosition == 0 || targetSectionElement == nil {
+				targetMenuElement.AddChild(sourceSectionElement)
+			} else {
+				targetMenuElement.InsertChild(targetSectionElement, sourceSectionElement)
+			}
+		case "update":
+			targetSectionElement = targetMenuElement.FindElement("//section[@code='" + m.Code + "']")
+			if targetSectionElement == nil {
+				//invalid target position for update at menu tag
+				return false, "\033[91mERRO-16\033[0m"
+			}
+			if len(m.Links) <= 0 {
+				//lacking link tag to update menu
+				return false, "\033[91mERRO-17\033[0m"
+			}
+			//insert the links inside the section
+			for _, l := range m.Links {
+				sourceLinkElement := sourceSectionElement.FindElement("//link[@code='" + l.Code + "']")
+				targetLinkElement := targetSectionElement.FindElement("//link[" + strconv.Itoa(l.TargetPosition) + "]")
+				if targetLinkElement == nil {
+					targetSectionElement.AddChild(sourceLinkElement)
+				} else {
+					targetSectionElement.InsertChild(targetLinkElement, sourceLinkElement)
+				}
+			}
+			// update section links position value
+			i := 1
+			for _, s := range targetSectionElement.FindElements("//link") {
+				s.CreateAttr("position", strconv.Itoa(i))
+				i += 1
+			}
+		case "replace":
+			targetSectionElement = targetMenuElement.FindElement("//section[@code='" + m.Code + "']")
+			if targetSectionElement == nil {
+				//cannot replace a section that does not exist in target
+				return false, "\033[91mERRO-18\033[0m"
+			}
+			if m.TargetPosition != 0 {
+				//If attribute targetPosition exists change the position of the section that is being replaced
+				targetPositionElement := targetMenuElement.FindElement("//section[" + strconv.Itoa(m.TargetPosition) + "]")
+				targetMenuElement.InsertChild(targetPositionElement, sourceSectionElement)
+			} else {
+				targetMenuElement.InsertChild(targetSectionElement, sourceSectionElement)
+			}
+			targetMenuElement.RemoveChild(targetSectionElement)
+		default:
+			//invalid action at menu tag
+			return false, "\033[91mERRO-15\033[0m"
+		}
+	}
+
+	// update section links position value
+	i := 1
+	for _, s := range targetMenuElement.FindElements("//section") {
+		s.CreateAttr("position", strconv.Itoa(i))
+		i += 1
+	}
+
+	targetDoc.Indent(4)
+	if err := targetDoc.WriteToFile(sourcePath); err != nil {
+		panic(err)
+	}
+	return true, "\033[92mSUCCESS\033[0m"
+}
+
 func MergeViews(xogfile XogDriverFile, sourcePath string, targetPath string) (bool, string) {
 	sourceDoc := etree.NewDocument()
 	if err := sourceDoc.ReadFromFile(sourcePath); err != nil {
@@ -287,7 +340,7 @@ func MergeViews(xogfile XogDriverFile, sourcePath string, targetPath string) (bo
 	status := false
 	message := "\033[93WARNING\033[0m"
 
-	//process replace action
+	//process replace
 	for _, s := range xogfile.Sections {
 		if s.Action == "replace" {
 			status, message = processSection(s, targetDoc, sourceDoc)
@@ -297,7 +350,7 @@ func MergeViews(xogfile XogDriverFile, sourcePath string, targetPath string) (bo
 		}
 	}
 
-	//process update actions
+	//process update
 	for _, s := range xogfile.Sections {
 		if s.Action == "update" {
 			status, message = processSection(s, targetDoc, sourceDoc)
@@ -307,7 +360,7 @@ func MergeViews(xogfile XogDriverFile, sourcePath string, targetPath string) (bo
 		}
 	}
 
-	//process remove action
+	//process remove
 	for _, s := range xogfile.Sections {
 		if s.Action == "remove" {
 			status, message = processSection(s, targetDoc, sourceDoc)
@@ -317,13 +370,21 @@ func MergeViews(xogfile XogDriverFile, sourcePath string, targetPath string) (bo
 		}
 	}
 
-	//process insert action
+	//process insert
 	for _, s := range xogfile.Sections {
 		if s.Action == "insert" {
 			status, message = processSection(s, targetDoc, sourceDoc)
 			if !status {
 				return status, message
 			}
+		}
+	}
+
+	//process tag action
+	for _, a := range xogfile.Actions {
+		status, message = processAction(a, targetDoc, sourceDoc)
+		if !status {
+			return status, message
 		}
 	}
 
@@ -339,6 +400,45 @@ func MergeViews(xogfile XogDriverFile, sourcePath string, targetPath string) (bo
 		panic(err)
 	}
 	return status, message
+}
+
+func processAction(a XogViewAction, targetDoc *etree.Document, sourceDoc *etree.Document) (bool, string) {
+	fmt.Printf("\n[processAction] action: %s - group: %s - insertBefor: %s - remove: %t", a.Code, a.GroupCode, a.InsertBefore, a.Remove)
+
+	sourceGroup := sourceDoc.FindElement("//actions/group[@code='" + a.GroupCode + "']")
+
+	if sourceGroup == nil {
+		//Group code does not exist in source environment view
+		return false, "\033[91mERRO-12\033[0m"
+	}
+
+	targetGroup := targetDoc.FindElement("//actions/group[@code='" + a.GroupCode + "']")
+
+	if sourceGroup == nil {
+		//Group code does not exist in target environment view
+		return false, "\033[91mERRO-13\033[0m"
+	}
+
+	if a.Remove {
+		action := targetGroup.FindElement("//action[@code='" + a.Code + "']")
+		if action == nil {
+			//Cannot remove action because there is no match code in target environment
+			return false, "\033[91mERRO-14\033[0m"
+		}
+		targetGroup.RemoveChild(action)
+	} else {
+		var targetAttribute *etree.Element
+		if a.InsertBefore != "" {
+			targetAttribute = targetGroup.FindElement("//action[@code='" + a.InsertBefore + "']")
+		}
+		if a.InsertBefore == "" || targetAttribute == nil {
+			targetAttribute = targetGroup.FindElement("//nls[1]")
+		}
+		attributeElement := sourceGroup.FindElement("//action[@code='" + a.Code + "']")
+		targetGroup.InsertChild(targetAttribute, attributeElement)
+	}
+
+	return true, "\033[92mSUCCESS\033[0m"
 }
 
 func processSection(s XogViewSection, targetDoc *etree.Document, sourceDoc *etree.Document) (bool, string) {
@@ -477,8 +577,13 @@ func Validate(path string) (bool, string) {
 			//validate warning
 			errorInformationElement := doc.FindElement("//ErrorInformation/Severity")
 			if errorInformationElement != nil {
-				message = "\033[93mWARNING\033[0m"
-				status = false
+				if errorInformationElement.Text() == "WARNING" {
+					status = true
+					message = "\033[93mWARNING\033[0m"
+				} else {
+					status = false
+					message = "\033[91m" + errorInformationElement.Text() + "\033[0m"
+				}
 			} else {
 				message = "\033[92m" + s + "\033[0m"
 				status = true

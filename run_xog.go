@@ -4,10 +4,10 @@ import (
 	"encoding/xml"
 	"fmt"
 	"io/ioutil"
+	"os"
 	"strconv"
 	"strings"
 	"time"
-	"os"
 )
 
 type XogRead struct {
@@ -15,6 +15,16 @@ type XogRead struct {
 		Type  string `xml:"type,attr"`
 		Value string `xml:"value"`
 	} `xml:"xogtype"`
+}
+
+type XogMenu struct {
+	Code           string `xml:"code,attr"`
+	Action         string `xml:"action,attr"`
+	TargetPosition int    `xml:"targetPosition,attr"`
+	Links          []struct {
+		Code           string `xml:"code,attr"`
+		TargetPosition int    `xml:"targetPosition,attr"`
+	} `xml:"link"`
 }
 
 type XogViewSection struct {
@@ -29,6 +39,13 @@ type XogViewSection struct {
 	} `xml:"attribute"`
 }
 
+type XogViewAction struct {
+	Code         string `xml:"code,attr"`
+	Remove       bool   `xml:"remove,attr"`
+	GroupCode    string `xml:"groupCode,attr"`
+	InsertBefore string `xml:"insertBefore,attr"`
+}
+
 type XogDriverFile struct {
 	Code            string           `xml:"code,attr"`
 	Path            string           `xml:"path,attr"`
@@ -36,11 +53,13 @@ type XogDriverFile struct {
 	ObjCode         string           `xml:"objectCode,attr"`
 	SingleView      bool             `xml:"singleView,attr"`
 	CopyToView      string           `xml:"copyToView,attr"`
-	ViewEnvTarget   int              `xml:"viewEnvTarget,attr"`
+	EnvTarget       string           `xml:"envTarget,attr"`
 	IgnoreReading   bool             `xml:"ignoreReading,attr"`
 	SourcePartition string           `xml:"sourcePartition,attr"`
 	TargetPartition string           `xml:"targetPartition,attr"`
 	Sections        []XogViewSection `xml:"section"`
+	Actions         []XogViewAction  `xml:"action"`
+	Menus           []XogMenu        `xml:"menu"`
 	Includes        []struct {
 		Type                  string `xml:"type,attr"`
 		Code                  string `xml:"code,attr"`
@@ -102,12 +121,12 @@ func main() {
 
 func loadXogDriverFile() {
 	//Define xog driver path
-	var envIndex = 0
-	xogDriverPath := "./drivers/"
+	var driverIndex = 0
+	xogDriverPath := "drivers/"
 	xogDriverFileList, _ := ioutil.ReadDir(xogDriverPath)
 
 	if len(xogDriverFileList) == 0 {
-		fmt.Printf("\n[\033[91mXOG\033[0m] Drivers not found!\n")
+		fmt.Printf("\n[XOG]\033[91mERROR\033[0m - Drivers not found!\n")
 		os.Exit(0)
 	}
 
@@ -120,15 +139,15 @@ func loadXogDriverFile() {
 	var input string = "0"
 	fmt.Scanln(&input)
 
-	envIndex, _ = strconv.Atoi(input)
+	driverIndex, _ = strconv.Atoi(input)
 
-	xogDriverFileName := xogDriverFileList[envIndex].Name()
+	xogDriverFileName := xogDriverFileList[driverIndex].Name()
 	xogDriverPathFile := xogDriverPath + xogDriverFileName
 
 	xog = new(XogDriver)
 	xml.Unmarshal(loadFile(xogDriverPathFile), xog)
 
-	fmt.Printf("\n[XOG]\033[92mLoaded XOG Driver file\033[0m: %s\n", xogDriverFileName)
+	fmt.Printf("\n[XOG]\033[92mLoaded XOG Driver file\033[0m: %s\n", xogDriverPathFile)
 }
 
 func scanActions() bool {
@@ -166,7 +185,7 @@ func scanActions() bool {
 	case "x":
 		return true
 	default:
-		fmt.Printf("\n[\033[91mError\033[0m] Action not implemented!\n")
+		fmt.Printf("\n[XOG]\033[91mERROR\033[0m - Action not implemented!\n")
 	}
 
 	elapsed := time.Since(start)

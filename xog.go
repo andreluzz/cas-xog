@@ -6,6 +6,7 @@ import (
 	"github.com/beevik/etree"
 	"os"
 	"os/exec"
+	"strconv"
 	"strings"
 )
 
@@ -135,9 +136,9 @@ func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
 		inputPath := inputDir + xogfileCompletePath
 		outputPath := outputDir + xogfileCompletePath
 
-		//Para arquivos que estão sendo ignorados dos processos de leitura vamos escrever utilizando os arquivos da pasta "_extra"
+		//Para arquivos que estão sendo ignorados dos processos de leitura vamos escrever utilizando os arquivos da pasta "extra"
 		if xogfile.IgnoreReading && action == "write" {
-			inputPath = "_extra/" + xogfileCompletePath
+			inputPath = "extra/" + xogfileCompletePath
 		}
 
 		if xogfile.IgnoreReading && action != "write" {
@@ -150,8 +151,8 @@ func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
 			}
 
 			validatedWriteEnvironment := true
-			//validate if viewEnvTarget is defined for the same environment select to write the XOGs
-			if action == "write" && xogfile.Type == "views" && xogfile.SingleView && len(xogfile.Sections) > 0 && xogfile.ViewEnvTarget != envIndex {
+			//validate if envTarget is defined for the same environment select to write the XOGs
+			if action == "write" && xogfile.EnvTarget != "" && xogfile.EnvTarget != strconv.Itoa(envIndex) {
 				validatedWriteEnvironment = false
 			}
 
@@ -168,22 +169,30 @@ func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
 				if Transform(xogfile, outputPath) {
 					transform = "\033[96mTRUE\033[0m"
 				}
-				if xogfile.Type == "views" && xogfile.SingleView && len(xogfile.Sections) > 0 {
-					//read file from view environment target
+				if xogfile.EnvTarget != "" && len(xogfile.Sections) > 0 || len(xogfile.Actions) > 0 || len(xogfile.Menus) > 0 {
+					//read file from target environment
 					tempOutputPath = outputDir + xogfile.Type + "/temp_" + xogfile.Path
 					if xogfile.TargetPartition != "" {
 						inputPath = inputDir + xogfile.Type + "/target_" + xogfile.Path
 					}
-					execCommand(xogfile.ViewEnvTarget, inputPath, tempOutputPath)
+					targetEnvironment, _ := strconv.Atoi(xogfile.EnvTarget)
+					execCommand(targetEnvironment, inputPath, tempOutputPath)
 					//Transform view to include the new attributes
 					Transform(xogfile, tempOutputPath)
-					_, statusMessage = MergeViews(xogfile, outputPath, tempOutputPath)
+					//Merge menus
+					if xogfile.Type == "menus" {
+						_, statusMessage = MergeMenus(xogfile, outputPath, tempOutputPath)
+					}
+					//Merge views
+					if xogfile.Type == "views" && xogfile.SingleView {
+						_, statusMessage = MergeViews(xogfile, outputPath, tempOutputPath)
+					}
 					os.Remove(tempOutputPath)
 				}
 			}
 
 			if !validatedWriteEnvironment {
-				//Trying to write view attributes readed from a different target environment
+				//Trying to write attributes readed from a different target environment
 				statusMessage = "\033[91mERRO-02\033[0m"
 			}
 
