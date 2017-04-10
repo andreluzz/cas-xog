@@ -17,4 +17,6 @@
 _read/
 _write/
 _debug/
-_extra/
+extra/
+drivers/
+xogEnv.xml
