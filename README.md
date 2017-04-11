@@ -4,6 +4,14 @@ Execute XOG files reading and wrinting in a more easy way
 This is a new easy way of creating reading and writing XOG files. Using a XOGDrive.xml file you can define with objects you would like to read and write.
 
 
+### How to use:
+
+1. Download the last stable executable release.
+2. Create a folder called "driver" with a the xogDriver xml file defining the objects you want to read and write.
+3. Create a file called xogEnv.xml, in the same folder of the cas-xog.exe, to define the environments connections configuration.
+4. Execute the cas-xog.exe and follow the instructions in the screen.
+
+
 ### Description of attributes for tag file:
 
 | TAG | Description |
