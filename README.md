@@ -27,10 +27,7 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
 | TAG | Description |
 | ------ | ------ |
 | code | Code of the attribute, link or action for the object |
-| type | Defines what are being readed (view: attribute) (object: attribute, link, action) (menu: menuSection, menuLink) |
-| sectionCode | Sets the code of the menu section. Required when type is menuLink |
-| linkPosition | Used to change the position of the link in the target. Available only if type is menuLink or menuSection |
-| targetSectionPosition | Used to change the position of the section in the target. Available only for file type menus |
+| type | Defines what are being readed: attribute, link, action |
 
 
 ### Description of attributes for tag menu:
