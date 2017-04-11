@@ -61,11 +61,8 @@ type XogDriverFile struct {
 	Actions         []XogViewAction  `xml:"action"`
 	Menus           []XogMenu        `xml:"menu"`
 	Includes        []struct {
-		Type                  string `xml:"type,attr"`
-		Code                  string `xml:"code,attr"`
-		SectionCode           string `xml:"sectionCode,attr"`
-		LinkPosition          string `xml:"linkPosition,attr"`
-		TargetSectionPosition string `xml:"targetSectionPosition,attr"`
+		Type string `xml:"type,attr"`
+		Code string `xml:"code,attr"`
 	} `xml:"include"`
 }
 
