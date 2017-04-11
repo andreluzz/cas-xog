@@ -12,7 +12,7 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
 | path | Path to the file to be written |
 | type | Type of file being read. Available: objects, views, portlets, pages, processes, lookups, groups, menus |
 | objectCode | Field to set the object code for views, customobjectinstances |
-| ignoreReading | Sets whether to ignore the read action for this file. The file must be created manually in the '_extra/type' so it can be writen |
+| ignoreReading | Sets whether to ignore the read action for this file. The file must be created manually in the folder 'extra/type' so it can be writen |
 | sourcePartition | Used to define which partition we will read |
 | targetPartition | Replace the partition code in the writing file, it is mandatory to use the sourcePartition tag |
 | singleView | Remove all other views leaving only the one that has the same code that was filled |
