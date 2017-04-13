@@ -24,8 +24,8 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
 | sourcePartition | Used to define which partition we will read |
 | targetPartition | Replace the partition code in the writing file, it is mandatory to use the sourcePartition tag |
 | singleView | Remove all other views leaving only the one that has the same code that was filled |
-| copyToView | Defines the code where the view will be cloned to. Required to use in conjunction with 'singleView' |
 | envTarget | Defines the target environment to get the destination information. Only available to types: 'views' and 'menus' |
+| onlyStructure | Boolean used to read only the structure and deal with dependency problems. Only available to type 'lookups' |
 
 
 ### Description of attributes for tag include:
@@ -111,6 +111,7 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
 ```sh
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="1.0">
+    <file code="CAS_LIST_ENVIRONMENTS" path="cas_list_environments.xml" type="lookups" onlyStructure="true" />
     <file code="idea" path="idea.xml" type="objects">
         <include type="attribute" code="tst_def_compat" />
         <include type="action" code="tst_nova_acao_id" />
@@ -140,6 +141,7 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
     <file code="tst_mtz_compatCreate" singleView="true" path="mtz_compat_create.xml" type="views" objectCode="tst_mtz_compat" sourcePartition="partition10" targetPartition="partition20" copyToView="tst_mtz_compatProperty" />
     <file code="tst_proc_v1" path="tst_proc_v1.xml" type="processes" />
     <file code="cas_running_processes_detail" path="cas_running_processes_detail.xml" type="portlets" />
+    <file code="CAS_LIST_ENVIRONMENTS" path="cas_list_environments.xml" type="lookups" />
     <file code="application" path="cas_menu_app.xml" type="menu" ignoreReading="true" />
 </xogdriver>
 ```
