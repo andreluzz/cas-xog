@@ -49,10 +49,15 @@ func Transform(xogfile XogDriverFile, path string) bool {
 		header.CreateAttr("version", "8.0")
 	}
 
+	SimplifyLookupStructure := false
 	objectFiltered := false
 	menuFiltered := false
 	tagsRemoved := RemoveUnnecessaryTags(xogfile.Type)
 	partitionReplaced := ReplacePartition(xogfile.SourcePartition, xogfile.TargetPartition)
+	if xogfile.Type == "lookups" && xogfile.OnlyStructure {
+		LookupOnlyStructure()
+		SimplifyLookupStructure = true
+	}
 	if xogfile.SingleView && xogfile.Type == "views" {
 		SingleView(xogfile.Code, xogfile.CopyToView)
 	}
@@ -70,7 +75,31 @@ func Transform(xogfile XogDriverFile, path string) bool {
 		panic(err)
 	}
 
-	return tagsRemoved || partitionReplaced || xogfile.SingleView || objectFiltered || menuFiltered
+	return tagsRemoved || partitionReplaced || xogfile.SingleView || objectFiltered || menuFiltered || SimplifyLookupStructure
+}
+
+func LookupOnlyStructure() {
+	lookupElement := doc.FindElement("//dynamicLookup")
+
+	lookupElement.CreateAttr("hiddenAttributeName", "id")
+	lookupElement.CreateAttr("objectCode", "")
+	lookupElement.CreateAttr("sortAttributeName", "id")
+	lookupElement.CreateAttr("sortDirection", "asc")
+
+	lookupElement.RemoveChild(lookupElement.FindElement("//nsql"))
+	lookupElement.RemoveChild(lookupElement.FindElement("//displayedSuggestionAttributes"))
+	lookupElement.RemoveChild(lookupElement.FindElement("//searchedSuggestionAttributes"))
+	lookupElement.RemoveChild(lookupElement.FindElement("//browsePage"))
+
+	lookupStructureExampleDoc := etree.NewDocument()
+	if err := lookupStructureExampleDoc.ReadFromString(readDefault.Examples[0].Value); err != nil {
+		panic(err)
+	}
+
+	lookupElement.AddChild(lookupStructureExampleDoc.FindElement("//nsql"))
+	lookupElement.AddChild(lookupStructureExampleDoc.FindElement("//displayedSuggestionAttributes"))
+	lookupElement.AddChild(lookupStructureExampleDoc.FindElement("//searchedSuggestionAttributes"))
+	lookupElement.AddChild(lookupStructureExampleDoc.FindElement("//browsePage"))
 }
 
 func FilterObjectAtributes(xogfile XogDriverFile) bool {
@@ -218,7 +247,7 @@ func RemoveUnnecessaryTags(action string) bool {
 	root := doc.SelectElement("NikuDataBus")
 	content := root.SelectElement("contentPack")
 
-	//Remove unecessary removeTags
+	//Remove unecessary tags
 	if content != nil {
 		for i := range removeTags {
 			e := content.SelectElement(removeTags[i])

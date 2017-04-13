@@ -113,4 +113,37 @@
   </CustomObjectInstanceQuery>
 </NikuDataBus>]]></value>
     </xogtype>
+    <xogExample type="onlyStructureLookup">
+      <value><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_contentPack.xsd">
+    <Header action="write" externalSource="NIKU" objectType="contentPack" version="8.0"/>
+    <contentPack update="true">
+        <lookups update="true">
+            <dynamicLookup>
+                <nsql databaseId="Niku" dbVendor="all">SELECT @SELECT:u.id:Id@ FROM cmn_sec_users u WHERE 1 = 1</nsql>
+                <displayedSuggestionAttributes>
+                  <displayedSuggestionAttribute value="id"/>
+                </displayedSuggestionAttributes>
+                <searchedSuggestionAttributes>
+                  <searchedSuggestionAttribute value="id"/>
+                </searchedSuggestionAttributes>
+                <browsePage>
+                  <singleSelectPageTitles>
+                    <nls description="dummyLookup_01" languageCode="en" name="dummyLookup_01"/>
+                  </singleSelectPageTitles>
+                  <multiSelectPageTitles>
+                    <nls description="dummyLookup_01" languageCode="en" name="dummyLookup_01"/>
+                  </multiSelectPageTitles>
+                  <filter code="id" defaultValue="" order="1" widgetType="text">
+                    <nls description="" languageCode="en" name="id"/>
+                  </filter>
+                  <listColumn code="id" order="1" widgetType="text">
+                    <nls description="" languageCode="en" name="id"/>
+                  </listColumn>
+                </browsePage>
+            </dynamicLookup>
+        </lookups>
+    </contentPack>
+</NikuDataBus>]]></value>
+    </xogExample>
 </xogread>

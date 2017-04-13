@@ -107,6 +107,11 @@ func createReadFile(xogfile XogDriverFile, xogTypes map[string]string, createTar
 			status = "\033[91mFAILURE\033[0m"
 		}
 
+		if xogfile.Type == "views" || xogfile.Type == "customObjectInstances" {
+			if xogfile.ObjCode == "" {
+				status = "\033[91mFAILURE\033[0m"
+			}
+		}
 	}
 
 	return status, path
@@ -136,9 +141,18 @@ func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
 		inputPath := inputDir + xogfileCompletePath
 		outputPath := outputDir + xogfileCompletePath
 
-		//Para arquivos que estão sendo ignorados dos processos de leitura vamos escrever utilizando os arquivos da pasta "extra"
+		//When IgnoreReading is true write from folder 'extra'
 		if xogfile.IgnoreReading && action == "write" {
 			inputPath = "extra/" + xogfileCompletePath
+		}
+
+		//When OnlyStructure is true write and read the file with 'pre_' in the name
+		if xogfile.Type == "lookups" && xogfile.OnlyStructure {
+			if action == "write" {
+				inputPath = inputDir + xogfile.Type + "/pre_" + xogfile.Path
+			} else {
+				outputPath = outputDir + xogfile.Type + "/pre_" + xogfile.Path
+			}
 		}
 
 		if xogfile.IgnoreReading && action != "write" {

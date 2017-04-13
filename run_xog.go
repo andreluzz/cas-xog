@@ -15,6 +15,10 @@ type XogRead struct {
 		Type  string `xml:"type,attr"`
 		Value string `xml:"value"`
 	} `xml:"xogtype"`
+	Examples []struct {
+		Type  string `xml:"type,attr"`
+		Value string `xml:"value"`
+	} `xml:"xogExample"`
 }
 
 type XogMenu struct {
@@ -57,6 +61,7 @@ type XogDriverFile struct {
 	IgnoreReading   bool             `xml:"ignoreReading,attr"`
 	SourcePartition string           `xml:"sourcePartition,attr"`
 	TargetPartition string           `xml:"targetPartition,attr"`
+	OnlyStructure   bool             `xml:"onlyStructure,attr"`
 	Sections        []XogViewSection `xml:"section"`
 	Actions         []XogViewAction  `xml:"action"`
 	Menus           []XogMenu        `xml:"menu"`
