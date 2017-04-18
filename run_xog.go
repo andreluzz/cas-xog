@@ -128,7 +128,9 @@ func loadXogDriverFile() {
 	xogDriverFileList, _ := ioutil.ReadDir(xogDriverPath)
 
 	if len(xogDriverFileList) == 0 {
-		Debug("\n[XOG]\033[91mERROR\033[0m - Drivers not found!\n")
+		Debug("\n[XOG]\033[91mERROR\033[0m - XogDriver folders or file not found! Press any key to exit...\n")
+		scanexit := ""
+		fmt.Scanln(&scanexit)
 		os.Exit(0)
 	}
 
