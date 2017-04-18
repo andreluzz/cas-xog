@@ -6,9 +6,9 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
 
 ### How to use:
 
-1. Download the last stable release (cas-xog.exe and xogRead.xml).
-2. Create a folder called "driver" with a the xogDriver xml file defining the objects you want to read and write.
-3. Create a file called xogEnv.xml, in the same folder of the cas-xog.exe, to define the environments connections configuration.
+1. Download the last stable release (cas-xog.exe and xogRead.xml);
+2. Create a file called xogEnv.xml, in the same folder of the cas-xog.exe, to define the environments connections configuration;
+3. Create a folder called "drivers" with all xogDriver xml files defining the objects you want to read and write;
 4. Execute the cas-xog.exe and follow the instructions in the screen.
 
 
