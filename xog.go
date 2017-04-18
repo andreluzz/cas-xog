@@ -31,7 +31,7 @@ func createReadFilesXOG(xog *XogDriver) {
 			status, _ = createReadFile(xogfile, xogTypes, true)
 		}
 
-		fmt.Printf("\n[XOG]Created read file %03d/%03d - %s | to file: %s", i, total, status, path)
+		Debug("\n[XOG]Created read file %03d/%03d - %s | to file: %s", i, total, status, path)
 
 		i += 1
 	}
@@ -156,7 +156,7 @@ func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
 		}
 
 		if xogfile.IgnoreReading && action != "write" {
-			fmt.Printf("\n[XOG]Readed %03d/%03d - \033[93mIGNORED\033[0m | transform: NONE | to file: %s", i, total, outputPath)
+			Debug("\n[XOG]Readed %03d/%03d - \033[93mIGNORED\033[0m | transform: NONE | to file: %s", i, total, outputPath)
 		} else {
 			//check if dir exists
 			_, err1 := os.Stat(outputDir + xogfile.Type)
@@ -211,9 +211,9 @@ func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
 			}
 
 			if action != "write" {
-				fmt.Printf("\n[XOG]Readed %03d/%03d - %s | transform: %s | to file: %s", i, total, statusMessage, transform, outputPath)
+				Debug("\n[XOG]Readed %03d/%03d - %s | transform: %s | to file: %s", i, total, statusMessage, transform, outputPath)
 			} else {
-				fmt.Printf("\n[XOG]Writed %03d/%03d - %s | to file: %s", i, total, statusMessage, outputPath)
+				Debug("\n[XOG]Writed %03d/%03d - %s | to file: %s", i, total, statusMessage, outputPath)
 			}
 		}
 		i += 1

@@ -128,14 +128,14 @@ func loadXogDriverFile() {
 	xogDriverFileList, _ := ioutil.ReadDir(xogDriverPath)
 
 	if len(xogDriverFileList) == 0 {
-		fmt.Printf("\n[XOG]\033[91mERROR\033[0m - Drivers not found!\n")
+		Debug("\n[XOG]\033[91mERROR\033[0m - Drivers not found!\n")
 		os.Exit(0)
 	}
 
 	fmt.Println("")
 	fmt.Println("Available drivers:")
 	for k, f := range xogDriverFileList {
-		fmt.Printf("%d - %s\n", k, f.Name())
+		Debug("%d - %s\n", k, f.Name())
 	}
 	fmt.Print("Choose driver [0]: ")
 	var input string = "0"
@@ -149,7 +149,7 @@ func loadXogDriverFile() {
 	xog = new(XogDriver)
 	xml.Unmarshal(loadFile(xogDriverPathFile), xog)
 
-	fmt.Printf("\n[XOG]\033[92mLoaded XOG Driver file\033[0m: %s\n", xogDriverPathFile)
+	Debug("\n[XOG]\033[92mLoaded XOG Driver file\033[0m: %s\n", xogDriverPathFile)
 }
 
 func scanActions() bool {
@@ -164,7 +164,7 @@ func scanActions() bool {
 		fmt.Println("")
 		fmt.Println("Available environments:")
 		for k, e := range env.Environments {
-			fmt.Printf("%d - %s\n", k, e.Name)
+			Debug("%d - %s\n", k, e.Name)
 		}
 		fmt.Print("Choose environment [0]: ")
 		var input string = "0"
@@ -187,15 +187,15 @@ func scanActions() bool {
 	case "x":
 		return true
 	default:
-		fmt.Printf("\n[XOG]\033[91mERROR\033[0m - Action not implemented!\n")
+		Debug("\n[XOG]\033[91mERROR\033[0m - Action not implemented!\n")
 	}
 
 	elapsed := time.Since(start)
 
-	fmt.Printf("\n------------------------------")
-	fmt.Printf("\n#### Processing concluded ####")
-	fmt.Printf("\nExecuted in:  %s", elapsed)
-	fmt.Printf("\n------------------------------\n\n")
+	Debug("\n------------------------------")
+	Debug("\n#### Processing concluded ####")
+	Debug("\nExecuted in:  %s", elapsed)
+	Debug("\n------------------------------\n\n")
 
 	return false
 }

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/beevik/etree"
 	"strconv"
 	"strings"
@@ -432,8 +431,6 @@ func MergeViews(xogfile XogDriverFile, sourcePath string, targetPath string) (bo
 }
 
 func processAction(a XogViewAction, targetDoc *etree.Document, sourceDoc *etree.Document) (bool, string) {
-	fmt.Printf("\n[processAction] action: %s - group: %s - insertBefor: %s - remove: %t", a.Code, a.GroupCode, a.InsertBefore, a.Remove)
-
 	sourceGroup := sourceDoc.FindElement("//actions/group[@code='" + a.GroupCode + "']")
 
 	if sourceGroup == nil {
