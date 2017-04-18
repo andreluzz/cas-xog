@@ -50,7 +50,6 @@ func Transform(xogfile XogDriverFile, path string) bool {
 
 	SimplifyLookupStructure := false
 	objectFiltered := false
-	menuFiltered := false
 	tagsRemoved := RemoveUnnecessaryTags(xogfile.Type)
 	partitionReplaced := ReplacePartition(xogfile.SourcePartition, xogfile.TargetPartition)
 	if xogfile.Type == "lookups" && xogfile.OnlyStructure {
@@ -66,7 +65,10 @@ func Transform(xogfile XogDriverFile, path string) bool {
 
 	xogOutputElement := doc.FindElement("//XOGOutput")
 	if xogOutputElement != nil {
-		root.RemoveChild(xogOutputElement)
+		errorInformationElement := doc.FindElement("//ErrorInformation/Severity")
+		if errorInformationElement == nil {
+			root.RemoveChild(xogOutputElement)
+		}
 	}
 
 	doc.Indent(4)
@@ -74,7 +76,7 @@ func Transform(xogfile XogDriverFile, path string) bool {
 		panic(err)
 	}
 
-	return tagsRemoved || partitionReplaced || xogfile.SingleView || objectFiltered || menuFiltered || SimplifyLookupStructure
+	return tagsRemoved || partitionReplaced || xogfile.SingleView || objectFiltered || SimplifyLookupStructure
 }
 
 func LookupOnlyStructure() {

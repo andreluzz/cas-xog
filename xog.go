@@ -183,25 +183,27 @@ func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
 				if Transform(xogfile, outputPath) {
 					transform = "\033[96mTRUE\033[0m"
 				}
-				if xogfile.EnvTarget != "" && len(xogfile.Sections) > 0 || len(xogfile.Actions) > 0 || len(xogfile.Menus) > 0 {
-					//read file from target environment
-					tempOutputPath = outputDir + xogfile.Type + "/temp_" + xogfile.Path
-					if xogfile.TargetPartition != "" {
-						inputPath = inputDir + xogfile.Type + "/target_" + xogfile.Path
+				if xogfile.EnvTarget != "" {
+					if len(xogfile.Sections) > 0 || len(xogfile.Actions) > 0 || len(xogfile.Menus) > 0 {
+						//read file from target environment
+						tempOutputPath = outputDir + xogfile.Type + "/temp_" + xogfile.Path
+						if xogfile.TargetPartition != "" {
+							inputPath = inputDir + xogfile.Type + "/target_" + xogfile.Path
+						}
+						targetEnvironment, _ := strconv.Atoi(xogfile.EnvTarget)
+						execCommand(targetEnvironment, inputPath, tempOutputPath)
+						//Transform view to include the new attributes
+						Transform(xogfile, tempOutputPath)
+						//Merge menus
+						if xogfile.Type == "menus" {
+							_, statusMessage = MergeMenus(xogfile, outputPath, tempOutputPath)
+						}
+						//Merge views
+						if xogfile.Type == "views" && xogfile.SingleView {
+							_, statusMessage = MergeViews(xogfile, outputPath, tempOutputPath)
+						}
+						os.Remove(tempOutputPath)
 					}
-					targetEnvironment, _ := strconv.Atoi(xogfile.EnvTarget)
-					execCommand(targetEnvironment, inputPath, tempOutputPath)
-					//Transform view to include the new attributes
-					Transform(xogfile, tempOutputPath)
-					//Merge menus
-					if xogfile.Type == "menus" {
-						_, statusMessage = MergeMenus(xogfile, outputPath, tempOutputPath)
-					}
-					//Merge views
-					if xogfile.Type == "views" && xogfile.SingleView {
-						_, statusMessage = MergeViews(xogfile, outputPath, tempOutputPath)
-					}
-					os.Remove(tempOutputPath)
 				}
 			}
 
