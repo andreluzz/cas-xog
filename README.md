@@ -24,7 +24,7 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
 | sourcePartition | Used to define which partition we will read |
 | targetPartition | Replace the partition code in the writing file, it is mandatory to use the sourcePartition tag |
 | singleView | Remove all other views leaving only the one that has the same code that was filled |
-| envTarget | Defines the target environment to get the destination information. Only available to types: 'views' and 'menus' |
+| envTarget | Defines the target environment to get the destination information. Only available to types: 'views' and 'menus'. <br /> OBS.: For views use only when you need to deal with sections or actions |
 | onlyStructure | Boolean used to read only the structure and deal with dependency problems. Only available to type 'lookups' |
 
 
@@ -49,7 +49,7 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
 | targetPosition | Defines the position this section should be inserted in the menu |
 
 
-### Description of attributes for tag attribute:
+### Description of attributes for tag link:
 
 *Obs.: Available only for types: "menus" inside tag menu*
 
@@ -80,6 +80,18 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
 | column | Defines if the attribute should be placed in the left or right column. This attribute is required. |
 | insertBefore | Defines the code of the attribute in the target to use as reference for positioning. If not set, the attribute will be inserted at the end of the column |
 | remove | Optional attribute, if set as true remove this atribute from target environment. Only available for action update | 
+
+
+### Description of attributes for tag action:
+
+*Obs.: Available only for types: "views"*
+
+| TAG | Description |
+| ------ | ------ |
+| code | Code of the action |
+| groupCode | Defines the group code where is going to be included the action |
+| insertBefore | Defines the code of the action in the target to use as reference for positioning. If not set, the action will be inserted at the end |
+| remove | Optional attribute, if set as true remove this action from target environment | 
 
 
 ### Description of Errors:
