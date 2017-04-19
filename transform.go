@@ -17,6 +17,15 @@ func initDoc(path string) bool {
 	return true
 }
 
+func removeTagFromParentEqual(parent *etree.Element, elems []*etree.Element, attrCode string, viewCode string) {
+	for _, e := range elems {
+		code := e.SelectAttrValue(attrCode, "")
+		if code != viewCode {
+			parent.RemoveChild(e)
+		}
+	}
+}
+
 func removeTagFromParent(parent *etree.Element, elems []*etree.Element, attrCode string, codes string) {
 	for _, e := range elems {
 		code := e.SelectAttrValue(attrCode, "")
@@ -175,9 +184,9 @@ func SingleView(viewCode string, copyToView string) {
 	content := root.SelectElement("contentPack")
 	views := content.SelectElement("views")
 
-	removeTagFromParent(views, doc.FindElements("//property"), "code", viewCode)
-	removeTagFromParent(views, doc.FindElements("//filter"), "code", viewCode)
-	removeTagFromParent(views, doc.FindElements("//list"), "code", viewCode)
+	removeTagFromParentEqual(views, doc.FindElements("//property"), "code", viewCode)
+	removeTagFromParentEqual(views, doc.FindElements("//filter"), "code", viewCode)
+	removeTagFromParentEqual(views, doc.FindElements("//list"), "code", viewCode)
 
 	if copyToView != "" {
 		for _, e := range views.ChildElements() {
@@ -192,19 +201,6 @@ func SingleView(viewCode string, copyToView string) {
 			}
 		}
 	}
-
-	//remove unnecessary views from propertyset
-	propertySet := views.SelectElement("propertySet")
-	propertySetCreate := propertySet.SelectElement("create")
-	propertySetUpdate := propertySet.SelectElement("update")
-
-	if propertySetCreate.SelectAttrValue("code", "") == viewCode {
-		propertySet.RemoveChild(propertySetUpdate)
-	} else {
-		propertySet.RemoveChild(propertySetCreate)
-		removeTagFromParent(propertySetUpdate, doc.FindElements("//update/view"), "code", viewCode)
-	}
-
 }
 
 func ReplacePartition(source string, target string) bool {
