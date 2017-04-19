@@ -543,15 +543,20 @@ func processSection(s XogViewSection, targetDoc *etree.Document, sourceDoc *etre
 			return false, "\033[91mERRO-09\033[0m"
 		}
 
-		columnLeft := targetSection.FindElement("//column[@sequence='1']")
-		if columnLeft == nil {
-			//Create column if it does not exists
-			columnLeft = targetSection.CreateElement("<column sequence='1' />")
-		}
 		columnRight := targetSection.FindElement("//column[@sequence='2']")
 		if columnRight == nil {
 			//Create column if it does not exists
-			columnRight = targetSection.CreateElement("<column sequence='2' />")
+			columnRight = etree.NewElement("column")
+			columnRight.CreateAttr("sequence", "2")
+			nlsElement := targetSection.FindElement("//nls[1]")
+			targetSection.InsertChild(nlsElement, columnRight)
+		}
+		columnLeft := targetSection.FindElement("//column[@sequence='1']")
+		if columnLeft == nil {
+			//Create column if it does not exists
+			columnLeft = etree.NewElement("column")
+			columnLeft.CreateAttr("sequence", "1")
+			targetSection.InsertChild(columnRight, columnLeft)
 		}
 
 		for _, a := range s.Attributes {
