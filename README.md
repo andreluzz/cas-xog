@@ -180,6 +180,27 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
 ```
 
 
+Silent Mode
+----
+To use the silente mode call the cas-xog.exe passing command-line params
+
+#### Example:
+```sh
+cas-xog.exe -xogdriver=xogDriver.xml -create -read=0 -write=1
+```
+
+#### Description of Params:
+
+| Param | Description |
+| ----- | ----------- |
+| xogdriver | Defines the driver filename that you want to use. The file should be in the drivers folder. This param is required to use the silent mode|
+| create | If you use this param it will create the read xog files |
+| read | Defines environment from where it should read |
+| write | Defines environment to where it should write |
+
+
+
+
 TODO
 ----
 * Delete views using complete="true" in view propertySet
