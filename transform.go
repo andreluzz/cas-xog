@@ -266,6 +266,16 @@ func RemoveUnnecessaryTags(action string) bool {
 		}
 	}
 
+	if action == "groups" {
+		//remove members
+		members := doc.FindElement("//group/members")
+		if members != nil {
+			parent := members.Parent()
+			parent.RemoveChild(members)
+			transf = true
+		}
+	}
+
 	return transf
 }
 
