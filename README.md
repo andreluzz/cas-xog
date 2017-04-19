@@ -142,7 +142,9 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
     <file code="tst_proc_v1" path="tst_proc_v1.xml" type="processes" />
     <file code="cas_running_processes_detail" path="cas_running_processes_detail.xml" type="portlets" />
     <file code="CAS_LIST_ENVIRONMENTS" path="cas_list_environments.xml" type="lookups" />
-    <file code="application" path="cas_menu_app.xml" type="menu" ignoreReading="true" />
+    <file code="cas_xog_client_page" path="cas_xog_client_page.xml" type="pages"/>
+    <file code="strat_admin" path="strat_admin.xml" type="groups"/>
+    <file code="application" path="cas_menu_app.xml" type="menus" ignoreReading="true" />
 </xogdriver>
 ```
 
