@@ -374,7 +374,16 @@ func MergeViews(xogfile XogDriverFile, sourcePath string, targetPath string) (bo
 	}
 
 	status := false
-	message := "\033[93WARNING\033[0m"
+	message := "\033[93mWARNING\033[0m"
+
+	//get view from source and insert in target if it does not exists in target
+	targetView := targetDoc.FindElement("//views/*[@code='" + xogfile.Code + "']")
+	if targetView == nil {
+		sourceView := sourceDoc.FindElement("//views/*[@code='" + xogfile.Code + "']")
+		targetPropertySet := targetDoc.FindElement("//propertySet")
+		targetParent := targetPropertySet.Parent()
+		targetParent.InsertChild(targetPropertySet, sourceView)
+	}
 
 	//process replace
 	for _, s := range xogfile.Sections {
@@ -429,6 +438,44 @@ func MergeViews(xogfile XogDriverFile, sourcePath string, targetPath string) (bo
 	for _, s := range targetDoc.FindElements("//section") {
 		s.CreateAttr("sequence", strconv.Itoa(i))
 		i += 1
+	}
+
+	//update target propertySet including or replacing the view
+	sourcePropertySetElement := sourceDoc.FindElement("//propertySet")
+	if sourcePropertySetElement != nil {
+		sourcePropertySetViewElement := sourcePropertySetElement.FindElement("//view[@code='" + xogfile.Code + "']")
+		if sourcePropertySetViewElement != nil {
+			targetPropertySetElement := targetDoc.FindElement("//propertySet")
+			if targetPropertySetElement != nil {
+				var targetInsertBeforeViewElement *etree.Element
+
+				targetCurrentViewElement := targetPropertySetElement.FindElement("//view[@code='" + xogfile.Code + "']")
+
+				if xogfile.InsertBefore != "" {
+					targetInsertBeforeViewElement = targetPropertySetElement.FindElement("//view[@code='" + xogfile.InsertBefore + "']")
+				}
+
+				//if exists the element from insertBefore use it to define the position of the view
+				if targetInsertBeforeViewElement != nil {
+					parent := targetInsertBeforeViewElement.Parent()
+					parent.InsertChild(targetInsertBeforeViewElement, sourcePropertySetViewElement)
+				} else {
+					//if there is no insertBefore defined insert as the last one
+					parent := targetPropertySetElement.FindElement("//view[1]").Parent()
+					nlsElement := parent.FindElement("//nls[1]")
+					parent.InsertChild(nlsElement, sourcePropertySetViewElement)
+				}
+
+				//If the target already have an element with the same view code then we need to remove it
+				if targetCurrentViewElement != nil {
+					parent := targetCurrentViewElement.Parent()
+					parent.RemoveChild(targetCurrentViewElement)
+				}
+
+				status = true
+				message = "\033[92mSUCCESS\033[0m"
+			}
+		}
 	}
 
 	targetDoc.Indent(4)
