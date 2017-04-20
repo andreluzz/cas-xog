@@ -24,8 +24,9 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
 | sourcePartition | Used to define which partition we will read |
 | targetPartition | Replace the partition code in the writing file, it is mandatory to use the sourcePartition tag |
 | singleView | Remove all other views leaving only the one that has the same code that was filled |
-| envTarget | Defines the target environment to get the destination information. Only available to types: 'views' and 'menus'. <br /> OBS.: For views use only when you need to deal with sections or actions |
+| envTarget | Defines the target environment to get the destination information. Only available to types: 'views' and 'menus'. <br /> OBS.: This tag is required if singleView is defined as true |
 | onlyStructure | Boolean used to read only the structure and deal with dependency problems. Only available to type 'lookups' |
+| insertBefore | Defines the code of the view in the target to use as reference for positioning. If not set, the view will be inserted at the end. Only available for type 'views'. <br /> OBS.: If you want to keep the view current position you should define insertBefore with the same value as code |
 
 
 ### Description of attributes for tag include:
@@ -141,6 +142,7 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
         <action code="tst_nova_acao_id" groupCode="general" insertBefore="odf_copy_srctst_mtz_compat" />
         <action code="odf_copy_srctst_mtz_compat" groupCode="general" remove="true" />
     </file>
+    <file code="obj_teste.subpagina_03" path="obj_teste.xml" type="views" objectCode="obj_teste" sourcePartition="NIKU.ROOT" singleView="true" envTarget="1" />
     <file code="application" path="cas_menu_app.xml" type="menus" envTarget="1">
         <menu code="cas_tools" action="insert" targetPosition="2"/>
         <menu code="npt.projmgr" action="replace" />
@@ -150,7 +152,6 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
     </file>
     <file code="tst_mtz_compat" path="tst_mtz_compat.xml" type="objects" />
     <file code="*" path="tst_mtz_compat_all.xml" type="views" objectCode="tst_mtz_compat" />
-    <file code="tst_mtz_compatCreate" singleView="true" path="mtz_compat_create.xml" type="views" objectCode="tst_mtz_compat" sourcePartition="partition10" targetPartition="partition20" copyToView="tst_mtz_compatProperty" />
     <file code="tst_proc_v1" path="tst_proc_v1.xml" type="processes" />
     <file code="cas_running_processes_detail" path="cas_running_processes_detail.xml" type="portlets" />
     <file code="CAS_LIST_ENVIRONMENTS" path="cas_list_environments.xml" type="lookups" />
@@ -213,11 +214,11 @@ cas-xog.exe -xogdriver=xogDriver.xml -create -read=0 -write=1
 | write | Defines environment to where it should write |
 
 
-
-
 TODO
 ----
 * Delete views using complete="true" in view propertySet
+* Catch error when sigleView is true and envTarget is not defined
+
 
 License
 ----
