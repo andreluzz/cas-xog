@@ -526,7 +526,7 @@ func processSection(s XogViewSection, targetDoc *etree.Document, sourceDoc *etre
 	var sourceSection *etree.Element
 	if s.Action != "remove" {
 		if s.SourceSectionPosition == "" {
-			return false, "\033[91mERRO-19\033[0m"
+			return false, "\033[91mERRO-08\033[0m"
 		}
 		sourceSection = sourceDoc.FindElement("//section[" + s.SourceSectionPosition + "]")
 	}
