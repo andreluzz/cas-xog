@@ -24,7 +24,7 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
 | sourcePartition | Used to define which partition we will read |
 | targetPartition | Replace the partition code in the writing file, it is mandatory to use the sourcePartition tag |
 | singleView | Remove all other views leaving only the one that has the same code that was filled |
-| envTarget | Defines the target environment to get the destination information. Only available to types: 'views' and 'menus'. <br /> OBS.: This tag is required if singleView is defined as true |
+| envTarget | Defines the target environment to get the destination information. Only available to types: 'obs', 'views' and 'menus'. <br /> OBS.: This tag is required if singleView is defined as true |
 | onlyStructure | Boolean used to read only the structure and deal with dependency problems. Only available to type 'lookups' |
 | insertBefore | Defines the code of the view in the target to use as reference for positioning. If not set, the view will be inserted at the end. Only available for type 'views'. <br /> OBS.: If you want to keep the view current position you should define insertBefore with the same value as code |
 
@@ -95,6 +95,18 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
 | remove | Optional attribute, if set as true remove this action from target environment | 
 
 
+### Description of attributes for tag unit:
+
+*Obs.: Available only for types: "obs"*
+
+| TAG | Description |
+| ------ | ------ |
+| name | Name of the unit |
+| parentName | Name of the parent unit. If this tag is empty it will be inserted in the first level  |
+| removeUnitChilds | Optional attribute, if set as true remove this unit's childs | 
+| remove | Optional attribute, if set as true remove this unit from target OBS | 
+
+
 ### Description of Errors:
 
 | Code | Description |
@@ -118,6 +130,9 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
 | <code>ERRO-16</code> | Transform menus - cannot update a section that does not exist in target |
 | <code>ERRO-17</code> | Transform menus - lacking link tags to update menu |
 | <code>ERRO-18</code> | Transform menus - cannot replace a section that does not exist in target |
+| <code>ERRO-19</code> | Transform obs - wrong unit's parent name in target environment |
+| <code>ERRO-20</code> | Transform obs - cannot remove unit, name does not exist in target environment |
+| <code>ERRO-21</code> | Transform obs - wrong unit's name in source environment |
 
 
 ### XOG Driver example
@@ -157,6 +172,10 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
     <file code="CAS_LIST_ENVIRONMENTS" path="cas_list_environments.xml" type="lookups" />
     <file code="cas_xog_client_page" path="cas_xog_client_page.xml" type="pages"/>
     <file code="strat_admin" path="strat_admin.xml" type="groups"/>
+    <file code="resourcePool" path="resourcePool.xml" type="obs" envTarget="1">
+    	<unit name="Customer Unit 0" removeUnitChilds="true" />
+        <unit name="Customer Unit 1" parentName="Customer Unit 1" />
+    </file>
     <file code="application" path="cas_menu_app.xml" type="menus" ignoreReading="true" />
 </xogdriver>
 ```
