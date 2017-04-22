@@ -103,6 +103,15 @@
   </MenuQuery>
 </NikuDataBus>]]></value>
     </xogtype>
+    <xogtype type="obs">
+        <value><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
+  <Header version="8.0" action="read" objectType="obs" externalSource="NIKU"/>
+  <Query>
+    <Filter name="code" criteria="EQUALS" />
+  </Query>
+</NikuDataBus>]]></value>
+    </xogtype>
     <xogtype type="customObjectInstances">
       <value><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">

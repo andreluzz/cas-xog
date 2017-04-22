@@ -361,6 +361,71 @@ func MergeMenus(xogfile XogDriverFile, sourcePath string, targetPath string) (bo
 	return true, "\033[92mSUCCESS\033[0m"
 }
 
+func MergeOBS(xogfile XogDriverFile, sourcePath string, targetPath string) (bool, string) {
+	sourceDoc := etree.NewDocument()
+	if err := sourceDoc.ReadFromFile(sourcePath); err != nil {
+		//trying to merge views and source view file does not exists
+		return false, "\033[91mERRO-04\033[0m"
+	}
+	targetDoc := etree.NewDocument()
+	if err := targetDoc.ReadFromFile(targetPath); err != nil {
+		//trying to merge views and target view file does not exists
+		return false, "\033[91mERRO-05\033[0m"
+	}
+
+	//clean source - remove associated objects
+	for _, a := range sourceDoc.FindElements("//associatedObject") {
+		a.Parent().RemoveChild(a)
+	}
+	for _, a := range sourceDoc.FindElements("//UserSecurity") {
+		a.Parent().RemoveChild(a)
+	}
+
+	obs := targetDoc.FindElement("//obs")
+	obs.CreateAttr("complete", "true")
+
+	for _, u := range xogfile.Units {
+		targetParent := targetDoc.FindElement("//unit[@name='" + u.ParentName + "']")
+		if targetParent == nil {
+			//Wrong unit's parent name in target environment
+			return false, "\033[91mERRO-19\033[0m"
+		}
+
+		if u.Remove {
+			unit := targetParent.FindElement("//unit[@name='" + u.Name + "']")
+			if unit == nil {
+				//Cannot remove unit, name does not exist in target environment
+				return false, "\033[91mERRO-20\033[0m"
+			}
+			targetParent.RemoveChild(unit)
+		} else {
+			sourceParent := sourceDoc.FindElement("//unit[@name='" + u.ParentName + "']")
+			unit := sourceParent.FindElement("//unit[@name='" + u.Name + "']")
+			if unit == nil {
+				//Wrong unit's name in source environment
+				return false, "\033[91mERRO-21\033[0m"
+			}
+			targetAssociatedObject := targetParent.FindElement("./associatedObject[0]")
+			if targetAssociatedObject != nil {
+				targetParent.InsertChild(targetAssociatedObject, unit)
+			} else {
+				targetRights := targetParent.FindElement("./rights[0]")
+				if targetRights != nil {
+					targetParent.InsertChild(targetRights, unit)
+				} else {
+					targetParent.AddChild(unit)
+				}
+			}
+		}
+	}
+
+	targetDoc.Indent(4)
+	if err := targetDoc.WriteToFile(sourcePath); err != nil {
+		panic(err)
+	}
+	return true, "\033[92mSUCCESS\033[0m"
+}
+
 func MergeViews(xogfile XogDriverFile, sourcePath string, targetPath string) (bool, string) {
 	sourceDoc := etree.NewDocument()
 	if err := sourceDoc.ReadFromFile(sourcePath); err != nil {

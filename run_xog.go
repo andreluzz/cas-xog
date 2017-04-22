@@ -32,6 +32,12 @@ type XogMenu struct {
 	} `xml:"link"`
 }
 
+type XogUnit struct {
+	Name       string `xml:"name,attr"`
+	ParentName string `xml:"parentName,attr"`
+	Remove     bool   `xml:"remove,attr"`
+}
+
 type XogViewSection struct {
 	SourceSectionPosition string `xml:"sourceSectionPosition,attr"`
 	TargetSectionPosition string `xml:"targetSectionPosition,attr"`
@@ -67,6 +73,7 @@ type XogDriverFile struct {
 	Sections        []XogViewSection `xml:"section"`
 	Actions         []XogViewAction  `xml:"action"`
 	Menus           []XogMenu        `xml:"menu"`
+	Units           []XogUnit        `xml:"unit"`
 	Includes        []struct {
 		Type string `xml:"type,attr"`
 		Code string `xml:"code,attr"`
@@ -180,7 +187,15 @@ func loadXogDriverFile(silentXogDriverPathFile string) {
 		var input string = "0"
 		fmt.Scanln(&input)
 
-		driverIndex, _ = strconv.Atoi(input)
+		var err error
+		driverIndex, err = strconv.Atoi(input)
+
+		if err != nil || driverIndex < 0 || driverIndex+1 > len(xogDriverFileList) {
+			Debug("\n[XOG]\033[91mERROR\033[0m - Invalid XOG driver! Press any key to exit...\n")
+			scanexit := ""
+			fmt.Scanln(&scanexit)
+			os.Exit(0)
+		}
 
 		xogDriverFileName = xogDriverFileList[driverIndex].Name()
 	}
@@ -212,7 +227,13 @@ func scanActions(silentAction string, silentEnv int) bool {
 			var input string = "0"
 			fmt.Scanln(&input)
 
-			envIndex, _ = strconv.Atoi(input)
+			var err error
+			envIndex, err = strconv.Atoi(input)
+
+			if err != nil || envIndex < 0 || envIndex+1 > len(env.Environments) {
+				Debug("\n[XOG]\033[91mERROR\033[0m - Invalid environment!\n\n")
+				return false
+			}
 		}
 	}
 
@@ -230,7 +251,8 @@ func scanActions(silentAction string, silentEnv int) bool {
 	case "x":
 		return true
 	default:
-		Debug("\n[XOG]\033[91mERROR\033[0m - Action not implemented!\n")
+		Debug("\n[XOG]\033[91mERROR\033[0m - Action not implemented!\n\n")
+		return false
 	}
 
 	elapsed := time.Since(start)

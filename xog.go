@@ -204,6 +204,12 @@ func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
 						_, statusMessage = MergeViews(xogfile, outputPath, tempOutputPath)
 					}
 
+					//Merge obs
+					if xogfile.Type == "obs" {
+						_, statusMessage = MergeOBS(xogfile, outputPath, tempOutputPath)
+						transform = "\033[96mTRUE\033[0m"
+					}
+
 					os.Remove(tempOutputPath)
 				}
 			}
@@ -228,6 +234,7 @@ func execCommand(envIndex int, inputPath string, outputPath string) {
 	var xog_path = env.GlobalVars[0].Value
 
 	var args [5]string
+
 	for k, param := range env.Environments[envIndex].Params {
 		args[k] = param.Value
 	}
