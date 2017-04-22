@@ -385,35 +385,62 @@ func MergeOBS(xogfile XogDriverFile, sourcePath string, targetPath string) (bool
 	obs.CreateAttr("complete", "true")
 
 	for _, u := range xogfile.Units {
-		targetParent := targetDoc.FindElement("//unit[@name='" + u.ParentName + "']")
+		var targetParent *etree.Element
+
+		if u.ParentName == "" {
+			targetParent = targetDoc.FindElement("//obs")
+		} else {
+			targetParent = targetDoc.FindElement("//unit[@name='" + u.ParentName + "']")
+		}
+
 		if targetParent == nil {
 			//Wrong unit's parent name in target environment
 			return false, "\033[91mERRO-19\033[0m"
 		}
 
+		targetUnit := targetParent.FindElement("//unit[@name='" + u.Name + "']")
 		if u.Remove {
-			unit := targetParent.FindElement("//unit[@name='" + u.Name + "']")
-			if unit == nil {
+			if targetUnit == nil {
 				//Cannot remove unit, name does not exist in target environment
 				return false, "\033[91mERRO-20\033[0m"
 			}
-			targetParent.RemoveChild(unit)
+			targetParent.RemoveChild(targetUnit)
 		} else {
-			sourceParent := sourceDoc.FindElement("//unit[@name='" + u.ParentName + "']")
-			unit := sourceParent.FindElement("//unit[@name='" + u.Name + "']")
+			if targetUnit != nil {
+				targetParent.RemoveChild(targetUnit)
+			}
+			var sourceParent *etree.Element
+			if u.ParentName == "" {
+				sourceParent = sourceDoc.FindElement("//obs")
+			} else {
+				sourceParent = sourceDoc.FindElement("//unit[@name='" + u.ParentName + "']")
+			}
+
+			unit := sourceParent.FindElement("//unit[@name='" + u.Name + "']").Copy()
 			if unit == nil {
 				//Wrong unit's name in source environment
 				return false, "\033[91mERRO-21\033[0m"
 			}
-			targetAssociatedObject := targetParent.FindElement("./associatedObject[0]")
-			if targetAssociatedObject != nil {
-				targetParent.InsertChild(targetAssociatedObject, unit)
+
+			if u.RemoveUnitChilds {
+				for _, child := range unit.SelectElements("unit") {
+					unit.RemoveChild(child)
+				}
+			}
+
+			if u.ParentName == "" {
+				targetParent.AddChild(unit)
 			} else {
-				targetRights := targetParent.FindElement("./rights[0]")
-				if targetRights != nil {
-					targetParent.InsertChild(targetRights, unit)
+				targetAssociatedObject := targetParent.FindElement("./associatedObject[0]")
+				if targetAssociatedObject != nil {
+					targetParent.InsertChild(targetAssociatedObject, unit)
 				} else {
-					targetParent.AddChild(unit)
+					targetRights := targetParent.FindElement("./rights[0]")
+					if targetRights != nil {
+						targetParent.InsertChild(targetRights, unit)
+					} else {
+						targetParent.AddChild(unit)
+					}
 				}
 			}
 		}

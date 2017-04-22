@@ -33,9 +33,10 @@ type XogMenu struct {
 }
 
 type XogUnit struct {
-	Name       string `xml:"name,attr"`
-	ParentName string `xml:"parentName,attr"`
-	Remove     bool   `xml:"remove,attr"`
+	Name             string `xml:"name,attr"`
+	ParentName       string `xml:"parentName,attr"`
+	RemoveUnitChilds bool   `xml:"removeUnitChilds,attr"`
+	Remove           bool   `xml:"remove,attr"`
 }
 
 type XogViewSection struct {
