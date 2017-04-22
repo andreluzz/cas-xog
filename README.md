@@ -18,8 +18,8 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
 | ------ | ------ |
 | code | Code of the object or instances in case of reading instances |
 | path | Path to the file to be written |
-| type | Type of file being read. Available: objects, views, portlets, pages, processes, lookups, groups, menus |
-| objectCode | Field to set the object code for views, customobjectinstances |
+| type | Type of file being read. Available: objects, views, portlets, queries, pages, processes, lookups, groups, menus, obs, customObjectInstances |
+| objectCode | Field to set the object code for views, customObjectInstances |
 | ignoreReading | Sets whether to ignore the read action for this file. The file must be created manually in the folder 'extra/type' so it can be writen |
 | sourcePartition | Used to define which partition we will read |
 | targetPartition | Replace the partition code in the writing file, it is mandatory to use the sourcePartition tag |
@@ -168,6 +168,7 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
     <file code="tst_mtz_compat" path="tst_mtz_compat.xml" type="objects" />
     <file code="*" path="tst_mtz_compat_all.xml" type="views" objectCode="tst_mtz_compat" />
     <file code="tst_proc_v1" path="tst_proc_v1.xml" type="processes" />
+    <file code="cas_running_processes_detail" path="cas_running_processes_detail.xml" type="queries" />
     <file code="cas_running_processes_detail" path="cas_running_processes_detail.xml" type="portlets" />
     <file code="CAS_LIST_ENVIRONMENTS" path="cas_list_environments.xml" type="lookups" />
     <file code="cas_xog_client_page" path="cas_xog_client_page.xml" type="pages"/>
