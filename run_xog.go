@@ -103,7 +103,7 @@ var global_env_version = "8.0"
 var xog *XogDriver
 var env *XogEnv
 var readDefault *XogRead
-var inputAction string
+var inputAction, xogDriverFileName string
 
 func main() {
 
@@ -130,7 +130,7 @@ func main() {
 	flag.Parse()
 
 	if driverPath != "" {
-		Debug("[XOG] Silent Mode: \033[92mON\033[0m\n")
+		Debug("[CAS-XOG] Silent Mode: \033[92mON\033[0m\n")
 	}
 
 	loadXogDriverFile(driverPath)
@@ -140,15 +140,15 @@ func main() {
 	if driverPath != "" {
 		if create || readEnv != -1 || writeEnv != -1 {
 			if create {
-				fmt.Println("[XOG] Silent Mode - Create XOGs Read files ")
+				fmt.Println("[CAS-XOG] Silent Mode - Create XOGs Read files ")
 				scanActions("c", -1)
 			}
 			if readEnv != -1 {
-				fmt.Println("[XOG] Silent Mode - Reading XOGs")
+				fmt.Println("[CAS-XOG] Silent Mode - Reading XOGs")
 				scanActions("r", readEnv)
 			}
 			if writeEnv != -1 {
-				fmt.Println("[XOG] Silent Mode - Writing XOGs")
+				fmt.Println("[CAS-XOG] Silent Mode - Writing XOGs")
 				scanActions("w", writeEnv)
 			}
 		}
@@ -167,13 +167,13 @@ func loadXogDriverFile(silentXogDriverPathFile string) {
 	//Define xog driver path
 	var driverIndex = 0
 	xogDriverPath := "drivers/"
-	xogDriverFileName := silentXogDriverPathFile
+	xogDriverFileName = silentXogDriverPathFile
 
 	if silentXogDriverPathFile == "" {
 		xogDriverFileList, _ := ioutil.ReadDir(xogDriverPath)
 
 		if len(xogDriverFileList) == 0 {
-			Debug("\n[XOG]\033[91mERROR\033[0m - XogDriver folders or file not found! Press any key to exit...\n")
+			Debug("\n[CAS-XOG]\033[91mERROR\033[0m - XogDriver folders or file not found! Press any key to exit...\n")
 			scanexit := ""
 			fmt.Scanln(&scanexit)
 			os.Exit(0)
@@ -192,7 +192,7 @@ func loadXogDriverFile(silentXogDriverPathFile string) {
 		driverIndex, err = strconv.Atoi(input)
 
 		if err != nil || driverIndex < 0 || driverIndex+1 > len(xogDriverFileList) {
-			Debug("\n[XOG]\033[91mERROR\033[0m - Invalid XOG driver! Press any key to exit...\n")
+			Debug("\n[CAS-XOG]\033[91mERROR\033[0m - Invalid XOG driver! Press any key to exit...\n")
 			scanexit := ""
 			fmt.Scanln(&scanexit)
 			os.Exit(0)
@@ -205,7 +205,7 @@ func loadXogDriverFile(silentXogDriverPathFile string) {
 	xog = new(XogDriver)
 	xml.Unmarshal(loadFile(xogDriverPathFile), xog)
 
-	Debug("\n[XOG]\033[92mLoaded XOG Driver file\033[0m: %s\n", xogDriverPathFile)
+	Debug("\n[CAS-XOG]\033[92mLoaded XOG Driver file\033[0m: %s\n", xogDriverPathFile)
 }
 
 func scanActions(silentAction string, silentEnv int) bool {
@@ -213,6 +213,7 @@ func scanActions(silentAction string, silentEnv int) bool {
 	var envIndex = silentEnv
 	if silentAction == "" {
 		//Define action: Write, Read ou Create
+		Debug("[CAS-XOG] Using xog driver: \033[96m%s\033[0m\n", xogDriverFileName)
 		fmt.Print("Choose action (l = Load new XOG Driver, c = Create XOGs Read files, r = Read XOGs, w = Write XOGs or x = eXit): ")
 		fmt.Scanln(&inputAction)
 
@@ -232,7 +233,7 @@ func scanActions(silentAction string, silentEnv int) bool {
 			envIndex, err = strconv.Atoi(input)
 
 			if err != nil || envIndex < 0 || envIndex+1 > len(env.Environments) {
-				Debug("\n[XOG]\033[91mERROR\033[0m - Invalid environment!\n\n")
+				Debug("\n[CAS-XOG]\033[91mERROR\033[0m - Invalid environment!\n\n")
 				return false
 			}
 		}
@@ -252,7 +253,7 @@ func scanActions(silentAction string, silentEnv int) bool {
 	case "x":
 		return true
 	default:
-		Debug("\n[XOG]\033[91mERROR\033[0m - Action not implemented!\n\n")
+		Debug("\n[CAS-XOG]\033[91mERROR\033[0m - Action not implemented!\n\n")
 		return false
 	}
 
