@@ -215,8 +215,8 @@ func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
 			}
 
 			if !validatedWriteEnvironment {
-				//Trying to write attributes readed from a different target environment
-				statusMessage = "\033[91mERRO-02\033[0m"
+				//Transform views - general - trying to write attributes readed from a different target environment (envTarget)
+				statusMessage = "\033[91mER-TVG1\033[0m"
 			}
 
 			if action != "write" {

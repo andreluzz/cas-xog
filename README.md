@@ -111,28 +111,28 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
 
 | Code | Description |
 | ---- | ---------- |
-| <code>ERRO-00</code> | Trying to validate a write file that does not exist |
-| <code>ERRO-01</code> | Output file does not have the XOGOutput Status tag |
-| <code>ERRO-02</code> | Trying to write view attributes readed from a different target environment |
-| <code>ERRO-03</code> | Readed single view attributes from one target environment and trying to write to another target environment |
-| <code>ERRO-04</code> | Transform - trying read source file that does not exists |
-| <code>ERRO-05</code> | Transform - trying read target file that does not exists |
-| <code>ERRO-06</code> | Transform views - section - invalid action at section tag |
-| <code>ERRO-07</code> | Transform views - section - invalid TargetSectionPosition |
-| <code>ERRO-08</code> | Transform views - section - invalid SourceSectionPosition |
-| <code>ERRO-09</code> | Transform views - section - action update without attributes |
-| <code>ERRO-10</code> | Transform views - section - column value invalid, only right or left are available |
-| <code>ERRO-11</code> | Transform views - section - insertBefore code does not exists in target |
-| <code>ERRO-12</code> | Transform views - action - group code does not exist in source environment view |
-| <code>ERRO-13</code> | Transform views - action - group code does not exist in target environment view |
-| <code>ERRO-14</code> | Transform views - action - cannot remove action because there is no match code in target environment |
-| <code>ERRO-15</code> | Transform menus - invalid action at menu tag |
-| <code>ERRO-16</code> | Transform menus - cannot update a section that does not exist in target |
-| <code>ERRO-17</code> | Transform menus - lacking link tags to update menu |
-| <code>ERRO-18</code> | Transform menus - cannot replace a section that does not exist in target |
-| <code>ERRO-19</code> | Transform obs - wrong unit's parent name in target environment |
-| <code>ERRO-20</code> | Transform obs - cannot remove unit, name does not exist in target environment |
-| <code>ERRO-21</code> | Transform obs - wrong unit's name in source environment |
+| ER-GN01<code>ER-GN01</code> | General - Trying to validate a write file that does not exist |
+| ER-GN02<code>ER-GN02</code> | General - Output file does not have the status tag inside XOGOutput block |
+| ER-GN04<code>ER-GN03</code> | General - trying read source file that does not exists |
+| ER-GN05<code>ER-GN04</code> | General - trying read target file that does not exists |
+| ER-TV06<code>ER-TVG1</code> | Transform views - general - trying to write attributes readed from a different target environment (envTarget) |
+| ER-TV06<code>ER-TVG2</code> | Transform views - general - attribute code does not exist in source environment view |
+| ER-TV06<code>ER-TVS1</code> | Transform views - section - invalid action at section tag |
+| ER-TV07<code>ER-TVS2</code> | Transform views - section - invalid value for targetSectionPosition |
+| ER-TV08<code>ER-TVS3</code> | Transform views - section - invalid value for sourceSectionPosition |
+| ER-TV09<code>ER-TVS4</code> | Transform views - section - action update without attributes |
+| ER-TV10<code>ER-TVS5</code> | Transform views - section - column value invalid, only 'right' or 'left' are available |
+| ER-TV11<code>ER-TVS6</code> | Transform views - section - trying to insert before an attribute that does not exists in target environment |
+| ER-TV12<code>ER-TVA1</code> | Transform views - action - group code does not exist in source environment view |
+| ER-TV13<code>ER-TVA2</code> | Transform views - action - group code does not exist in target environment view |
+| ER-TV14<code>ER-TVA3</code> | Transform views - action - cannot remove action because there is no match code in target environment |
+| ER-TM15<code>ER-TM01</code> | Transform menus - invalid action at menu tag |
+| ER-GN16<code>ER-TM02</code> | Transform menus - cannot update a section that does not exist in target |
+| ER-GN17<code>ER-TM03</code> | Transform menus - lacking link tags to update menu |
+| ER-GN18<code>ER-TM04</code> | Transform menus - cannot replace a section that does not exist in target |
+| ER-GN19<code>ER-TO01</code> | Transform obs - wrong unit's parent name in target environment |
+| ER-GN20<code>ER-TO02</code> | Transform obs - cannot remove unit, name does not exist in target environment |
+| ER-GN21<code>ER-TO03</code> | Transform obs - wrong unit's name in source environment |
 
 
 ### XOG Driver example

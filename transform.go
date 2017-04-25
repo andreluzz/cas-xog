@@ -304,12 +304,12 @@ func MergeMenus(xogfile XogDriverFile, sourcePath string, targetPath string) (bo
 		case "update":
 			targetSectionElement = targetMenuElement.FindElement("//section[@code='" + m.Code + "']")
 			if targetSectionElement == nil {
-				//invalid target position for update at menu tag
-				return false, "\033[91mERRO-16\033[0m"
+				//Transform menus - cannot update a section that does not exist in target
+				return false, "\033[91mER-TM02\033[0m"
 			}
 			if len(m.Links) <= 0 {
-				//lacking link tag to update menu
-				return false, "\033[91mERRO-17\033[0m"
+				//Transform menus - lacking link tags to update menu
+				return false, "\033[91mER-TM03\033[0m"
 			}
 			//insert the links inside the section
 			for _, l := range m.Links {
@@ -330,8 +330,8 @@ func MergeMenus(xogfile XogDriverFile, sourcePath string, targetPath string) (bo
 		case "replace":
 			targetSectionElement = targetMenuElement.FindElement("//section[@code='" + m.Code + "']")
 			if targetSectionElement == nil {
-				//cannot replace a section that does not exist in target
-				return false, "\033[91mERRO-18\033[0m"
+				//Transform menus - cannot replace a section that does not exist in target
+				return false, "\033[91mER-TM04\033[0m"
 			}
 			if m.TargetPosition != 0 {
 				//If attribute targetPosition exists change the position of the section that is being replaced
@@ -342,8 +342,8 @@ func MergeMenus(xogfile XogDriverFile, sourcePath string, targetPath string) (bo
 			}
 			targetMenuElement.RemoveChild(targetSectionElement)
 		default:
-			//invalid action at menu tag
-			return false, "\033[91mERRO-15\033[0m"
+			//Transform menus - invalid action at menu tag
+			return false, "\033[91mER-TM01\033[0m"
 		}
 	}
 
@@ -394,15 +394,15 @@ func MergeOBS(xogfile XogDriverFile, sourcePath string, targetPath string) (bool
 		}
 
 		if targetParent == nil {
-			//Wrong unit's parent name in target environment
-			return false, "\033[91mERRO-19\033[0m"
+			//Transform obs - wrong unit's parent name in target environment
+			return false, "\033[91mER-TO01\033[0m"
 		}
 
 		targetUnit := targetParent.FindElement("//unit[@name='" + u.Name + "']")
 		if u.Remove {
 			if targetUnit == nil {
-				//Cannot remove unit, name does not exist in target environment
-				return false, "\033[91mERRO-20\033[0m"
+				//Transform obs - cannot remove unit, name does not exist in target environment
+				return false, "\033[91mER-TO02\033[0m"
 			}
 			targetParent.RemoveChild(targetUnit)
 		} else {
@@ -418,8 +418,8 @@ func MergeOBS(xogfile XogDriverFile, sourcePath string, targetPath string) (bool
 
 			unit := sourceParent.FindElement("//unit[@name='" + u.Name + "']").Copy()
 			if unit == nil {
-				//Wrong unit's name in source environment
-				return false, "\033[91mERRO-21\033[0m"
+				//Transform obs - wrong unit's name in source environment
+				return false, "\033[91mER-TO03\033[0m"
 			}
 
 			if u.RemoveUnitChilds {
@@ -473,8 +473,10 @@ func MergeViews(xogfile XogDriverFile, sourcePath string, targetPath string) (bo
 	if targetView == nil {
 		sourceView := sourceDoc.FindElement("//views/*[@code='" + xogfile.Code + "']")
 		targetPropertySet := targetDoc.FindElement("//propertySet")
-		targetParent := targetPropertySet.Parent()
-		targetParent.InsertChild(targetPropertySet, sourceView)
+		if targetPropertySet != nil {
+			targetParent := targetPropertySet.Parent()
+			targetParent.InsertChild(targetPropertySet, sourceView)
+		}
 	}
 
 	//process replace
@@ -581,22 +583,22 @@ func processAction(a XogViewAction, targetDoc *etree.Document, sourceDoc *etree.
 	sourceGroup := sourceDoc.FindElement("//actions/group[@code='" + a.GroupCode + "']")
 
 	if sourceGroup == nil {
-		//Group code does not exist in source environment view
-		return false, "\033[91mERRO-12\033[0m"
+		//Transform views - action - group code does not exist in source environment view
+		return false, "\033[91mER-TVA1\033[0m"
 	}
 
 	targetGroup := targetDoc.FindElement("//actions/group[@code='" + a.GroupCode + "']")
 
 	if sourceGroup == nil {
-		//Group code does not exist in target environment view
-		return false, "\033[91mERRO-13\033[0m"
+		//Transform views - action - group code does not exist in target environment view
+		return false, "\033[91mER-TVA2\033[0m"
 	}
 
 	if a.Remove {
 		action := targetGroup.FindElement("//action[@code='" + a.Code + "']")
 		if action == nil {
-			//Cannot remove action because there is no match code in target environment
-			return false, "\033[91mERRO-14\033[0m"
+			//Transform views - action - cannot remove action because there is no match code in target environment
+			return false, "\033[91mER-TVA3\033[0m"
 		}
 		targetGroup.RemoveChild(action)
 	} else {
@@ -618,15 +620,16 @@ func processSection(s XogViewSection, targetDoc *etree.Document, sourceDoc *etre
 	var sourceSection *etree.Element
 	if s.Action != "remove" {
 		if s.SourceSectionPosition == "" {
-			return false, "\033[91mERRO-08\033[0m"
+			//Transform views - section - invalid value for sourceSectionPosition
+			return false, "\033[91mER-TVS3\033[0m"
 		}
 		sourceSection = sourceDoc.FindElement("//section[" + s.SourceSectionPosition + "]")
 	}
 
 	if sourceSection == nil {
 		if s.Action != "remove" {
-			//invalid SourceSectionPosition
-			return false, "\033[91mERRO-08\033[0m"
+			//Transform views - section - invalid value for sourceSectionPosition
+			return false, "\033[91mER-TVS3\033[0m"
 		}
 	} else {
 		//get all attributes codes from source section
@@ -635,6 +638,7 @@ func processSection(s XogViewSection, targetDoc *etree.Document, sourceDoc *etre
 			for _, a := range s.Attributes {
 				sourceSectionAttributesCodes = append(sourceSectionAttributesCodes, a.Code)
 			}
+
 			//remove unnecessary attributes from source section
 			removeTags(sourceSection.FindElements("//viewFieldDescriptor"), "attributeCode", strings.Join(sourceSectionAttributesCodes, ";"))
 		} else {
@@ -659,9 +663,9 @@ func processSection(s XogViewSection, targetDoc *etree.Document, sourceDoc *etre
 
 	targetSection := targetDoc.FindElement("//section[" + s.TargetSectionPosition + "]")
 	if targetSection == nil {
-		//invalid TargetSectionPosition for replace or update view
 		if s.Action == "replace" || s.Action == "update" || s.Action == "remove" {
-			return false, "\033[91mERRO-07\033[0m"
+			//Transform views - section - invalid value for targetSectionPosition
+			return false, "\033[91mER-TVS2\033[0m"
 		}
 	}
 
@@ -682,7 +686,8 @@ func processSection(s XogViewSection, targetDoc *etree.Document, sourceDoc *etre
 		parent.RemoveChild(targetSection)
 	case "update":
 		if len(s.Attributes) <= 0 {
-			return false, "\033[91mERRO-09\033[0m"
+			//Transform views - section - action update without attributes
+			return false, "\033[91mER-TVS4\033[0m"
 		}
 
 		columnRight := targetSection.FindElement("//column[@sequence='2']")
@@ -704,11 +709,16 @@ func processSection(s XogViewSection, targetDoc *etree.Document, sourceDoc *etre
 		for _, a := range s.Attributes {
 			if !a.Remove {
 				attributeElement := sourceSection.FindElement("//viewFieldDescriptor[@attributeCode='" + a.Code + "']")
+				if attributeElement == nil {
+					//Transform views - general - attribute code does not exist in source environment view
+					return false, "\033[91mER-TVG2\033[0m"
+				}
 				var targetAttribute *etree.Element
 				if a.InsertBefore != "" {
 					targetAttribute = targetSection.FindElement("//viewFieldDescriptor[@attributeCode='" + a.InsertBefore + "']")
 					if targetAttribute == nil {
-						return false, "\033[91mERRO-11\033[0m"
+						//Transform views - section - trying to insert before an attribute that does not exists in target environment
+						return false, "\033[91mER-TVS6\033[0m"
 					}
 				}
 				switch a.Column {
@@ -725,13 +735,14 @@ func processSection(s XogViewSection, targetDoc *etree.Document, sourceDoc *etre
 						columnRight.InsertChild(targetAttribute, attributeElement)
 					}
 				default:
-					return false, "\033[91mERRO-10\033[0m"
+					//Transform views - section - column value invalid, only 'right' or 'left' are available
+					return false, "\033[91mER-TVS5\033[0m"
 				}
 			}
 		}
 	default:
-		//trying to merge views erro because of an invalid action at section tag
-		return false, "\033[91mERRO-06\033[0m"
+		//Transform views - section - invalid action at section tag
+		return false, "\033[91mER-TVS1\033[0m"
 	}
 
 	return true, "\033[92mSUCCESS\033[0m"
@@ -739,8 +750,8 @@ func processSection(s XogViewSection, targetDoc *etree.Document, sourceDoc *etre
 
 func Validate(path string) (bool, string) {
 	if initStatus := initDoc(path); initStatus == false {
-		//ERRO-00: Reading file does not exist
-		return false, "\033[91mERRO-00\033[0m"
+		//General - Trying to validate a write file that does not exist
+		return false, "\033[91mER-GN01\033[0m"
 	}
 
 	statusElement := doc.FindElement("//XOGOutput/Status")
@@ -774,8 +785,8 @@ func Validate(path string) (bool, string) {
 			status = false
 		}
 	} else {
-		//ERRO-01: Output file does not have the XOGOutput Status tag
-		message = "\033[91mERRO-01\033[0m"
+		//General - Output file does not have the status tag inside XOGOutput block
+		message = "\033[91mER-GN02\033[0m"
 		status = false
 	}
 
