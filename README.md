@@ -238,6 +238,8 @@ TODO
 ----
 * Delete views using complete="true" in view propertySet
 * Catch error when sigleView is true and envTarget is not defined
+* Give more feedback during all the file processing life cycle
+* Create a new folder "failures" with only the debug where there is errors that need some evaluation 
 
 
 License
