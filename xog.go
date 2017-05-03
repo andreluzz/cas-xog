@@ -189,6 +189,7 @@ func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
 					if xogfile.TargetPartition != "" {
 						inputPath = inputDir + xogfile.Type + "/target_" + xogfile.Path
 					}
+
 					targetEnvironment, _ := strconv.Atoi(xogfile.EnvTarget)
 					execCommand(targetEnvironment, inputPath, tempOutputPath)
 					//Transform view to include the new attributes

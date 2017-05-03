@@ -472,10 +472,12 @@ func MergeViews(xogfile XogDriverFile, sourcePath string, targetPath string) (bo
 	targetView := targetDoc.FindElement("//views/*[@code='" + xogfile.Code + "']")
 	if targetView == nil {
 		sourceView := sourceDoc.FindElement("//views/*[@code='" + xogfile.Code + "']")
-		targetPropertySet := targetDoc.FindElement("//propertySet")
-		if targetPropertySet != nil {
-			targetParent := targetPropertySet.Parent()
-			targetParent.InsertChild(targetPropertySet, sourceView)
+		if sourceView != nil {
+			targetPropertySet := targetDoc.FindElement("//propertySet")
+			if targetPropertySet != nil {
+				targetParent := targetPropertySet.Parent()
+				targetParent.InsertChild(targetPropertySet, sourceView)
+			}
 		}
 	}
 
@@ -535,12 +537,12 @@ func MergeViews(xogfile XogDriverFile, sourcePath string, targetPath string) (bo
 	}
 
 	//update target propertySet including or replacing the view
-	sourcePropertySetElement := sourceDoc.FindElement("//propertySet")
-	if sourcePropertySetElement != nil {
+	sourcePropertySetElements := sourceDoc.FindElements("//propertySet")
+	for _, sourcePropertySetElement := range sourcePropertySetElements {
 		sourcePropertySetViewElement := sourcePropertySetElement.FindElement("//view[@code='" + xogfile.Code + "']")
 		if sourcePropertySetViewElement != nil {
-			targetPropertySetElement := targetDoc.FindElement("//propertySet")
-			if targetPropertySetElement != nil {
+			targetPropertySetElements := targetDoc.FindElements("//propertySet")
+			for _, targetPropertySetElement := range targetPropertySetElements {
 				var targetInsertBeforeViewElement *etree.Element
 
 				targetCurrentViewElement := targetPropertySetElement.FindElement("//view[@code='" + xogfile.Code + "']")
@@ -554,13 +556,17 @@ func MergeViews(xogfile XogDriverFile, sourcePath string, targetPath string) (bo
 					parent := targetInsertBeforeViewElement.Parent()
 					parent.InsertChild(targetInsertBeforeViewElement, sourcePropertySetViewElement)
 				} else {
-					//if there is no insertBefore defined insert as the last one
-					parent := targetPropertySetElement.FindElement("//view[1]").Parent()
-					nlsElement := parent.FindElement("//nls[1]")
-					parent.InsertChild(nlsElement, sourcePropertySetViewElement)
+					if targetCurrentViewElement != nil {
+						parent := targetCurrentViewElement.Parent()
+						parent.InsertChild(targetCurrentViewElement, sourcePropertySetViewElement)
+					} else {
+						//if there is no insertBefore defined insert as the last one
+						nlsElement := targetPropertySetElement.FindElement("//nls[1]")
+						targetPropertySetElement.InsertChild(nlsElement, sourcePropertySetViewElement)
+					}
 				}
 
-				//If the target already have an element with the same view code then we need to remove it
+				//if the target already have an element with the same view code then we need to remove it
 				if targetCurrentViewElement != nil {
 					parent := targetCurrentViewElement.Parent()
 					parent.RemoveChild(targetCurrentViewElement)
