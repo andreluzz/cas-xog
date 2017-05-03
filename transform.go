@@ -62,8 +62,11 @@ func Transform(xogfile XogDriverFile, path string) bool {
 	tagsRemoved := RemoveUnnecessaryTags(xogfile.Type)
 	partitionReplaced := ReplacePartition(xogfile.SourcePartition, xogfile.TargetPartition)
 	if xogfile.Type == "lookups" && xogfile.OnlyStructure {
-		LookupOnlyStructure()
-		SimplifyLookupStructure = true
+		dynamicLookupElement := doc.FindElement("//dynamicLookup")
+		if dynamicLookupElement != nil {
+			LookupOnlyStructure()
+			SimplifyLookupStructure = true
+		}
 	}
 	if xogfile.SingleView && xogfile.Type == "views" {
 		SingleView(xogfile.Code, xogfile.CopyToView)
