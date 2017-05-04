@@ -155,6 +155,12 @@ func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
 			}
 		}
 
+		if action != "write" {
+			Debug("\n[CAS-XOG]Reading %03d/%03d | file: %s", i, total, inputPath)
+		} else {
+			Debug("\n[CAS-XOG]Writing %03d/%03d | file: %s", i, total, inputPath)
+		}
+
 		if xogfile.IgnoreReading && action != "write" {
 			Debug("\n[CAS-XOG]Readed %03d/%03d - \033[93mIGNORED\033[0m | transform: NONE | to file: %s", i, total, outputPath)
 		} else {
@@ -221,9 +227,9 @@ func ExecuteXOG(xog *XogDriver, env *XogEnv, envIndex int, action string) {
 			}
 
 			if action != "write" {
-				Debug("\n[CAS-XOG]Readed %03d/%03d - %s | transform: %s | to file: %s", i, total, statusMessage, transform, outputPath)
+				Debug("\r[CAS-XOG]Readed %03d/%03d - %s | transform: %s | to file: %s", i, total, statusMessage, transform, outputPath)
 			} else {
-				Debug("\n[CAS-XOG]Writed %03d/%03d - %s | to file: %s", i, total, statusMessage, outputPath)
+				Debug("\r[CAS-XOG]Writed %03d/%03d - %s | to file: %s", i, total, statusMessage, outputPath)
 			}
 		}
 		i += 1

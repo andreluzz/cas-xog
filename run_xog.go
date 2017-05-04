@@ -71,6 +71,7 @@ type XogDriverFile struct {
 	TargetPartition string           `xml:"targetPartition,attr"`
 	OnlyStructure   bool             `xml:"onlyStructure,attr"`
 	InsertBefore    string           `xml:"insertBefore,attr"`
+	UpdateProgram   bool             `xml:"updateProgram,attr"`
 	Sections        []XogViewSection `xml:"section"`
 	Actions         []XogViewAction  `xml:"action"`
 	Menus           []XogMenu        `xml:"menu"`

@@ -539,53 +539,56 @@ func MergeViews(xogfile XogDriverFile, sourcePath string, targetPath string) (bo
 		i += 1
 	}
 
-	//update target propertySet including or replacing the view
-	sourcePropertySetElements := sourceDoc.FindElements("//propertySet")
-	for _, sourcePropertySetElement := range sourcePropertySetElements {
-		sourcePropertySetViewElement := sourcePropertySetElement.FindElement("//view[@code='" + xogfile.Code + "']")
-		if sourcePropertySetViewElement != nil {
-			targetPropertySetElements := targetDoc.FindElements("//propertySet")
-			for _, targetPropertySetElement := range targetPropertySetElements {
-				var targetInsertBeforeViewElement *etree.Element
-
-				targetCurrentViewElement := targetPropertySetElement.FindElement("//view[@code='" + xogfile.Code + "']")
-
-				if xogfile.InsertBefore != "" {
-					targetInsertBeforeViewElement = targetPropertySetElement.FindElement("//view[@code='" + xogfile.InsertBefore + "']")
-				}
-
-				//if exists the element from insertBefore use it to define the position of the view
-				if targetInsertBeforeViewElement != nil {
-					parent := targetInsertBeforeViewElement.Parent()
-					parent.InsertChild(targetInsertBeforeViewElement, sourcePropertySetViewElement)
-				} else {
-					if targetCurrentViewElement != nil {
-						parent := targetCurrentViewElement.Parent()
-						parent.InsertChild(targetCurrentViewElement, sourcePropertySetViewElement)
-					} else {
-						//if there is no insertBefore defined insert as the last one
-						nlsElement := targetPropertySetElement.FindElement("//nls[1]")
-						targetPropertySetElement.InsertChild(nlsElement, sourcePropertySetViewElement)
-					}
-				}
-
-				//if the target already have an element with the same view code then we need to remove it
-				if targetCurrentViewElement != nil {
-					parent := targetCurrentViewElement.Parent()
-					parent.RemoveChild(targetCurrentViewElement)
-				}
-
-				status = true
-				message = "\033[92mSUCCESS\033[0m"
-			}
-		}
-	}
+	status, message = updatePropertySet(xogfile, targetDoc, sourceDoc)
 
 	targetDoc.Indent(4)
 	if err := targetDoc.WriteToFile(sourcePath); err != nil {
 		panic(err)
 	}
 	return status, message
+}
+
+func updatePropertySet(xogfile XogDriverFile, targetDoc *etree.Document, sourceDoc *etree.Document) (bool, string) {
+	var sourcePropertySetElement, targetPropertySetElement *etree.Element
+	if xogfile.ObjCode == "project" {
+		if xogfile.UpdateProgram {
+			sourcePropertySetElement = sourceDoc.FindElement("//propertySet/create[@code='programCreate']").Parent()
+			targetPropertySetElement = targetDoc.FindElement("//propertySet/create[@code='programCreate']").Parent()
+		} else {
+			sourcePropertySetElement = sourceDoc.FindElement("//propertySet/create[@code='projectCreate']").Parent()
+			targetPropertySetElement = targetDoc.FindElement("//propertySet/create[@code='projectCreate']").Parent()
+		}
+	} else {
+		sourcePropertySetElement = sourceDoc.FindElement("//propertySet]")
+		targetPropertySetElement = targetDoc.FindElement("//propertySet]")
+	}
+
+	if sourcePropertySetElement == nil || targetPropertySetElement == nil {
+		return false, "\033[93mWARNING\033[0m"
+	}
+
+	targetPropertySetViewElement := targetPropertySetElement.FindElement("//view[@code='" + xogfile.Code + "']")
+	if targetPropertySetViewElement != nil {
+		targetPropertySetViewElement.Parent().RemoveChild(targetPropertySetViewElement)
+	}
+
+	sourcePropertySetViewElement := sourcePropertySetElement.FindElement("//view[@code='" + xogfile.Code + "']")
+	if sourcePropertySetViewElement == nil {
+		return false, "\033[93mWARNING\033[0m"
+	}
+
+	if xogfile.InsertBefore != "" {
+		targetInsertBeforeViewElement := targetPropertySetElement.FindElement("//view[@code='" + xogfile.InsertBefore + "']")
+		if targetInsertBeforeViewElement == nil {
+			return false, "\033[93mWARNING\033[0m"
+		}
+		targetInsertBeforeViewElement.Parent().InsertChild(targetInsertBeforeViewElement, sourcePropertySetViewElement)
+	} else {
+		nlsElement := targetPropertySetElement.FindElement("//update/nls[1]")
+		nlsElement.Parent().InsertChild(nlsElement, sourcePropertySetViewElement)
+	}
+
+	return true, "\033[92mSUCCESS\033[0m"
 }
 
 func processAction(a XogViewAction, targetDoc *etree.Document, sourceDoc *etree.Document) (bool, string) {
