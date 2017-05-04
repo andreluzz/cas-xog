@@ -27,6 +27,7 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
 | envTarget | Defines the target environment to get the destination information. Only available to types: 'obs', 'views' and 'menus'. <br /> OBS.: This tag is required if singleView is defined as true |
 | onlyStructure | Boolean used to read only the structure and deal with dependency problems. Only available to type 'lookups' |
 | insertBefore | Defines the code of the view in the target to use as reference for positioning. If not set, the view will be inserted at the end. Only available for type 'views'. <br /> OBS.: If you want to keep the view current position you should define insertBefore with the same value as code |
+| updateProgram | Used to change views in programs. Only available for type 'views' and objectCode 'project'. |
 
 
 ### Description of attributes for tag include:
