@@ -601,7 +601,7 @@ func processAction(a XogViewAction, targetDoc *etree.Document, sourceDoc *etree.
 
 	targetGroup := targetDoc.FindElement("//actions/group[@code='" + a.GroupCode + "']")
 
-	if sourceGroup == nil {
+	if targetGroup == nil {
 		//Transform views - action - group code does not exist in target environment view
 		return false, "\033[91mER-TVA2\033[0m"
 	}
@@ -621,8 +621,12 @@ func processAction(a XogViewAction, targetDoc *etree.Document, sourceDoc *etree.
 		if a.InsertBefore == "" || targetAttribute == nil {
 			targetAttribute = targetGroup.FindElement("//nls[1]")
 		}
-		attributeElement := sourceGroup.FindElement("//action[@code='" + a.Code + "']")
-		targetGroup.InsertChild(targetAttribute, attributeElement)
+		actionSourceElement := sourceGroup.FindElement("//action[@code='" + a.Code + "']")
+		if actionSourceElement == nil {
+			//Transform views - action - action code does not exist in source view
+			return false, "\033[91mER-TVA4\033[0m"
+		}
+		targetGroup.InsertChild(targetAttribute, actionSourceElement)
 	}
 
 	return true, "\033[92mSUCCESS\033[0m"
