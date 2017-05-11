@@ -23,10 +23,11 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
 | ignoreReading | Sets whether to ignore the read action for this file. The file must be created manually in the folder 'extra/type' so it can be writen |
 | sourcePartition | Used to define which partition we will read |
 | targetPartition | Replace the partition code in the writing file, it is mandatory to use the sourcePartition tag |
+| partitionModel | Replace the partition model code in the writing file, it is mandatory to use the targetPartition tag |
 | singleView | Remove all other views leaving only the one that has the same code that was filled |
-| envTarget | Defines the target environment to get the destination information. Only available to types: 'obs', 'views' and 'menus'. <br /> OBS.: This tag is required if singleView is defined as true |
 | onlyStructure | Boolean used to read only the structure and deal with dependency problems. Only available to type 'lookups' |
 | insertBefore | Defines the code of the view in the target to use as reference for positioning. If not set, the view will be inserted at the end. Only available for type 'views'. <br /> OBS.: If you want to keep the view current position you should define insertBefore with the same value as code |
+| insertBeforeIndex | Defines the index of the view in the target to use as reference for positioning. If not set, the view will be inserted at the end. Only available for type 'views'. <br /> OBS.: The index begin with 1.|
 | updateProgram | Used to change views in programs. Only available for type 'views' and objectCode 'project'. |
 
 
@@ -146,7 +147,7 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
         <include type="action" code="tst_nova_acao_id" />
         <include type="link" code="tst_novo_link_id" />
     </file>
-    <file code="ideaProperty" path="idea_edit.xml" type="views" objectCode="idea" sourcePartition="partition10" singleView="true" envTarget="1">
+    <file code="ideaProperty" path="idea_edit.xml" type="views" objectCode="idea" sourcePartition="partition10" singleView="true">
         <section sourceSectionPosition="4" targetSectionPosition="4" action="replace" />
         <section sourceSectionPosition="2" targetSectionPosition="2" action="update" >
             <attribute code="tst_aval_compat" insertBefore="tst_is_compat" column="left" />
@@ -158,8 +159,8 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
         <action code="tst_nova_acao_id" groupCode="general" insertBefore="odf_copy_srctst_mtz_compat" />
         <action code="odf_copy_srctst_mtz_compat" groupCode="general" remove="true" />
     </file>
-    <file code="obj_teste.subpagina_03" path="obj_teste.xml" type="views" objectCode="obj_teste" sourcePartition="NIKU.ROOT" singleView="true" envTarget="1" />
-    <file code="application" path="cas_menu_app.xml" type="menus" envTarget="1">
+    <file code="obj_teste.subpagina_03" path="obj_teste.xml" type="views" objectCode="obj_teste" sourcePartition="NIKU.ROOT" singleView="true" />
+    <file code="application" path="cas_menu_app.xml" type="menus">
         <menu code="cas_tools" action="insert" targetPosition="2"/>
         <menu code="npt.projmgr" action="replace" />
         <menu code="itl.incidentManager" action="update">
@@ -174,7 +175,7 @@ This is a new easy way of creating reading and writing XOG files. Using a XOGDri
     <file code="CAS_LIST_ENVIRONMENTS" path="cas_list_environments.xml" type="lookups" />
     <file code="cas_xog_client_page" path="cas_xog_client_page.xml" type="pages"/>
     <file code="strat_admin" path="strat_admin.xml" type="groups"/>
-    <file code="resourcePool" path="resourcePool.xml" type="obs" envTarget="1">
+    <file code="resourcePool" path="resourcePool.xml" type="obs">
     	<unit name="Customer Unit 0" removeUnitChilds="true" />
         <unit name="Customer Unit 1" parentName="Customer Unit 1" />
     </file>
@@ -240,7 +241,8 @@ TODO
 * Delete views using complete="true" in view propertySet
 * Catch error when sigleView is true and envTarget is not defined
 * Give more feedback during all the file processing life cycle
-* Create a new folder "failures" with only the debug where there is errors that need some evaluation 
+* Create a new folder "failures" with only the debug where there is errors that need some evaluation
+* Validate when targetPartition does not have any modifications
 
 
 License

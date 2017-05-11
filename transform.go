@@ -60,6 +60,11 @@ func Transform(xogfile XogDriverFile, path string) bool {
 	SimplifyLookupStructure := false
 	objectFiltered := false
 	tagsRemoved := RemoveUnnecessaryTags(xogfile.Type)
+	if xogfile.PartitionModel != "" {
+		for _, e := range doc.FindElements("//*[@partitionModelCode]") {
+			e.CreateAttr("partitionModelCode", xogfile.PartitionModel)
+		}
+	}
 	partitionReplaced := ReplacePartition(xogfile.SourcePartition, xogfile.TargetPartition)
 	if xogfile.Type == "lookups" && xogfile.OnlyStructure {
 		dynamicLookupElement := doc.FindElement("//dynamicLookup")
@@ -564,7 +569,7 @@ func updatePropertySet(xogfile XogDriverFile, targetDoc *etree.Document, sourceD
 	}
 
 	if sourcePropertySetElement == nil || targetPropertySetElement == nil {
-		return false, "\033[93mWARNING\033[0m"
+		return false, "\033[93mWARN-PS\033[0m"
 	}
 
 	targetPropertySetViewElement := targetPropertySetElement.FindElement("//view[@code='" + xogfile.Code + "']")
@@ -574,20 +579,30 @@ func updatePropertySet(xogfile XogDriverFile, targetDoc *etree.Document, sourceD
 
 	sourcePropertySetViewElement := sourcePropertySetElement.FindElement("//view[@code='" + xogfile.Code + "']")
 	if sourcePropertySetViewElement == nil {
-		return false, "\033[93mWARNING\033[0m"
+		return false, "\033[93mWARN-PS\033[0m"
+	}
+
+	if xogfile.InsertBeforeIndex != "" {
+		targetInsertBeforeIndexElem := targetPropertySetElement.FindElement("//update/view[" + xogfile.InsertBeforeIndex + "]")
+		if targetInsertBeforeIndexElem == nil {
+			return false, "\033[93mWARN-PS\033[0m"
+		}
+
+		targetInsertBeforeIndexElem.Parent().InsertChild(targetInsertBeforeIndexElem, sourcePropertySetViewElement)
+		return true, "\033[92mSUCCESS\033[0m"
 	}
 
 	if xogfile.InsertBefore != "" {
 		targetInsertBeforeViewElement := targetPropertySetElement.FindElement("//view[@code='" + xogfile.InsertBefore + "']")
 		if targetInsertBeforeViewElement == nil {
-			return false, "\033[93mWARNING\033[0m"
+			return false, "\033[93mWARN-PS\033[0m"
 		}
 		targetInsertBeforeViewElement.Parent().InsertChild(targetInsertBeforeViewElement, sourcePropertySetViewElement)
-	} else {
-		nlsElement := targetPropertySetElement.FindElement("//update/nls[1]")
-		nlsElement.Parent().InsertChild(nlsElement, sourcePropertySetViewElement)
+		return true, "\033[92mSUCCESS\033[0m"
 	}
 
+	nlsElement := targetPropertySetElement.FindElement("//update/nls[1]")
+	nlsElement.Parent().InsertChild(nlsElement, sourcePropertySetViewElement)
 	return true, "\033[92mSUCCESS\033[0m"
 }
 

@@ -59,24 +59,26 @@ type XogViewAction struct {
 }
 
 type XogDriverFile struct {
-	Code            string           `xml:"code,attr"`
-	Path            string           `xml:"path,attr"`
-	Type            string           `xml:"type,attr"`
-	ObjCode         string           `xml:"objectCode,attr"`
-	SingleView      bool             `xml:"singleView,attr"`
-	CopyToView      string           `xml:"copyToView,attr"`
-	EnvTarget       string           `xml:"envTarget,attr"`
-	IgnoreReading   bool             `xml:"ignoreReading,attr"`
-	SourcePartition string           `xml:"sourcePartition,attr"`
-	TargetPartition string           `xml:"targetPartition,attr"`
-	OnlyStructure   bool             `xml:"onlyStructure,attr"`
-	InsertBefore    string           `xml:"insertBefore,attr"`
-	UpdateProgram   bool             `xml:"updateProgram,attr"`
-	Sections        []XogViewSection `xml:"section"`
-	Actions         []XogViewAction  `xml:"action"`
-	Menus           []XogMenu        `xml:"menu"`
-	Units           []XogUnit        `xml:"unit"`
-	Includes        []struct {
+	Code              string           `xml:"code,attr"`
+	Path              string           `xml:"path,attr"`
+	Type              string           `xml:"type,attr"`
+	ObjCode           string           `xml:"objectCode,attr"`
+	SingleView        bool             `xml:"singleView,attr"`
+	CopyToView        string           `xml:"copyToView,attr"`
+	EnvTarget         string           `xml:"envTarget,attr"`
+	IgnoreReading     bool             `xml:"ignoreReading,attr"`
+	SourcePartition   string           `xml:"sourcePartition,attr"`
+	TargetPartition   string           `xml:"targetPartition,attr"`
+	PartitionModel    string           `xml:"partitionModel,attr"`
+	OnlyStructure     bool             `xml:"onlyStructure,attr"`
+	InsertBefore      string           `xml:"insertBefore,attr"`
+	InsertBeforeIndex string           `xml:"insertBeforeIndex,attr"`
+	UpdateProgram     bool             `xml:"updateProgram,attr"`
+	Sections          []XogViewSection `xml:"section"`
+	Actions           []XogViewAction  `xml:"action"`
+	Menus             []XogMenu        `xml:"menu"`
+	Units             []XogUnit        `xml:"unit"`
+	Includes          []struct {
 		Type string `xml:"type,attr"`
 		Code string `xml:"code,attr"`
 	} `xml:"include"`
@@ -105,6 +107,7 @@ var xog *XogDriver
 var env *XogEnv
 var readDefault *XogRead
 var inputAction, xogDriverFileName string
+var envTargetIndex = 0
 
 func main() {
 
@@ -226,7 +229,12 @@ func scanActions(silentAction string, silentEnv int) bool {
 			for k, e := range env.Environments {
 				Debug("%d - %s\n", k, e.Name)
 			}
-			fmt.Print("Choose environment [0]: ")
+			fmt.Println("")
+			if inputAction == "r" {
+				fmt.Print("Choose reading environment [0]: ")
+			} else {
+				fmt.Print("Choose writing environment [0]: ")
+			}
 			var input string = "0"
 			fmt.Scanln(&input)
 
@@ -236,6 +244,33 @@ func scanActions(silentAction string, silentEnv int) bool {
 			if err != nil || envIndex < 0 || envIndex+1 > len(env.Environments) {
 				Debug("\n[CAS-XOG]\033[91mERROR\033[0m - Invalid environment!\n\n")
 				return false
+			}
+
+			if inputAction == "w" {
+				if envIndex != envTargetIndex {
+					Debug("\n[CAS-XOG]\033[93mWARNING\033[0m - Trying to write attributes readed from a different target environment!\n\n")
+					fmt.Print("Do you want to continue anyway? (y = Yes, n = No) [y]: ")
+					var inputContinue string = "y"
+					fmt.Scanln(&inputContinue)
+					if inputContinue == "n" || inputContinue != "y" {
+						fmt.Println("")
+						return false
+					}
+				}
+			}
+
+			if inputAction == "r" {
+				fmt.Print("Choose writing environment [0]: ")
+				var input string = "0"
+				fmt.Scanln(&input)
+
+				var err error
+				envTargetIndex, err = strconv.Atoi(input)
+
+				if err != nil || envTargetIndex < 0 || envTargetIndex+1 > len(env.Environments) {
+					Debug("\n[CAS-XOG]\033[91mERROR\033[0m - Invalid environment!\n\n")
+					return false
+				}
 			}
 		}
 	}
