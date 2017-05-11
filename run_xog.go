@@ -65,7 +65,6 @@ type XogDriverFile struct {
 	ObjCode           string           `xml:"objectCode,attr"`
 	SingleView        bool             `xml:"singleView,attr"`
 	CopyToView        string           `xml:"copyToView,attr"`
-	EnvTarget         string           `xml:"envTarget,attr"`
 	IgnoreReading     bool             `xml:"ignoreReading,attr"`
 	SourcePartition   string           `xml:"sourcePartition,attr"`
 	TargetPartition   string           `xml:"targetPartition,attr"`
