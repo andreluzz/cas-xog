@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xogread version="1.0">
+    <xogtype type="login">
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:obj="http://www.niku.com/xog/Object">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <obj:Login>
+                    <obj:Username />
+                    <obj:Password />
+                </obj:Login>
+            </soapenv:Body>
+        </soapenv:Envelope>
+    </xogtype>
+    <xogtype type="logout">
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:obj="http://www.niku.com/xog/Object">
+            <soapenv:Header/>
+            <soapenv:Body>
+                <obj:Logout>
+                    <obj:SessionID />
+                </obj:Logout>
+            </soapenv:Body>
+        </soapenv:Envelope>
+    </xogtype>
+    <xogtype type="envelope">
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xog="http://www.niku.com/xog">
+            <soapenv:Header>
+                <xog:Auth>
+                    <xog:SessionID />
+                </xog:Auth>
+            </soapenv:Header>
+            <soapenv:Body />
+        </soapenv:Envelope>
+    </xogtype>
+    <xogtype type="lookups">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
+            <Header action="read" externalSource="NIKU" objectType="contentPack" version="8.0">
+                <args name="no_dependencies" value="true"/>
+            </Header>
+            <LookupQuery>
+                <Filter criteria="EQUALS" name="code"/>
+            </LookupQuery>
+        </NikuDataBus>
+    </xogtype>
+    <xogtype type="objects">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
+            <Header action="read" externalSource="NIKU" objectType="contentPack" version="8.0">
+                <args name="no_dependencies" value="true"/>
+                <args name="exclude_parent" value="true"/>
+                <args name="noparents" value="true"/>
+            </Header>
+            <ObjectQuery>
+                <Filter criteria="EQUALS" name="object_code"/>
+            </ObjectQuery>
+        </NikuDataBus>
+    </xogtype>
+    <xogtype type="views">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
+            <Header action="read" externalSource="NIKU" objectType="contentPack" version="8.0">
+                <args name="no_dependencies" value="true"/>
+            </Header>
+            <ViewQuery>
+                <Filter criteria="EQUALS" name="code"/>
+                <Filter criteria="EQUALS" name="object_code"/>
+                <Filter criteria="EQUALS" name="partition_code"/>
+            </ViewQuery>
+        </NikuDataBus>
+    </xogtype>
+    <xogtype type="portlets">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
+            <Header action="read" externalSource="NIKU" objectType="contentPack" version="8.0">
+                <args name="no_dependencies" value="true"/>
+            </Header>
+            <PortletQuery>
+                <Filter criteria="EQUALS" name="code"/>
+            </PortletQuery>
+        </NikuDataBus>
+    </xogtype>
+    <xogtype type="queries">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
+            <Header action="read" externalSource="NIKU" objectType="contentPack" version="8.0">
+                <args name="no_dependencies" value="true"/>
+            </Header>
+            <QueryQuery>
+                <Filter criteria="EQUALS" name="code"/>
+            </QueryQuery>
+        </NikuDataBus>
+    </xogtype>
+    <xogtype type="processes">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
+            <Header action="read" externalSource="NIKU" objectType="contentPack" version="8.0">
+                <args name="no_dependencies" value="true"/>
+            </Header>
+            <ProcessQuery>
+                <Filter criteria="EQUALS" name="code"/>
+            </ProcessQuery>
+        </NikuDataBus>
+    </xogtype>
+    <xogtype type="pages">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
+            <Header action="read" externalSource="NIKU" objectType="contentPack" version="8.0">
+                <args name="no_dependencies" value="true"/>
+            </Header>
+            <PageQuery>
+                <Filter criteria="EQUALS" name="code"/>
+            </PageQuery>
+        </NikuDataBus>
+    </xogtype>
+    <xogtype type="groups">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
+            <Header action="read" externalSource="NIKU" objectType="group" version="7.5">
+                <args name="no_dependencies" value="true"/>
+            </Header>
+            <Query>
+                <Filter criteria="EQUALS" name="code"/>
+            </Query>
+        </NikuDataBus>
+    </xogtype>
+    <xogtype type="menus">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
+            <Header action="read" externalSource="NIKU" objectType="contentPack" version="8.0">
+                <args name="no_dependencies" value="true"/>
+            </Header>
+            <MenuQuery>
+                <Filter criteria="EQUALS" name="code"/>
+            </MenuQuery>
+        </NikuDataBus>
+    </xogtype>
+    <xogtype type="obs">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
+            <Header action="read" externalSource="NIKU" objectType="obs" version="8.0"/>
+            <Query>
+                <Filter criteria="EQUALS" name="code"/>
+            </Query>
+        </NikuDataBus>
+    </xogtype>
+    <xogtype type="customObjectInstances">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
+            <Header action="read" externalSource="NIKU" objectType="customObjectInstance" version="8.0"/>
+            <CustomObjectInstanceQuery>
+                <Filter criteria="EQUALS" name="objectCode"/>
+                <Filter criteria="OR" name="instanceCode"/>
+            </CustomObjectInstanceQuery>
+        </NikuDataBus>
+    </xogtype>
+</xogread>
