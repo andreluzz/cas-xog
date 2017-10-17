@@ -65,6 +65,14 @@ func read(file *common.DriverFile, env *EnvType) (string, error) {
 	case common.CUSTOM_OBJECT_INSTANCE:
 		req.FindElement("//Filter[@name='instanceCode']").SetText(file.Code)
 		req.FindElement("//Filter[@name='objectCode']").SetText(file.ObjCode)
+	case common.RESOURCE_CLASS_INSTANCE:
+		req.FindElement("//Filter[@name='resource_class']").SetText(file.Code)
+	case common.WIP_CLASS_INSTANCE:
+		req.FindElement("//Filter[@name='wipclass']").SetText(file.Code)
+	case common.INVESTMENT_CLASS_INSTANCE:
+		req.FindElement("//Filter[@name='investmentclass']").SetText(file.Code)
+	case common.TRANSACTION_CLASS_INSTANCE:
+		req.FindElement("//Filter[@name='transclass']").SetText(file.Code)
 	}
 
 	nikuDataBusElement := req.FindElement("//NikuDataBus").Copy()

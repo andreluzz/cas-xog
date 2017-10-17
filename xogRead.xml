@@ -142,4 +142,36 @@
             </CustomObjectInstanceQuery>
         </NikuDataBus>
     </xogtype>
+    <xogtype type="resourceClassInstances">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_notification.xsd">
+            <Header action="read" externalSource="NIKU" objectType="resourceclass" version="12.0"/>
+            <Query>
+                <Filter name="resource_class" criteria="EQUALS"/>
+            </Query>
+        </NikuDataBus>
+    </xogtype>
+    <xogtype type="wipClassInstances">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_notification.xsd">
+            <Header action="read" externalSource="NIKU" objectType="wipclass" version="12.0"/>
+            <Query>
+                <Filter name="wipclass" criteria="EQUALS"/>
+            </Query>
+        </NikuDataBus>
+    </xogtype>
+    <xogtype type="investmentClassInstances">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_notification.xsd">
+            <Header action="read" externalSource="NIKU" objectType="investmentclass" version="14.1"/>
+            <Query>
+                <Filter name="investmentclass" criteria="EQUALS"/>
+            </Query>
+        </NikuDataBus>
+    </xogtype>
+    <xogtype type="transactionClassInstances">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_notification.xsd">
+            <Header action="read" externalSource="NIKU" objectType="transactionclass" version="12.0"/>
+            <Query>
+                <Filter name="transclass" criteria="EQUALS"/>
+            </Query>
+        </NikuDataBus>
+    </xogtype>
 </xogread>
