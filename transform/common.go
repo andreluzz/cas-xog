@@ -46,6 +46,10 @@ func Process(xog, aux *etree.Document, file common.DriverFile) error {
 			removeElementsFromParent(xog, "//Security")
 			removeElementsFromParent(xog, "//rights")
 		}
+	case common.RESOURCE_CLASS_INSTANCE, common.WIP_CLASS_INSTANCE, common.TRANSACTION_CLASS_INSTANCE:
+		headerElement.CreateAttr("version", "12.0")
+	case common.INVESTMENT_CLASS_INSTANCE:
+		headerElement.CreateAttr("version", "14.1")
 	}
 
 	removeElementFromParent(xog, "//partitionModels")

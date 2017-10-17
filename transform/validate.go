@@ -26,13 +26,6 @@ func Validate(xog *etree.Document) (common.XOGOutput, error) {
 		return errorOutput, errors.New("no status tag defined")
 	}
 
-	statusStateAttr := statusElement.SelectAttrValue("state", UNDEFINED)
-
-	//TODO: validate when error and warning
-	if statusStateAttr != "SUCCESS" {
-		return errorOutput, errors.New("output status state error")
-	}
-
 	errorInformationElement := output.FindElement("//ErrorInformation")
 
 	if errorInformationElement != nil {

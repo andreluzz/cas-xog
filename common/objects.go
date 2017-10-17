@@ -72,7 +72,11 @@ const OBJECT 	string 	= "objects"
 const VIEW 		string	= "views"
 const MIGRATION	string	= "migrations"
 
-const CUSTOM_OBJECT_INSTANCE string = "customObjectInstances"
+const CUSTOM_OBJECT_INSTANCE     string = "customObjectInstances"
+const RESOURCE_CLASS_INSTANCE    string = "resourceClassInstances"
+const WIP_CLASS_INSTANCE         string = "wipClassInstances"
+const INVESTMENT_CLASS_INSTANCE  string = "investmentClassInstances"
+const TRANSACTION_CLASS_INSTANCE string = "transactionClassInstances"
 
 const FOLDER_READ 		string = "_read/"
 const FOLDER_WRITE 		string = "_write/"
