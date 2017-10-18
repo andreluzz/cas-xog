@@ -10,6 +10,18 @@ type Menu struct {
 	} `xml:"link"`
 }
 
+type ViewSection struct {
+	SourcePosition string `xml:"sourcePosition,attr"`
+	TargetPosition string `xml:"targetPosition,attr"`
+	Action string `xml:"action,attr"`
+	Fields []struct {
+		Code         string `xml:"code,attr"`
+		Column       string `xml:"column,attr"`
+		Remove       bool   `xml:"remove,attr"`
+		InsertBefore string `xml:"insertBefore,attr"`
+	}`xml:"field"`
+}
+
 type DriverFile struct {
 	Code              string        `xml:"code,attr"`
 	Path              string        `xml:"path,attr"`
@@ -33,6 +45,7 @@ type DriverFile struct {
 	InstanceTag 	  string 		`xml:"instance,attr"`
 	ExportToExcel 	  bool			`xml:"exportToExcel,attr"`
 	Menus             []Menu        `xml:"menu"`
+	Sections 		  []ViewSection `xml:"section"`
 	Includes          []struct {
 		Type string `xml:"type,attr"`
 		Code string `xml:"code,attr"`
