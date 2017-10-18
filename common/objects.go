@@ -52,6 +52,12 @@ type DriverFile struct {
 	Menus             []Menu        `xml:"menu"`
 	Sections 		  []ViewSection `xml:"section"`
 	Includes          []Include    `xml:"include"`
+	Elements []struct {
+		Type   string `xml:"type,attr"`
+		XPath  string `xml:"xpath,attr"`
+		Code   string `xml:"code,attr"`
+		Action string `xml:"action,attr"`
+	} `xml:"element"`
 	Replace			  []struct {
 		From string `xml:"from"`
 		To 	 string `xml:"to"`
