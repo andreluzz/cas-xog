@@ -171,7 +171,7 @@ func ProcessDriverFiles(action string) {
 			actionLabel = "Create"
 		}
 
-		debug(i+1, len(driverXOG.Files), action, transform.OUTPUT_SUCCESS, f.Path, validateOutput.Debug)
+		debug(i+1, len(driverXOG.Files), action, validateOutput.Code, f.Path, validateOutput.Debug)
 	}
 
 	elapsed := time.Since(start)

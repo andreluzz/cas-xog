@@ -37,7 +37,8 @@ func Validate(xog *etree.Document) (common.XOGOutput, error) {
 		}
 		if severityElement != nil {
 			if severityElement.Text() == "WARNING" {
-				return warningOutput, errors.New(desc)
+				warningOutput.Debug = desc
+				return warningOutput, nil
 			} else {
 				return errorOutput, errors.New(desc)
 			}

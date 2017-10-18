@@ -46,6 +46,10 @@ func read(file *common.DriverFile, env *EnvType) (string, error) {
 		return "", errors.New("no attribute code defined on tag <file>")
 	}
 
+	if file.Path == "" {
+		return "", errors.New("no attribute path defined on tag <file>")
+	}
+
 	req := etree.NewDocument()
 	req.SetRoot(readXML)
 	req.FindElement("//xog:SessionID").SetText(env.Session)
@@ -70,6 +74,9 @@ func read(file *common.DriverFile, env *EnvType) (string, error) {
 			req.FindElement("//Filter[@name='partition_code']").SetText(file.SourcePartition)
 		}
 	case common.CUSTOM_OBJECT_INSTANCE:
+		if file.ObjCode == "" {
+			return "", errors.New("no attribute objectCode defined on tag <file>")
+		}
 		req.FindElement("//Filter[@name='instanceCode']").SetText(file.Code)
 		req.FindElement("//Filter[@name='objectCode']").SetText(file.ObjCode)
 	case common.RESOURCE_CLASS_INSTANCE:
@@ -80,6 +87,10 @@ func read(file *common.DriverFile, env *EnvType) (string, error) {
 		req.FindElement("//Filter[@name='investmentclass']").SetText(file.Code)
 	case common.TRANSACTION_CLASS_INSTANCE:
 		req.FindElement("//Filter[@name='transclass']").SetText(file.Code)
+	case common.RESOURCE_INSTANCE:
+		req.FindElement("//Filter[@name='resourceID']").SetText(file.Code)
+	case common.USER_INSTANCE:
+		req.FindElement("//Filter[@name='userName']").SetText(file.Code)
 	}
 
 	nikuDataBusElement := req.FindElement("//NikuDataBus").Copy()

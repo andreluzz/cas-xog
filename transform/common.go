@@ -52,6 +52,14 @@ func Process(xog, aux *etree.Document, file common.DriverFile) error {
 		headerElement.CreateAttr("version", "14.1")
 	}
 
+	if len(file.Elements) > 0 {
+		for _,e := range file.Elements {
+			if e.Action == common.ACTION_REMOVE && e.XPath != "" && e.Type == "" && e.Code == "" {
+				removeElementFromParent(xog, e.XPath)
+			}
+		}
+	}
+
 	removeElementFromParent(xog, "//partitionModels")
 	removeElementFromParent(xog, "//XOGOutput")
 
