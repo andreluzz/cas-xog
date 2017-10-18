@@ -15,26 +15,31 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 
 | Type | Description |
 | ------ | ------ |
-| [objects](#type:-objects) | Used to read and write objects attributes, actions and links  |
+| [objects](#type-objects) | Used to read and write objects attributes, actions and links  |
 
 
-#### Type: Objects
+# Type objects
 
 | Atribute | Description | Required |
 | ------ | ------ | ------ |
-| Code | Object code | yes | 
-| Path | Path to the file to be saved on the file system | yes | 
-| Path | Path to the file to be saved on the file system | yes | 
+| code | Object code | yes | 
+| path | Path to the file to be saved on the file system | yes | 
+| partitionModel | Defines a new partitionModel if you want to set or change | no |
+| sourcePartition | When defined reads only elements from this partition code | no |
+| targetPartition | Used to change the current partition code. Used alone without sourcePartition replaces the tag partitionCode of all xog elements with the defined value. | no |
 
 ```sh
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="1.0">
-    <file code="test_subobj" path="test_subobj.xml" type="objects" />
+    <file code="idea" path="idea.xml" type="objects" />
+    <file code="application" path="application.xml" type="objects" partitionModel="new-corp" />
+    <file code="systems" path="systems.xml" type="objects" sourcePartition="partition10" targetPartition="NIKU.ROOT" />
+    <file code="inv" path="inv.xml" type="objects" targetPartition="NIKU.ROOT" />
 </xogdriver>
 ```
 
-##### Sub Type: Element
-Used to read only the selected elements from the environment
+### Sub tag: Element
+Used to read only the selected elements from the object
 
 | Atribute | Description | Required |
 | ------ | ------ | ------ |
