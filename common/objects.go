@@ -22,41 +22,38 @@ type ViewSection struct {
 	}`xml:"field"`
 }
 
+type Element struct {
+	Type   string `xml:"type,attr"`
+	XPath  string `xml:"xpath,attr"`
+	Code   string `xml:"code,attr"`
+	Action string `xml:"action,attr"`
+}
+
 type DriverFile struct {
-	Code                    string  `xml:"code,attr"`
-	Path                    string  `xml:"path,attr"`
-	Type                    string  `xml:"type,attr"`
-	ObjCode                 string  `xml:"objectCode,attr"`
-	SingleView              bool    `xml:"singleView,attr"`
-	CopyToView              string  `xml:"copyToView,attr"`
-	IgnoreReading           bool    `xml:"ignoreReading,attr"`
-	SourcePartition         string  `xml:"sourcePartition,attr"`
-	TargetPartition         string  `xml:"targetPartition,attr"`
-	PartitionModel          string  `xml:"partitionModel,attr"`
-	InsertBefore            string  `xml:"insertBefore,attr"`
-	InsertBeforeIndex       string  `xml:"insertBeforeIndex,attr"`
-	UpdateProgram           bool    `xml:"updateProgram,attr"`
-	CopyPermissions         string	`xml:"copyPermissions,attr"`
-	RemoveObjAssoc          bool	`xml:"removeObjectsAssociation,attr"`
-	RemoveSecurity          bool	`xml:"removeSecurity,attr"`
-	Template 		        string 	`xml:"template,attr"`
-	ExcelFile 		        string 	`xml:"excel,attr"`
-	ExcelStartRow 	        string 	`xml:"startRow,attr"`
-	InstanceTag 	        string 	`xml:"instance,attr"`
-	ExportToExcel 	        bool	`xml:"exportToExcel,attr"`
-	Menus                   []Menu        `xml:"menu"`
-	Sections 		        []ViewSection `xml:"section"`
-	Includes []struct {
-		Type   string `xml:"type,attr"`
-		Code   string `xml:"code,attr"`
-		Action string `xml:"action,attr"`
-	} `xml:"include"`
-	Elements []struct {
-		Type   string `xml:"type,attr"`
-		XPath  string `xml:"xpath,attr"`
-		Code   string `xml:"code,attr"`
-		Action string `xml:"action,attr"`
-	} `xml:"element"`
+	Code              string        `xml:"code,attr"`
+	Path              string        `xml:"path,attr"`
+	Type              string        `xml:"type,attr"`
+	ObjCode           string        `xml:"objectCode,attr"`
+	SingleView        bool          `xml:"singleView,attr"`
+	CopyToView        string        `xml:"copyToView,attr"`
+	IgnoreReading     bool          `xml:"ignoreReading,attr"`
+	SourcePartition   string        `xml:"sourcePartition,attr"`
+	TargetPartition   string        `xml:"targetPartition,attr"`
+	PartitionModel    string        `xml:"partitionModel,attr"`
+	InsertBefore      string        `xml:"insertBefore,attr"`
+	InsertBeforeIndex string        `xml:"insertBeforeIndex,attr"`
+	UpdateProgram     bool          `xml:"updateProgram,attr"`
+	CopyPermissions   string		`xml:"copyPermissions,attr"`
+	RemoveObjAssoc    bool			`xml:"removeObjectsAssociation,attr"`
+	RemoveSecurity    bool			`xml:"removeSecurity,attr"`
+	Template 		  string 		`xml:"template,attr"`
+	ExcelFile 		  string 		`xml:"excel,attr"`
+	ExcelStartRow 	  string 		`xml:"startRow,attr"`
+	InstanceTag 	  string 		`xml:"instance,attr"`
+	ExportToExcel 	  bool			`xml:"exportToExcel,attr"`
+	Menus             []Menu        `xml:"menu"`
+	Sections 		  []ViewSection `xml:"section"`
+	Elements 		  []Element		`xml:"element"`
 	Replace			  []struct {
 		From string `xml:"from"`
 		To 	 string `xml:"to"`
