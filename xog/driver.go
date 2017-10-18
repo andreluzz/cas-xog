@@ -120,7 +120,7 @@ func ProcessDriverFiles(action string) {
 					if f.TargetPartition != "" {
 						partition = f.TargetPartition
 					}
-					auxFile = common.DriverFile{Code: "*", ObjCode: f.ObjCode, Path: "aux_" + f.Path + ".xml", SourcePartition: partition, Type: common.VIEW}
+					auxFile = common.DriverFile{Code: f.Code, ObjCode: f.ObjCode, Path: "aux_" + f.Path + ".xml", SourcePartition: partition, Type: common.VIEW}
 				}
 			}
 
@@ -181,7 +181,7 @@ func ProcessDriverFiles(action string) {
 
 	common.Debug("\n\n------------------------------------------------------------------")
 	common.Debug("\nStats: total = %d | failure = %d | success = %d | warning = %d", len(driverXOG.Files), output[transform.OUTPUT_ERROR], output[transform.OUTPUT_SUCCESS], output[transform.OUTPUT_WARNING])
-	common.Debug("\n[blue[Concluded in]]: %.2f seconds", elapsed.Seconds())
+	common.Debug("\n[blue[Concluded in]]: %.3f seconds", elapsed.Seconds())
 	common.Debug("\n------------------------------------------------------------------\n")
 }
 

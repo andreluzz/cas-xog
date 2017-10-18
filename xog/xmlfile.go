@@ -42,6 +42,10 @@ func read(file *common.DriverFile, env *EnvType) (string, error) {
 		return "", err
 	}
 
+	if file.Code == "" {
+		return "", errors.New("no attribute code defined on tag <file>")
+	}
+
 	req := etree.NewDocument()
 	req.SetRoot(readXML)
 	req.FindElement("//xog:SessionID").SetText(env.Session)
@@ -54,6 +58,9 @@ func read(file *common.DriverFile, env *EnvType) (string, error) {
 	case common.OBJECT:
 		req.FindElement("//Filter[@name='object_code']").SetText(file.Code)
 	case common.VIEW:
+		if file.ObjCode == "" {
+			return "", errors.New("no attribute objectCode defined on tag <file>")
+		}
 		req.FindElement("//Filter[@name='code']").SetText(file.Code)
 		req.FindElement("//Filter[@name='object_code']").SetText(file.ObjCode)
 		if file.SourcePartition == "" {
