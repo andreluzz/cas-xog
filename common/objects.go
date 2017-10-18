@@ -22,6 +22,11 @@ type ViewSection struct {
 	}`xml:"field"`
 }
 
+type Include struct {
+	Type string `xml:"type,attr"`
+	Code string `xml:"code,attr"`
+}
+
 type DriverFile struct {
 	Code              string        `xml:"code,attr"`
 	Path              string        `xml:"path,attr"`
@@ -46,10 +51,7 @@ type DriverFile struct {
 	ExportToExcel 	  bool			`xml:"exportToExcel,attr"`
 	Menus             []Menu        `xml:"menu"`
 	Sections 		  []ViewSection `xml:"section"`
-	Includes          []struct {
-		Type string `xml:"type,attr"`
-		Code string `xml:"code,attr"`
-	} `xml:"include"`
+	Includes          []Include    `xml:"include"`
 	Replace			  []struct {
 		From string `xml:"from"`
 		To 	 string `xml:"to"`

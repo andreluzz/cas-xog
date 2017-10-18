@@ -12,19 +12,53 @@ func specificObjectTransformations(xog *etree.Document, file common.DriverFile) 
 		object.RemoveChild(e)
 	}
 
+	if file.SourcePartition != "" {
+		removeOtherPartitionsAttributes(xog, file)
+	}
+
 	if len(file.Includes) > 0 {
-		removeUndefinedIncludes(xog, file)
-		processObjectIncludes(xog, file)
+		removeUndefinedIncludes(xog, file.Includes)
+		processObjectIncludes(xog, file.Includes)
+	}
+
+	if file.TargetPartition != "" {
+		changePartition(xog, file)
+	}
+
+	if file.PartitionModel != "" {
+		xog.FindElement("//object[@code='" + file.Code + "']").CreateAttr("partitionModelCode", file.PartitionModel)
 	}
 
 	return nil
 }
 
-func removeUndefinedIncludes(xog *etree.Document, file common.DriverFile) {
+func removeOtherPartitionsAttributes(xog *etree.Document, file common.DriverFile) {
+	partitionElements := xog.FindElements("//[@partitionCode='" + file.SourcePartition + "']")
+	var includes []common.Include
+	for _, e := range partitionElements {
+		var include common.Include
+		switch e.Tag{
+		case "customAttribute":
+			include.Type = "attribute"
+		case "link":
+			include.Type = "link"
+		case "action":
+			include.Type = "action"
+		}
+		include.Code = e.SelectAttrValue("code", "")
+		includes = append(includes, include)
+	}
+	if len(includes) > 0 {
+		removeUndefinedIncludes(xog, includes)
+		processObjectIncludes(xog, includes)
+	}
+}
+
+func removeUndefinedIncludes(xog *etree.Document, includes []common.Include) {
 	removeActions := true
 	removeLinks := true
 	removeAttributes := true
-	for _, include := range file.Includes {
+	for _, include := range includes {
 		if include.Type == "action" {
 			removeActions = false
 		}
@@ -51,18 +85,18 @@ func removeUndefinedIncludes(xog *etree.Document, file common.DriverFile) {
 	}
 }
 
-func processObjectIncludes(xog *etree.Document, file common.DriverFile) {
-	validateAttributesToRemove(xog, file, "//customAttribute", "code", "attribute")
-	validateAttributesToRemove(xog, file, "//attributeDefault", "code", "attribute")
-	validateAttributesToRemove(xog, file, "//attributeAutonumbering", "code", "attribute")
-	validateAttributesToRemove(xog, file, "//displayMapping", "attributeCode", "attribute")
-	validateAttributesToRemove(xog, file, "//audit/attribute", "code", "attribute")
-	validateAttributesToRemove(xog, file, "//link", "code", "link")
-	validateAttributesToRemove(xog, file, "//action", "code", "action")
+func processObjectIncludes(xog *etree.Document, includes []common.Include) {
+	validateAttributesToRemove(xog, includes, "//customAttribute", "code", "attribute")
+	validateAttributesToRemove(xog, includes, "//attributeDefault", "code", "attribute")
+	validateAttributesToRemove(xog, includes, "//attributeAutonumbering", "code", "attribute")
+	validateAttributesToRemove(xog, includes, "//displayMapping", "attributeCode", "attribute")
+	validateAttributesToRemove(xog, includes, "//audit/attribute", "code", "attribute")
+	validateAttributesToRemove(xog, includes, "//link", "code", "link")
+	validateAttributesToRemove(xog, includes, "//action", "code", "action")
 }
 
-func validateInclude(includeType, code string, file common.DriverFile) bool {
-	for _, include := range file.Includes {
+func validateInclude(includeType, code string, includes []common.Include) bool {
+	for _, include := range includes {
 		if include.Type == includeType {
 			if include.Code == code {
 				return false
@@ -72,10 +106,10 @@ func validateInclude(includeType, code string, file common.DriverFile) bool {
 	return true
 }
 
-func validateAttributesToRemove(xog *etree.Document, file common.DriverFile, path, attributeKey, includeType string) {
+func validateAttributesToRemove(xog *etree.Document, includes []common.Include, path, attributeKey, includeType string) {
 	for _, e := range xog.FindElements(path) {
 		code := e.SelectAttrValue(attributeKey, "")
-		if validateInclude(includeType, code, file) {
+		if validateInclude(includeType, code, includes) {
 			e.Parent().RemoveChild(e)
 		}
 	}

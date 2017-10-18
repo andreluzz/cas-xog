@@ -93,3 +93,25 @@ func findAndReplace(xog *etree.Document, file common.DriverFile) {
 	xmlResult.ReadFromString(xogString)
 	xog.SetRoot(xmlResult.Root())
 }
+
+func changePartition(xog *etree.Document, file common.DriverFile) {
+	var elems []*etree.Element
+	if file.SourcePartition == "" {
+		elems = xog.FindElements("//*[@partitionCode]")
+	} else {
+		elems = xog.FindElements("//*[@partitionCode='" + file.SourcePartition + "']")
+	}
+
+	for _, e := range elems {
+		e.CreateAttr("partitionCode", file.TargetPartition)
+	}
+	if file.SourcePartition == "" {
+		for _, e := range xog.FindElements("//*[@dataProviderPartitionId]") {
+			e.CreateAttr("dataProviderPartitionId", file.TargetPartition)
+		}
+	} else {
+		for _, e := range xog.FindElements("//*[@dataProviderPartitionId='" + file.SourcePartition + "']") {
+			e.CreateAttr("dataProviderPartitionId", file.TargetPartition)
+		}
+	}
+}
