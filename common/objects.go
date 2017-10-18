@@ -23,33 +23,40 @@ type ViewSection struct {
 }
 
 type DriverFile struct {
-	Code              string        `xml:"code,attr"`
-	Path              string        `xml:"path,attr"`
-	Type              string        `xml:"type,attr"`
-	ObjCode           string        `xml:"objectCode,attr"`
-	SingleView        bool          `xml:"singleView,attr"`
-	CopyToView        string        `xml:"copyToView,attr"`
-	IgnoreReading     bool          `xml:"ignoreReading,attr"`
-	SourcePartition   string        `xml:"sourcePartition,attr"`
-	TargetPartition   string        `xml:"targetPartition,attr"`
-	PartitionModel    string        `xml:"partitionModel,attr"`
-	InsertBefore      string        `xml:"insertBefore,attr"`
-	InsertBeforeIndex string        `xml:"insertBeforeIndex,attr"`
-	UpdateProgram     bool          `xml:"updateProgram,attr"`
-	CopyPermissions   string		`xml:"copyPermissions,attr"`
-	RemoveObjAssoc    bool			`xml:"removeObjectsAssociation,attr"`
-	RemoveSecurity    bool			`xml:"removeSecurity,attr"`
-	Template 		  string 		`xml:"template,attr"`
-	ExcelFile 		  string 		`xml:"excel,attr"`
-	ExcelStartRow 	  string 		`xml:"startRow,attr"`
-	InstanceTag 	  string 		`xml:"instance,attr"`
-	ExportToExcel 	  bool			`xml:"exportToExcel,attr"`
-	Menus             []Menu        `xml:"menu"`
-	Sections 		  []ViewSection `xml:"section"`
-	Includes          []struct {
-		Type string `xml:"type,attr"`
-		Code string `xml:"code,attr"`
+	Code                    string  `xml:"code,attr"`
+	Path                    string  `xml:"path,attr"`
+	Type                    string  `xml:"type,attr"`
+	ObjCode                 string  `xml:"objectCode,attr"`
+	SingleView              bool    `xml:"singleView,attr"`
+	CopyToView              string  `xml:"copyToView,attr"`
+	IgnoreReading           bool    `xml:"ignoreReading,attr"`
+	SourcePartition         string  `xml:"sourcePartition,attr"`
+	TargetPartition         string  `xml:"targetPartition,attr"`
+	PartitionModel          string  `xml:"partitionModel,attr"`
+	InsertBefore            string  `xml:"insertBefore,attr"`
+	InsertBeforeIndex       string  `xml:"insertBeforeIndex,attr"`
+	UpdateProgram           bool    `xml:"updateProgram,attr"`
+	CopyPermissions         string	`xml:"copyPermissions,attr"`
+	RemoveObjAssoc          bool	`xml:"removeObjectsAssociation,attr"`
+	RemoveSecurity          bool	`xml:"removeSecurity,attr"`
+	Template 		        string 	`xml:"template,attr"`
+	ExcelFile 		        string 	`xml:"excel,attr"`
+	ExcelStartRow 	        string 	`xml:"startRow,attr"`
+	InstanceTag 	        string 	`xml:"instance,attr"`
+	ExportToExcel 	        bool	`xml:"exportToExcel,attr"`
+	Menus                   []Menu        `xml:"menu"`
+	Sections 		        []ViewSection `xml:"section"`
+	Includes []struct {
+		Type   string `xml:"type,attr"`
+		Code   string `xml:"code,attr"`
+		Action string `xml:"action,attr"`
 	} `xml:"include"`
+	Elements []struct {
+		Type   string `xml:"type,attr"`
+		XPath  string `xml:"xpath,attr"`
+		Code   string `xml:"code,attr"`
+		Action string `xml:"action,attr"`
+	} `xml:"element"`
 	Replace			  []struct {
 		From string `xml:"from"`
 		To 	 string `xml:"to"`
@@ -85,11 +92,18 @@ const OBJECT 	string 	= "objects"
 const VIEW 		string	= "views"
 const MIGRATION	string	= "migrations"
 
+const ACTION_REPLACE string = "replace"
+const ACTION_UPDATE  string = "update"
+const ACTION_REMOVE  string = "remove"
+const ACTION_INSERT  string = "insert"
+
 const CUSTOM_OBJECT_INSTANCE     string = "customObjectInstances"
 const RESOURCE_CLASS_INSTANCE    string = "resourceClassInstances"
 const WIP_CLASS_INSTANCE         string = "wipClassInstances"
 const INVESTMENT_CLASS_INSTANCE  string = "investmentClassInstances"
 const TRANSACTION_CLASS_INSTANCE string = "transactionClassInstances"
+const RESOURCE_INSTANCE          string = "resourceInstances"
+const USER_INSTANCE              string = "userInstances"
 
 const FOLDER_READ 		string = "_read/"
 const FOLDER_WRITE 		string = "_write/"

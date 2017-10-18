@@ -146,7 +146,7 @@
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_notification.xsd">
             <Header action="read" externalSource="NIKU" objectType="resourceclass" version="12.0"/>
             <Query>
-                <Filter name="resource_class" criteria="EQUALS"/>
+                <Filter criteria="EQUALS" name="resource_class"/>
             </Query>
         </NikuDataBus>
     </xogtype>
@@ -154,7 +154,7 @@
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_notification.xsd">
             <Header action="read" externalSource="NIKU" objectType="wipclass" version="12.0"/>
             <Query>
-                <Filter name="wipclass" criteria="EQUALS"/>
+                <Filter criteria="EQUALS" name="wipclass"/>
             </Query>
         </NikuDataBus>
     </xogtype>
@@ -162,7 +162,7 @@
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_notification.xsd">
             <Header action="read" externalSource="NIKU" objectType="investmentclass" version="14.1"/>
             <Query>
-                <Filter name="investmentclass" criteria="EQUALS"/>
+                <Filter criteria="EQUALS" name="investmentclass"/>
             </Query>
         </NikuDataBus>
     </xogtype>
@@ -170,7 +170,28 @@
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_notification.xsd">
             <Header action="read" externalSource="NIKU" objectType="transactionclass" version="12.0"/>
             <Query>
-                <Filter name="transclass" criteria="EQUALS"/>
+                <Filter criteria="EQUALS" name="transclass"/>
+            </Query>
+        </NikuDataBus>
+    </xogtype>
+    <xogtype type="resourceInstances">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
+            <Header action="read" externalSource="NIKU" objectType="resource" version="8.0">
+                <args name="include_contact" value="true"/>
+                <args name="include_management" value="true"/>
+                <args name="include_custom" value="true"/>
+                <args name="include_financial" value="true"/>
+            </Header>
+            <Query>
+                <Filter criteria="OR" name="resourceID"/>
+            </Query>
+        </NikuDataBus>
+    </xogtype>
+    <xogtype type="userInstances">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
+            <Header action="read" externalSource="NIKU" objectType="user" version="8.0"/>
+            <Query>
+                <Filter criteria="EQUALS" name="userName"/>
             </Query>
         </NikuDataBus>
     </xogtype>

@@ -62,7 +62,7 @@ func updateSections(xog, aux *etree.Document, file common.DriverFile) error {
 	}
 
 	for _, section := range file.Sections {
-		if section.Action == "replace" {
+		if section.Action == common.ACTION_REPLACE {
 			err := processSectionByType(section, sourceView, targetView)
 			if err != nil {
 				return err
@@ -71,7 +71,7 @@ func updateSections(xog, aux *etree.Document, file common.DriverFile) error {
 	}
 
 	for _, section := range file.Sections {
-		if section.Action == "update" {
+		if section.Action == common.ACTION_UPDATE {
 			err := processSectionByType(section, sourceView, targetView)
 			if err != nil {
 				return err
@@ -80,7 +80,7 @@ func updateSections(xog, aux *etree.Document, file common.DriverFile) error {
 	}
 
 	for _, section := range file.Sections {
-		if section.Action == "remove" {
+		if section.Action == common.ACTION_REMOVE {
 			err := processSectionByType(section, sourceView, targetView)
 			if err != nil {
 				return err
@@ -89,7 +89,7 @@ func updateSections(xog, aux *etree.Document, file common.DriverFile) error {
 	}
 
 	for _, section := range file.Sections {
-		if section.Action == "insert" {
+		if section.Action == common.ACTION_INSERT {
 			err := processSectionByType(section, sourceView, targetView)
 			if err != nil {
 				return err
@@ -108,7 +108,7 @@ func updateSections(xog, aux *etree.Document, file common.DriverFile) error {
 
 func processSectionByType(section common.ViewSection, sourceView, targetView *etree.Element) error {
 	var sourceSection *etree.Element
-	if section.Action != "remove" {
+	if section.Action != common.ACTION_REMOVE {
 		if section.SourcePosition == "" {
 			return errors.New("attribute sourcePosition from tag <section> is not defined")
 		}
@@ -128,20 +128,20 @@ func processSectionByType(section common.ViewSection, sourceView, targetView *et
 	}
 
 	switch section.Action {
-	case "replace":
+	case common.ACTION_REPLACE:
 		if section.TargetPosition == "" {
 			return errors.New("cannot replace section because attribute targetPosition from tag <section> is not defined")
 		}
 		targetView.InsertChild(targetSection, sourceSection)
 		targetView.RemoveChild(targetSection)
-	case "remove":
+	case common.ACTION_REMOVE:
 		if section.TargetPosition == "" {
 			return errors.New("cannot remove section because attribute targetPosition from tag <section> is not defined")
 		}
 		targetView.RemoveChild(targetSection)
-	case "insert":
+	case common.ACTION_INSERT:
 		targetView.InsertChild(targetSection, sourceSection)
-	case "update":
+	case common.ACTION_UPDATE:
 		if len(section.Fields) == 0 {
 			return errors.New("cannot update section because there is no tag <filed> defined")
 		}
