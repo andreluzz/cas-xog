@@ -102,13 +102,10 @@ func ExportInstancesToExcel(xog *etree.Document, file common.DriverFile) error {
 
 		for _, match := range file.MatchExcel {
 			var e *etree.Element
-			if match.AttributeValue == "" {
-				e = instance.FindElement("//" + match.Tag + "[@" + match.AttributeName + "']")
-			} else {
-				e = instance.FindElement("//" + match.Tag + "[@" + match.AttributeName + "='" + match.AttributeValue + "']")
-			}
-			if instance.Tag == match.Tag {
+			if match.XPath == "" {
 				e = instance
+			} else {
+				e = instance.FindElement(match.XPath)
 			}
 
 			cell := row.AddCell()
@@ -119,7 +116,7 @@ func ExportInstancesToExcel(xog *etree.Document, file common.DriverFile) error {
 			}
 
 			value := ""
-			if match.IsAttribute {
+			if match.AttributeName != "" {
 				value = e.SelectAttrValue(match.AttributeName, "")
 			} else {
 				if match.MultiValued {
@@ -135,12 +132,11 @@ func ExportInstancesToExcel(xog *etree.Document, file common.DriverFile) error {
 					value = e.Text()
 				}
 			}
-
 			cell.Value = value
 		}
 	}
 
-	err = xlsxFile.Save(common.FOLDER_READ + file.Type + "/" + file.ObjCode + "_instances.xlsx")
+	err = xlsxFile.Save(common.FOLDER_READ + "/excel/" + file.Type + "/" + file.ExcelFile)
 	if err != nil {
 		return errors.New("[migration error] ExportInstancesToExcel: " + err.Error())
 	}

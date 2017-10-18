@@ -59,13 +59,14 @@ type DriverFile struct {
 		To 	 string `xml:"to"`
 	} `xml:"replace"`
 	MatchExcel		  []struct {
-		Col            int    `xml:"col,attr"`
-		Tag            string `xml:"tag,attr"`
-		AttributeName  string `xml:"attribute,attr"`
-		AttributeValue string `xml:"attributeValue,attr"`
-		IsAttribute    bool   `xml:"isAttribute,attr"`
-		MultiValued    bool   `xml:"multiValued,attr"`
-		Separator      string `xml:"separator,attr"`
+		Col 			int		`xml:"col,attr"`
+		Tag 			string	`xml:"tag,attr"`
+		XPath 			string	`xml:"xpath,attr"`
+		AttributeName  	string	`xml:"attribute,attr"`
+		AttributeValue 	string	`xml:"attributeValue,attr"`
+		IsAttribute    	bool  	`xml:"isAttribute,attr"`
+		MultiValued    	bool  	`xml:"multiValued,attr"`
+		Separator      	string 	`xml:"separator,attr"`
 	} `xml:"match"`
 }
 
