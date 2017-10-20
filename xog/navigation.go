@@ -1,12 +1,12 @@
 package xog
 
 import (
-	"fmt"
-	"github.com/andreluzz/cas-xog/common"
-	"io/ioutil"
 	"os"
+	"fmt"
 	"strconv"
 	"strings"
+	"io/ioutil"
+	"github.com/andreluzz/cas-xog/common"
 )
 
 func RenderHome() {
@@ -19,13 +19,22 @@ func RenderHome() {
 
 	LoadEnvironmentsList()
 
+	err := LoadAvailablePackages()
+	if err != nil {
+		common.Debug("\n[CAS-XOG][red[ERROR]] - Error loading packages: %s", err.Error())
+		common.Debug("\n[CAS-XOG][red[FATAL]] - Check your _packages folder. Press enter key to exit...")
+		scanExit := ""
+		fmt.Scanln(&scanExit)
+		os.Exit(0)
+	}
+
 	RenderDrivers()
 }
 
 func RenderInterface() bool {
 	var inputAction string
 	common.Debug("\nChoose action")
-	common.Debug("\n(l = Load XOG Driver, r = Read XOGs, m = Create Migration, w = Write XOGs or x = eXit): ")
+	common.Debug("\n(l = Load XOG Driver, r = Read XOGs, w = Write XOGs, m = Create Migration, p = Install Packages or x = eXit): ")
 	fmt.Scanln(&inputAction)
 	switch strings.ToLower(inputAction) {
 	case "w", "r", "m":
@@ -33,6 +42,18 @@ func RenderInterface() bool {
 			return false
 		}
 		ProcessDriverFiles(strings.ToLower(inputAction))
+	case "p":
+		if !RenderPackages() {
+			return false
+		}
+		if !RenderEnvironments(strings.ToLower(inputAction)) {
+			return false
+		}
+		err := InstallPackage()
+		if err != nil {
+			common.Debug("\n[CAS-XOG][red[ERROR]] %s\n", err.Error())
+			return false
+		}
 	case "l":
 		RenderDrivers()
 	case "x":
