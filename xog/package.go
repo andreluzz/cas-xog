@@ -2,38 +2,21 @@ package xog
 
 import (
 	"os"
+	"fmt"
+	"time"
 	"errors"
+	"strconv"
 	"strings"
 	"io/ioutil"
 	"encoding/xml"
 	"path/filepath"
 	"github.com/andreluzz/cas-xog/common"
-	"fmt"
-	"strconv"
-	"time"
+	"github.com/andreluzz/cas-xog/transform"
 )
 
-type Definition struct {
-	Type string `xml:"type,attr"`
-	Description string `xml:"description,attr"`
-	Value string `xml:"default,attr"`
-}
-
-type Version struct {
-	Name string `xml:"name,attr"`
-	Path string `xml:"path,attr"`
-	Definitions []Definition `xml:"definition"`
-}
-
-type Package struct {
-	Name string `xml:"name,attr"`
-	DriverPath string `xml:"driverPath,attr"`
-	Versions []Version `xml:"version"`
-}
-
-var availablePackages []Package
-var selectedPackage Package
-var selectedVersion Version
+var availablePackages []common.Package
+var selectedPackage common.Package
+var selectedVersion common.Version
 
 func LoadAvailablePackages() error {
 	err := filepath.Walk("./_packages", func(path string, info os.FileInfo, err error) error {
@@ -43,7 +26,7 @@ func LoadAvailablePackages() error {
 				return errors.New("Error loading package file: " + err.Error())
 			}
 			driverXOG = new(common.Driver)
-			pkg := new(Package)
+			pkg := new(common.Package)
 			xml.Unmarshal(xmlPackageFile, pkg)
 			availablePackages = append(availablePackages, *pkg)
 		}
@@ -73,10 +56,40 @@ func InstallPackage() error {
 		return err
 	}
 
+	os.RemoveAll(common.FOLDER_DEBUG)
+	os.MkdirAll(common.FOLDER_DEBUG, os.ModePerm)
+	os.RemoveAll(common.FOLDER_WRITE)
+	os.MkdirAll(common.FOLDER_WRITE, os.ModePerm)
+
 	for i, f := range driverXOG.Files {
-		common.Debug("\n[CAS-XOG][blue[Installing]] %03d/%03d | file: %s", i+1, len(driverXOG.Files), f.Path)
-		
-		common.Debug("\r[CAS-XOG][green[Installed]] %03d/%03d | file: %s", i+1, len(driverXOG.Files), f.Path)
+		common.Debug("\n[CAS-XOG][blue[Processing]] %03d/%03d | file: %s", i+1, len(driverXOG.Files), f.Path)
+		f.PackageFolder = common.FOLDER_PACKAGE + selectedVersion.Path
+
+		//check if target folder type dir exists
+		_, dirErr := os.Stat(f.PackageFolder + f.Type)
+		if os.IsNotExist(dirErr) {
+			_ = os.Mkdir(f.PackageFolder + f.Type, os.ModePerm)
+		}
+
+		transform.ProcessPackage(f, selectedVersion.Definitions)
+
+		action := "w"
+		folder := common.FOLDER_DEBUG
+
+		//check if target folder type dir exists
+		_, dirErr = os.Stat(folder + f.Type)
+		if os.IsNotExist(dirErr) {
+			_ = os.Mkdir(folder+f.Type, os.ModePerm)
+		}
+
+		_, validateOutput, err := loadAndValidate(action, folder, &f, TargetEnv)
+
+		if err != nil {
+			debug(i+1, len(driverXOG.Files), action, validateOutput.Code, f.Path, err.Error())
+			continue
+		}
+
+		debug(i+1, len(driverXOG.Files), action, validateOutput.Code, f.Path, validateOutput.Debug)
 	}
 
 	TargetEnv.logout()

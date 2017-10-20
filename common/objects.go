@@ -68,6 +68,7 @@ type DriverFile struct {
 		MultiValued    	bool  	`xml:"multiValued,attr"`
 		Separator      	string 	`xml:"separator,attr"`
 	} `xml:"match"`
+	PackageFolder 	  string
 }
 
 type Driver struct {
@@ -77,6 +78,24 @@ type Driver struct {
 type XOGOutput struct {
 	Code	string
 	Debug	string
+}
+
+type Definition struct {
+	Type string `xml:"type,attr"`
+	Description string `xml:"description,attr"`
+	Value string `xml:"default,attr"`
+}
+
+type Version struct {
+	Name string `xml:"name,attr"`
+	Path string `xml:"path,attr"`
+	Definitions []Definition `xml:"definition"`
+}
+
+type Package struct {
+	Name string `xml:"name,attr"`
+	DriverPath string `xml:"driverPath,attr"`
+	Versions []Version `xml:"version"`
 }
 
 const LOOKUP 	string 	= "lookups"
@@ -107,3 +126,4 @@ const FOLDER_READ 		string = "_read/"
 const FOLDER_WRITE 		string = "_write/"
 const FOLDER_MIGRATION 	string = "_migration/"
 const FOLDER_DEBUG 		string = "_debug/"
+const FOLDER_PACKAGE 	string = "_package/"

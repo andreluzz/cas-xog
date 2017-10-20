@@ -190,8 +190,7 @@ func debug(index, total int, action, status, path, err string) {
 	actionLabel := "Write"
 	if action == "r" {
 		actionLabel = "Read"
-	}
-	if action == "m" {
+	} else if action == "m" {
 		actionLabel = "Create"
 	}
 

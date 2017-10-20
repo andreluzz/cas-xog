@@ -107,12 +107,8 @@ func read(file *common.DriverFile, env *EnvType) (string, error) {
 	return req.WriteToString()
 }
 
-func write(file *common.DriverFile, env *EnvType) (string, error) {
+func write(file *common.DriverFile, env *EnvType, folder string) (string, error) {
 	nikuDataBusXML := etree.NewDocument()
-	folder := common.FOLDER_WRITE
-	if file.Type == common.MIGRATION {
-		folder = common.FOLDER_MIGRATION
-	}
 
 	err := nikuDataBusXML.ReadFromFile(folder + file.Type + "/" + file.Path)
 	if err != nil {
@@ -132,6 +128,10 @@ func GetXMLFile(action string, file *common.DriverFile, env *EnvType) (string, e
 	if action == "r" {
 		return read(file, env)
 	} else {
-		return write(file, env)
+		folder := common.FOLDER_WRITE
+		if file.Type == common.MIGRATION {
+			folder = common.FOLDER_MIGRATION
+		}
+		return write(file, env, folder)
 	}
 }
