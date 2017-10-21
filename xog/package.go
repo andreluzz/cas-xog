@@ -14,11 +14,53 @@ import (
 	"github.com/andreluzz/cas-xog/transform"
 )
 
+var packagesDriversFileInfo []common.Driver
 var availablePackages []common.Package
 var selectedPackage common.Package
 var selectedVersion common.Version
 
-func LoadAvailablePackages() error {
+func LoadPackages() {
+	err := unzipPackages()
+	if err != nil {
+		common.Debug("\n[CAS-XOG][red[ERROR]] - Error unzipping packages: %s", err.Error())
+		common.Debug("\n[CAS-XOG][red[FATAL]] - Check your packages folder. Press enter key to exit...")
+		scanExit := ""
+		fmt.Scanln(&scanExit)
+		os.Exit(0)
+	}
+
+	err = loadAvailablePackages()
+	if err != nil {
+		common.Debug("\n[CAS-XOG][red[ERROR]] - Error loading packages: %s", err.Error())
+		common.Debug("\n[CAS-XOG][red[FATAL]] - Check your _packages folder. Press enter key to exit...")
+		scanExit := ""
+		fmt.Scanln(&scanExit)
+		os.Exit(0)
+	}
+}
+
+func unzipPackages() error {
+	userPackagesFolder := "packages/"
+	packagesFiles, _ := ioutil.ReadDir(userPackagesFolder)
+	if len(packagesFiles) == 0 {
+		return nil
+	}
+
+	os.RemoveAll(common.FOLDER_PACKAGE)
+	os.MkdirAll(common.FOLDER_PACKAGE, os.ModePerm)
+
+	for _, f := range packagesFiles {
+		_, err := common.Unzip(userPackagesFolder + f.Name(), common.FOLDER_PACKAGE)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func loadAvailablePackages() error {
+	availablePackages = nil
 	err := filepath.Walk("./_packages", func(path string, info os.FileInfo, err error) error {
 		if strings.Contains(path, ".package") {
 			xmlPackageFile, err := ioutil.ReadFile(path)
@@ -29,19 +71,24 @@ func LoadAvailablePackages() error {
 			pkg := new(common.Package)
 			xml.Unmarshal(xmlPackageFile, pkg)
 			availablePackages = append(availablePackages, *pkg)
+		} else if strings.Contains(path, ".driver") {
+			driver := new(common.Driver)
+			driver.Info = info
+			driver.PackageDriver = true
+			driver.FilePath = path
+			packagesDriversFileInfo = append(packagesDriversFileInfo, *driver)
 		}
 		return err
 	})
 
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return err
 }
 
 func InstallPackage() error {
 	start := time.Now()
+
+	output = map[string]int{transform.OUTPUT_SUCCESS: 0, transform.OUTPUT_WARNING: 0, transform.OUTPUT_ERROR: 0}
+
 	common.Debug("\n------------------------------------------------------------------")
 	common.Debug("\n[blue[Initiated at]]: %s", start.Format("Mon _2 Jan 2006 - 15:04:05"))
 	common.Debug("\nInstalling Package: [blue[%s]] (%s)", selectedPackage.Name, selectedVersion.Name)
@@ -51,7 +98,7 @@ func InstallPackage() error {
 	}
 	common.Debug("\n------------------------------------------------------------------\n")
 
-	err := LoadDriver(selectedPackage.DriverPath)
+	err := LoadDriver(common.FOLDER_PACKAGE + selectedPackage.Folder + selectedPackage.DriverFileName)
 	if err != nil {
 		return err
 	}
@@ -63,7 +110,7 @@ func InstallPackage() error {
 
 	for i, f := range driverXOG.Files {
 		common.Debug("\n[CAS-XOG][blue[Processing]] %03d/%03d | file: %s", i+1, len(driverXOG.Files), f.Path)
-		f.PackageFolder = common.FOLDER_PACKAGE + selectedVersion.Path
+		f.PackageFolder = common.FOLDER_PACKAGE + selectedVersion.Folder
 
 		//check if target folder type dir exists
 		_, dirErr := os.Stat(f.PackageFolder + f.Type)
@@ -96,7 +143,8 @@ func InstallPackage() error {
 	elapsed := time.Since(start)
 
 	common.Debug("\n\n------------------------------------------------------------------")
-	common.Debug("\n[blue[Package installed in]]: %.3f seconds", elapsed.Seconds())
+	common.Debug("\nStats: total = %d | failure = %d | success = %d | warning = %d", len(driverXOG.Files), output[transform.OUTPUT_ERROR], output[transform.OUTPUT_SUCCESS], output[transform.OUTPUT_WARNING])
+	common.Debug("\n[blue[Concluded in]]: %.3f seconds", elapsed.Seconds())
 	common.Debug("\n------------------------------------------------------------------\n")
 
 	return nil

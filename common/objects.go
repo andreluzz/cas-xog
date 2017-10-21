@@ -1,5 +1,7 @@
 package common
 
+import "os"
+
 type Menu struct {
 	Code           string `xml:"code,attr"`
 	Action         string `xml:"action,attr"`
@@ -72,7 +74,10 @@ type DriverFile struct {
 }
 
 type Driver struct {
-	Files []DriverFile `xml:"file"`
+	Files 			[]DriverFile `xml:"file"`
+	Info  			os.FileInfo
+	PackageDriver 	bool
+	FilePath 		string
 }
 
 type XOGOutput struct {
@@ -81,21 +86,22 @@ type XOGOutput struct {
 }
 
 type Definition struct {
-	Type string `xml:"type,attr"`
+	Type 		string `xml:"type,attr"`
 	Description string `xml:"description,attr"`
-	Value string `xml:"default,attr"`
+	Value 		string `xml:"default,attr"`
 }
 
 type Version struct {
-	Name string `xml:"name,attr"`
-	Path string `xml:"path,attr"`
-	Definitions []Definition `xml:"definition"`
+	Name 		string `xml:"name,attr"`
+	Folder 		string `xml:"folder,attr"`
+	Definitions	[]Definition `xml:"definition"`
 }
 
 type Package struct {
-	Name string `xml:"name,attr"`
-	DriverPath string `xml:"driverPath,attr"`
-	Versions []Version `xml:"version"`
+	Name 			string `xml:"name,attr"`
+	Folder 			string `xml:"folder,attr"`
+	DriverFileName	string `xml:"driver,attr"`
+	Versions 		[]Version `xml:"version"`
 }
 
 const LOOKUP 	string 	= "lookups"
@@ -126,4 +132,4 @@ const FOLDER_READ 		string = "_read/"
 const FOLDER_WRITE 		string = "_write/"
 const FOLDER_MIGRATION 	string = "_migration/"
 const FOLDER_DEBUG 		string = "_debug/"
-const FOLDER_PACKAGE 	string = "_package/"
+const FOLDER_PACKAGE 	string = "_packages/"
