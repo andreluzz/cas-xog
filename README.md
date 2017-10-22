@@ -16,9 +16,14 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 | Type | Description |
 | ------ | ------ |
 | [`objects`](#type-objects) | Used to read and write objects attributes, actions and links  |
+| [`processes`](#type-processes) | Used to read and write processes  |
+| [`lookups`](#type-lookups) | Used to read and write lookups  |
+| [`portlets`](#type-portlets) | Used to read and write portlets  |
+| [`queries`](#type-queries) | Used to read and write queries  |
+| [`pages`](#type-pages) | Used to read and write pages  |
 
 
-# Type objects
+# Type `objects`
 
 | Atribute | Description | Required |
 | ------ | ------ | ------ |
@@ -55,6 +60,76 @@ Used to read only the selected elements from the object
         <element type="action" code="tst_run_proc_lnk" />
         <element type="link" code="test_subobj.link_test" />
     </file>
+</xogdriver>
+```
+
+# Type `processes`
+
+| Atribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | Process code | yes | 
+| `path` | Path to the file to be saved on the file system | yes | 
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="1.0">
+    <file code="PRC_0001" path="PRC_0001.xml" type="processes" />
+</xogdriver>
+```
+
+# Type `lookups`
+
+| Atribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | Lookup code | yes | 
+| `path` | Path to the file to be saved on the file system | yes | 
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="1.0">
+    <file code="INV_APPLICATION_CATEGORY_TYPE" path="INV_APPLICATION_CATEGORY_TYPE.xml" type="lookups" />
+</xogdriver>
+```
+
+# Type `portlets`
+
+| Atribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | Portlet code | yes | 
+| `path` | Path to the file to be saved on the file system | yes | 
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="1.0">
+    <file code="cop.teamCapacityLinkable" path="cop.teamCapacityLinkable.xml" type="portlets"/>
+</xogdriver>
+```
+
+# Type `queries`
+
+| Atribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | Query code | yes | 
+| `path` | Path to the file to be saved on the file system | yes | 
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="1.0">
+    <file code="cop.projectCostsPhaseLinkable" path="cop.projectCostsPhaseLinkable.xml" type="queries"/>
+</xogdriver>
+```
+
+# Type `pages`
+
+| Atribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | Page code | yes | 
+| `path` | Path to the file to be saved on the file system | yes | 
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="1.0">
+    <file code="pma.ideaFrame" path="pma.ideaFrame.xml" type="pages"/>
 </xogdriver>
 ```
 
