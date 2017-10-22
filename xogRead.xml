@@ -135,7 +135,9 @@
     </xogtype>
     <xogtype type="customObjectInstances">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
-            <Header action="read" externalSource="NIKU" objectType="customObjectInstance" version="8.0"/>
+            <Header action="read" externalSource="NIKU" objectType="customObjectInstance" version="8.0">
+                <args name="documentLocation" value="C:\temp\instances\customObjectInstance"/>
+            </Header>
             <CustomObjectInstanceQuery>
                 <Filter criteria="EQUALS" name="objectCode"/>
                 <Filter criteria="OR" name="instanceCode"/>
@@ -146,7 +148,7 @@
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_notification.xsd">
             <Header action="read" externalSource="NIKU" objectType="resourceclass" version="12.0"/>
             <Query>
-                <Filter criteria="EQUALS" name="resource_class"/>
+                <Filter criteria="OR" name="resource_class"/>
             </Query>
         </NikuDataBus>
     </xogtype>
@@ -154,7 +156,7 @@
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_notification.xsd">
             <Header action="read" externalSource="NIKU" objectType="wipclass" version="12.0"/>
             <Query>
-                <Filter criteria="EQUALS" name="wipclass"/>
+                <Filter criteria="OR" name="wipclass"/>
             </Query>
         </NikuDataBus>
     </xogtype>
@@ -162,7 +164,7 @@
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_notification.xsd">
             <Header action="read" externalSource="NIKU" objectType="investmentclass" version="14.1"/>
             <Query>
-                <Filter criteria="EQUALS" name="investmentclass"/>
+                <Filter criteria="OR" name="investmentclass"/>
             </Query>
         </NikuDataBus>
     </xogtype>
@@ -170,7 +172,7 @@
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_notification.xsd">
             <Header action="read" externalSource="NIKU" objectType="transactionclass" version="12.0"/>
             <Query>
-                <Filter criteria="EQUALS" name="transclass"/>
+                <Filter criteria="OR" name="transclass"/>
             </Query>
         </NikuDataBus>
     </xogtype>
@@ -191,7 +193,112 @@
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
             <Header action="read" externalSource="NIKU" objectType="user" version="8.0"/>
             <Query>
-                <Filter criteria="EQUALS" name="userName"/>
+                <Filter criteria="OR" name="userName"/>
+            </Query>
+        </NikuDataBus>
+    </xogtype>
+    <xogtype type="projectInstances">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
+            <Header action="read" externalSource="NIKU" objectType="project" version="8.0">
+                <args name="include_tasks" value="true"/>
+                <args name="include_dependencies" value="true"/>
+                <args name="include_subprojects" value="true"/>
+                <args name="include_resources" value="true"/>
+                <args name="include_baselines" value="true"/>
+                <args name="include_allocations" value="true"/>
+                <args name="include_estimates" value="true"/>
+                <args name="include_actuals" value="true"/>
+                <args name="include_custom" value="true"/>
+                <args name="include_burdening" value="true"/>
+
+                <args name="documentLocation" value="C:\temp\instances\project"/>
+            </Header>
+            <Query>
+                <Filter criteria="OR" name="projectID"/>
+            </Query>
+        </NikuDataBus>
+    </xogtype>
+    <xogtype type="ideaInstances">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
+            <Header action="read" externalSource="NIKU" objectType="idea" version="8.0">
+                <args name="include_resources" value="true"/>
+                <args name="include_tasks" value="true"/>
+                <args name="include_allocations" value="true"/>
+
+                <args name="documentLocation" value="C:\temp\instances\idea"/>
+            </Header>
+            <Query>
+                <Filter criteria="OR" name="objectID"/>
+            </Query>
+        </NikuDataBus>
+    </xogtype>
+    <xogtype type="applicationInstances">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
+            <Header action="read" externalSource="NIKU" objectType="application" version="8.0">
+                <args name="include_resources" value="true"/>
+                <args name="include_tasks" value="true"/>
+                <args name="include_allocations" value="true"/>
+
+                <args name="documentLocation" value="C:\temp\instances\application"/>
+            </Header>
+            <Query>
+                <Filter criteria="OR" name="objectID"/>
+            </Query>
+        </NikuDataBus>
+    </xogtype>
+    <xogtype type="assetInstances">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
+            <Header action="read" externalSource="NIKU" objectType="asset" version="8.0">
+                <args name="include_resources" value="true"/>
+                <args name="include_tasks" value="true"/>
+                <args name="include_allocations" value="true"/>
+
+                <args name="documentLocation" value="C:\temp\instances\asset"/>
+            </Header>
+            <Query>
+                <Filter criteria="OR" name="objectID"/>
+            </Query>
+        </NikuDataBus>
+    </xogtype>
+    <xogtype type="otherInvestmentInstances">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
+            <Header action="read" externalSource="NIKU" objectType="otherInvestment" version="8.0">
+                <args name="include_resources" value="true"/>
+                <args name="include_tasks" value="true"/>
+                <args name="include_allocations" value="true"/>
+
+                <args name="documentLocation" value="C:\temp\instances\otherInvestment"/>
+            </Header>
+            <Query>
+                <Filter criteria="OR" name="objectID"/>
+            </Query>
+        </NikuDataBus>
+    </xogtype>
+    <xogtype type="productInstances">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
+            <Header action="read" externalSource="NIKU" objectType="product" version="8.0">
+                <args name="include_resources" value="true"/>
+                <args name="include_tasks" value="true"/>
+                <args name="include_allocations" value="true"/>
+
+                <args name="documentLocation" value="C:\temp\instances\product"/>
+            </Header>
+            <Query>
+                <Filter criteria="OR" name="objectID"/>
+            </Query>
+        </NikuDataBus>
+    </xogtype>
+    <xogtype type="serviceInstances">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
+            <Header action="read" externalSource="NIKU" objectType="service" version="8.0">
+                <args name="include_resources" value="true"/>
+                <args name="include_tasks" value="true"/>
+                <args name="include_allocations" value="true"/>
+
+                <args name="documentLocation" value="C:\temp\instances\service"/>
+            </Header>
+            <Query>
+                <Filter criteria="OR" name="objectID"/>
             </Query>
         </NikuDataBus>
     </xogtype>

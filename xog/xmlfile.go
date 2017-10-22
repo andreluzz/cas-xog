@@ -79,6 +79,7 @@ func read(file *common.DriverFile, env *EnvType) (string, error) {
 		}
 		req.FindElement("//Filter[@name='instanceCode']").SetText(file.Code)
 		req.FindElement("//Filter[@name='objectCode']").SetText(file.ObjCode)
+		req.FindElement("//args[@name='documentLocation']").CreateAttr("value", "./" + common.FOLDER_WRITE + "_" + file.Type + "/_document")
 	case common.RESOURCE_CLASS_INSTANCE:
 		req.FindElement("//Filter[@name='resource_class']").SetText(file.Code)
 	case common.WIP_CLASS_INSTANCE:
@@ -91,6 +92,12 @@ func read(file *common.DriverFile, env *EnvType) (string, error) {
 		req.FindElement("//Filter[@name='resourceID']").SetText(file.Code)
 	case common.USER_INSTANCE:
 		req.FindElement("//Filter[@name='userName']").SetText(file.Code)
+	case common.PROJECT_INSTANCE:
+		req.FindElement("//Filter[@name='projectID']").SetText(file.Code)
+		req.FindElement("//args[@name='documentLocation']").CreateAttr("value", "./" + common.FOLDER_WRITE + "_" + file.Type + "/_document")
+	case common.IDEA_INSTANCE, common.APPLICATION_INSTANCE, common.ASSET_INSTANCE, common.OTHER_INVESTMENT_INSTANCE, common.PRODUCT_INSTANCE, common.SERVICE_INSTANCE:
+		req.FindElement("//Filter[@name='objectID']").SetText(file.Code)
+		req.FindElement("//args[@name='documentLocation']").CreateAttr("value", "./" + common.FOLDER_WRITE + "_" + file.Type + "/_document")
 	}
 
 	nikuDataBusElement := req.FindElement("//NikuDataBus").Copy()

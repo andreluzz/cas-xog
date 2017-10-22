@@ -83,11 +83,13 @@ Used to read only the selected elements from the object
 | ------ | ------ | ------ |
 | `code` | Lookup code | yes | 
 | `path` | Path to the file to be saved on the file system | yes | 
+| `onlyStructure` | Used to create a lookup with a fake query to prevent error of attributes that have not yet been imported | no | 
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="1.0">
     <file code="INV_APPLICATION_CATEGORY_TYPE" path="INV_APPLICATION_CATEGORY_TYPE.xml" type="lookups" />
+    <file code="LOOKUP_FIN_CHARGECODES" path="LOOKUP_FIN_CHARGECODES.xml" onlyStructure="true" type="lookups" />
 </xogdriver>
 ```
 
