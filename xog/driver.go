@@ -10,6 +10,8 @@ import (
 	"io/ioutil"
 	"os"
 	"time"
+	"fmt"
+	"strconv"
 )
 
 var driverXOG *common.Driver
@@ -185,61 +187,69 @@ func ProcessDriverFiles(action string) {
 	common.Debug("\n------------------------------------------------------------------\n")
 }
 
-func debug(index, total int, action, status, path, err string) {
+func RenderDrivers() {
+	var driverIndex = 1
+	driverPath := "drivers/"
+	driversFileList, _ := ioutil.ReadDir(driverPath)
 
-	actionLabel := "Write"
-	if action == "r" {
-		actionLabel = "Read"
-	}
-	if action == "m" {
-		actionLabel = "Create"
-	}
-
-	color := "green"
-	statusLabel := "success"
-	if status == transform.OUTPUT_WARNING {
-		statusLabel = "warning"
-		color = "yellow"
-	} else if status == transform.OUTPUT_ERROR {
-		statusLabel = "error  "
-		color = "red"
+	if len(driversFileList) == 0 {
+		common.Debug("\n[CAS-XOG][red[ERROR]] - XogDriver folders or file not found! Press enter key to exit...\n")
+		scanexit := ""
+		fmt.Scanln(&scanexit)
+		os.Exit(0)
 	}
 
-	if err != "" {
-		err = "| Debug: " + err
+	var driversList []common.Driver
+	for _, f := range driversFileList {
+		driver := new(common.Driver)
+		driver.Info = f
+		driver.FilePath = driverPath + f.Name()
+		driversList = append(driversList, *driver)
 	}
 
-	output[status] += 1
+	driversList = append(driversList, packagesDriversFileInfo...)
 
-	common.Debug("\r[CAS-XOG][%s[%s %s]] %03d/%03d | file: %s %s", color, actionLabel, statusLabel, index, total, path, err)
+	fmt.Println("")
+	fmt.Println("Available drivers:")
+	for k, d := range driversList {
+		if d.PackageDriver {
+			common.Debug("%d - [blue[Package driver:]] %s\n", k+1, d.Info.Name())
+		} else {
+			common.Debug("%d - %s\n", k+1, d.Info.Name())
+		}
+	}
+	if startInstallingPackage == 0 {
+		fmt.Print("Choose driver [1] or p = Install Package: ")
+	}else {
+		fmt.Print("Choose driver [1]: ")
+	}
+
+	input := "1"
+	fmt.Scanln(&input)
+
+	if input == "p" && startInstallingPackage == 0 {
+		startInstallingPackage = 1
+		return
+	}
+	startInstallingPackage = -1
+
+	var err error
+	driverIndex, err = strconv.Atoi(input)
+
+	if err != nil || driverIndex-1 < 0 || driverIndex > len(driversList) {
+		common.Debug("\n[CAS-XOG][red[ERROR]] - Invalid XOG driver!\n")
+		return
+	}
+
+	err = LoadDriver( driversList[driverIndex-1].FilePath)
+	if err != nil {
+		common.Debug("\n[CAS-XOG][red[ERROR]] - %s", err.Error())
+		common.Debug("\n[CAS-XOG][red[FATAL]] - Check your driver file. Press enter key to exit...")
+		scanExit := ""
+		fmt.Scanln(&scanExit)
+		os.Exit(0)
+	}
+
+	common.Debug("\n[CAS-XOG][blue[Loaded XOG Driver file]]: %s | Total files: [green[%d]]\n",  driversList[driverIndex-1].FilePath, len(driverXOG.Files))
 }
 
-func loadAndValidate(action, folder string, file *common.DriverFile, env *EnvType) (*etree.Document, common.XOGOutput, error) {
-
-	if action != "w" && file.Type == common.MIGRATION {
-		return nil, common.XOGOutput{Code: transform.OUTPUT_ERROR, Debug: ""}, nil
-	}
-
-	body, err := GetXMLFile(action, file, env)
-	errorOutput := common.XOGOutput{Code: transform.OUTPUT_ERROR, Debug: ""}
-	if err != nil {
-		return nil, errorOutput, err
-	}
-
-	resp, err := common.SoapCall(body, env.URL)
-
-	if err != nil {
-		return nil, errorOutput, err
-	}
-
-	resp.IndentTabs()
-	resp.WriteToFile(folder + file.Type + "/" + file.Path)
-
-	validateOutput, err := transform.Validate(resp)
-
-	if err != nil {
-		return nil, validateOutput, err
-	}
-
-	return resp, validateOutput, nil
-}

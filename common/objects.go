@@ -1,5 +1,7 @@
 package common
 
+import "os"
+
 type Menu struct {
 	Code           string `xml:"code,attr"`
 	Action         string `xml:"action,attr"`
@@ -29,6 +31,11 @@ type Element struct {
 	Action string `xml:"action,attr"`
 }
 
+type FileReplace struct {
+	From string `xml:"from"`
+	To 	 string `xml:"to"`
+}
+
 type DriverFile struct {
 	Code              string        `xml:"code,attr"`
 	Path              string        `xml:"path,attr"`
@@ -54,10 +61,7 @@ type DriverFile struct {
 	Menus             []Menu        `xml:"menu"`
 	Sections 		  []ViewSection `xml:"section"`
 	Elements 		  []Element		`xml:"element"`
-	Replace			  []struct {
-		From string `xml:"from"`
-		To 	 string `xml:"to"`
-	} `xml:"replace"`
+	Replace			  []FileReplace `xml:"replace"`
 	MatchExcel		  []struct {
 		Col 			int		`xml:"col,attr"`
 		Tag 			string	`xml:"tag,attr"`
@@ -68,15 +72,43 @@ type DriverFile struct {
 		MultiValued    	bool  	`xml:"multiValued,attr"`
 		Separator      	string 	`xml:"separator,attr"`
 	} `xml:"match"`
+	PackageFolder 	  string
 }
 
 type Driver struct {
-	Files []DriverFile `xml:"file"`
+	Files 			[]DriverFile `xml:"file"`
+	Info  			os.FileInfo
+	PackageDriver 	bool
+	FilePath 		string
 }
 
 type XOGOutput struct {
 	Code	string
 	Debug	string
+}
+
+type Definition struct {
+	Action 			string	`xml:"action,attr"`
+	Description 	string	`xml:"description,attr"`
+	Default 		string	`xml:"default,attr"`
+	Value	 		string
+	TransformTypes	string	`xml:"transformTypes"`
+	Match 			string	`xml:"match"`
+	Replace			string	`xml:"replace"`
+}
+
+type Version struct {
+	Name 			string `xml:"name,attr"`
+	Folder 			string `xml:"folder,attr"`
+	DriverFileName	string `xml:"driver,attr"`
+	Definitions		[]Definition `xml:"definition"`
+}
+
+type Package struct {
+	Name 			string `xml:"name,attr"`
+	Folder 			string `xml:"folder,attr"`
+	DriverFileName	string `xml:"driver,attr"`
+	Versions 		[]Version `xml:"version"`
 }
 
 const LOOKUP 	string 	= "lookups"
@@ -114,3 +146,4 @@ const FOLDER_READ 		string = "_read/"
 const FOLDER_WRITE 		string = "_write/"
 const FOLDER_MIGRATION 	string = "_migration/"
 const FOLDER_DEBUG 		string = "_debug/"
+const FOLDER_PACKAGE 	string = "_packages/"
