@@ -213,14 +213,25 @@ func RenderDrivers() {
 	fmt.Println("Available drivers:")
 	for k, d := range driversList {
 		if d.PackageDriver {
-			common.Debug("%d - %s [blue[(package driver)]]\n", k+1, d.Info.Name())
+			common.Debug("%d - [blue[Package driver:]] %s\n", k+1, d.Info.Name())
 		} else {
 			common.Debug("%d - %s\n", k+1, d.Info.Name())
 		}
 	}
-	fmt.Print("Choose driver [1]: ")
-	var input string = "1"
+	if startInstallingPackage == 0 {
+		fmt.Print("Choose driver [1] or p = Install Package: ")
+	}else {
+		fmt.Print("Choose driver [1]: ")
+	}
+
+	input := "1"
 	fmt.Scanln(&input)
+
+	if input == "p" && startInstallingPackage == 0 {
+		startInstallingPackage = 1
+		return
+	}
+	startInstallingPackage = -1
 
 	var err error
 	driverIndex, err = strconv.Atoi(input)

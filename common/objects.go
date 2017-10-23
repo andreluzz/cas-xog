@@ -92,9 +92,10 @@ type Definition struct {
 }
 
 type Version struct {
-	Name 		string `xml:"name,attr"`
-	Folder 		string `xml:"folder,attr"`
-	Definitions	[]Definition `xml:"definition"`
+	Name 			string `xml:"name,attr"`
+	Folder 			string `xml:"folder,attr"`
+	DriverFileName	string `xml:"driver,attr"`
+	Definitions		[]Definition `xml:"definition"`
 }
 
 type Package struct {

@@ -102,24 +102,24 @@ func findAndReplace(xog *etree.Document, file common.DriverFile) {
 	xog.SetRoot(xmlResult.Root())
 }
 
-func changePartition(xog *etree.Document, file common.DriverFile) {
+func changePartition(xog *etree.Document, sourcePartition, targetPartition string) {
 	var elems []*etree.Element
-	if file.SourcePartition == "" {
+	if sourcePartition == "" {
 		elems = xog.FindElements("//*[@partitionCode]")
 	} else {
-		elems = xog.FindElements("//*[@partitionCode='" + file.SourcePartition + "']")
+		elems = xog.FindElements("//*[@partitionCode='" + sourcePartition + "']")
 	}
 
 	for _, e := range elems {
-		e.CreateAttr("partitionCode", file.TargetPartition)
+		e.CreateAttr("partitionCode", targetPartition)
 	}
-	if file.SourcePartition == "" {
+	if sourcePartition == "" {
 		for _, e := range xog.FindElements("//*[@dataProviderPartitionId]") {
-			e.CreateAttr("dataProviderPartitionId", file.TargetPartition)
+			e.CreateAttr("dataProviderPartitionId", targetPartition)
 		}
 	} else {
-		for _, e := range xog.FindElements("//*[@dataProviderPartitionId='" + file.SourcePartition + "']") {
-			e.CreateAttr("dataProviderPartitionId", file.TargetPartition)
+		for _, e := range xog.FindElements("//*[@dataProviderPartitionId='" + sourcePartition + "']") {
+			e.CreateAttr("dataProviderPartitionId", targetPartition)
 		}
 	}
 }

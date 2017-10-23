@@ -7,11 +7,18 @@ import (
 	"github.com/andreluzz/cas-xog/common"
 )
 
+var startInstallingPackage int
+
 func RenderHome() {
+
+	common.InitLog()
+
 	common.Debug("\n")
 	common.Debug("--------------------------------------------\n")
 	common.Debug("##### CAS XOG Automation - Version 2.0 #####\n")
 	common.Debug("--------------------------------------------\n")
+
+	startInstallingPackage = 0
 
 	InitRead()
 
@@ -24,9 +31,16 @@ func RenderHome() {
 
 func RenderInterface() bool {
 	var inputAction string
-	common.Debug("\nChoose action")
-	common.Debug("\n(l = Load XOG Driver, r = Read XOGs, w = Write XOGs, m = Create Migration, p = Install Packages or x = eXit): ")
-	fmt.Scanln(&inputAction)
+
+	if startInstallingPackage == 1 {
+		startInstallingPackage = -1
+		inputAction = "p"
+	} else {
+		common.Debug("\nChoose action")
+		common.Debug("\n(l = Load XOG Driver, r = Read XOGs, w = Write XOGs, m = Create Migration, p = Install Package or x = eXit): ")
+		fmt.Scanln(&inputAction)
+	}
+
 	switch strings.ToLower(inputAction) {
 	case "w", "r", "m":
 		if !RenderEnvironments(strings.ToLower(inputAction)) {

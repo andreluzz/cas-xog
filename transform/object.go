@@ -22,7 +22,7 @@ func specificObjectTransformations(xog *etree.Document, file common.DriverFile) 
 	}
 
 	if file.TargetPartition != "" {
-		changePartition(xog, file)
+		changePartition(xog, file.SourcePartition, file.TargetPartition)
 	}
 
 	if file.PartitionModel != "" {

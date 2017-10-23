@@ -17,7 +17,7 @@ func specificViewTransformations(xog, aux *etree.Document, file common.DriverFil
 	removeElementFromParent(xog, "//objects")
 
 	if file.TargetPartition != "" {
-		changePartition(xog, file)
+		changePartition(xog, file.SourcePartition, file.TargetPartition)
 	}
 
 	if file.Code != "*" {

@@ -92,13 +92,27 @@ func InstallPackage() error {
 	common.Debug("\n------------------------------------------------------------------")
 	common.Debug("\n[blue[Initiated at]]: %s", start.Format("Mon _2 Jan 2006 - 15:04:05"))
 	common.Debug("\nInstalling Package: [blue[%s]] (%s)", selectedPackage.Name, selectedVersion.Name)
-	common.Debug("\nDefinitions:")
-	for _, d := range selectedVersion.Definitions {
-		common.Debug("\n   %s: %s", d.Type, d.Value)
+	common.Debug("\nTarget environment: [blue[%s]]", TargetEnv.Name)
+	if len(selectedVersion.Definitions) > 0 {
+		common.Debug("\nDefinitions:")
+		for _, d := range selectedVersion.Definitions {
+			common.Debug("\n   %s: %s", d.Type, d.Value)
+		}
 	}
 	common.Debug("\n------------------------------------------------------------------\n")
+	common.Debug("\n[CAS-XOG]Start package install? (y = Yes, n = No) [n]: ")
+	input := "n"
+	fmt.Scanln(&input)
+	if input == "n" || input != "y" {
+		return nil
+	}
 
-	err := LoadDriver(common.FOLDER_PACKAGE + selectedPackage.Folder + selectedPackage.DriverFileName)
+	driverPath := common.FOLDER_PACKAGE + selectedPackage.Folder + selectedPackage.DriverFileName
+	if selectedVersion.DriverFileName != "" {
+		driverPath = common.FOLDER_PACKAGE + selectedPackage.Folder + selectedVersion.DriverFileName
+	}
+
+	err := LoadDriver(driverPath)
 	if err != nil {
 		return err
 	}
@@ -110,21 +124,17 @@ func InstallPackage() error {
 
 	for i, f := range driverXOG.Files {
 		common.Debug("\n[CAS-XOG][blue[Processing]] %03d/%03d | file: %s", i+1, len(driverXOG.Files), f.Path)
-		f.PackageFolder = common.FOLDER_PACKAGE + selectedVersion.Folder
-
-		//check if target folder type dir exists
-		_, dirErr := os.Stat(f.PackageFolder + f.Type)
-		if os.IsNotExist(dirErr) {
-			_ = os.Mkdir(f.PackageFolder + f.Type, os.ModePerm)
-		}
+		f.PackageFolder = common.FOLDER_PACKAGE + selectedPackage.Folder + selectedVersion.Folder
 
 		transform.ProcessPackage(f, selectedVersion.Definitions)
+
+		common.Debug("\r[CAS-XOG]Writing %03d/%03d | file: %s   ", i+1, len(driverXOG.Files), f.Path)
 
 		action := "w"
 		folder := common.FOLDER_DEBUG
 
 		//check if target folder type dir exists
-		_, dirErr = os.Stat(folder + f.Type)
+		_, dirErr := os.Stat(folder + f.Type)
 		if os.IsNotExist(dirErr) {
 			_ = os.Mkdir(folder+f.Type, os.ModePerm)
 		}
@@ -157,7 +167,7 @@ func RenderPackages() bool {
 		common.Debug("%d - %s\n", i+1, p.Name)
 	}
 	common.Debug("Choose package to install [1]: ")
-	var input string = "1"
+	input := "1"
 	fmt.Scanln(&input)
 
 	packageIndex, err := strconv.Atoi(input)

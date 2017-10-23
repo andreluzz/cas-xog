@@ -5,6 +5,7 @@
 *.dylib
 *.xlsx
 *.ico
+*.log
 *.manifest
 
 # Test binary, build with `go test -c`
@@ -23,6 +24,7 @@ _debug/
 _packages/
 extra/
 drivers/
+packages/
 .idea/
 xogEnv.xml
 template.xml

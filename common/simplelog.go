@@ -3,8 +3,8 @@ package common
 import (
 	"fmt"
 	"strings"
-	"github.com/mattn/go-colorable"
 	"github.com/beevik/etree"
+	"github.com/mattn/go-colorable"
 )
 
 func Debug(format string, args ...interface{}) {
@@ -12,6 +12,10 @@ func Debug(format string, args ...interface{}) {
 	r := strings.NewReplacer("[red[", "\033[91m", "[green[", "\033[92m", "[yellow[", "\033[93m", "[blue[", "\033[96m", "]]", "\033[0m")
 	format = r.Replace(format)
 	fmt.Fprintf(colorable.NewColorableStdout(), format)
+}
+
+func InitLog() {
+	//TODO log to file
 }
 
 func DebugElement(e *etree.Element) {
