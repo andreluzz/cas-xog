@@ -64,7 +64,7 @@ func Process(xog, aux *etree.Document, file common.DriverFile) error {
 	removeElementFromParent(xog, "//XOGOutput")
 
 	if len(file.Replace) > 0 {
-		findAndReplace(xog, file)
+		findAndReplace(xog, file.Replace)
 	}
 
 	return err
@@ -92,9 +92,9 @@ func validateCodeAndRemoveElementsFromParent(xog *etree.Document, path, code str
 	}
 }
 
-func findAndReplace(xog *etree.Document, file common.DriverFile) {
+func findAndReplace(xog *etree.Document, replace []common.FileReplace) {
 	xogString, _ := xog.WriteToString()
-	for _, r := range file.Replace {
+	for _, r := range replace {
 		xogString = strings.Replace(xogString, r.From, r.To, -1)
 	}
 	xmlResult := etree.NewDocument()

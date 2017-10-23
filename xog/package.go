@@ -29,6 +29,11 @@ func LoadPackages() {
 		os.Exit(0)
 	}
 
+	_, dirErr := os.Stat(common.FOLDER_PACKAGE)
+	if os.IsNotExist(dirErr) {
+		return
+	}
+
 	err = loadAvailablePackages()
 	if err != nil {
 		common.Debug("\n[CAS-XOG][red[ERROR]] - Error loading packages: %s", err.Error())
@@ -96,7 +101,7 @@ func InstallPackage() error {
 	if len(selectedVersion.Definitions) > 0 {
 		common.Debug("\nDefinitions:")
 		for _, d := range selectedVersion.Definitions {
-			common.Debug("\n   %s: %s", d.Type, d.Value)
+			common.Debug("\n   %s: %s", d.Action, d.Value)
 		}
 	}
 	common.Debug("\n------------------------------------------------------------------\n")
@@ -109,7 +114,7 @@ func InstallPackage() error {
 
 	driverPath := common.FOLDER_PACKAGE + selectedPackage.Folder + selectedPackage.DriverFileName
 	if selectedVersion.DriverFileName != "" {
-		driverPath = common.FOLDER_PACKAGE + selectedPackage.Folder + selectedVersion.DriverFileName
+		driverPath = common.FOLDER_PACKAGE + selectedPackage.Folder + selectedVersion.Folder + selectedVersion.DriverFileName
 	}
 
 	err := LoadDriver(driverPath)
@@ -161,6 +166,12 @@ func InstallPackage() error {
 }
 
 func RenderPackages() bool {
+
+	if len(availablePackages) <= 0 {
+		common.Debug("\n[CAS-XOG][yellow[WARNING]] - No package available, check your packages folder!\n")
+		return false
+	}
+
 	common.Debug("\n")
 	common.Debug("Available packages:\n")
 	for i, p := range availablePackages {
@@ -187,7 +198,7 @@ func RenderPackages() bool {
 			common.Debug("%d - %s\n", i+1, v.Name)
 		}
 		common.Debug("Choose version to install [1]: ")
-		var input string = "1"
+		input := "1"
 		fmt.Scanln(&input)
 		versionIndex, err = strconv.Atoi(input)
 
@@ -200,8 +211,8 @@ func RenderPackages() bool {
 	common.Debug("\n[CAS-XOG] [blue[Package required definitions:]]\n")
 	selectedVersion = selectedPackage.Versions[versionIndex-1]
 	for i, d := range selectedVersion.Definitions {
-		common.Debug("%s [%s]:", d.Description, d.Value)
-		input = d.Value
+		common.Debug("%s [%s]:", d.Description, d.Default)
+		input := d.Default
 		fmt.Scanln(&input)
 		if input == "" {
 			common.Debug("\n[CAS-XOG][red[ERROR]] - Invalid definition!\n")

@@ -4,6 +4,7 @@ import (
 	"os"
 	"github.com/beevik/etree"
 	"github.com/andreluzz/cas-xog/common"
+	"strings"
 )
 
 func ProcessPackage(file common.DriverFile, definitions []common.Definition) error {
@@ -15,7 +16,10 @@ func ProcessPackage(file common.DriverFile, definitions []common.Definition) err
 	}
 
 	for _, def := range definitions {
-		switch def.Type {
+		if def.Value == def.Default {
+			continue
+		}
+		switch def.Action {
 		case "targetPartitionModel":
 			if file.Type == common.OBJECT {
 				e := xog.FindElement("//object[@partitionModelCode]")
@@ -27,9 +31,16 @@ func ProcessPackage(file common.DriverFile, definitions []common.Definition) err
 			if file.Type == common.OBJECT || file.Type == common.VIEW {
 				changePartition(xog, "", def.Value)
 			}
-		case "processXOGUser":
-			if file.Type == common.PROCESS {
-
+		case "replaceString":
+			if def.Value == "" {
+				continue
+			}
+			replace := strings.Replace(def.Replace, "##DEFINITION_VALUE##", def.Value, 1)
+			if replace == def.Match {
+				continue
+			}
+			if def.TransformTypes == "" || strings.Contains(def.TransformTypes, file.Type) {
+				findAndReplace(xog, []common.FileReplace{{From: def.Match, To: replace}})
 			}
 		}
 	}

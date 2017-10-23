@@ -31,6 +31,11 @@ type Element struct {
 	Action string `xml:"action,attr"`
 }
 
+type FileReplace struct {
+	From string `xml:"from"`
+	To 	 string `xml:"to"`
+}
+
 type DriverFile struct {
 	Code              string        `xml:"code,attr"`
 	Path              string        `xml:"path,attr"`
@@ -56,10 +61,7 @@ type DriverFile struct {
 	Menus             []Menu        `xml:"menu"`
 	Sections 		  []ViewSection `xml:"section"`
 	Elements 		  []Element		`xml:"element"`
-	Replace			  []struct {
-		From string `xml:"from"`
-		To 	 string `xml:"to"`
-	} `xml:"replace"`
+	Replace			  []FileReplace `xml:"replace"`
 	MatchExcel		  []struct {
 		Col 			int		`xml:"col,attr"`
 		Tag 			string	`xml:"tag,attr"`
@@ -86,9 +88,13 @@ type XOGOutput struct {
 }
 
 type Definition struct {
-	Type 		string `xml:"type,attr"`
-	Description string `xml:"description,attr"`
-	Value 		string `xml:"default,attr"`
+	Action 			string	`xml:"action,attr"`
+	Description 	string	`xml:"description,attr"`
+	Default 		string	`xml:"default,attr"`
+	Value	 		string
+	TransformTypes	string	`xml:"transformTypes"`
+	Match 			string	`xml:"match"`
+	Replace			string	`xml:"replace"`
 }
 
 type Version struct {
