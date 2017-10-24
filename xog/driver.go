@@ -134,7 +134,7 @@ func ProcessDriverFiles(action string) {
 				}
 			}
 
-			err := transform.Process(resp, aux, f)
+			err := transform.Execute(resp, aux, f)
 			if err != nil {
 				debug(i+1, len(driverXOG.Files), action, common.OUTPUT_ERROR, f.Path, err.Error())
 				continue
@@ -155,6 +155,7 @@ func ProcessDriverFiles(action string) {
 				debug(i+1, len(driverXOG.Files), action, common.OUTPUT_ERROR, f.Path, err.Error())
 				continue
 			}
+			validateOutput =  common.XOGOutput{Code: common.OUTPUT_SUCCESS, Debug: ""}
 		}
 
 		nikuDataBusElement := resp.FindElement("//NikuDataBus")

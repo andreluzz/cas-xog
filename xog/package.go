@@ -94,6 +94,42 @@ func InstallPackage() error {
 
 	output = map[string]int{common.OUTPUT_SUCCESS: 0, common.OUTPUT_WARNING: 0, common.OUTPUT_ERROR: 0}
 
+	driverPath := common.FOLDER_PACKAGE + selectedPackage.Folder + selectedPackage.DriverFileName
+	if selectedVersion.DriverFileName != "" {
+		driverPath = common.FOLDER_PACKAGE + selectedPackage.Folder + selectedVersion.Folder + selectedVersion.DriverFileName
+	}
+
+	err := LoadDriver(driverPath)
+	if err != nil {
+		return err
+	}
+
+	os.RemoveAll(common.FOLDER_DEBUG)
+	os.MkdirAll(common.FOLDER_DEBUG, os.ModePerm)
+	os.RemoveAll(common.FOLDER_WRITE)
+	os.MkdirAll(common.FOLDER_WRITE, os.ModePerm)
+
+	if len(selectedVersion.Definitions) > 0 {
+		common.Info("\n------------------------------------------------------------------")
+		common.Info("\n[blue[Initiated at]]: %s", start.Format("Mon _2 Jan 2006 - 15:04:05"))
+		common.Info("\nProcessing Package: [blue[%s]] (%s)", selectedPackage.Name, selectedVersion.Name)
+		common.Info("\n------------------------------------------------------------------\n")
+
+		for i, f := range driverXOG.Files {
+			f.PackageFolder = common.FOLDER_PACKAGE + selectedPackage.Folder + selectedVersion.Folder
+			transform.ProcessPackage(f, selectedVersion.Definitions)
+			common.Info("\n[CAS-XOG][blue[Processed]] %03d/%03d | file: %s", i+1, len(driverXOG.Files), f.Path)
+
+		}
+		elapsed := time.Since(start)
+
+		common.Info("\n\n------------------------------------------------------------------")
+		common.Info("\n[blue[Concluded in]]: %.3f seconds", elapsed.Seconds())
+		common.Info("\n------------------------------------------------------------------\n")
+	}
+
+	start = time.Now()
+
 	common.Info("\n------------------------------------------------------------------")
 	common.Info("\n[blue[Initiated at]]: %s", start.Format("Mon _2 Jan 2006 - 15:04:05"))
 	common.Info("\nInstalling Package: [blue[%s]] (%s)", selectedPackage.Name, selectedVersion.Name)
@@ -112,28 +148,9 @@ func InstallPackage() error {
 		return nil
 	}
 
-	driverPath := common.FOLDER_PACKAGE + selectedPackage.Folder + selectedPackage.DriverFileName
-	if selectedVersion.DriverFileName != "" {
-		driverPath = common.FOLDER_PACKAGE + selectedPackage.Folder + selectedVersion.Folder + selectedVersion.DriverFileName
-	}
-
-	err := LoadDriver(driverPath)
-	if err != nil {
-		return err
-	}
-
-	os.RemoveAll(common.FOLDER_DEBUG)
-	os.MkdirAll(common.FOLDER_DEBUG, os.ModePerm)
-	os.RemoveAll(common.FOLDER_WRITE)
-	os.MkdirAll(common.FOLDER_WRITE, os.ModePerm)
-
 	for i, f := range driverXOG.Files {
-		common.Info("\n[CAS-XOG][blue[Processing]] %03d/%03d | file: %s", i+1, len(driverXOG.Files), f.Path)
 		f.PackageFolder = common.FOLDER_PACKAGE + selectedPackage.Folder + selectedVersion.Folder
-
-		transform.ProcessPackage(f, selectedVersion.Definitions)
-
-		common.Info("\r[CAS-XOG]Writing %03d/%03d | file: %s   ", i+1, len(driverXOG.Files), f.Path)
+		common.Info("\n[CAS-XOG]Writing %03d/%03d | file: %s   ", i+1, len(driverXOG.Files), f.Path)
 
 		action := "w"
 		folder := common.FOLDER_DEBUG

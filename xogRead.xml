@@ -136,7 +136,7 @@
     <xogtype type="customObjectInstances">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
             <Header action="read" externalSource="NIKU" objectType="customObjectInstance" version="8.0">
-                <args name="documentLocation" value="C:\temp\instances\customObjectInstance"/>
+                <args name="documentLocation" />
             </Header>
             <CustomObjectInstanceQuery>
                 <Filter criteria="EQUALS" name="objectCode"/>
@@ -211,7 +211,7 @@
                 <args name="include_custom" value="true"/>
                 <args name="include_burdening" value="true"/>
 
-                <args name="documentLocation" value="C:\temp\instances\project"/>
+                <args name="documentLocation" />
             </Header>
             <Query>
                 <Filter criteria="OR" name="projectID"/>
@@ -225,7 +225,7 @@
                 <args name="include_tasks" value="true"/>
                 <args name="include_allocations" value="true"/>
 
-                <args name="documentLocation" value="C:\temp\instances\idea"/>
+                <args name="documentLocation" />
             </Header>
             <Query>
                 <Filter criteria="OR" name="objectID"/>
@@ -239,7 +239,7 @@
                 <args name="include_tasks" value="true"/>
                 <args name="include_allocations" value="true"/>
 
-                <args name="documentLocation" value="C:\temp\instances\application"/>
+                <args name="documentLocation" />
             </Header>
             <Query>
                 <Filter criteria="OR" name="objectID"/>
@@ -253,7 +253,7 @@
                 <args name="include_tasks" value="true"/>
                 <args name="include_allocations" value="true"/>
 
-                <args name="documentLocation" value="C:\temp\instances\asset"/>
+                <args name="documentLocation" />
             </Header>
             <Query>
                 <Filter criteria="OR" name="objectID"/>
@@ -267,7 +267,7 @@
                 <args name="include_tasks" value="true"/>
                 <args name="include_allocations" value="true"/>
 
-                <args name="documentLocation" value="C:\temp\instances\otherInvestment"/>
+                <args name="documentLocation" />
             </Header>
             <Query>
                 <Filter criteria="OR" name="objectID"/>
@@ -281,7 +281,7 @@
                 <args name="include_tasks" value="true"/>
                 <args name="include_allocations" value="true"/>
 
-                <args name="documentLocation" value="C:\temp\instances\product"/>
+                <args name="documentLocation" />
             </Header>
             <Query>
                 <Filter criteria="OR" name="objectID"/>
@@ -295,7 +295,7 @@
                 <args name="include_tasks" value="true"/>
                 <args name="include_allocations" value="true"/>
 
-                <args name="documentLocation" value="C:\temp\instances\service"/>
+                <args name="documentLocation" />
             </Header>
             <Query>
                 <Filter criteria="OR" name="objectID"/>

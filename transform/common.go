@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func Process(xog, aux *etree.Document, file common.DriverFile) error {
+func Execute(xog, aux *etree.Document, file common.DriverFile) error {
 	err := errors.New("")
 	err = nil
 

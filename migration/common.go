@@ -2,14 +2,15 @@ package migration
 
 import (
 	"errors"
-	"github.com/andreluzz/cas-xog/common"
-	"github.com/beevik/etree"
-	"github.com/tealeg/xlsx"
 	"strconv"
 	"strings"
+	"github.com/tealeg/xlsx"
+	"github.com/beevik/etree"
+	"github.com/andreluzz/cas-xog/common"
 )
 
 func ReadDataFromExcel(file common.DriverFile) (*etree.Document, error) {
+
 	err := errors.New("")
 	err = nil
 
@@ -45,6 +46,7 @@ func ReadDataFromExcel(file common.DriverFile) (*etree.Document, error) {
 	if err != nil {
 		return nil, errors.New("[migration error] " + err.Error())
 	}
+
 
 	for index, row := range xlFile.Sheets[0].Rows {
 		if index >= excelStartRowIndex {
@@ -136,7 +138,9 @@ func ExportInstancesToExcel(xog *etree.Document, file common.DriverFile) error {
 		}
 	}
 
-	err = xlsxFile.Save(common.FOLDER_READ + "/excel/" + file.Type + "/" + file.ExcelFile)
+	folder := common.FOLDER_READ + file.Type + "/"
+	common.ValidateFolder(folder)
+	err = xlsxFile.Save(folder + file.ExcelFile)
 	if err != nil {
 		return errors.New("[migration error] ExportInstancesToExcel: " + err.Error())
 	}
