@@ -22,8 +22,8 @@ var selectedVersion common.Version
 func LoadPackages() {
 	err := unzipPackages()
 	if err != nil {
-		common.Debug("\n[CAS-XOG][red[ERROR]] - Error unzipping packages: %s", err.Error())
-		common.Debug("\n[CAS-XOG][red[FATAL]] - Check your packages folder. Press enter key to exit...")
+		common.Info("\n[CAS-XOG][red[ERROR]] - Error unzipping packages: %s", err.Error())
+		common.Info("\n[CAS-XOG][red[FATAL]] - Check your packages folder. Press enter key to exit...")
 		scanExit := ""
 		fmt.Scanln(&scanExit)
 		os.Exit(0)
@@ -36,8 +36,8 @@ func LoadPackages() {
 
 	err = loadAvailablePackages()
 	if err != nil {
-		common.Debug("\n[CAS-XOG][red[ERROR]] - Error loading packages: %s", err.Error())
-		common.Debug("\n[CAS-XOG][red[FATAL]] - Check your _packages folder. Press enter key to exit...")
+		common.Info("\n[CAS-XOG][red[ERROR]] - Error loading packages: %s", err.Error())
+		common.Info("\n[CAS-XOG][red[FATAL]] - Check your _packages folder. Press enter key to exit...")
 		scanExit := ""
 		fmt.Scanln(&scanExit)
 		os.Exit(0)
@@ -92,20 +92,20 @@ func loadAvailablePackages() error {
 func InstallPackage() error {
 	start := time.Now()
 
-	output = map[string]int{transform.OUTPUT_SUCCESS: 0, transform.OUTPUT_WARNING: 0, transform.OUTPUT_ERROR: 0}
+	output = map[string]int{common.OUTPUT_SUCCESS: 0, common.OUTPUT_WARNING: 0, common.OUTPUT_ERROR: 0}
 
-	common.Debug("\n------------------------------------------------------------------")
-	common.Debug("\n[blue[Initiated at]]: %s", start.Format("Mon _2 Jan 2006 - 15:04:05"))
-	common.Debug("\nInstalling Package: [blue[%s]] (%s)", selectedPackage.Name, selectedVersion.Name)
-	common.Debug("\nTarget environment: [blue[%s]]", TargetEnv.Name)
+	common.Info("\n------------------------------------------------------------------")
+	common.Info("\n[blue[Initiated at]]: %s", start.Format("Mon _2 Jan 2006 - 15:04:05"))
+	common.Info("\nInstalling Package: [blue[%s]] (%s)", selectedPackage.Name, selectedVersion.Name)
+	common.Info("\nTarget environment: [blue[%s]]", TargetEnv.Name)
 	if len(selectedVersion.Definitions) > 0 {
-		common.Debug("\nDefinitions:")
+		common.Info("\nDefinitions:")
 		for _, d := range selectedVersion.Definitions {
-			common.Debug("\n   %s: %s", d.Action, d.Value)
+			common.Info("\n   %s: %s", d.Action, d.Value)
 		}
 	}
-	common.Debug("\n------------------------------------------------------------------\n")
-	common.Debug("\n[CAS-XOG]Start package install? (y = Yes, n = No) [n]: ")
+	common.Info("\n------------------------------------------------------------------\n")
+	common.Info("\n[CAS-XOG]Start package install? (y = Yes, n = No) [n]: ")
 	input := "n"
 	fmt.Scanln(&input)
 	if input == "n" || input != "y" {
@@ -128,12 +128,12 @@ func InstallPackage() error {
 	os.MkdirAll(common.FOLDER_WRITE, os.ModePerm)
 
 	for i, f := range driverXOG.Files {
-		common.Debug("\n[CAS-XOG][blue[Processing]] %03d/%03d | file: %s", i+1, len(driverXOG.Files), f.Path)
+		common.Info("\n[CAS-XOG][blue[Processing]] %03d/%03d | file: %s", i+1, len(driverXOG.Files), f.Path)
 		f.PackageFolder = common.FOLDER_PACKAGE + selectedPackage.Folder + selectedVersion.Folder
 
 		transform.ProcessPackage(f, selectedVersion.Definitions)
 
-		common.Debug("\r[CAS-XOG]Writing %03d/%03d | file: %s   ", i+1, len(driverXOG.Files), f.Path)
+		common.Info("\r[CAS-XOG]Writing %03d/%03d | file: %s   ", i+1, len(driverXOG.Files), f.Path)
 
 		action := "w"
 		folder := common.FOLDER_DEBUG
@@ -157,10 +157,10 @@ func InstallPackage() error {
 	TargetEnv.logout()
 	elapsed := time.Since(start)
 
-	common.Debug("\n\n------------------------------------------------------------------")
-	common.Debug("\nStats: total = %d | failure = %d | success = %d | warning = %d", len(driverXOG.Files), output[transform.OUTPUT_ERROR], output[transform.OUTPUT_SUCCESS], output[transform.OUTPUT_WARNING])
-	common.Debug("\n[blue[Concluded in]]: %.3f seconds", elapsed.Seconds())
-	common.Debug("\n------------------------------------------------------------------\n")
+	common.Info("\n\n------------------------------------------------------------------")
+	common.Info("\nStats: total = %d | failure = %d | success = %d | warning = %d", len(driverXOG.Files), output[common.OUTPUT_ERROR], output[common.OUTPUT_SUCCESS], output[common.OUTPUT_WARNING])
+	common.Info("\n[blue[Concluded in]]: %.3f seconds", elapsed.Seconds())
+	common.Info("\n------------------------------------------------------------------\n")
 
 	return nil
 }
@@ -168,54 +168,54 @@ func InstallPackage() error {
 func RenderPackages() bool {
 
 	if len(availablePackages) <= 0 {
-		common.Debug("\n[CAS-XOG][yellow[WARNING]] - No package available, check your packages folder!\n")
+		common.Info("\n[CAS-XOG][yellow[WARNING]] - No package available, check your packages folder!\n")
 		return false
 	}
 
-	common.Debug("\n")
-	common.Debug("Available packages:\n")
+	common.Info("\n")
+	common.Info("Available packages:\n")
 	for i, p := range availablePackages {
-		common.Debug("%d - %s\n", i+1, p.Name)
+		common.Info("%d - %s\n", i+1, p.Name)
 	}
-	common.Debug("Choose package to install [1]: ")
+	common.Info("Choose package to install [1]: ")
 	input := "1"
 	fmt.Scanln(&input)
 
 	packageIndex, err := strconv.Atoi(input)
 
 	if err != nil || packageIndex-1 < 0 || packageIndex > len(availablePackages) {
-		common.Debug("\n[CAS-XOG][red[ERROR]] - Invalid package!\n")
+		common.Info("\n[CAS-XOG][red[ERROR]] - Invalid package!\n")
 		return false
 	}
 
 	selectedPackage = availablePackages[packageIndex-1]
-	common.Debug("\n[CAS-XOG] [blue[Package %s selected]]\n", selectedPackage.Name)
+	common.Info("\n[CAS-XOG] [blue[Package %s selected]]\n", selectedPackage.Name)
 
 	versionIndex := 1
 	if len(selectedPackage.Versions) > 1 {
-		common.Debug("Available package versions:\n")
+		common.Info("Available package versions:\n")
 		for i, v := range selectedPackage.Versions {
-			common.Debug("%d - %s\n", i+1, v.Name)
+			common.Info("%d - %s\n", i+1, v.Name)
 		}
-		common.Debug("Choose version to install [1]: ")
+		common.Info("Choose version to install [1]: ")
 		input := "1"
 		fmt.Scanln(&input)
 		versionIndex, err = strconv.Atoi(input)
 
 		if err != nil {
-			common.Debug("\n[CAS-XOG][red[ERROR]] - Package definition error: %s\n", err.Error())
+			common.Info("\n[CAS-XOG][red[ERROR]] - Package definition error: %s\n", err.Error())
 			return false
 		}
 	}
 
-	common.Debug("\n[CAS-XOG] [blue[Package required definitions:]]\n")
+	common.Info("\n[CAS-XOG] [blue[Package required definitions:]]\n")
 	selectedVersion = selectedPackage.Versions[versionIndex-1]
 	for i, d := range selectedVersion.Definitions {
-		common.Debug("%s [%s]:", d.Description, d.Default)
+		common.Info("%s [%s]:", d.Description, d.Default)
 		input := d.Default
 		fmt.Scanln(&input)
 		if input == "" {
-			common.Debug("\n[CAS-XOG][red[ERROR]] - Invalid definition!\n")
+			common.Info("\n[CAS-XOG][red[ERROR]] - Invalid definition!\n")
 			return false
 		}
 		selectedVersion.Definitions[i].Value = input

@@ -33,12 +33,12 @@ var output map[string]int
 func ProcessDriverFiles(action string) {
 	start := time.Now()
 
-	output = map[string]int{transform.OUTPUT_SUCCESS: 0, transform.OUTPUT_WARNING: 0, transform.OUTPUT_ERROR: 0}
+	output = map[string]int{common.OUTPUT_SUCCESS: 0, common.OUTPUT_WARNING: 0, common.OUTPUT_ERROR: 0}
 
-	common.Debug("\n------------------------------------------------------------------")
-	common.Debug("\n[blue[Initiated at]]: %s", start.Format("Mon _2 Jan 2006 - 15:04:05"))
-	common.Debug("\nProcessing driver: %s", driverPath)
-	common.Debug("\n------------------------------------------------------------------\n")
+	common.Info("\n------------------------------------------------------------------")
+	common.Info("\n[blue[Initiated at]]: %s", start.Format("Mon _2 Jan 2006 - 15:04:05"))
+	common.Info("\nProcessing driver: %s", driverPath)
+	common.Info("\n------------------------------------------------------------------\n")
 
 	var env *EnvType
 
@@ -73,18 +73,18 @@ func ProcessDriverFiles(action string) {
 			actionLabel = "Creating"
 		}
 
-		common.Debug("\n[CAS-XOG][blue[%s]] %03d/%03d | file: %s", actionLabel, i+1, len(driverXOG.Files), f.Path)
+		common.Info("\n[CAS-XOG][blue[%s]] %03d/%03d | file: %s", actionLabel, i+1, len(driverXOG.Files), f.Path)
 
 		if f.IgnoreReading && action == "r" {
-			debug(i+1, len(driverXOG.Files), action, transform.OUTPUT_WARNING, f.Path, "File reading ignored")
+			debug(i+1, len(driverXOG.Files), action, common.OUTPUT_WARNING, f.Path, "File reading ignored")
 			continue
 		}
 
 		if action == "m" && f.Type != common.MIGRATION {
-			debug(i+1, len(driverXOG.Files), action, transform.OUTPUT_WARNING, f.Path, "Use action 'r' to this type("+f.Type+") of file")
+			debug(i+1, len(driverXOG.Files), action, common.OUTPUT_WARNING, f.Path, "Use action 'r' to this type("+f.Type+") of file")
 			continue
 		} else if action == "r" && f.Type == common.MIGRATION {
-			debug(i+1, len(driverXOG.Files), action, transform.OUTPUT_WARNING, f.Path, "Use action 'm' to this type("+f.Type+") of file")
+			debug(i+1, len(driverXOG.Files), action, common.OUTPUT_WARNING, f.Path, "Use action 'm' to this type("+f.Type+") of file")
 			continue
 		}
 
@@ -129,21 +129,21 @@ func ProcessDriverFiles(action string) {
 			if loadAuxFile {
 				aux, _, err = loadAndValidate(action, folder, &auxFile, auxEnv)
 				if err != nil {
-					debug(i+1, len(driverXOG.Files), action, transform.OUTPUT_ERROR, f.Path, "[Auxiliary XOG] "+err.Error())
+					debug(i+1, len(driverXOG.Files), action, common.OUTPUT_ERROR, f.Path, "[Auxiliary XOG] "+err.Error())
 					continue
 				}
 			}
 
 			err := transform.Process(resp, aux, f)
 			if err != nil {
-				debug(i+1, len(driverXOG.Files), action, transform.OUTPUT_ERROR, f.Path, err.Error())
+				debug(i+1, len(driverXOG.Files), action, common.OUTPUT_ERROR, f.Path, err.Error())
 				continue
 			}
 
 			if f.ExportToExcel {
 				err := migration.ExportInstancesToExcel(resp, f)
 				if err != nil {
-					debug(i+1, len(driverXOG.Files), action, transform.OUTPUT_ERROR, f.Path, err.Error())
+					debug(i+1, len(driverXOG.Files), action, common.OUTPUT_ERROR, f.Path, err.Error())
 					continue
 				}
 			}
@@ -152,7 +152,7 @@ func ProcessDriverFiles(action string) {
 		if action == "m" {
 			resp, err = migration.ReadDataFromExcel(f)
 			if err != nil {
-				debug(i+1, len(driverXOG.Files), action, transform.OUTPUT_ERROR, f.Path, err.Error())
+				debug(i+1, len(driverXOG.Files), action, common.OUTPUT_ERROR, f.Path, err.Error())
 				continue
 			}
 		}
@@ -181,10 +181,10 @@ func ProcessDriverFiles(action string) {
 	TargetEnv.logout()
 	SourceEnv.logout()
 
-	common.Debug("\n\n------------------------------------------------------------------")
-	common.Debug("\nStats: total = %d | failure = %d | success = %d | warning = %d", len(driverXOG.Files), output[transform.OUTPUT_ERROR], output[transform.OUTPUT_SUCCESS], output[transform.OUTPUT_WARNING])
-	common.Debug("\n[blue[Concluded in]]: %.3f seconds", elapsed.Seconds())
-	common.Debug("\n------------------------------------------------------------------\n")
+	common.Info("\n\n------------------------------------------------------------------")
+	common.Info("\nStats: total = %d | failure = %d | success = %d | warning = %d", len(driverXOG.Files), output[common.OUTPUT_ERROR], output[common.OUTPUT_SUCCESS], output[common.OUTPUT_WARNING])
+	common.Info("\n[blue[Concluded in]]: %.3f seconds", elapsed.Seconds())
+	common.Info("\n------------------------------------------------------------------\n")
 }
 
 func RenderDrivers() {
@@ -193,7 +193,7 @@ func RenderDrivers() {
 	driversFileList, _ := ioutil.ReadDir(driverPath)
 
 	if len(driversFileList) == 0 {
-		common.Debug("\n[CAS-XOG][red[ERROR]] - XogDriver folders or file not found! Press enter key to exit...\n")
+		common.Info("\n[CAS-XOG][red[ERROR]] - XogDriver folders or file not found! Press enter key to exit...\n")
 		scanexit := ""
 		fmt.Scanln(&scanexit)
 		os.Exit(0)
@@ -213,9 +213,9 @@ func RenderDrivers() {
 	fmt.Println("Available drivers:")
 	for k, d := range driversList {
 		if d.PackageDriver {
-			common.Debug("%d - [blue[Package driver:]] %s\n", k+1, d.Info.Name())
+			common.Info("%d - [blue[Package driver:]] %s\n", k+1, d.Info.Name())
 		} else {
-			common.Debug("%d - %s\n", k+1, d.Info.Name())
+			common.Info("%d - %s\n", k+1, d.Info.Name())
 		}
 	}
 	if startInstallingPackage == 0 {
@@ -237,19 +237,19 @@ func RenderDrivers() {
 	driverIndex, err = strconv.Atoi(input)
 
 	if err != nil || driverIndex-1 < 0 || driverIndex > len(driversList) {
-		common.Debug("\n[CAS-XOG][red[ERROR]] - Invalid XOG driver!\n")
+		common.Info("\n[CAS-XOG][red[ERROR]] - Invalid XOG driver!\n")
 		return
 	}
 
 	err = LoadDriver( driversList[driverIndex-1].FilePath)
 	if err != nil {
-		common.Debug("\n[CAS-XOG][red[ERROR]] - %s", err.Error())
-		common.Debug("\n[CAS-XOG][red[FATAL]] - Check your driver file. Press enter key to exit...")
+		common.Info("\n[CAS-XOG][red[ERROR]] - %s", err.Error())
+		common.Info("\n[CAS-XOG][red[FATAL]] - Check your driver file. Press enter key to exit...")
 		scanExit := ""
 		fmt.Scanln(&scanExit)
 		os.Exit(0)
 	}
 
-	common.Debug("\n[CAS-XOG][blue[Loaded XOG Driver file]]: %s | Total files: [green[%d]]\n",  driversList[driverIndex-1].FilePath, len(driverXOG.Files))
+	common.Info("\n[CAS-XOG][blue[Loaded XOG Driver file]]: %s | Total files: [green[%d]]\n",  driversList[driverIndex-1].FilePath, len(driverXOG.Files))
 }
 

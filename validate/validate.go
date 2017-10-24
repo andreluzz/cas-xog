@@ -1,4 +1,4 @@
-package transform
+package validate
 
 import (
 	"errors"
@@ -6,15 +6,10 @@ import (
 	"github.com/beevik/etree"
 )
 
-const UNDEFINED string = ""
-const OUTPUT_ERROR string = "error"
-const OUTPUT_WARNING string = "warning"
-const OUTPUT_SUCCESS string = "success"
-
-func Validate(xog *etree.Document) (common.XOGOutput, error) {
+func Check(xog *etree.Document) (common.XOGOutput, error) {
 	output := xog.FindElement("//XOGOutput")
-	errorOutput := common.XOGOutput{Code: OUTPUT_ERROR, Debug: ""}
-	warningOutput := common.XOGOutput{Code: OUTPUT_WARNING, Debug: ""}
+	errorOutput := common.XOGOutput{Code: common.OUTPUT_ERROR, Debug: ""}
+	warningOutput := common.XOGOutput{Code: common.OUTPUT_WARNING, Debug: ""}
 
 	if output == nil {
 		return errorOutput, errors.New("no output tag defined")
@@ -58,12 +53,12 @@ func Validate(xog *etree.Document) (common.XOGOutput, error) {
 		}
 	}
 
-	elapsedTime := statusElement.SelectAttrValue("elapsedTime", UNDEFINED)
+	elapsedTime := statusElement.SelectAttrValue("elapsedTime", common.UNDEFINED)
 
 	debug := ""
-	if elapsedTime != UNDEFINED {
+	if elapsedTime != common.UNDEFINED {
 		debug = "| Elapsed time: " + elapsedTime
 	}
 
-	return common.XOGOutput{Code: OUTPUT_SUCCESS, Debug: debug}, nil
+	return common.XOGOutput{Code: common.OUTPUT_SUCCESS, Debug: debug}, nil
 }

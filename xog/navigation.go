@@ -13,10 +13,10 @@ func RenderHome() {
 
 	common.InitLog()
 
-	common.Debug("\n")
-	common.Debug("--------------------------------------------\n")
-	common.Debug("##### CAS XOG Automation - Version 2.0 #####\n")
-	common.Debug("--------------------------------------------\n")
+	common.Info("\n")
+	common.Info("--------------------------------------------\n")
+	common.Info("##### CAS XOG Automation - Version 2.0 #####\n")
+	common.Info("--------------------------------------------\n")
 
 	startInstallingPackage = 0
 
@@ -36,8 +36,8 @@ func RenderInterface() bool {
 		startInstallingPackage = -1
 		inputAction = "p"
 	} else {
-		common.Debug("\nChoose action")
-		common.Debug("\n(l = Load XOG Driver, r = Read XOGs, w = Write XOGs, m = Create Migration, p = Install Package or x = eXit): ")
+		common.Info("\nChoose action")
+		common.Info("\n(l = Load XOG Driver, r = Read XOGs, w = Write XOGs, m = Create Migration, p = Install Package or x = eXit): ")
 		fmt.Scanln(&inputAction)
 	}
 
@@ -56,19 +56,19 @@ func RenderInterface() bool {
 		}
 		err := InstallPackage()
 		if err != nil {
-			common.Debug("\n[CAS-XOG][red[PACKAGE]]: %s\n", err.Error())
+			common.Info("\n[CAS-XOG][red[PACKAGE]]: %s\n", err.Error())
 			return false
 		}
 	case "l":
 		RenderDrivers()
 	case "x":
-		common.Debug("\n[CAS-XOG][blue[Action exit selected]]\nPress enter key to exit...")
+		common.Info("\n[CAS-XOG][blue[Action exit selected]] - Press enter key to exit...\n")
 		scanExit := ""
 		fmt.Scanln(&scanExit)
 		os.Exit(0)
 		return true
 	default:
-		common.Debug("\n[CAS-XOG][red[ACTION]] - Action not implemented!\n")
+		common.Info("\n[CAS-XOG][red[ACTION]] - Action not implemented!\n")
 	}
 
 	return false

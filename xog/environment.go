@@ -95,25 +95,25 @@ func RenderEnvironments(action string) bool {
 	sourceInput := "-1"
 	targetInput := "-1"
 
-	common.Debug("\n")
-	common.Debug("Available environments:\n")
+	common.Info("\n")
+	common.Info("Available environments:\n")
 
 	availableEnvironments := envXml.FindElements("./xogenvs/env")
 
 	if availableEnvironments == nil || len(availableEnvironments) == 0 {
-		common.Debug("\n[CAS-XOG][red[ERROR]] - None available environments found!\n")
-		common.Debug("\n[CAS-XOG][red[FATAL]] - Check your xogEnv.xml file. Press enter key to exit...")
+		common.Info("\n[CAS-XOG][red[ERROR]] - None available environments found!\n")
+		common.Info("\n[CAS-XOG][red[FATAL]] - Check your xogEnv.xml file. Press enter key to exit...")
 		scanExit := ""
 		fmt.Scanln(&scanExit)
 		os.Exit(0)
 	}
 
 	for i, e := range availableEnvironments {
-		common.Debug("%d - %s\n", i+1, e.SelectAttrValue("name", "Unknown environment name"))
+		common.Info("%d - %s\n", i+1, e.SelectAttrValue("name", "Unknown environment name"))
 	}
 
 	if action == "r" {
-		common.Debug("Choose reading environment [1]: ")
+		common.Info("Choose reading environment [1]: ")
 		sourceInput = "1"
 		fmt.Scanln(&sourceInput)
 
@@ -121,25 +121,25 @@ func RenderEnvironments(action string) bool {
 		envIndex, err := strconv.Atoi(sourceInput)
 
 		if err != nil || envIndex <= 0 || envIndex > len(availableEnvironments) {
-			common.Debug("\n[CAS-XOG][red[ERROR]] - Invalid reading environment index!\n\n")
+			common.Info("\n[CAS-XOG][red[ERROR]] - Invalid reading environment index!\n\n")
 			return false
 		}
 
-		common.Debug("[CAS-XOG]Processing environment login")
+		common.Info("[CAS-XOG]Processing environment login")
 		SourceEnv = new(EnvType)
 		err = SourceEnv.init(sourceInput)
 		if err != nil {
-			common.Debug("\n[CAS-XOG][red[ERROR]] - %s", err.Error())
-			common.Debug("\n[CAS-XOG][red[FATAL]] - Check your xogEnv.xml file. Press enter key to exit...")
+			common.Info("\n[CAS-XOG][red[ERROR]] - %s", err.Error())
+			common.Info("\n[CAS-XOG][red[FATAL]] - Check your xogEnv.xml file. Press enter key to exit...")
 			scanExit := ""
 			fmt.Scanln(&scanExit)
 			os.Exit(0)
 		}
 
-		common.Debug("\r[CAS-XOG]Environment: %s - [green[Login successfully]]\n", SourceEnv.Name)
+		common.Info("\r[CAS-XOG]Environment: %s - [green[Login successfully]]\n", SourceEnv.Name)
 	}
 
-	common.Debug("Choose writing environment [1]: ")
+	common.Info("Choose writing environment [1]: ")
 	targetInput = "1"
 	fmt.Scanln(&targetInput)
 
@@ -148,8 +148,8 @@ func RenderEnvironments(action string) bool {
 	if action == "r" {
 		targetEnvInput = targetInput
 	} else if action == "w" && targetEnvInput != targetInput {
-		common.Debug("\n[CAS-XOG][yellow[Warning]]: Trying to write files read from a different target environment!")
-		common.Debug("\n[CAS-XOG]Do you want to continue anyway? (y = Yes, n = No) [n]: ")
+		common.Info("\n[CAS-XOG][yellow[Warning]]: Trying to write files read from a different target environment!")
+		common.Info("\n[CAS-XOG]Do you want to continue anyway? (y = Yes, n = No) [n]: ")
 		input := "n"
 		fmt.Scanln(&input)
 		if input == "n" || input != "y" {
@@ -158,7 +158,7 @@ func RenderEnvironments(action string) bool {
 	}
 
 	if err != nil || envIndex <= 0 || envIndex > len(availableEnvironments) {
-		common.Debug("\n[CAS-XOG][red[ERROR]] - Invalid writing environment index!\n\n")
+		common.Info("\n[CAS-XOG][red[ERROR]] - Invalid writing environment index!\n\n")
 		return false
 	}
 
@@ -166,16 +166,16 @@ func RenderEnvironments(action string) bool {
 	if sourceInput == targetInput {
 		TargetEnv = SourceEnv.copyEnv()
 	} else {
-		common.Debug("[CAS-XOG]Processing environment login")
+		common.Info("[CAS-XOG]Processing environment login")
 		err = TargetEnv.init(targetInput)
 		if err != nil {
-			common.Debug("\n[CAS-XOG][red[ERROR]] - %s", err.Error())
-			common.Debug("\n[CAS-XOG][red[FATAL]] - Check your xogEnv.xml file. Press enter key to exit...")
+			common.Info("\n[CAS-XOG][red[ERROR]] - %s", err.Error())
+			common.Info("\n[CAS-XOG][red[FATAL]] - Check your xogEnv.xml file. Press enter key to exit...")
 			scanExit := ""
 			fmt.Scanln(&scanExit)
 			os.Exit(0)
 		}
-		common.Debug("\r[CAS-XOG]Environment: %s - [green[Login successfully]]\n", TargetEnv.Name)
+		common.Info("\r[CAS-XOG]Environment: %s - [green[Login successfully]]\n", TargetEnv.Name)
 	}
 
 	return true
