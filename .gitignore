@@ -23,6 +23,7 @@ _read/
 _write/
 _debug/
 _packages/
+_migration/
 extra/
 drivers/
 packages/
