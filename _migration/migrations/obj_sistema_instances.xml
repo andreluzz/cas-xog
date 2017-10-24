@@ -1,0 +1,333 @@
+<NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_customObjectInstance.xsd">
+	<Header action="write" externalSource="NIKU" objectType="customObjectInstance" version="8.0"/>
+	<customObjectInstances objectCode="obj_sistema">
+		<instance instanceCode="ID" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">ID</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Nome</ColumnValue>
+				<ColumnValue name="status_novo">Status</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00001" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00001</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 01</ColumnValue>
+				<ColumnValue name="status_novo">CAL_CLOSED</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00002" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00002</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 02</ColumnValue>
+				<ColumnValue name="status_novo">CAL_DEFERRED</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00003" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00003</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 03</ColumnValue>
+				<ColumnValue name="status_novo">CAL_DONE</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00004" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00004</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 04</ColumnValue>
+				<ColumnValue name="status_novo">CAL_IN_PROGRESS</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00005" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00005</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 05</ColumnValue>
+				<ColumnValue name="status_novo">CAL_OPEN</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00006" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00006</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 06</ColumnValue>
+				<ColumnValue name="status_novo">CAL_OPEN</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00007" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00007</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 07</ColumnValue>
+				<ColumnValue name="status_novo">CAL_IN_PROGRESS</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00008" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00008</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 08</ColumnValue>
+				<ColumnValue name="status_novo">CAL_CLOSED</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00009" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00009</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 09</ColumnValue>
+				<ColumnValue name="status_novo">CAL_DEFERRED</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00010" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00010</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 10</ColumnValue>
+				<ColumnValue name="status_novo">CAL_OPEN</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00011" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00011</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 11</ColumnValue>
+				<ColumnValue name="status_novo">CAL_DEFERRED</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00012" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00012</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 12</ColumnValue>
+				<ColumnValue name="status_novo">CAL_CLOSED</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00013" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00013</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 13</ColumnValue>
+				<ColumnValue name="status_novo">CAL_IN_PROGRESS</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00014" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00014</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 14</ColumnValue>
+				<ColumnValue name="status_novo">CAL_DONE</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00015" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00015</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 15</ColumnValue>
+				<ColumnValue name="status_novo">CAL_CLOSED</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00016" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00016</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 16</ColumnValue>
+				<ColumnValue name="status_novo">CAL_DONE</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00017" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00017</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 17</ColumnValue>
+				<ColumnValue name="status_novo">CAL_DEFERRED</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00018" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00018</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 18</ColumnValue>
+				<ColumnValue name="status_novo">CAL_OPEN</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00019" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00019</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 19</ColumnValue>
+				<ColumnValue name="status_novo">CAL_IN_PROGRESS</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00020" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00020</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 20</ColumnValue>
+				<ColumnValue name="status_novo">CAL_DEFERRED</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00021" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00021</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 21</ColumnValue>
+				<ColumnValue name="status_novo">CAL_CLOSED</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00022" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00022</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 22</ColumnValue>
+				<ColumnValue name="status_novo">CAL_DEFERRED</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00023" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00023</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 23</ColumnValue>
+				<ColumnValue name="status_novo">CAL_DONE</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00024" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00024</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 24</ColumnValue>
+				<ColumnValue name="status_novo">CAL_IN_PROGRESS</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00025" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00025</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 25</ColumnValue>
+				<ColumnValue name="status_novo">CAL_OPEN</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00026" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00026</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 26</ColumnValue>
+				<ColumnValue name="status_novo">CAL_OPEN</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00027" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00027</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 27</ColumnValue>
+				<ColumnValue name="status_novo">CAL_IN_PROGRESS</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00028" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00028</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 28</ColumnValue>
+				<ColumnValue name="status_novo">CAL_CLOSED</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00029" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00029</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 29</ColumnValue>
+				<ColumnValue name="status_novo">CAL_DEFERRED</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00030" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00030</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 30</ColumnValue>
+				<ColumnValue name="status_novo">CAL_OPEN</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00031" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00031</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 31</ColumnValue>
+				<ColumnValue name="status_novo">CAL_DEFERRED</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00032" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00032</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 32</ColumnValue>
+				<ColumnValue name="status_novo">CAL_CLOSED</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00033" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00033</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 33</ColumnValue>
+				<ColumnValue name="status_novo">CAL_IN_PROGRESS</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00034" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00034</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 34</ColumnValue>
+				<ColumnValue name="status_novo">CAL_DONE</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00035" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00035</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 35</ColumnValue>
+				<ColumnValue name="status_novo">CAL_CLOSED</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00036" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00036</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 36</ColumnValue>
+				<ColumnValue name="status_novo">CAL_DONE</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00037" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00037</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 37</ColumnValue>
+				<ColumnValue name="status_novo">CAL_DEFERRED</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00038" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00038</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 38</ColumnValue>
+				<ColumnValue name="status_novo">CAL_OPEN</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00039" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00039</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 39</ColumnValue>
+				<ColumnValue name="status_novo">CAL_IN_PROGRESS</ColumnValue>
+			</CustomInformation>
+		</instance>
+		<instance instanceCode="SIS00040" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code">SIS00040</ColumnValue>
+				<ColumnValue name="page_layout">odf.obj_sistemaFrame</ColumnValue>
+				<ColumnValue name="name">Sistema 40</ColumnValue>
+				<ColumnValue name="status_novo">CAL_DEFERRED</ColumnValue>
+			</CustomInformation>
+		</instance>
+	</customObjectInstances>
+</NikuDataBus>
