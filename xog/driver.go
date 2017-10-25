@@ -141,7 +141,8 @@ func ProcessDriverFiles(action string) {
 			}
 
 			if f.ExportToExcel {
-				err := migration.ExportInstancesToExcel(resp, f)
+				folder := common.FOLDER_READ + f.Type + "/"
+				err := migration.ExportInstancesToExcel(resp, f, folder)
 				if err != nil {
 					debug(i+1, len(driverXOG.Files), action, common.OUTPUT_ERROR, f.Path, err.Error())
 					continue

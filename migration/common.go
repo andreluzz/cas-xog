@@ -18,7 +18,7 @@ func ReadDataFromExcel(file common.DriverFile) (*etree.Document, error) {
 	if file.ExcelStartRow != "" {
 		excelStartRowIndex, err = strconv.Atoi(file.ExcelStartRow)
 		if err != nil {
-			return nil, errors.New("[migration error] tag 'startRow' not a number. Error:  " + err.Error())
+			return nil, errors.New("migration - tag 'startRow' not a number. Debug:  " + err.Error())
 		}
 		excelStartRowIndex -= 1
 	}
@@ -26,7 +26,7 @@ func ReadDataFromExcel(file common.DriverFile) (*etree.Document, error) {
 	xog := etree.NewDocument()
 	err = xog.ReadFromFile(file.Template)
 	if err != nil {
-		return nil, errors.New("[migration error] invalid template file. Error: " + err.Error())
+		return nil, errors.New("migration - invalid template file. Debug: " + err.Error())
 	}
 
 	instance := "instance"
@@ -35,7 +35,7 @@ func ReadDataFromExcel(file common.DriverFile) (*etree.Document, error) {
 	}
 	templateInstanceElement := xog.FindElement("//" + instance)
 	if templateInstanceElement == nil {
-		return nil, errors.New("[migration error] no instance element found")
+		return nil, errors.New("migration - template invalid no instance element found")
 	}
 
 	parent := templateInstanceElement.Parent()
@@ -44,9 +44,8 @@ func ReadDataFromExcel(file common.DriverFile) (*etree.Document, error) {
 
 	xlFile, err := xlsx.OpenFile(file.ExcelFile)
 	if err != nil {
-		return nil, errors.New("[migration error] " + err.Error())
+		return nil, errors.New("migration - error opening excel. Debug: " + err.Error())
 	}
-
 
 	for index, row := range xlFile.Sheets[0].Rows {
 		if index >= excelStartRowIndex {
@@ -63,7 +62,7 @@ func ReadDataFromExcel(file common.DriverFile) (*etree.Document, error) {
 				}
 
 				if e == nil {
-					return nil, errors.New("[migration error] invalid attribute name(" + match.AttributeName + ") or tag(" + match.Tag + ")")
+					return nil, errors.New("migration - invalid attribute name(" + match.AttributeName + ") or tag(" + match.Tag + ")")
 				}
 
 				value := row.Cells[match.Col-1].String()
@@ -92,12 +91,9 @@ func ReadDataFromExcel(file common.DriverFile) (*etree.Document, error) {
 	return xog, nil
 }
 
-func ExportInstancesToExcel(xog *etree.Document, file common.DriverFile) error {
+func ExportInstancesToExcel(xog *etree.Document, file common.DriverFile, folder string) error {
 	xlsxFile := xlsx.NewFile()
-	sheet, err := xlsxFile.AddSheet("Instances")
-	if err != nil {
-		return errors.New("[migration error] ExportInstancesToExcel: " + err.Error())
-	}
+	sheet, _ := xlsxFile.AddSheet("Instances")
 
 	for _, instance := range xog.FindElements("//" + file.InstanceTag) {
 		row := sheet.AddRow()
@@ -138,11 +134,10 @@ func ExportInstancesToExcel(xog *etree.Document, file common.DriverFile) error {
 		}
 	}
 
-	folder := common.FOLDER_READ + file.Type + "/"
 	common.ValidateFolder(folder)
-	err = xlsxFile.Save(folder + file.ExcelFile)
+	err := xlsxFile.Save(folder + file.ExcelFile)
 	if err != nil {
-		return errors.New("[migration error] ExportInstancesToExcel: " + err.Error())
+		return errors.New("migration - ExportInstancesToExcel saving excel error. Debug: " + err.Error())
 	}
 
 	return nil

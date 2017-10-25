@@ -6,7 +6,7 @@ type Menu struct {
 	Code           string `xml:"code,attr"`
 	Action         string `xml:"action,attr"`
 	TargetPosition int    `xml:"targetPosition,attr"`
-	Links          []struct {
+	Links []struct {
 		Code           string `xml:"code,attr"`
 		TargetPosition int    `xml:"targetPosition,attr"`
 	} `xml:"link"`
@@ -36,6 +36,17 @@ type FileReplace struct {
 	To 	 string `xml:"to"`
 }
 
+type MatchExcel	struct {
+	Col 			int		`xml:"col,attr"`
+	Tag 			string	`xml:"tag,attr"`
+	XPath 			string	`xml:"xpath,attr"`
+	AttributeName  	string	`xml:"attribute,attr"`
+	AttributeValue 	string	`xml:"attributeValue,attr"`
+	IsAttribute    	bool  	`xml:"isAttribute,attr"`
+	MultiValued    	bool  	`xml:"multiValued,attr"`
+	Separator      	string 	`xml:"separator,attr"`
+}
+
 type DriverFile struct {
 	Code              string        `xml:"code,attr"`
 	Path              string        `xml:"path,attr"`
@@ -62,16 +73,7 @@ type DriverFile struct {
 	Sections 		  []ViewSection `xml:"section"`
 	Elements 		  []Element		`xml:"element"`
 	Replace			  []FileReplace `xml:"replace"`
-	MatchExcel		  []struct {
-		Col 			int		`xml:"col,attr"`
-		Tag 			string	`xml:"tag,attr"`
-		XPath 			string	`xml:"xpath,attr"`
-		AttributeName  	string	`xml:"attribute,attr"`
-		AttributeValue 	string	`xml:"attributeValue,attr"`
-		IsAttribute    	bool  	`xml:"isAttribute,attr"`
-		MultiValued    	bool  	`xml:"multiValued,attr"`
-		Separator      	string 	`xml:"separator,attr"`
-	} `xml:"match"`
+	MatchExcel		  []MatchExcel	`xml:"match"`
 	PackageFolder 	  string
 }
 
@@ -147,6 +149,7 @@ const FOLDER_WRITE 		= "_write/"
 const FOLDER_MIGRATION 	= "_migration/"
 const FOLDER_DEBUG 		= "_debug/"
 const FOLDER_PACKAGE 	= "_packages/"
+const FOLDER_MOCK 		= "mock/"
 
 const UNDEFINED 		= ""
 const OUTPUT_ERROR 		= "error"

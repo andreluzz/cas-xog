@@ -4,7 +4,7 @@
 *.dll
 *.so
 *.dylib
-*.xlsx
+/*.xlsx
 *.ico
 *.log
 *.manifest
@@ -29,4 +29,4 @@ drivers/
 packages/
 .idea/
 xogEnv.xml
-template.xml
+/template.xml

@@ -1,0 +1,14 @@
+<NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_customObjectInstance.xsd">
+	<Header action="write" externalSource="NIKU" objectType="customObjectInstance" version="8.0" />
+	<customObjectInstances objectCode="obj_sistema">
+		<instance instanceCode="" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code"></ColumnValue>
+				<ColumnValue name="name"></ColumnValue>
+				<ColumnValue name="status_novo"></ColumnValue>
+				<ColumnValue name="analista"></ColumnValue>
+				<ColumnValue name="multivalue_status"></ColumnValue>
+			</CustomInformation>
+		</instance>
+	</customObjectInstances>
+</NikuDataBus>
