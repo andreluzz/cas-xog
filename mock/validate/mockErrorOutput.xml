@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XOGOutput>
+    <Object type="contentPack"/>
+    <Status elapsedTime="0.001 seconds" state="FAILURE"/>
+    <Statistics failureRecords="0" insertedRecords="0" totalNumberOfRecords="0" updatedRecords="0"/>
+    <ErrorInformation>
+        <Severity>FATAL</Severity>
+        <Description>[Error] :1:1: attribute "name" has a bad value: the value is not a member of the enumeration: ("object_code")
+            Invalid attribute in input document. Please remove all instances of attribute from document elements and try again.
+            [Element : Filter, Attribute : name ].
+        </Description>
+        <Exception type="java.lang.Exception">Invalid xml data</Exception>
+    </ErrorInformation>
+</XOGOutput>

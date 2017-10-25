@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NikuDataBus>
+    <XOGOutput>
+        <Object type="resource"/>
+        <Status state="SUCCESS"/>
+        <Statistics failureRecords="0" insertedRecords="0" totalNumberOfRecords="1" updatedRecords="0"/>
+        <Records>
+            <Record>
+                <KeyInformation>
+                    <column name="object_code">resource</column>
+                </KeyInformation>
+                <ErrorInformation>
+                    <Severity>WARNING</Severity>
+                    <Description>XOG-9101: Document Location not specified, attachments not exported</Description>
+                </ErrorInformation>
+            </Record>
+        </Records>
+    </XOGOutput>
+</NikuDataBus>

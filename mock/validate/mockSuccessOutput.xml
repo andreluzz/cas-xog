@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NikuDataBus>
+    <XOGOutput>
+        <Object type="contentPack"/>
+        <Status state="SUCCESS"/>
+        <Statistics failureRecords="0" insertedRecords="0" totalNumberOfRecords="13" updatedRecords="0"/>
+        <Records/>
+    </XOGOutput>
+</NikuDataBus>
