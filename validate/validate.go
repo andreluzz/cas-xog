@@ -7,9 +7,14 @@ import (
 )
 
 func Check(xog *etree.Document) (common.XOGOutput, error) {
-	output := xog.FindElement("//XOGOutput")
 	errorOutput := common.XOGOutput{Code: common.OUTPUT_ERROR, Debug: ""}
 	warningOutput := common.XOGOutput{Code: common.OUTPUT_WARNING, Debug: ""}
+
+	if xog == nil {
+		return errorOutput, errors.New("invalid xog")
+	}
+
+	output := xog.FindElement("//XOGOutput")
 
 	if output == nil {
 		return errorOutput, errors.New("no output tag defined")

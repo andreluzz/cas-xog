@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XOGOutput>
+    <Object type="contentPack"/>
+    <Status elapsedTime="0.001 seconds" state="FAILURE"/>
+    <Statistics failureRecords="1" insertedRecords="0" totalNumberOfRecords="1" updatedRecords="0"/>
+</XOGOutput>
