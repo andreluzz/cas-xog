@@ -1,0 +1,112 @@
+<NikuDataBus>
+    <Header action="write" externalSource="NIKU" objectType="contentPack" version="15.2.0.213"/>
+    <contentPack update="true">
+        <Processes />
+        <lookups update="true">
+            <staticLookup autoSuggestEnabled="true" autoSuggestMaxSuggestions="10" code="CAL_EVENT_PRIORITY" hiddenAttributeName="id" sortStyle="manual" source="niku.com" status="active" update="true">
+                <nls description="Prioritat dels esdeveniments del calendari" languageCode="ca" name="Prioritat del calendari"/>
+                <nls description="Priorita události kalendáře" languageCode="cs" name="Priorita kalendáře"/>
+                <nls description="Prioritet for kalenderaftale" languageCode="da" name="Kalenderprioritet"/>
+                <nls description="Kalenderereignis - Priorität" languageCode="de" name="Kalenderpriorität"/>
+                <nls description="Calendar Event Priority" languageCode="en" name="Calendar Priority"/>
+                <nls description="Prioridad de los eventos del calendario" languageCode="es" name="Prioridad del calendario"/>
+                <nls description="Kalenteritapahtuman prioriteetti" languageCode="fi" name="Kalenteriprioriteetti"/>
+                <nls description="Priorité des événements du calendrier" languageCode="fr" name="Priorité sur le calendrier"/>
+                <nls description="Naptáresemény prioritása" languageCode="hu" name="Naptár prioritása"/>
+                <nls description="Priorità eventi calendario" languageCode="it" name="Priorità calendario"/>
+                <nls description="カレンダ イベントの優先度" languageCode="ja" name="カレンダの優先度"/>
+                <nls description="일정 이벤트 우선 순위" languageCode="ko" name="일정 우선 순위"/>
+                <nls description="Prioriteit agenda-evenement" languageCode="nl" name="Agenda prioriteit"/>
+                <nls description="Kalenderbegivenhetsprioritet" languageCode="no" name="Kalenderprioritet"/>
+                <nls description="Priorytet zdarzenia w kalendarzu" languageCode="pl" name="Priorytet kalendarza"/>
+                <nls description="Prioridade do evento do calendário" languageCode="pt" name="Prioridade do calendário"/>
+                <nls description="Приоритет события календаря" languageCode="ru" name="Приоритет календаря"/>
+                <nls description="Prioritet för kalenderhändelse" languageCode="sv" name="Kalenderprioritet"/>
+                <nls description="Takvim Olayı Önceliği" languageCode="tr" name="Takvim Önceliği"/>
+                <nls description="日历事件优先级" languageCode="zh" name="日历优先级"/>
+                <nls description="行事曆事件優先順序" languageCode="zh_TW" name="行事曆優先順序"/>
+                <lookupValue code="CAL_LOW" sortOrder="1" status="active">
+                    <nls description="Sota" languageCode="ca" name="Sota"/>
+                    <nls description="Nízké" languageCode="cs" name="Nízké"/>
+                    <nls description="Lav" languageCode="da" name="Lav"/>
+                    <nls description="Niedrig" languageCode="de" name="Niedrig"/>
+                    <nls description="Low" languageCode="en" name="Low"/>
+                    <nls description="Bajo" languageCode="es" name="Bajo"/>
+                    <nls description="Matala" languageCode="fi" name="Matala"/>
+                    <nls description="Faible" languageCode="fr" name="Faible"/>
+                    <nls description="Alacsony" languageCode="hu" name="Alacsony"/>
+                    <nls description="Bassa" languageCode="it" name="Bassa"/>
+                    <nls description="低" languageCode="ja" name="低"/>
+                    <nls description="낮음" languageCode="ko" name="낮음"/>
+                    <nls description="Laag" languageCode="nl" name="Laag"/>
+                    <nls description="Lav" languageCode="no" name="Lav"/>
+                    <nls description="Niski" languageCode="pl" name="Niski"/>
+                    <nls description="Baixo" languageCode="pt" name="Baixo"/>
+                    <nls description="Низкий" languageCode="ru" name="Низкий"/>
+                    <nls description="Låg" languageCode="sv" name="Låg"/>
+                    <nls description="Düşük" languageCode="tr" name="Düşük"/>
+                    <nls description="低" languageCode="zh" name="低"/>
+                    <nls description="低" languageCode="zh_TW" name="低"/>
+                </lookupValue>
+                <lookupValue code="CAL_MEDIUM" sortOrder="2" status="active">
+                    <nls description="Medi" languageCode="ca" name="Medi"/>
+                    <nls description="Střední" languageCode="cs" name="Střední"/>
+                    <nls description="Mellem" languageCode="da" name="Mellem"/>
+                    <nls description="Mittel" languageCode="de" name="Mittel"/>
+                    <nls description="Medium" languageCode="en" name="Medium"/>
+                    <nls description="Medio" languageCode="es" name="Medio"/>
+                    <nls description="Keskisuuri" languageCode="fi" name="Keskisuuri"/>
+                    <nls description="Moyen(ne)" languageCode="fr" name="Moyen(ne)"/>
+                    <nls description="Közepes" languageCode="hu" name="Közepes"/>
+                    <nls description="Media" languageCode="it" name="Media"/>
+                    <nls description="中" languageCode="ja" name="中"/>
+                    <nls description="중간" languageCode="ko" name="중간"/>
+                    <nls description="Gemiddeld" languageCode="nl" name="Gemiddeld"/>
+                    <nls description="Middels" languageCode="no" name="Middels"/>
+                    <nls description="Średni" languageCode="pl" name="Średni"/>
+                    <nls description="Médio" languageCode="pt" name="Médio"/>
+                    <nls description="Средний" languageCode="ru" name="Средний"/>
+                    <nls description="Medel" languageCode="sv" name="Medel"/>
+                    <nls description="Orta" languageCode="tr" name="Orta"/>
+                    <nls description="中" languageCode="zh" name="中"/>
+                    <nls description="中" languageCode="zh_TW" name="中"/>
+                </lookupValue>
+                <lookupValue code="CAL_HIGH" sortOrder="3" status="active">
+                    <nls description="Alt" languageCode="ca" name="Alt"/>
+                    <nls description="Vysoké" languageCode="cs" name="Vysoké"/>
+                    <nls description="Høj" languageCode="da" name="Høj"/>
+                    <nls description="Hoch" languageCode="de" name="Hoch"/>
+                    <nls description="High" languageCode="en" name="High"/>
+                    <nls description="Alto" languageCode="es" name="Alto"/>
+                    <nls description="Korkea" languageCode="fi" name="Korkea"/>
+                    <nls description="Elevé(e)" languageCode="fr" name="Elevé(e)"/>
+                    <nls description="Magas" languageCode="hu" name="Magas"/>
+                    <nls description="Alta" languageCode="it" name="Alta"/>
+                    <nls description="高" languageCode="ja" name="高"/>
+                    <nls description="높음" languageCode="ko" name="높음"/>
+                    <nls description="Hoog" languageCode="nl" name="Hoog"/>
+                    <nls description="Høy" languageCode="no" name="Høy"/>
+                    <nls description="Wysoki" languageCode="pl" name="Wysoki"/>
+                    <nls description="Alto" languageCode="pt" name="Alto"/>
+                    <nls description="Высокий" languageCode="ru" name="Высокий"/>
+                    <nls description="Hög" languageCode="sv" name="Hög"/>
+                    <nls description="Yüksek" languageCode="tr" name="Yüksek"/>
+                    <nls description="高" languageCode="zh" name="高"/>
+                    <nls description="高" languageCode="zh_TW" name="高"/>
+                </lookupValue>
+                <displayedSuggestionAttributes>
+                    <displayedSuggestionAttribute value="name"/>
+                </displayedSuggestionAttributes>
+                <searchedSuggestionAttributes>
+                    <searchedSuggestionAttribute value="name"/>
+                </searchedSuggestionAttributes>
+            </staticLookup>
+        </lookups>
+    </contentPack>
+    <XOGOutput>
+        <Object type="contentPack"/>
+        <Status state="SUCCESS"/>
+        <Statistics failureRecords="0" insertedRecords="0" totalNumberOfRecords="2" updatedRecords="0"/>
+        <Records/>
+    </XOGOutput>
+</NikuDataBus>

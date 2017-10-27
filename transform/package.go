@@ -1,10 +1,9 @@
 package transform
 
 import (
-	"os"
+	"strings"
 	"github.com/beevik/etree"
 	"github.com/andreluzz/cas-xog/common"
-	"strings"
 )
 
 func ProcessPackage(file common.DriverFile, definitions []common.Definition) error {
@@ -45,14 +44,10 @@ func ProcessPackage(file common.DriverFile, definitions []common.Definition) err
 		}
 	}
 
-	//check if target folder type dir exists
-	_, dirErr := os.Stat(common.FOLDER_WRITE + file.Type)
-	if os.IsNotExist(dirErr) {
-		_ = os.Mkdir(common.FOLDER_WRITE + file.Type, os.ModePerm)
-	}
-
 	xog.IndentTabs()
-	err = xog.WriteToFile(common.FOLDER_WRITE + file.Type + "/" + file.Path)
+	folder := common.FOLDER_WRITE + file.Type
+	common.ValidateFolder(folder)
+	err = xog.WriteToFile(folder + "/" + file.Path)
 	if err != nil {
 		return err
 	}

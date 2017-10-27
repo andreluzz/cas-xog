@@ -1,0 +1,277 @@
+<NikuDataBus>
+    <Header action="write" externalSource="NIKU" objectType="contentPack" version="15.2.0.213"/>
+    <contentPack update="true">
+        <Processes>
+            <Process allowOneRunningInstance="true" code="PRC_0002" createdBy="admin" endStep="Finish" source="customer" startOption="ON_DEMAND" startStep="Start">
+                <nls languageCode="ca" name="Test cas-xog 002"/>
+                <nls languageCode="cs" name="Test cas-xog 002"/>
+                <nls languageCode="da" name="Test cas-xog 002"/>
+                <nls languageCode="de" name="Test cas-xog 002"/>
+                <nls languageCode="en" name="Test cas-xog 002"/>
+                <nls languageCode="es" name="Test cas-xog 002"/>
+                <nls languageCode="fi" name="Test cas-xog 002"/>
+                <nls languageCode="fr" name="Test cas-xog 002"/>
+                <nls languageCode="hu" name="Test cas-xog 002"/>
+                <nls languageCode="it" name="Test cas-xog 002"/>
+                <nls languageCode="ja" name="Test cas-xog 002"/>
+                <nls languageCode="ko" name="Test cas-xog 002"/>
+                <nls languageCode="nl" name="Test cas-xog 002"/>
+                <nls languageCode="no" name="Test cas-xog 002"/>
+                <nls languageCode="pl" name="Test cas-xog 002"/>
+                <nls languageCode="pt" name="Test cas-xog 002"/>
+                <nls languageCode="ru" name="Test cas-xog 002"/>
+                <nls languageCode="sv" name="Test cas-xog 002"/>
+                <nls languageCode="tr" name="Test cas-xog 002"/>
+                <nls languageCode="zh" name="Test cas-xog 002"/>
+                <nls languageCode="zh_TW" name="Test cas-xog 002"/>
+                <Security>
+                    <UserSecurity rightCode="PROCESS-DEF-INST-INITIATE" userName="admin"/>
+                    <UserSecurity rightCode="PROCESS-DEF-INST-WRITE" userName="admin"/>
+                </Security>
+                <Objects>
+                    <Object manualStart="true" name="ida" objectType="idea" partitionCode="NIKU.ROOT" partitionModeCode="PARTITION_AND_ANSTRS_DESDNTS" type="BPM_POT_PRIMARY"/>
+                </Objects>
+                <Steps>
+                    <Step id="Start" isMileStone="false" sequenceNo="1">
+                        <nls languageCode="ca" name="Start"/>
+                        <nls languageCode="cs" name="Start"/>
+                        <nls languageCode="da" name="Start"/>
+                        <nls languageCode="de" name="Start"/>
+                        <nls languageCode="en" name="Start"/>
+                        <nls languageCode="es" name="Start"/>
+                        <nls languageCode="fi" name="Start"/>
+                        <nls languageCode="fr" name="Start"/>
+                        <nls languageCode="hu" name="Start"/>
+                        <nls languageCode="it" name="Start"/>
+                        <nls languageCode="ja" name="Start"/>
+                        <nls languageCode="ko" name="Start"/>
+                        <nls languageCode="nl" name="Start"/>
+                        <nls languageCode="no" name="Start"/>
+                        <nls languageCode="pl" name="Start"/>
+                        <nls languageCode="pt" name="Start"/>
+                        <nls languageCode="ru" name="Start"/>
+                        <nls languageCode="sv" name="Start"/>
+                        <nls languageCode="tr" name="Start"/>
+                        <nls languageCode="zh" name="Start"/>
+                        <nls languageCode="zh_TW" name="Start"/>
+                        <Notifications notifyOwner="false">
+                            <NotifyWhen stepCompleted="false" stepInError="false" stepStarted="false"/>
+                            <Assignees/>
+                        </Notifications>
+                        <Operations/>
+                        <TransitionRestrictions>
+                            <TransitionRestriction>
+                                <Join type="BPM_JT_NONE">
+                                    <Condition sequencNo="1" type="BPM_SCT_PRECONDITION"/>
+                                </Join>
+                            </TransitionRestriction>
+                            <TransitionRestriction>
+                                <Split type="BPM_ST_SEQUENCE">
+                                    <Condition sequencNo="1" type="BPM_SCT_POSTCONDITION">
+                                        <Transitions>
+                                            <Transition to="e_004"/>
+                                        </Transitions>
+                                    </Condition>
+                                </Split>
+                            </TransitionRestriction>
+                        </TransitionRestrictions>
+                    </Step>
+                    <Step id="Finish" isMileStone="false" sequenceNo="2">
+                        <nls languageCode="ca" name="Finish"/>
+                        <nls languageCode="cs" name="Finish"/>
+                        <nls languageCode="da" name="Finish"/>
+                        <nls languageCode="de" name="Finish"/>
+                        <nls languageCode="en" name="Finish"/>
+                        <nls languageCode="es" name="Finish"/>
+                        <nls languageCode="fi" name="Finish"/>
+                        <nls languageCode="fr" name="Finish"/>
+                        <nls languageCode="hu" name="Finish"/>
+                        <nls languageCode="it" name="Finish"/>
+                        <nls languageCode="ja" name="Finish"/>
+                        <nls languageCode="ko" name="Finish"/>
+                        <nls languageCode="nl" name="Finish"/>
+                        <nls languageCode="no" name="Finish"/>
+                        <nls languageCode="pl" name="Finish"/>
+                        <nls languageCode="pt" name="Finish"/>
+                        <nls languageCode="ru" name="Finish"/>
+                        <nls languageCode="sv" name="Finish"/>
+                        <nls languageCode="tr" name="Finish"/>
+                        <nls languageCode="zh" name="Finish"/>
+                        <nls languageCode="zh_TW" name="Finish"/>
+                        <Notifications notifyOwner="false">
+                            <NotifyWhen stepCompleted="false" stepInError="false" stepStarted="false"/>
+                            <Assignees/>
+                        </Notifications>
+                        <Operations/>
+                        <TransitionRestrictions>
+                            <TransitionRestriction>
+                                <Join type="BPM_JT_NONE">
+                                    <Condition sequencNo="1" type="BPM_SCT_PRECONDITION"/>
+                                </Join>
+                            </TransitionRestriction>
+                            <TransitionRestriction>
+                                <Split type="BPM_ST_SEQUENCE">
+                                    <Condition sequencNo="1" type="BPM_SCT_POSTCONDITION">
+                                        <Transitions/>
+                                    </Condition>
+                                </Split>
+                            </TransitionRestriction>
+                        </TransitionRestrictions>
+                    </Step>
+                    <Step id="e_004" isMileStone="false" sequenceNo="3">
+                        <nls languageCode="ca" name="Processamento"/>
+                        <nls languageCode="cs" name="Processamento"/>
+                        <nls languageCode="da" name="Processamento"/>
+                        <nls languageCode="de" name="Processamento"/>
+                        <nls languageCode="en" name="Processamento"/>
+                        <nls languageCode="es" name="Processamento"/>
+                        <nls languageCode="fi" name="Processamento"/>
+                        <nls languageCode="fr" name="Processamento"/>
+                        <nls languageCode="hu" name="Processamento"/>
+                        <nls languageCode="it" name="Processamento"/>
+                        <nls languageCode="ja" name="Processamento"/>
+                        <nls languageCode="ko" name="Processamento"/>
+                        <nls languageCode="nl" name="Processamento"/>
+                        <nls languageCode="no" name="Processamento"/>
+                        <nls languageCode="pl" name="Processamento"/>
+                        <nls languageCode="pt" name="Processamento"/>
+                        <nls languageCode="ru" name="Processamento"/>
+                        <nls languageCode="sv" name="Processamento"/>
+                        <nls languageCode="tr" name="Processamento"/>
+                        <nls languageCode="zh" name="Processamento"/>
+                        <nls languageCode="zh_TW" name="Processamento"/>
+                        <Notifications notifyOwner="false">
+                            <NotifyWhen stepCompleted="false" stepInError="false" stepStarted="false"/>
+                            <Assignees/>
+                        </Notifications>
+                        <Operations/>
+                        <TransitionRestrictions>
+                            <TransitionRestriction>
+                                <Join type="BPM_JT_NONE">
+                                    <Condition sequencNo="1" type="BPM_SCT_PRECONDITION"/>
+                                </Join>
+                            </TransitionRestriction>
+                            <TransitionRestriction>
+                                <Split type="BPM_ST_SEQUENCE">
+                                    <Condition sequencNo="1" type="BPM_SCT_POSTCONDITION">
+                                        <Transitions>
+                                            <Transition to="Finish"/>
+                                        </Transitions>
+                                    </Condition>
+                                </Split>
+                            </TransitionRestriction>
+                        </TransitionRestrictions>
+                    </Step>
+                </Steps>
+                <Groups/>
+                <OBSAssocs complete="false"/>
+            </Process>
+        </Processes>
+        <lookups update="true">
+            <staticLookup autoSuggestEnabled="true" autoSuggestMaxSuggestions="10" code="CAL_EVENT_PRIORITY" hiddenAttributeName="id" sortStyle="manual" source="niku.com" status="active" update="true">
+                <nls description="Prioritat dels esdeveniments del calendari" languageCode="ca" name="Prioritat del calendari"/>
+                <nls description="Priorita události kalendáře" languageCode="cs" name="Priorita kalendáře"/>
+                <nls description="Prioritet for kalenderaftale" languageCode="da" name="Kalenderprioritet"/>
+                <nls description="Kalenderereignis - Priorität" languageCode="de" name="Kalenderpriorität"/>
+                <nls description="Calendar Event Priority" languageCode="en" name="Calendar Priority"/>
+                <nls description="Prioridad de los eventos del calendario" languageCode="es" name="Prioridad del calendario"/>
+                <nls description="Kalenteritapahtuman prioriteetti" languageCode="fi" name="Kalenteriprioriteetti"/>
+                <nls description="Priorité des événements du calendrier" languageCode="fr" name="Priorité sur le calendrier"/>
+                <nls description="Naptáresemény prioritása" languageCode="hu" name="Naptár prioritása"/>
+                <nls description="Priorità eventi calendario" languageCode="it" name="Priorità calendario"/>
+                <nls description="カレンダ イベントの優先度" languageCode="ja" name="カレンダの優先度"/>
+                <nls description="일정 이벤트 우선 순위" languageCode="ko" name="일정 우선 순위"/>
+                <nls description="Prioriteit agenda-evenement" languageCode="nl" name="Agenda prioriteit"/>
+                <nls description="Kalenderbegivenhetsprioritet" languageCode="no" name="Kalenderprioritet"/>
+                <nls description="Priorytet zdarzenia w kalendarzu" languageCode="pl" name="Priorytet kalendarza"/>
+                <nls description="Prioridade do evento do calendário" languageCode="pt" name="Prioridade do calendário"/>
+                <nls description="Приоритет события календаря" languageCode="ru" name="Приоритет календаря"/>
+                <nls description="Prioritet för kalenderhändelse" languageCode="sv" name="Kalenderprioritet"/>
+                <nls description="Takvim Olayı Önceliği" languageCode="tr" name="Takvim Önceliği"/>
+                <nls description="日历事件优先级" languageCode="zh" name="日历优先级"/>
+                <nls description="行事曆事件優先順序" languageCode="zh_TW" name="行事曆優先順序"/>
+                <lookupValue code="CAL_LOW" sortOrder="1" status="active">
+                    <nls description="Sota" languageCode="ca" name="Sota"/>
+                    <nls description="Nízké" languageCode="cs" name="Nízké"/>
+                    <nls description="Lav" languageCode="da" name="Lav"/>
+                    <nls description="Niedrig" languageCode="de" name="Niedrig"/>
+                    <nls description="Low" languageCode="en" name="Low"/>
+                    <nls description="Bajo" languageCode="es" name="Bajo"/>
+                    <nls description="Matala" languageCode="fi" name="Matala"/>
+                    <nls description="Faible" languageCode="fr" name="Faible"/>
+                    <nls description="Alacsony" languageCode="hu" name="Alacsony"/>
+                    <nls description="Bassa" languageCode="it" name="Bassa"/>
+                    <nls description="低" languageCode="ja" name="低"/>
+                    <nls description="낮음" languageCode="ko" name="낮음"/>
+                    <nls description="Laag" languageCode="nl" name="Laag"/>
+                    <nls description="Lav" languageCode="no" name="Lav"/>
+                    <nls description="Niski" languageCode="pl" name="Niski"/>
+                    <nls description="Baixo" languageCode="pt" name="Baixo"/>
+                    <nls description="Низкий" languageCode="ru" name="Низкий"/>
+                    <nls description="Låg" languageCode="sv" name="Låg"/>
+                    <nls description="Düşük" languageCode="tr" name="Düşük"/>
+                    <nls description="低" languageCode="zh" name="低"/>
+                    <nls description="低" languageCode="zh_TW" name="低"/>
+                </lookupValue>
+                <lookupValue code="CAL_MEDIUM" sortOrder="2" status="active">
+                    <nls description="Medi" languageCode="ca" name="Medi"/>
+                    <nls description="Střední" languageCode="cs" name="Střední"/>
+                    <nls description="Mellem" languageCode="da" name="Mellem"/>
+                    <nls description="Mittel" languageCode="de" name="Mittel"/>
+                    <nls description="Medium" languageCode="en" name="Medium"/>
+                    <nls description="Medio" languageCode="es" name="Medio"/>
+                    <nls description="Keskisuuri" languageCode="fi" name="Keskisuuri"/>
+                    <nls description="Moyen(ne)" languageCode="fr" name="Moyen(ne)"/>
+                    <nls description="Közepes" languageCode="hu" name="Közepes"/>
+                    <nls description="Media" languageCode="it" name="Media"/>
+                    <nls description="中" languageCode="ja" name="中"/>
+                    <nls description="중간" languageCode="ko" name="중간"/>
+                    <nls description="Gemiddeld" languageCode="nl" name="Gemiddeld"/>
+                    <nls description="Middels" languageCode="no" name="Middels"/>
+                    <nls description="Średni" languageCode="pl" name="Średni"/>
+                    <nls description="Médio" languageCode="pt" name="Médio"/>
+                    <nls description="Средний" languageCode="ru" name="Средний"/>
+                    <nls description="Medel" languageCode="sv" name="Medel"/>
+                    <nls description="Orta" languageCode="tr" name="Orta"/>
+                    <nls description="中" languageCode="zh" name="中"/>
+                    <nls description="中" languageCode="zh_TW" name="中"/>
+                </lookupValue>
+                <lookupValue code="CAL_HIGH" sortOrder="3" status="active">
+                    <nls description="Alt" languageCode="ca" name="Alt"/>
+                    <nls description="Vysoké" languageCode="cs" name="Vysoké"/>
+                    <nls description="Høj" languageCode="da" name="Høj"/>
+                    <nls description="Hoch" languageCode="de" name="Hoch"/>
+                    <nls description="High" languageCode="en" name="High"/>
+                    <nls description="Alto" languageCode="es" name="Alto"/>
+                    <nls description="Korkea" languageCode="fi" name="Korkea"/>
+                    <nls description="Elevé(e)" languageCode="fr" name="Elevé(e)"/>
+                    <nls description="Magas" languageCode="hu" name="Magas"/>
+                    <nls description="Alta" languageCode="it" name="Alta"/>
+                    <nls description="高" languageCode="ja" name="高"/>
+                    <nls description="높음" languageCode="ko" name="높음"/>
+                    <nls description="Hoog" languageCode="nl" name="Hoog"/>
+                    <nls description="Høy" languageCode="no" name="Høy"/>
+                    <nls description="Wysoki" languageCode="pl" name="Wysoki"/>
+                    <nls description="Alto" languageCode="pt" name="Alto"/>
+                    <nls description="Высокий" languageCode="ru" name="Высокий"/>
+                    <nls description="Hög" languageCode="sv" name="Hög"/>
+                    <nls description="Yüksek" languageCode="tr" name="Yüksek"/>
+                    <nls description="高" languageCode="zh" name="高"/>
+                    <nls description="高" languageCode="zh_TW" name="高"/>
+                </lookupValue>
+                <displayedSuggestionAttributes>
+                    <displayedSuggestionAttribute value="name"/>
+                </displayedSuggestionAttributes>
+                <searchedSuggestionAttributes>
+                    <searchedSuggestionAttribute value="name"/>
+                </searchedSuggestionAttributes>
+            </staticLookup>
+        </lookups>
+    </contentPack>
+    <XOGOutput>
+        <Object type="contentPack"/>
+        <Status state="SUCCESS"/>
+        <Statistics failureRecords="0" insertedRecords="0" totalNumberOfRecords="2" updatedRecords="0"/>
+        <Records/>
+    </XOGOutput>
+</NikuDataBus>

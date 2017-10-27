@@ -1,8 +1,8 @@
 package transform
 
 import (
-	"github.com/andreluzz/cas-xog/common"
 	"github.com/beevik/etree"
+	"github.com/andreluzz/cas-xog/common"
 )
 
 func specificObjectTransformations(xog *etree.Document, file common.DriverFile) error {
@@ -26,7 +26,9 @@ func specificObjectTransformations(xog *etree.Document, file common.DriverFile) 
 	}
 
 	if file.PartitionModel != "" {
-		xog.FindElement("//object[@code='" + file.Code + "']").CreateAttr("partitionModelCode", file.PartitionModel)
+
+		element := xog.FindElement("//object[@code='" + file.Code + "']")
+		element.CreateAttr("partitionModelCode", file.PartitionModel)
 	}
 
 	return nil
