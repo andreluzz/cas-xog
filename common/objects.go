@@ -74,7 +74,6 @@ type DriverFile struct {
 	Elements 		  []Element		`xml:"element"`
 	Replace			  []FileReplace `xml:"replace"`
 	MatchExcel		  []MatchExcel	`xml:"match"`
-	PackageFolder 	  string
 }
 
 type Driver struct {
@@ -93,10 +92,10 @@ type Definition struct {
 	Action 			string	`xml:"action,attr"`
 	Description 	string	`xml:"description,attr"`
 	Default 		string	`xml:"default,attr"`
-	Value	 		string
 	TransformTypes	string	`xml:"transformTypes"`
-	Match 			string	`xml:"match"`
-	Replace			string	`xml:"replace"`
+	From 			string	`xml:"match"`
+	To				string	`xml:"replace"`
+	Value	 		string
 }
 
 type Version struct {

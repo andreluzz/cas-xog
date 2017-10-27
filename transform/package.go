@@ -6,10 +6,10 @@ import (
 	"github.com/andreluzz/cas-xog/common"
 )
 
-func ProcessPackage(file common.DriverFile, definitions []common.Definition) error {
+func ProcessPackageFile(file common.DriverFile, packageFolder string, definitions []common.Definition) error {
 
 	xog := etree.NewDocument()
-	err := xog.ReadFromFile(file.PackageFolder + file.Type + "/" + file.Path)
+	err := xog.ReadFromFile(packageFolder + file.Path)
 	if err != nil {
 		return err
 	}
@@ -34,12 +34,12 @@ func ProcessPackage(file common.DriverFile, definitions []common.Definition) err
 			if def.Value == "" {
 				continue
 			}
-			replace := strings.Replace(def.Replace, "##DEFINITION_VALUE##", def.Value, 1)
-			if replace == def.Match {
+			replaced := strings.Replace(def.To, "##DEFINITION_VALUE##", def.Value, 1)
+			if replaced == def.From {
 				continue
 			}
 			if def.TransformTypes == "" || strings.Contains(def.TransformTypes, file.Type) {
-				findAndReplace(xog, []common.FileReplace{{From: def.Match, To: replace}})
+				findAndReplace(xog, []common.FileReplace{{From: def.From, To: replaced}})
 			}
 		}
 	}
@@ -47,10 +47,7 @@ func ProcessPackage(file common.DriverFile, definitions []common.Definition) err
 	xog.IndentTabs()
 	folder := common.FOLDER_WRITE + file.Type
 	common.ValidateFolder(folder)
-	err = xog.WriteToFile(folder + "/" + file.Path)
-	if err != nil {
-		return err
-	}
+	xog.WriteToFile(folder + "/" + file.Path)
 
 	return nil
 }

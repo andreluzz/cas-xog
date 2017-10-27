@@ -109,24 +109,27 @@ func InstallPackage() error {
 	os.RemoveAll(common.FOLDER_WRITE)
 	os.MkdirAll(common.FOLDER_WRITE, os.ModePerm)
 
-	if len(selectedVersion.Definitions) > 0 {
-		common.Info("\n------------------------------------------------------------------")
-		common.Info("\n[blue[Initiated at]]: %s", start.Format("Mon _2 Jan 2006 - 15:04:05"))
-		common.Info("\nProcessing Package: [blue[%s]] (%s)", selectedPackage.Name, selectedVersion.Name)
-		common.Info("\n------------------------------------------------------------------\n")
+	common.Info("\n------------------------------------------------------------------")
+	common.Info("\n[blue[Initiated at]]: %s", start.Format("Mon _2 Jan 2006 - 15:04:05"))
+	common.Info("\nProcessing Package: [blue[%s]] (%s)", selectedPackage.Name, selectedVersion.Name)
+	common.Info("\n------------------------------------------------------------------\n")
 
-		for i, f := range driverXOG.Files {
-			f.PackageFolder = common.FOLDER_PACKAGE + selectedPackage.Folder + selectedVersion.Folder
-			transform.ProcessPackage(f, selectedVersion.Definitions)
+	for i, f := range driverXOG.Files {
+		packageFolder := common.FOLDER_PACKAGE + selectedPackage.Folder + selectedVersion.Folder + "/" + f.Type + "/"
+		err := transform.ProcessPackageFile(f, packageFolder, selectedVersion.Definitions)
+		if err != nil {
 			common.Info("\n[CAS-XOG][blue[Processed]] %03d/%03d | file: %s", i+1, len(driverXOG.Files), f.Path)
-
+		} else {
+			common.Info("\n[CAS-XOG][red[Error    ]] %03d/%03d | file: %s | Debug: %s", i+1, len(driverXOG.Files), f.Path, err.Error())
 		}
-		elapsed := time.Since(start)
 
-		common.Info("\n\n------------------------------------------------------------------")
-		common.Info("\n[blue[Concluded in]]: %.3f seconds", elapsed.Seconds())
-		common.Info("\n------------------------------------------------------------------\n")
 	}
+
+	elapsed := time.Since(start)
+
+	common.Info("\n\n------------------------------------------------------------------")
+	common.Info("\n[blue[Concluded in]]: %.3f seconds", elapsed.Seconds())
+	common.Info("\n------------------------------------------------------------------\n")
 
 	start = time.Now()
 
@@ -148,8 +151,9 @@ func InstallPackage() error {
 		return nil
 	}
 
+	start = time.Now()
+
 	for i, f := range driverXOG.Files {
-		f.PackageFolder = common.FOLDER_PACKAGE + selectedPackage.Folder + selectedVersion.Folder
 		common.Info("\n[CAS-XOG]Writing %03d/%03d | file: %s   ", i+1, len(driverXOG.Files), f.Path)
 
 		action := "w"
@@ -172,7 +176,7 @@ func InstallPackage() error {
 	}
 
 	TargetEnv.logout()
-	elapsed := time.Since(start)
+	elapsed = time.Since(start)
 
 	common.Info("\n\n------------------------------------------------------------------")
 	common.Info("\nStats: total = %d | failure = %d | success = %d | warning = %d", len(driverXOG.Files), output[common.OUTPUT_ERROR], output[common.OUTPUT_SUCCESS], output[common.OUTPUT_WARNING])
