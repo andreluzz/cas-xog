@@ -6,7 +6,7 @@ import (
 	"github.com/andreluzz/cas-xog/common"
 )
 
-func ProcessPackageFile(file common.DriverFile, packageFolder string, definitions []common.Definition) error {
+func ProcessPackageFile(file common.DriverFile, packageFolder, writeFolder string, definitions []common.Definition) error {
 
 	xog := etree.NewDocument()
 	err := xog.ReadFromFile(packageFolder + file.Path)
@@ -45,9 +45,8 @@ func ProcessPackageFile(file common.DriverFile, packageFolder string, definition
 	}
 
 	xog.IndentTabs()
-	folder := common.FOLDER_WRITE + file.Type
-	common.ValidateFolder(folder)
-	xog.WriteToFile(folder + "/" + file.Path)
+	common.ValidateFolder(writeFolder)
+	xog.WriteToFile(writeFolder + "/" + file.Path)
 
 	return nil
 }

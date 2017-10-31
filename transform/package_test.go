@@ -7,6 +7,10 @@ import (
 	"strings"
 )
 
+func init() {
+
+}
+
 func TestProcessPackageToReplaceTargetPartitionModel(t *testing.T) {
 	file := common.DriverFile{
 		Type: common.OBJECT,
@@ -21,14 +25,13 @@ func TestProcessPackageToReplaceTargetPartitionModel(t *testing.T) {
 		},
 	}
 
-	folder := packageMockFolder
-	err := ProcessPackageFile(file, folder, def)
+	folder := "../" + common.FOLDER_WRITE + file.Type
+	err := ProcessPackageFile(file, packageMockFolder, folder, def)
 
 	if err != nil {
 		t.Fatalf("Error processing package file. Debug: %s", err.Error())
 	}
 
-	folder = common.FOLDER_WRITE + file.Type
 	result := etree.NewDocument()
 	err = result.ReadFromFile(folder + "/" + file.Path)
 	if err != nil {
@@ -57,14 +60,13 @@ func TestProcessPackageToDiscardObjectWithoutPartitionModel(t *testing.T) {
 		},
 	}
 
-	folder := packageMockFolder
-	err := ProcessPackageFile(file, folder, def)
+	folder := "../" + common.FOLDER_WRITE + file.Type
+	err := ProcessPackageFile(file, packageMockFolder, folder, def)
 
 	if err != nil {
 		t.Fatalf("Error processing package file. Debug: %s", err.Error())
 	}
 
-	folder = common.FOLDER_WRITE + file.Type
 	result := etree.NewDocument()
 	err = result.ReadFromFile(folder + "/" + file.Path)
 	if err != nil {
@@ -96,14 +98,13 @@ func TestProcessPackageToReplaceTargetPartition(t *testing.T) {
 		},
 	}
 
-	folder := packageMockFolder
-	err := ProcessPackageFile(file, folder, def)
+	folder := "../" + common.FOLDER_WRITE + file.Type
+	err := ProcessPackageFile(file, packageMockFolder, folder, def)
 
 	if err != nil {
 		t.Fatalf("Error processing package file. Debug: %s", err.Error())
 	}
 
-	folder = common.FOLDER_WRITE + file.Type
 	result := etree.NewDocument()
 	err = result.ReadFromFile(folder + "/" + file.Path)
 	if err != nil {
@@ -153,14 +154,13 @@ func TestProcessPackageToProcessDefinitionReplaceString(t *testing.T) {
 		},
 	}
 
-	folder := packageMockFolder
-	err := ProcessPackageFile(file, folder, def)
+	folder := "../" + common.FOLDER_WRITE + file.Type
+	err := ProcessPackageFile(file, packageMockFolder, folder, def)
 
 	if err != nil {
 		t.Fatalf("Error processing package file. Debug: %s", err.Error())
 	}
 
-	folder = common.FOLDER_WRITE + file.Type
 	result := etree.NewDocument()
 	err = result.ReadFromFile(folder + "/" + file.Path)
 	if err != nil {
@@ -176,7 +176,7 @@ func TestProcessPackageToProcessDefinitionReplaceString(t *testing.T) {
 
 func TestProcessPackageToReturnErrorFileIsNil(t *testing.T) {
 
-	err := ProcessPackageFile(common.DriverFile{}, "", nil)
+	err := ProcessPackageFile(common.DriverFile{}, "", "", nil)
 
 	if err == nil {
 		t.Errorf("Error processing package file. Debug: not validating if driver file is null")

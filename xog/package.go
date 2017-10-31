@@ -116,7 +116,8 @@ func InstallPackage() error {
 
 	for i, f := range driverXOG.Files {
 		packageFolder := common.FOLDER_PACKAGE + selectedPackage.Folder + selectedVersion.Folder + "/" + f.Type + "/"
-		err := transform.ProcessPackageFile(f, packageFolder, selectedVersion.Definitions)
+		writeFolder := common.FOLDER_WRITE + f.Type
+		err := transform.ProcessPackageFile(f, packageFolder, writeFolder, selectedVersion.Definitions)
 		if err != nil {
 			common.Info("\n[CAS-XOG][blue[Processed]] %03d/%03d | file: %s", i+1, len(driverXOG.Files), f.Path)
 		} else {
