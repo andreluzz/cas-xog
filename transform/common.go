@@ -18,6 +18,8 @@ func Execute(xog, aux *etree.Document, file common.DriverFile) error {
 	headerElement.CreateAttr("version", "8.0")
 
 	switch file.Type {
+	case common.LOOKUP:
+		specificLookupTransformations(xog, file)
 	case common.PROCESS:
 		err = specificProcessTransformations(xog, aux, file)
 		if err != nil {
@@ -33,8 +35,9 @@ func Execute(xog, aux *etree.Document, file common.DriverFile) error {
 		if err != nil {
 			return errors.New("[transform error] " + err.Error())
 		}
-	case common.PORTLET:
+	case common.PORTLET, common.QUERY:
 		removeElementFromParent(xog, "//lookups")
+		removeElementFromParent(xog, "//objects")
 	case common.MENU:
 		removeElementFromParent(xog, "//objects")
 		removeElementFromParent(xog, "//pages")
@@ -55,7 +58,10 @@ func Execute(xog, aux *etree.Document, file common.DriverFile) error {
 	if len(file.Elements) > 0 {
 		for _,e := range file.Elements {
 			if e.Action == common.ACTION_REMOVE && e.XPath != "" && e.Type == "" && e.Code == "" {
-				removeElementFromParent(xog, e.XPath)
+				if strings.HasPrefix(e.XPath, "/") {
+					e.XPath = "." + e.XPath
+				}
+				removeElementsFromParent(xog, e.XPath)
 			}
 		}
 	}
@@ -80,15 +86,6 @@ func removeElementFromParent(xog *etree.Document, path string) {
 func removeElementsFromParent(xog *etree.Document, path string) {
 	for _, e := range xog.FindElements(path) {
 		e.Parent().RemoveChild(e)
-	}
-}
-
-func validateCodeAndRemoveElementsFromParent(xog *etree.Document, path, code string) {
-	for _, e := range xog.FindElements(path) {
-		elementCode := e.SelectAttrValue("code", "")
-		if elementCode != code {
-			e.Parent().RemoveChild(e)
-		}
 	}
 }
 

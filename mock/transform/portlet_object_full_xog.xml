@@ -1,0 +1,1748 @@
+<NikuDataBus>
+    <Header action="write" externalSource="NIKU" objectType="contentPack" version="15.2.0.213"/>
+    <contentPack update="true">
+        <portlets update="true">
+            <gridPortlet allowConfigure="true" allowConfigureLabel="true" allowEditing="true" category="COLLABORATION" code="test_cas_xog" dataProviderId="obj_sistema" dataProviderPartitionId="NIKU.ROOT" dataProviderType="object" defaultSortColumn="code" defaultSortOrder="ascending" forceFilter="false" gridAttributeProtection="1" hasEditableColumn="true" metricsLocation="bottom" objectType="SYSTEM" showAltValueText="false" showColumnCurrencyCode="false" source="customer">
+                <nls languageCode="de" name="Portlet de objeto - Sistema"/>
+                <nls languageCode="no" name="Portlet de objeto - Sistema"/>
+                <nls languageCode="fi" name="Portlet de objeto - Sistema"/>
+                <nls languageCode="ru" name="Portlet de objeto - Sistema"/>
+                <nls languageCode="sv" name="Portlet de objeto - Sistema"/>
+                <nls languageCode="ko" name="Portlet de objeto - Sistema"/>
+                <nls languageCode="pt" name="Portlet de objeto - Sistema"/>
+                <nls languageCode="en" name="Portlet de objeto - Sistema"/>
+                <nls languageCode="it" name="Portlet de objeto - Sistema"/>
+                <nls languageCode="fr" name="Portlet de objeto - Sistema"/>
+                <nls languageCode="hu" name="Portlet de objeto - Sistema"/>
+                <nls languageCode="es" name="Portlet de objeto - Sistema"/>
+                <nls languageCode="zh" name="Portlet de objeto - Sistema"/>
+                <nls languageCode="cs" name="Portlet de objeto - Sistema"/>
+                <nls languageCode="zh_TW" name="Portlet de objeto - Sistema"/>
+                <nls languageCode="ja" name="Portlet de objeto - Sistema"/>
+                <nls languageCode="pl" name="Portlet de objeto - Sistema"/>
+                <nls languageCode="da" name="Portlet de objeto - Sistema"/>
+                <nls languageCode="ca" name="Portlet de objeto - Sistema"/>
+                <nls languageCode="nl" name="Portlet de objeto - Sistema"/>
+                <nls languageCode="tr" name="Portlet de objeto - Sistema"/>
+                <column align="left" allowEditing="false" allowHeaderWrapping="false" allowWrapping="true" code="code" isEditable="false" position="1" showHeaderLabel="true" showSeparator="true" type="label">
+                    <nls languageCode="de" name="ID"/>
+                    <nls languageCode="no" name="ID"/>
+                    <nls languageCode="fi" name="Tunnus"/>
+                    <nls languageCode="ru" name="Код"/>
+                    <nls languageCode="sv" name="ID"/>
+                    <nls languageCode="ko" name="[ko: ID]"/>
+                    <nls languageCode="pt" name="ID"/>
+                    <nls languageCode="en" name="ID"/>
+                    <nls languageCode="it" name="ID"/>
+                    <nls languageCode="fr" name="ID"/>
+                    <nls languageCode="hu" name="Azonosító"/>
+                    <nls languageCode="es" name="ID"/>
+                    <nls languageCode="zh" name="ID"/>
+                    <nls languageCode="cs" name="ID"/>
+                    <nls languageCode="zh_TW" name="ID"/>
+                    <nls languageCode="ja" name="ID"/>
+                    <nls languageCode="pl" name="Identyfikator"/>
+                    <nls languageCode="da" name="Id"/>
+                    <nls languageCode="ca" name="ID"/>
+                    <nls languageCode="nl" name="ID"/>
+                    <nls languageCode="tr" name="Kimlik"/>
+                </column>
+                <column align="left" allowEditing="true" allowHeaderWrapping="false" allowWrapping="true" code="name" isEditable="true" position="2" showHeaderLabel="true" showSeparator="true" type="label">
+                    <nls languageCode="de" name="Name"/>
+                    <nls languageCode="no" name="Navn"/>
+                    <nls languageCode="fi" name="Nimi"/>
+                    <nls languageCode="sv" name="Namn"/>
+                    <nls languageCode="ru" name="Имя"/>
+                    <nls languageCode="pt" name="Nome"/>
+                    <nls languageCode="ko" name="[ko: Name]"/>
+                    <nls languageCode="en" name="Name"/>
+                    <nls languageCode="it" name="Nome"/>
+                    <nls languageCode="fr" name="Nom"/>
+                    <nls languageCode="hu" name="Név"/>
+                    <nls languageCode="es" name="Nombre"/>
+                    <nls languageCode="zh" name="名称"/>
+                    <nls languageCode="cs" name="Název"/>
+                    <nls languageCode="zh_TW" name="名稱"/>
+                    <nls languageCode="ja" name="名前"/>
+                    <nls languageCode="pl" name="Nazwa"/>
+                    <nls languageCode="da" name="Navn"/>
+                    <nls languageCode="ca" name="Nom"/>
+                    <nls languageCode="tr" name="Adı"/>
+                    <nls languageCode="nl" name="Naam"/>
+                </column>
+                <column align="left" allowEditing="true" allowHeaderWrapping="false" allowWrapping="false" code="multivalue_status_caption" isEditable="true" position="3" showHeaderLabel="true" showSeparator="true" type="label">
+                    <nls languageCode="de" name="Available Status"/>
+                    <nls languageCode="no" name="Available Status"/>
+                    <nls languageCode="fi" name="Available Status"/>
+                    <nls languageCode="sv" name="Available Status"/>
+                    <nls languageCode="ru" name="Available Status"/>
+                    <nls languageCode="pt" name="Available Status"/>
+                    <nls languageCode="ko" name="Available Status"/>
+                    <nls languageCode="en" name="Available Status"/>
+                    <nls languageCode="it" name="Available Status"/>
+                    <nls languageCode="fr" name="Available Status"/>
+                    <nls languageCode="hu" name="Available Status"/>
+                    <nls languageCode="es" name="Available Status"/>
+                    <nls languageCode="zh" name="Available Status"/>
+                    <nls languageCode="cs" name="Available Status"/>
+                    <nls languageCode="zh_TW" name="Available Status"/>
+                    <nls languageCode="ja" name="Available Status"/>
+                    <nls languageCode="pl" name="Available Status"/>
+                    <nls languageCode="da" name="Available Status"/>
+                    <nls languageCode="ca" name="Available Status"/>
+                    <nls languageCode="tr" name="Available Status"/>
+                    <nls languageCode="nl" name="Available Status"/>
+                </column>
+                <column align="left" allowEditing="true" allowHeaderWrapping="false" allowWrapping="true" code="status_caption" isEditable="true" position="4" showHeaderLabel="true" showSeparator="true" type="label">
+                    <nls languageCode="de" name="Status"/>
+                    <nls languageCode="no" name="Status"/>
+                    <nls languageCode="fi" name="Status"/>
+                    <nls languageCode="ru" name="Status"/>
+                    <nls languageCode="sv" name="Status"/>
+                    <nls languageCode="ko" name="Status"/>
+                    <nls languageCode="pt" name="Status Legado"/>
+                    <nls languageCode="en" name="Status"/>
+                    <nls languageCode="it" name="Status"/>
+                    <nls languageCode="fr" name="Status"/>
+                    <nls languageCode="hu" name="Status"/>
+                    <nls languageCode="es" name="Status"/>
+                    <nls languageCode="zh" name="Status"/>
+                    <nls languageCode="cs" name="Status"/>
+                    <nls languageCode="zh_TW" name="Status"/>
+                    <nls languageCode="ja" name="Status"/>
+                    <nls languageCode="pl" name="Status"/>
+                    <nls languageCode="da" name="Status"/>
+                    <nls languageCode="ca" name="Status"/>
+                    <nls languageCode="nl" name="Status"/>
+                    <nls languageCode="tr" name="Status"/>
+                </column>
+                <column align="left" allowEditing="true" allowHeaderWrapping="false" allowWrapping="true" code="status_novo" isEditable="true" position="5" showHeaderLabel="true" showSeparator="true" type="label">
+                    <nls languageCode="de" name="Status novo 2"/>
+                    <nls languageCode="no" name="Status novo 2"/>
+                    <nls languageCode="fi" name="Status novo 2"/>
+                    <nls languageCode="ru" name="Status novo 2"/>
+                    <nls languageCode="sv" name="Status novo 2"/>
+                    <nls languageCode="ko" name="Status novo 2"/>
+                    <nls languageCode="pt" name="Status Atualizado"/>
+                    <nls languageCode="en" name="Status novo 2"/>
+                    <nls languageCode="it" name="Status novo 2"/>
+                    <nls languageCode="fr" name="Status novo 2"/>
+                    <nls languageCode="hu" name="Status novo 2"/>
+                    <nls languageCode="es" name="Status novo 2"/>
+                    <nls languageCode="zh" name="Status novo 2"/>
+                    <nls languageCode="cs" name="Status novo 2"/>
+                    <nls languageCode="zh_TW" name="Status novo 2"/>
+                    <nls languageCode="ja" name="Status novo 2"/>
+                    <nls languageCode="pl" name="Status novo 2"/>
+                    <nls languageCode="da" name="Status novo 2"/>
+                    <nls languageCode="ca" name="Status novo 2"/>
+                    <nls languageCode="nl" name="Status novo 2"/>
+                    <nls languageCode="tr" name="Status novo 2"/>
+                </column>
+                <column align="left" allowEditing="true" allowHeaderWrapping="false" allowWrapping="true" code="analista" isEditable="true" position="6" showHeaderLabel="true" showSeparator="true" type="label">
+                    <nls languageCode="de" name="Analista"/>
+                    <nls languageCode="no" name="Analista"/>
+                    <nls languageCode="fi" name="Analista"/>
+                    <nls languageCode="sv" name="Analista"/>
+                    <nls languageCode="ru" name="Analista"/>
+                    <nls languageCode="pt" name="Analista"/>
+                    <nls languageCode="ko" name="Analista"/>
+                    <nls languageCode="en" name="Analista"/>
+                    <nls languageCode="it" name="Analista"/>
+                    <nls languageCode="fr" name="Analista"/>
+                    <nls languageCode="hu" name="Analista"/>
+                    <nls languageCode="es" name="Analista"/>
+                    <nls languageCode="zh" name="Analista"/>
+                    <nls languageCode="cs" name="Analista"/>
+                    <nls languageCode="zh_TW" name="Analista"/>
+                    <nls languageCode="ja" name="Analista"/>
+                    <nls languageCode="pl" name="Analista"/>
+                    <nls languageCode="da" name="Analista"/>
+                    <nls languageCode="ca" name="Analista"/>
+                    <nls languageCode="tr" name="Analista"/>
+                    <nls languageCode="nl" name="Analista"/>
+                </column>
+                <column align="right" allowEditing="false" allowHeaderWrapping="false" allowWrapping="true" code="created_date" isEditable="false" position="7" showHeaderLabel="true" showSeparator="true" type="label">
+                    <nls languageCode="de" name="Erstellungsdatum"/>
+                    <nls languageCode="no" name="Opprettingsdato"/>
+                    <nls languageCode="fi" name="Luontipäivä"/>
+                    <nls languageCode="sv" name="Skapad datum"/>
+                    <nls languageCode="ru" name="Дата создания"/>
+                    <nls languageCode="pt" name="Data de criação"/>
+                    <nls languageCode="ko" name="[ko: Created Date]"/>
+                    <nls languageCode="en" name="Created Date"/>
+                    <nls languageCode="it" name="Data di creazione"/>
+                    <nls languageCode="fr" name="Date de création"/>
+                    <nls languageCode="hu" name="Létrehozás dátuma"/>
+                    <nls languageCode="es" name="Fecha de creación"/>
+                    <nls languageCode="zh" name="创建日期"/>
+                    <nls languageCode="cs" name="Datum vytvoření"/>
+                    <nls languageCode="zh_TW" name="建立日期"/>
+                    <nls languageCode="ja" name="作成日"/>
+                    <nls languageCode="pl" name="Data utworzenia"/>
+                    <nls languageCode="da" name="Oprettelsesdato"/>
+                    <nls languageCode="ca" name="Data de creació"/>
+                    <nls languageCode="tr" name="Oluşturma Tarihi"/>
+                    <nls languageCode="nl" name="Gemaakt op"/>
+                </column>
+                <OBSAssocs complete="false"/>
+                <Security/>
+                <filter code="test_cas_xog" componentCode="odf" dataProviderId="obj_sistema" dataProviderType="object" isCustomized="true" objectCode="5134001" obsTableNameKey="obj_sistema" partitionCode="NIKU.ROOT">
+                    <section collapsed="true" currentState="collapsed" filterByExpression="false">
+                        <column sequence="1">
+                            <viewFieldDescriptor active="true" aggregate="false" attributeCode="status" dataSize="30" decimals="0" extType="enum" fixedWidget="false" hidden="false" isMVLookup="false" lookupType="CAL_ACTIONITEM_STATUS" multiValued="false" notEqualXPath="false" readOnly="false" required="false" virtual="false" widgetType="browse" width="30">
+                                <nls languageCode="ca" name="Status"/>
+                                <nls languageCode="cs" name="Status"/>
+                                <nls languageCode="da" name="Status"/>
+                                <nls languageCode="de" name="Status"/>
+                                <nls languageCode="en" name="Status"/>
+                                <nls languageCode="es" name="Status"/>
+                                <nls languageCode="fi" name="Status"/>
+                                <nls languageCode="fr" name="Status"/>
+                                <nls languageCode="hu" name="Status"/>
+                                <nls languageCode="it" name="Status"/>
+                                <nls languageCode="ja" name="Status"/>
+                                <nls languageCode="ko" name="Status"/>
+                                <nls languageCode="nl" name="Status"/>
+                                <nls languageCode="no" name="Status"/>
+                                <nls languageCode="pl" name="Status"/>
+                                <nls languageCode="pt" name="Status Legado"/>
+                                <nls languageCode="ru" name="Status"/>
+                                <nls languageCode="sv" name="Status"/>
+                                <nls languageCode="tr" name="Status"/>
+                                <nls languageCode="zh" name="Status"/>
+                                <nls languageCode="zh_TW" name="Status"/>
+                                <autoSuggest enabled="true" maxSuggestions="10"/>
+                            </viewFieldDescriptor>
+                            <viewFieldDescriptor active="true" aggregate="false" attributeCode="status_novo" dataSize="20" decimals="0" fixedWidget="false" hidden="false" isMVLookup="false" multiValued="false" notEqualXPath="false" readOnly="false" required="false" virtual="false" widgetType="text" width="20">
+                                <nls languageCode="ca" name="Status novo 2"/>
+                                <nls languageCode="cs" name="Status novo 2"/>
+                                <nls languageCode="da" name="Status novo 2"/>
+                                <nls languageCode="de" name="Status novo 2"/>
+                                <nls languageCode="en" name="Status novo 2"/>
+                                <nls languageCode="es" name="Status novo 2"/>
+                                <nls languageCode="fi" name="Status novo 2"/>
+                                <nls languageCode="fr" name="Status novo 2"/>
+                                <nls languageCode="hu" name="Status novo 2"/>
+                                <nls languageCode="it" name="Status novo 2"/>
+                                <nls languageCode="ja" name="Status novo 2"/>
+                                <nls languageCode="ko" name="Status novo 2"/>
+                                <nls languageCode="nl" name="Status novo 2"/>
+                                <nls languageCode="no" name="Status novo 2"/>
+                                <nls languageCode="pl" name="Status novo 2"/>
+                                <nls languageCode="pt" name="Status Atualizado"/>
+                                <nls languageCode="ru" name="Status novo 2"/>
+                                <nls languageCode="sv" name="Status novo 2"/>
+                                <nls languageCode="tr" name="Status novo 2"/>
+                                <nls languageCode="zh" name="Status novo 2"/>
+                                <nls languageCode="zh_TW" name="Status novo 2"/>
+                            </viewFieldDescriptor>
+                        </column>
+                        <column sequence="2">
+                            <viewFieldDescriptor attributeCode="odf_obs_unit_id_list" dataSize="20" fixedWidget="false" hidden="false" multiValued="false" notEqualXPath="false" readOnly="false" required="false" virtual="false" widgetType="browse" width="20">
+                                <nls description="Unitat OBS" languageCode="ca" name="Unitat OBS"/>
+                                <nls description="Jednotka OBS" languageCode="cs" name="Jednotka OBS"/>
+                                <nls description="OBS-enhed" languageCode="da" name="OBS-enhed"/>
+                                <nls description="OSP-Einheit" languageCode="de" name="OSP-Einheit"/>
+                                <nls description="OBS Unit" languageCode="en" name="OBS Unit"/>
+                                <nls description="Unidad OBS" languageCode="es" name="Unidad OBS"/>
+                                <nls description="OBS-yksikkö" languageCode="fi" name="OBS-yksikkö"/>
+                                <nls description="Unité d'organigramme organisationnel" languageCode="fr" name="Unité d'organigramme organisationnel"/>
+                                <nls description="Szervezeti struktúra egység" languageCode="hu" name="Szervezeti struktúra egység"/>
+                                <nls description="Unità OBS" languageCode="it" name="Unità OBS"/>
+                                <nls description="OBS ユニット" languageCode="ja" name="OBS ユニット"/>
+                                <nls description="OBS Unit" languageCode="ko" name="OBS Unit"/>
+                                <nls description="OBS-eenheid" languageCode="nl" name="OBS-eenheid"/>
+                                <nls description="OAS-enhet" languageCode="no" name="OAS-enhet"/>
+                                <nls description="Jednostka SPO" languageCode="pl" name="Jednostka SPO"/>
+                                <nls languageCode="pt" name="Unidade de ORG"/>
+                                <nls description="Элемент оргструктуры" languageCode="ru" name="Элемент оргструктуры"/>
+                                <nls description="OBS-enhet" languageCode="sv" name="OBS-enhet"/>
+                                <nls description="OKY Birimi" languageCode="tr" name="OKY Birimi"/>
+                                <nls description="OBS 单位" languageCode="zh" name="OBS 单位"/>
+                                <nls description="OBS 單位" languageCode="zh_TW" name="OBS 單位"/>
+                            </viewFieldDescriptor>
+                        </column>
+                        <nls languageCode="ca" name="Portlet de objeto - Sistema Filter"/>
+                        <nls languageCode="cs" name="Portlet de objeto - Sistema Filter"/>
+                        <nls languageCode="da" name="Portlet de objeto - Sistema Filter"/>
+                        <nls languageCode="de" name="Portlet de objeto - Sistema Filter"/>
+                        <nls languageCode="en" name="Portlet de objeto - Sistema Filter"/>
+                        <nls languageCode="es" name="Portlet de objeto - Sistema Filter"/>
+                        <nls languageCode="fi" name="Portlet de objeto - Sistema Filter"/>
+                        <nls languageCode="fr" name="Portlet de objeto - Sistema Filter"/>
+                        <nls languageCode="hu" name="Portlet de objeto - Sistema Filter"/>
+                        <nls languageCode="it" name="Portlet de objeto - Sistema Filter"/>
+                        <nls languageCode="ja" name="Portlet de objeto - Sistema Filter"/>
+                        <nls languageCode="ko" name="Portlet de objeto - Sistema Filter"/>
+                        <nls languageCode="nl" name="Portlet de objeto - Sistema Filter"/>
+                        <nls languageCode="no" name="Portlet de objeto - Sistema Filter"/>
+                        <nls languageCode="pl" name="Portlet de objeto - Sistema Filter"/>
+                        <nls languageCode="pt" name="Portlet de objeto - Sistema Filter"/>
+                        <nls languageCode="ru" name="Portlet de objeto - Sistema Filter"/>
+                        <nls languageCode="sv" name="Portlet de objeto - Sistema Filter"/>
+                        <nls languageCode="tr" name="Portlet de objeto - Sistema Filter"/>
+                        <nls languageCode="zh" name="Portlet de objeto - Sistema Filter"/>
+                        <nls languageCode="zh_TW" name="Portlet de objeto - Sistema Filter"/>
+                    </section>
+                    <defaultDisplay>
+                        <viewFieldDescriptor active="true" aggregate="false" attributeCode="analista" dataSize="20" decimals="0" fixedWidget="false" hidden="false" isMVLookup="false" multiValued="false" notEqualXPath="false" readOnly="false" required="false" virtual="false" widgetType="text" width="20">
+                            <nls languageCode="ca" name="Analista"/>
+                            <nls languageCode="cs" name="Analista"/>
+                            <nls languageCode="da" name="Analista"/>
+                            <nls languageCode="de" name="Analista"/>
+                            <nls languageCode="en" name="Analista"/>
+                            <nls languageCode="es" name="Analista"/>
+                            <nls languageCode="fi" name="Analista"/>
+                            <nls languageCode="fr" name="Analista"/>
+                            <nls languageCode="hu" name="Analista"/>
+                            <nls languageCode="it" name="Analista"/>
+                            <nls languageCode="ja" name="Analista"/>
+                            <nls languageCode="ko" name="Analista"/>
+                            <nls languageCode="nl" name="Analista"/>
+                            <nls languageCode="no" name="Analista"/>
+                            <nls languageCode="pl" name="Analista"/>
+                            <nls languageCode="pt" name="Analista"/>
+                            <nls languageCode="ru" name="Analista"/>
+                            <nls languageCode="sv" name="Analista"/>
+                            <nls languageCode="tr" name="Analista"/>
+                            <nls languageCode="zh" name="Analista"/>
+                            <nls languageCode="zh_TW" name="Analista"/>
+                        </viewFieldDescriptor>
+                        <viewFieldDescriptor active="true" aggregate="false" attributeCode="code" dataSize="30" decimals="0" fixedWidget="false" hidden="false" isMVLookup="false" multiValued="false" notEqualXPath="false" readOnly="false" required="false" virtual="false" widgetType="text" width="30">
+                            <nls languageCode="ca" name="ID"/>
+                            <nls languageCode="cs" name="ID"/>
+                            <nls languageCode="da" name="Id"/>
+                            <nls languageCode="de" name="ID"/>
+                            <nls languageCode="en" name="ID"/>
+                            <nls languageCode="es" name="ID"/>
+                            <nls languageCode="fi" name="Tunnus"/>
+                            <nls languageCode="fr" name="ID"/>
+                            <nls languageCode="hu" name="Azonosító"/>
+                            <nls languageCode="it" name="ID"/>
+                            <nls languageCode="ja" name="ID"/>
+                            <nls languageCode="ko" name="[ko: ID]"/>
+                            <nls languageCode="nl" name="ID"/>
+                            <nls languageCode="no" name="ID"/>
+                            <nls languageCode="pl" name="Identyfikator"/>
+                            <nls languageCode="pt" name="ID"/>
+                            <nls languageCode="ru" name="Код"/>
+                            <nls languageCode="sv" name="ID"/>
+                            <nls languageCode="tr" name="Kimlik"/>
+                            <nls languageCode="zh" name="ID"/>
+                            <nls languageCode="zh_TW" name="ID"/>
+                        </viewFieldDescriptor>
+                        <viewFieldDescriptor active="true" aggregate="false" attributeCode="created_by" dataSize="30" decimals="0" fixedWidget="false" hidden="false" isMVLookup="false" multiValued="false" notEqualXPath="false" readOnly="false" required="false" virtual="true" widgetType="text" width="20">
+                            <nls languageCode="ca" name="Autor"/>
+                            <nls languageCode="cs" name="Vytvořil/-a"/>
+                            <nls languageCode="da" name="Oprettet af"/>
+                            <nls languageCode="de" name="Erstellt von"/>
+                            <nls languageCode="en" name="Created By"/>
+                            <nls languageCode="es" name="Autor"/>
+                            <nls languageCode="fi" name="Laatija"/>
+                            <nls languageCode="fr" name="Créé(e) par"/>
+                            <nls languageCode="hu" name="Létrehozó"/>
+                            <nls languageCode="it" name="Creato da"/>
+                            <nls languageCode="ja" name="作成者"/>
+                            <nls languageCode="ko" name="[ko: Created By]"/>
+                            <nls languageCode="nl" name="Gemaakt door"/>
+                            <nls languageCode="no" name="Opprettet av"/>
+                            <nls languageCode="pl" name="Utworzone przez"/>
+                            <nls languageCode="pt" name="Criado por"/>
+                            <nls languageCode="ru" name="Автор"/>
+                            <nls languageCode="sv" name="Skapad av"/>
+                            <nls languageCode="tr" name="Oluşturan"/>
+                            <nls languageCode="zh" name="创建者"/>
+                            <nls languageCode="zh_TW" name="建立者"/>
+                        </viewFieldDescriptor>
+                        <viewFieldDescriptor active="true" aggregate="false" attributeCode="created_date" dataSize="30" decimals="0" fixedWidget="false" hidden="false" isMVLookup="false" multiValued="false" notEqualXPath="false" readOnly="false" required="false" virtual="true" widgetType="datepicker">
+                            <nls languageCode="ca" name="Data de creació"/>
+                            <nls languageCode="cs" name="Datum vytvoření"/>
+                            <nls languageCode="da" name="Oprettelsesdato"/>
+                            <nls languageCode="de" name="Erstellungsdatum"/>
+                            <nls languageCode="en" name="Created Date"/>
+                            <nls languageCode="es" name="Fecha de creación"/>
+                            <nls languageCode="fi" name="Luontipäivä"/>
+                            <nls languageCode="fr" name="Date de création"/>
+                            <nls languageCode="hu" name="Létrehozás dátuma"/>
+                            <nls languageCode="it" name="Data di creazione"/>
+                            <nls languageCode="ja" name="作成日"/>
+                            <nls languageCode="ko" name="[ko: Created Date]"/>
+                            <nls languageCode="nl" name="Gemaakt op"/>
+                            <nls languageCode="no" name="Opprettingsdato"/>
+                            <nls languageCode="pl" name="Data utworzenia"/>
+                            <nls languageCode="pt" name="Data de criação"/>
+                            <nls languageCode="ru" name="Дата создания"/>
+                            <nls languageCode="sv" name="Skapad datum"/>
+                            <nls languageCode="tr" name="Oluşturma Tarihi"/>
+                            <nls languageCode="zh" name="创建日期"/>
+                            <nls languageCode="zh_TW" name="建立日期"/>
+                        </viewFieldDescriptor>
+                        <viewFieldDescriptor active="true" aggregate="false" attributeCode="last_updated_date" dataSize="30" decimals="0" fixedWidget="false" hidden="false" isMVLookup="false" multiValued="false" notEqualXPath="false" readOnly="false" required="false" virtual="true" widgetType="datepicker">
+                            <nls languageCode="ca" name="Data de l'última actualització"/>
+                            <nls languageCode="cs" name="Datum poslední aktualizace"/>
+                            <nls languageCode="da" name="Seneste opdateringsdato"/>
+                            <nls languageCode="de" name="Datum der letzten Aktualisierung"/>
+                            <nls languageCode="en" name="Last Updated Date"/>
+                            <nls languageCode="es" name="Fecha de la última actualización"/>
+                            <nls languageCode="fi" name="Edellinen päivityspäivämäärä"/>
+                            <nls languageCode="fr" name="Date de la dernière mise à jour"/>
+                            <nls languageCode="hu" name="Utolsó frissítés dátuma"/>
+                            <nls languageCode="it" name="Data ultimo aggiornamento"/>
+                            <nls languageCode="ja" name="最終更新日"/>
+                            <nls languageCode="ko" name="[ko: Last Updated Date]"/>
+                            <nls languageCode="nl" name="Datum laatst bijgewerkt"/>
+                            <nls languageCode="no" name="Sist oppdatert dato"/>
+                            <nls languageCode="pl" name="Data ostatniej aktualizacji"/>
+                            <nls languageCode="pt" name="Data da última atualização"/>
+                            <nls languageCode="ru" name="Дата последнего обновления"/>
+                            <nls languageCode="sv" name="Senaste uppdateringsdatum"/>
+                            <nls languageCode="tr" name="Son Güncelleme Tarihi"/>
+                            <nls languageCode="zh" name="上次更新日期"/>
+                            <nls languageCode="zh_TW" name="上次更新日期"/>
+                        </viewFieldDescriptor>
+                        <viewFieldDescriptor active="true" aggregate="false" attributeCode="multivalue_status" dataSize="30" decimals="0" extType="enum" fixedWidget="false" hidden="false" isMVLookup="true" lookupType="CAL_ACTIONITEM_STATUS" multiValued="true" notEqualXPath="false" readOnly="false" required="false" virtual="false" widgetType="browse" width="30">
+                            <nls languageCode="ca" name="Available Status"/>
+                            <nls languageCode="cs" name="Available Status"/>
+                            <nls languageCode="da" name="Available Status"/>
+                            <nls languageCode="de" name="Available Status"/>
+                            <nls languageCode="en" name="Available Status"/>
+                            <nls languageCode="es" name="Available Status"/>
+                            <nls languageCode="fi" name="Available Status"/>
+                            <nls languageCode="fr" name="Available Status"/>
+                            <nls languageCode="hu" name="Available Status"/>
+                            <nls languageCode="it" name="Available Status"/>
+                            <nls languageCode="ja" name="Available Status"/>
+                            <nls languageCode="ko" name="Available Status"/>
+                            <nls languageCode="nl" name="Available Status"/>
+                            <nls languageCode="no" name="Available Status"/>
+                            <nls languageCode="pl" name="Available Status"/>
+                            <nls languageCode="pt" name="Available Status"/>
+                            <nls languageCode="ru" name="Available Status"/>
+                            <nls languageCode="sv" name="Available Status"/>
+                            <nls languageCode="tr" name="Available Status"/>
+                            <nls languageCode="zh" name="Available Status"/>
+                            <nls languageCode="zh_TW" name="Available Status"/>
+                            <autoSuggest enabled="true" maxSuggestions="10"/>
+                        </viewFieldDescriptor>
+                        <viewFieldDescriptor active="true" aggregate="false" attributeCode="name" dataSize="80" decimals="0" fixedWidget="false" hidden="false" isMVLookup="false" multiValued="false" notEqualXPath="false" readOnly="false" required="false" virtual="false" widgetType="text" width="30">
+                            <nls languageCode="ca" name="Nom"/>
+                            <nls languageCode="cs" name="Název"/>
+                            <nls languageCode="da" name="Navn"/>
+                            <nls languageCode="de" name="Name"/>
+                            <nls languageCode="en" name="Name"/>
+                            <nls languageCode="es" name="Nombre"/>
+                            <nls languageCode="fi" name="Nimi"/>
+                            <nls languageCode="fr" name="Nom"/>
+                            <nls languageCode="hu" name="Név"/>
+                            <nls languageCode="it" name="Nome"/>
+                            <nls languageCode="ja" name="名前"/>
+                            <nls languageCode="ko" name="[ko: Name]"/>
+                            <nls languageCode="nl" name="Naam"/>
+                            <nls languageCode="no" name="Navn"/>
+                            <nls languageCode="pl" name="Nazwa"/>
+                            <nls languageCode="pt" name="Nome"/>
+                            <nls languageCode="ru" name="Имя"/>
+                            <nls languageCode="sv" name="Namn"/>
+                            <nls languageCode="tr" name="Adı"/>
+                            <nls languageCode="zh" name="名称"/>
+                            <nls languageCode="zh_TW" name="名稱"/>
+                        </viewFieldDescriptor>
+                        <viewFieldDescriptor attributeCode="odf_pk" dataSize="30" fixedWidget="false" hidden="true" multiValued="false" notEqualXPath="false" readOnly="false" required="false" virtual="false" widgetType="text">
+                            <nls languageCode="ca" name="no name"/>
+                            <nls languageCode="cs" name="no name"/>
+                            <nls languageCode="da" name="no name"/>
+                            <nls languageCode="de" name="no name"/>
+                            <nls languageCode="en" name="no name"/>
+                            <nls languageCode="es" name="no name"/>
+                            <nls languageCode="fi" name="no name"/>
+                            <nls languageCode="fr" name="no name"/>
+                            <nls languageCode="hu" name="no name"/>
+                            <nls languageCode="it" name="no name"/>
+                            <nls languageCode="ja" name="no name"/>
+                            <nls languageCode="ko" name="no name"/>
+                            <nls languageCode="nl" name="no name"/>
+                            <nls languageCode="no" name="no name"/>
+                            <nls languageCode="pl" name="no name"/>
+                            <nls languageCode="pt" name="no name"/>
+                            <nls languageCode="ru" name="no name"/>
+                            <nls languageCode="sv" name="no name"/>
+                            <nls languageCode="tr" name="no name"/>
+                            <nls languageCode="zh" name="no name"/>
+                            <nls languageCode="zh_TW" name="no name"/>
+                        </viewFieldDescriptor>
+                        <viewFieldDescriptor active="true" aggregate="false" attributeCode="page_layout" dataSize="30" decimals="0" extType="enum" fixedWidget="false" hidden="false" isMVLookup="false" lookupType="ODF_CST_OBJ_SISTEMA_PAGE_LAYOUT" multiValued="false" notEqualXPath="false" readOnly="false" required="false" virtual="false" widgetType="browse" width="30">
+                            <nls description="Disseny de pàgina" languageCode="ca" name="Disseny de pàgina"/>
+                            <nls description="Rozvržení stránky" languageCode="cs" name="Rozvržení stránky"/>
+                            <nls description="Sidelayout" languageCode="da" name="Sidelayout"/>
+                            <nls description="Seitenlayout" languageCode="de" name="Seitenlayout"/>
+                            <nls description="Page Layout" languageCode="en" name="Page Layout"/>
+                            <nls description="Diseño de página" languageCode="es" name="Diseño de página"/>
+                            <nls description="Sivun asettelu" languageCode="fi" name="Sivun asettelu"/>
+                            <nls description="Mise en page" languageCode="fr" name="Mise en page"/>
+                            <nls description="Oldalelrendezés" languageCode="hu" name="Oldalelrendezés"/>
+                            <nls description="Layout di pagina" languageCode="it" name="Layout di pagina"/>
+                            <nls description="ページ レイアウト" languageCode="ja" name="ページ レイアウト"/>
+                            <nls description="[ko: Page Layout]" languageCode="ko" name="[ko: Page Layout]"/>
+                            <nls description="Paginalay-out" languageCode="nl" name="Paginalay-out"/>
+                            <nls description="Sideoppsett" languageCode="no" name="Sideoppsett"/>
+                            <nls description="Układ strony" languageCode="pl" name="Układ strony"/>
+                            <nls description="Layout da página" languageCode="pt" name="Layout da página"/>
+                            <nls description="Разметка страницы" languageCode="ru" name="Разметка страницы"/>
+                            <nls description="Sidlayout" languageCode="sv" name="Sidlayout"/>
+                            <nls description="Sayfa Düzeni" languageCode="tr" name="Sayfa Düzeni"/>
+                            <nls description="页面布局" languageCode="zh" name="页面布局"/>
+                            <nls description="頁面配置" languageCode="zh_TW" name="頁面配置"/>
+                            <autoSuggest enabled="true" maxSuggestions="10"/>
+                        </viewFieldDescriptor>
+                        <viewFieldDescriptor active="true" aggregate="false" attributeCode="partition_code" dataSize="30" decimals="0" extType="enum" fixedWidget="false" hidden="false" isMVLookup="false" lookupType="LOOKUP_USER_PARTITIONS" multiValued="false" notEqualXPath="false" readOnly="false" required="false" virtual="false" widgetType="browse" width="30">
+                            <nls description="Codi que identifica la partició" languageCode="ca" name="Partició"/>
+                            <nls description="Kód, který identifikuje oddíl" languageCode="cs" name="Oddíl"/>
+                            <nls description="Kode, som identificerer partitionen" languageCode="da" name="Partition"/>
+                            <nls description="Code, der die Partition identifiziert" languageCode="de" name="Partition"/>
+                            <nls description="Code that identifies the partition" languageCode="en" name="Partition"/>
+                            <nls description="Código que identifica la partición" languageCode="es" name="Partición"/>
+                            <nls description="Osion määrittävä koodi" languageCode="fi" name="Osio"/>
+                            <nls description="Code d'identification de la partition" languageCode="fr" name="Partition"/>
+                            <nls description="A partíciót azonosító kód" languageCode="hu" name="Partíció"/>
+                            <nls description="Codice di identificazione della partizione" languageCode="it" name="Partizione"/>
+                            <nls description="パーティションの識別コード" languageCode="ja" name="パーティション"/>
+                            <nls description="Code that identifies the partition" languageCode="ko" name="Partition"/>
+                            <nls description="Code waarmee de partitie wordt aangegeven" languageCode="nl" name="Partitie"/>
+                            <nls description="Kode som identifiserer partisjonen" languageCode="no" name="Partisjon"/>
+                            <nls description="Kod identyfikujący partycję" languageCode="pl" name="Partycja"/>
+                            <nls description="Código que identifica a partição" languageCode="pt" name="Partição"/>
+                            <nls description="Код, идентифицирующий раздел" languageCode="ru" name="Раздел"/>
+                            <nls description="Kod som identifierar partition" languageCode="sv" name="Partition"/>
+                            <nls description="departmanı tanımlayan kod" languageCode="tr" name="Bölme"/>
+                            <nls description="标识分区的代码" languageCode="zh" name="分区"/>
+                            <nls description="識別分割的代碼" languageCode="zh_TW" name="分割"/>
+                            <autoSuggest enabled="true" maxSuggestions="10"/>
+                        </viewFieldDescriptor>
+                        <viewFieldDescriptor active="true" aggregate="false" attributeCode="updated_by" dataSize="30" decimals="0" fixedWidget="false" hidden="false" isMVLookup="false" multiValued="false" notEqualXPath="false" readOnly="false" required="false" virtual="true" widgetType="text" width="20">
+                            <nls languageCode="ca" name="Actualitzat per"/>
+                            <nls languageCode="cs" name="Aktualizoval/-a"/>
+                            <nls languageCode="da" name="Opdateret af"/>
+                            <nls languageCode="de" name="Aktualisiert von"/>
+                            <nls languageCode="en" name="Updated By"/>
+                            <nls languageCode="es" name="Actualizado por"/>
+                            <nls languageCode="fi" name="Päivittäjä"/>
+                            <nls languageCode="fr" name="Mis(e) à jour par"/>
+                            <nls languageCode="hu" name="Frissítette:"/>
+                            <nls languageCode="it" name="Aggiornato da"/>
+                            <nls languageCode="ja" name="更新者"/>
+                            <nls languageCode="ko" name="[ko: Updated By]"/>
+                            <nls languageCode="nl" name="Bijgewerkt door"/>
+                            <nls languageCode="no" name="Oppdatert av"/>
+                            <nls languageCode="pl" name="Zaktualizowane przez"/>
+                            <nls languageCode="pt" name="Atualizado por"/>
+                            <nls languageCode="ru" name="Обновление выполнил"/>
+                            <nls languageCode="sv" name="Uppdaterad av"/>
+                            <nls languageCode="tr" name="Güncelleyen"/>
+                            <nls languageCode="zh" name="更新者"/>
+                            <nls languageCode="zh_TW" name="更新者"/>
+                        </viewFieldDescriptor>
+                    </defaultDisplay>
+                    <subObject code="obj_sub_sistema"/>
+                </filter>
+            </gridPortlet>
+        </portlets>
+        <objects>
+            <object code="obj_sistema" entityCodeAttribute="odf_entity_code" fiscalPeriodTypeAttribute="odf_period_type" pageInstanceType="obj_sistema" pageLayoutAttribute="page_layout" partitionModelCode="partitionModel1" periodEndAttribute="odf_period_end" periodStartAttribute="odf_period_start" raiseEvents="false" source="customer" update="true">
+                <nls languageCode="ca" name="Sistema"/>
+                <nls languageCode="cs" name="Sistema"/>
+                <nls languageCode="da" name="Sistema"/>
+                <nls languageCode="de" name="Sistema"/>
+                <nls languageCode="en" name="Sistema"/>
+                <nls languageCode="es" name="Sistema"/>
+                <nls languageCode="fi" name="Sistema"/>
+                <nls languageCode="fr" name="Sistema"/>
+                <nls languageCode="hu" name="Sistema"/>
+                <nls languageCode="it" name="Sistema"/>
+                <nls languageCode="ja" name="Sistema"/>
+                <nls languageCode="ko" name="Sistema"/>
+                <nls languageCode="nl" name="Sistema"/>
+                <nls languageCode="no" name="Sistema"/>
+                <nls languageCode="pl" name="Sistema"/>
+                <nls languageCode="pt" name="Sistema"/>
+                <nls languageCode="ru" name="Sistema"/>
+                <nls languageCode="sv" name="Sistema"/>
+                <nls languageCode="tr" name="Sistema"/>
+                <nls languageCode="zh" name="Sistema"/>
+                <nls languageCode="zh_TW" name="Sistema"/>
+                <customAttribute active="true" code="analista" column="analista" constant="false" currencyConnected="false" custom="true" dataSize="20" dataType="string" editable="true" multiValued="false" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" presenceRequired="false" private="false" required="false" unique="false" virtual="false">
+                    <nls languageCode="ca" name="Analista"/>
+                    <nls languageCode="cs" name="Analista"/>
+                    <nls languageCode="da" name="Analista"/>
+                    <nls languageCode="de" name="Analista"/>
+                    <nls languageCode="en" name="Analista"/>
+                    <nls languageCode="es" name="Analista"/>
+                    <nls languageCode="fi" name="Analista"/>
+                    <nls languageCode="fr" name="Analista"/>
+                    <nls languageCode="hu" name="Analista"/>
+                    <nls languageCode="it" name="Analista"/>
+                    <nls languageCode="ja" name="Analista"/>
+                    <nls languageCode="ko" name="Analista"/>
+                    <nls languageCode="nl" name="Analista"/>
+                    <nls languageCode="no" name="Analista"/>
+                    <nls languageCode="pl" name="Analista"/>
+                    <nls languageCode="pt" name="Analista"/>
+                    <nls languageCode="ru" name="Analista"/>
+                    <nls languageCode="sv" name="Analista"/>
+                    <nls languageCode="tr" name="Analista"/>
+                    <nls languageCode="zh" name="Analista"/>
+                    <nls languageCode="zh_TW" name="Analista"/>
+                </customAttribute>
+                <customAttribute active="true" code="multivalue_status" column="multivalue_status" constant="false" currencyConnected="false" custom="true" dataSize="2000" dataType="string" editable="true" extendedType="lookup" lookupType="CAL_ACTIONITEM_STATUS" multiValued="true" partitionCode="partition20" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" presenceRequired="false" private="false" required="false" unique="false" virtual="false">
+                    <nls languageCode="ca" name="Available Status"/>
+                    <nls languageCode="cs" name="Available Status"/>
+                    <nls languageCode="da" name="Available Status"/>
+                    <nls languageCode="de" name="Available Status"/>
+                    <nls languageCode="en" name="Available Status"/>
+                    <nls languageCode="es" name="Available Status"/>
+                    <nls languageCode="fi" name="Available Status"/>
+                    <nls languageCode="fr" name="Available Status"/>
+                    <nls languageCode="hu" name="Available Status"/>
+                    <nls languageCode="it" name="Available Status"/>
+                    <nls languageCode="ja" name="Available Status"/>
+                    <nls languageCode="ko" name="Available Status"/>
+                    <nls languageCode="nl" name="Available Status"/>
+                    <nls languageCode="no" name="Available Status"/>
+                    <nls languageCode="pl" name="Available Status"/>
+                    <nls languageCode="pt" name="Available Status"/>
+                    <nls languageCode="ru" name="Available Status"/>
+                    <nls languageCode="sv" name="Available Status"/>
+                    <nls languageCode="tr" name="Available Status"/>
+                    <nls languageCode="zh" name="Available Status"/>
+                    <nls languageCode="zh_TW" name="Available Status"/>
+                </customAttribute>
+                <customAttribute active="true" code="status" column="status" constant="false" currencyConnected="false" custom="true" dataSize="30" dataType="string" editable="true" extendedType="lookup" lookupType="CAL_ACTIONITEM_STATUS" multiValued="false" partitionCode="partition10" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" presenceRequired="false" private="false" required="false" unique="false" virtual="false">
+                    <nls languageCode="ca" name="Status"/>
+                    <nls languageCode="cs" name="Status"/>
+                    <nls languageCode="da" name="Status"/>
+                    <nls languageCode="de" name="Status"/>
+                    <nls languageCode="en" name="Status"/>
+                    <nls languageCode="es" name="Status"/>
+                    <nls languageCode="fi" name="Status"/>
+                    <nls languageCode="fr" name="Status"/>
+                    <nls languageCode="hu" name="Status"/>
+                    <nls languageCode="it" name="Status"/>
+                    <nls languageCode="ja" name="Status"/>
+                    <nls languageCode="ko" name="Status"/>
+                    <nls languageCode="nl" name="Status"/>
+                    <nls languageCode="no" name="Status"/>
+                    <nls languageCode="pl" name="Status"/>
+                    <nls languageCode="pt" name="Status"/>
+                    <nls languageCode="ru" name="Status"/>
+                    <nls languageCode="sv" name="Status"/>
+                    <nls languageCode="tr" name="Status"/>
+                    <nls languageCode="zh" name="Status"/>
+                    <nls languageCode="zh_TW" name="Status"/>
+                </customAttribute>
+                <customAttribute active="true" code="status_novo" column="status_novo" constant="false" currencyConnected="false" custom="true" dataSize="20" dataType="string" editable="true" multiValued="false" partitionCode="partition10" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" presenceRequired="false" private="false" required="false" unique="false" virtual="false">
+                    <nls languageCode="ca" name="Status novo 2"/>
+                    <nls languageCode="cs" name="Status novo 2"/>
+                    <nls languageCode="da" name="Status novo 2"/>
+                    <nls languageCode="de" name="Status novo 2"/>
+                    <nls languageCode="en" name="Status novo 2"/>
+                    <nls languageCode="es" name="Status novo 2"/>
+                    <nls languageCode="fi" name="Status novo 2"/>
+                    <nls languageCode="fr" name="Status novo 2"/>
+                    <nls languageCode="hu" name="Status novo 2"/>
+                    <nls languageCode="it" name="Status novo 2"/>
+                    <nls languageCode="ja" name="Status novo 2"/>
+                    <nls languageCode="ko" name="Status novo 2"/>
+                    <nls languageCode="nl" name="Status novo 2"/>
+                    <nls languageCode="no" name="Status novo 2"/>
+                    <nls languageCode="pl" name="Status novo 2"/>
+                    <nls languageCode="pt" name="Status novo 2"/>
+                    <nls languageCode="ru" name="Status novo 2"/>
+                    <nls languageCode="sv" name="Status novo 2"/>
+                    <nls languageCode="tr" name="Status novo 2"/>
+                    <nls languageCode="zh" name="Status novo 2"/>
+                    <nls languageCode="zh_TW" name="Status novo 2"/>
+                </customAttribute>
+                <attributeDefault code="page_layout" value="odf.obj_sistemaFrame"/>
+                <links objectCode="obj_sistema">
+                    <link action="SubPage.5161273.actionLink" active="true" code="obj_sistema.auditoria" isObjectInstanceLink="false" partitionCode="NIKU.ROOT" partitionMode="PARTITION_ONLY" system="true">
+                        <nls description="Link to Sistema properties Auditoria subpage" languageCode="ca" name="Sistema Auditoria Link"/>
+                        <nls description="Link to Sistema properties Auditoria subpage" languageCode="cs" name="Sistema Auditoria Link"/>
+                        <nls description="Link to Sistema properties Auditoria subpage" languageCode="da" name="Sistema Auditoria Link"/>
+                        <nls description="Link to Sistema properties Auditoria subpage" languageCode="de" name="Sistema Auditoria Link"/>
+                        <nls description="Link to Sistema properties Auditoria subpage" languageCode="en" name="Sistema Auditoria Link"/>
+                        <nls description="Link to Sistema properties Auditoria subpage" languageCode="es" name="Sistema Auditoria Link"/>
+                        <nls description="Link to Sistema properties Auditoria subpage" languageCode="fi" name="Sistema Auditoria Link"/>
+                        <nls description="Link to Sistema properties Auditoria subpage" languageCode="fr" name="Sistema Auditoria Link"/>
+                        <nls description="Link to Sistema properties Auditoria subpage" languageCode="hu" name="Sistema Auditoria Link"/>
+                        <nls description="Link to Sistema properties Auditoria subpage" languageCode="it" name="Sistema Auditoria Link"/>
+                        <nls description="Link to Sistema properties Auditoria subpage" languageCode="ja" name="Sistema Auditoria Link"/>
+                        <nls description="Link to Sistema properties Auditoria subpage" languageCode="ko" name="Sistema Auditoria Link"/>
+                        <nls description="Link to Sistema properties Auditoria subpage" languageCode="nl" name="Sistema Auditoria Link"/>
+                        <nls description="Link to Sistema properties Auditoria subpage" languageCode="no" name="Sistema Auditoria Link"/>
+                        <nls description="Link to Sistema properties Auditoria subpage" languageCode="pl" name="Sistema Auditoria Link"/>
+                        <nls description="Link to Sistema properties Auditoria subpage" languageCode="pt" name="Sistema Auditoria Link"/>
+                        <nls description="Link to Sistema properties Auditoria subpage" languageCode="ru" name="Sistema Auditoria Link"/>
+                        <nls description="Link to Sistema properties Auditoria subpage" languageCode="sv" name="Sistema Auditoria Link"/>
+                        <nls description="Link to Sistema properties Auditoria subpage" languageCode="tr" name="Sistema Auditoria Link"/>
+                        <nls description="Link to Sistema properties Auditoria subpage" languageCode="zh" name="Sistema Auditoria Link"/>
+                        <nls description="Link to Sistema properties Auditoria subpage" languageCode="zh_TW" name="Sistema Auditoria Link"/>
+                        <linkParam dataRef="odf_pk" dataSource="data" paramCode="id"/>
+                        <linkParam dataRef="obj_sistema.auditoria" dataSource="static" paramCode="odf_view"/>
+                        <linkParam dataRef="obj_sistema" dataSource="static" paramCode="odf_code"/>
+                    </link>
+                    <link action="odf.customObject" active="true" code="obj_sistema.default" isObjectInstanceLink="false" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" system="true">
+                        <nls description="Sistema Vincle de fitxa predeterminat" languageCode="ca" name="Sistema Vincle de fitxa predeterminat"/>
+                        <nls description="Sistema – Odkaz na výchozí kartu" languageCode="cs" name="Sistema – Odkaz na výchozí kartu"/>
+                        <nls description="Sistema Link til standardfaner" languageCode="da" name="Sistema Link til standardfaner"/>
+                        <nls description="Verknüpfung mit Standardregisterkarte von: Sistema" languageCode="de" name="Verknüpfung mit Standardregisterkarte von: Sistema"/>
+                        <nls description="Sistema Default Tab Link" languageCode="en" name="Sistema Default Tab Link"/>
+                        <nls description="Sistema Vínculo de ficha predeterminado" languageCode="es" name="Sistema Vínculo de ficha predeterminado"/>
+                        <nls description="Sistema Oletusvälilehtilinkki" languageCode="fi" name="Sistema Oletusvälilehtilinkki"/>
+                        <nls description="Sistema - Lien d'onglet par défaut" languageCode="fr" name="Sistema - Lien d'onglet par défaut"/>
+                        <nls description="Sistema Alapértelmezett lap hivatkozása" languageCode="hu" name="Sistema Alapértelmezett lap hivatkozása"/>
+                        <nls description="Collegamento alla scheda predefinita Sistema" languageCode="it" name="Collegamento alla scheda predefinita Sistema"/>
+                        <nls description="Sistema 既定タブ リンク" languageCode="ja" name="Sistema 既定タブ リンク"/>
+                        <nls description="[ko: Sistema Default Tab Link]" languageCode="ko" name="[ko: Sistema Default Tab Link]"/>
+                        <nls description="Sistema - Standaardtabkoppeling" languageCode="nl" name="Sistema - Standaardtabkoppeling"/>
+                        <nls description="Sistema Kobling til standardfaner" languageCode="no" name="Sistema Kobling til standardfaner"/>
+                        <nls description="Sistema — Łącze do domyślnej karty" languageCode="pl" name="Sistema — Łącze do domyślnej karty"/>
+                        <nls description="Link para guia padrão de Sistema" languageCode="pt" name="Link para guia padrão de Sistema"/>
+                        <nls description="Sistema: ссылка на вкладку по умолчанию" languageCode="ru" name="Sistema: ссылка на вкладку по умолчанию"/>
+                        <nls description="Sistema Länken Standardflik" languageCode="sv" name="Sistema Länken Standardflik"/>
+                        <nls description="Sistema Varsayılan Sekme Bağlantısı" languageCode="tr" name="Sistema Varsayılan Sekme Bağlantısı"/>
+                        <nls description="Sistema 默认选项卡链接" languageCode="zh" name="Sistema 默认选项卡链接"/>
+                        <nls description="Sistema預設索引標籤連結" languageCode="zh_TW" name="Sistema預設索引標籤連結"/>
+                        <linkParam dataRef="odf_pk" dataSource="data" paramCode="id"/>
+                        <linkParam dataRef="obj_sistema" dataSource="static" paramCode="odf_code"/>
+                        <linkParam dataRef="odf_pk" dataSource="data" paramCode="odf_parent_id"/>
+                    </link>
+                    <link action="tso.NPDDocumentReview" active="true" code="obj_sistema.link_partition_niku" isObjectInstanceLink="false" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS">
+                        <nls description="" languageCode="ca" name="Link Partição Sistema"/>
+                        <nls description="" languageCode="cs" name="Link Partição Sistema"/>
+                        <nls description="" languageCode="da" name="Link Partição Sistema"/>
+                        <nls description="" languageCode="de" name="Link Partição Sistema"/>
+                        <nls description="" languageCode="en" name="Link Partição Sistema"/>
+                        <nls description="" languageCode="es" name="Link Partição Sistema"/>
+                        <nls description="" languageCode="fi" name="Link Partição Sistema"/>
+                        <nls description="" languageCode="fr" name="Link Partição Sistema"/>
+                        <nls description="" languageCode="hu" name="Link Partição Sistema"/>
+                        <nls description="" languageCode="it" name="Link Partição Sistema"/>
+                        <nls description="" languageCode="ja" name="Link Partição Sistema"/>
+                        <nls description="" languageCode="ko" name="Link Partição Sistema"/>
+                        <nls description="" languageCode="nl" name="Link Partição Sistema"/>
+                        <nls description="" languageCode="no" name="Link Partição Sistema"/>
+                        <nls description="" languageCode="pl" name="Link Partição Sistema"/>
+                        <nls description="" languageCode="pt" name="Link Partição Sistema"/>
+                        <nls description="" languageCode="ru" name="Link Partição Sistema"/>
+                        <nls description="" languageCode="sv" name="Link Partição Sistema"/>
+                        <nls description="" languageCode="tr" name="Link Partição Sistema"/>
+                        <nls description="" languageCode="zh" name="Link Partição Sistema"/>
+                        <nls description="" languageCode="zh_TW" name="Link Partição Sistema"/>
+                        <linkParam dataRef="odf_pk" dataSource="data" paramCode="id"/>
+                    </link>
+                    <link action="pma.ideaProperties" active="true" code="obj_sistema.lk_teste" isObjectInstanceLink="false" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS">
+                        <nls description="teste" languageCode="ca" name="Link teste"/>
+                        <nls description="teste" languageCode="cs" name="Link teste"/>
+                        <nls description="teste" languageCode="da" name="Link teste"/>
+                        <nls description="teste" languageCode="de" name="Link teste"/>
+                        <nls description="teste" languageCode="en" name="Link teste"/>
+                        <nls description="teste" languageCode="es" name="Link teste"/>
+                        <nls description="teste" languageCode="fi" name="Link teste"/>
+                        <nls description="teste" languageCode="fr" name="Link teste"/>
+                        <nls description="teste" languageCode="hu" name="Link teste"/>
+                        <nls description="teste" languageCode="it" name="Link teste"/>
+                        <nls description="teste" languageCode="ja" name="Link teste"/>
+                        <nls description="teste" languageCode="ko" name="Link teste"/>
+                        <nls description="teste" languageCode="nl" name="Link teste"/>
+                        <nls description="teste" languageCode="no" name="Link teste"/>
+                        <nls description="teste" languageCode="pl" name="Link teste"/>
+                        <nls description="teste" languageCode="pt" name="Link teste"/>
+                        <nls description="teste" languageCode="ru" name="Link teste"/>
+                        <nls description="teste" languageCode="sv" name="Link teste"/>
+                        <nls description="teste" languageCode="tr" name="Link teste"/>
+                        <nls description="teste" languageCode="zh" name="Link teste"/>
+                        <nls description="teste" languageCode="zh_TW" name="Link teste"/>
+                        <linkParam dataRef="odf_pk" dataSource="data" paramCode="id"/>
+                        <linkParam dataRef="odf_pk" dataSource="data" paramCode="ownerID"/>
+                    </link>
+                    <link action="SubPage.5164273.actionLink" active="true" code="obj_sistema.obj_sub_sistema.5104595.link" isObjectInstanceLink="false" partitionCode="NIKU.ROOT" partitionMode="PARTITION_ONLY" system="true">
+                        <nls description="Vincle en la vista de propietat Geral 179 establerta en la llista de subobjecte Sistema Sub sistema List" languageCode="ca" name="Geral 179 Subpàgina Sistema Sub sistema List vincle"/>
+                        <nls description="Odkaz v zobrazení sady vlastností Geral 179 na dílčí seznam objektů Sistema Sub sistema List" languageCode="cs" name="Geral 179 – Dílčí stránka Sistema Sub sistema List odkaz"/>
+                        <nls description="Hyperlink i egenskabsvisningen Geral 179 er konfigureret til underobjektlisten Sistema Sub sistema List" languageCode="da" name="Geral 179 Underside Sistema Sub sistema List hyperlink"/>
+                        <nls description="Verknüpfung in der Eigenschaftsansicht von {0} ist auf die Unterobjektliste {1} festgelegt" languageCode="de" name="Geral 179 SubPage Sistema Sub sistema List Verknüpfung"/>
+                        <nls description="Link in the Geral 179 property view set to the sub object list Sistema Sub sistema List" languageCode="en" name="Geral 179 SubPage Sistema Sub sistema List link"/>
+                        <nls description="Vínculo en la vista de propiedad Geral 179 establecida en la lista de subobjeto Sistema Sub sistema List" languageCode="es" name="Geral 179 Subpágina Sistema Sub sistema List vínculo"/>
+                        <nls description="Linkitä ominaisuusnäkymään Geral 179, joka määrittää aliobjektiluettelon Sistema Sub sistema List" languageCode="fi" name="Kohteen Geral 179 alisivun linkki Sistema Sub sistema List"/>
+                        <nls description="Le lien dans la vue des propriétés Geral 179 est défini sur la liste des sous-objets Sistema Sub sistema List." languageCode="fr" name="Lien Sistema Sub sistema List de sous-page Geral 179"/>
+                        <nls description="A(z) Sistema Sub sistema List alobjektumlistához beállított Geral 179 tulajdonságnézet hivatkozása" languageCode="hu" name="Geral 179 Aloldal Sistema Sub sistema List hivatkozás"/>
+                        <nls description="Collegamento nella visualizzazione della proprietà Geral 179 impostato sullelenco di oggetti secondari {1}" languageCode="it" name="Geral 179 Pagina secondaria Sistema Sub sistema List collegamento"/>
+                        <nls description="[Geral 179] プロパティ ビュー内のリンクがサブ オブジェクト リスト [Sistema Sub sistema List] に設定されている" languageCode="ja" name="Geral 179 サブページの Sistema Sub sistema List リンク"/>
+                        <nls description="Link in the Geral 179 property view set to the sub object list Sistema Sub sistema List" languageCode="ko" name="Geral 179 SubPage Sistema Sub sistema List link"/>
+                        <nls description="Koppeling in de Geral 179 eigenschappenweergave is ingesteld voor de subobjectlijst Sistema Sub sistema List" languageCode="nl" name="Geral 179 Subpaginakoppeling Sistema Sub sistema List"/>
+                        <nls description="Koblingen i egenskapsvisningen Geral 179 er satt til delobjektlisten Sistema Sub sistema List" languageCode="no" name="Geral 179 Underside Sistema Sub sistema List kobling"/>
+                        <nls description="Łącze w widoku właściwości Geral 179 jest ustawione na listę podobiektów Sistema Sub sistema List" languageCode="pl" name="Geral 179 — Podstrona Sistema Sub sistema List — łącze"/>
+                        <nls description="Link na visualização de propriedades Geral 179 definida para a sublista de objeto Sistema Sub sistema List" languageCode="pt" name="Geral 179 Subpágina Sistema Sub sistema List link"/>
+                        <nls description="Ссылка в наборе представлений для свойства Geral 179 на список вложенных объектов Sistema Sub sistema List" languageCode="ru" name="Ссылка на подстраницу Geral 179 Sistema Sub sistema List"/>
+                        <nls description="Länk i Geral 179 egenskapsvyn inställd på underobjektslista Sistema Sub sistema List" languageCode="sv" name="Geral 179 Undersida Sistema Sub sistema List länk"/>
+                        <nls description="Geral 179 özellik görünümündeki bağlantı, Sistema Sub sistema List alt nesne listesine ayarlı" languageCode="tr" name="Geral 179 Alt Sayfası Sistema Sub sistema List bağlantısı"/>
+                        <nls description="Geral 179属性视图中的链接被设置为子对象列表 Sistema Sub sistema List" languageCode="zh" name="Geral 179 子页面 Sistema Sub sistema List 链接"/>
+                        <nls description="Geral 179 內容檢視中的連結設定至子物件清單 Sistema Sub sistema List" languageCode="zh_TW" name="Geral 179 子頁面 Sistema Sub sistema List 連結"/>
+                        <linkParam dataRef="odf_pk" dataSource="data" paramCode="id"/>
+                        <linkParam dataRef="obj_sistemaCreate.subObjList.obj_sub_sistema" dataSource="static" paramCode="odf_view"/>
+                        <linkParam dataRef="obj_sistema" dataSource="static" paramCode="odf_code"/>
+                        <linkParam dataRef="odf_pk" dataSource="data" paramCode="odf_parent_id"/>
+                        <linkParam dataRef="odf_pk" dataSource="data" paramCode="odf_cncrt_parent_id"/>
+                    </link>
+                    <link action="odf.obj_sistemaProperties" active="true" code="obj_sistema.properties" isObjectInstanceLink="false" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" system="true">
+                        <nls description="Sistema Vincle de propietats" languageCode="ca" name="Sistema Vincle de propietats"/>
+                        <nls description="Sistema – Odkaz na vlastnosti" languageCode="cs" name="Sistema – Odkaz na vlastnosti"/>
+                        <nls description="Link til Egenskaber for Sistema" languageCode="da" name="Link til Egenskaber for Sistema"/>
+                        <nls description="Verknüpfung mit Eigenschaften von: 'Sistema'" languageCode="de" name="Verknüpfung mit Eigenschaften von: 'Sistema'"/>
+                        <nls description="Sistema Properties Link" languageCode="en" name="Sistema Properties Link"/>
+                        <nls description="Sistema Vínculo de propiedades" languageCode="es" name="Sistema Vínculo de propiedades"/>
+                        <nls description="Sistema Ominaisuuslinkki" languageCode="fi" name="Sistema Ominaisuuslinkki"/>
+                        <nls description="Sistema - Lien vers les propriétés" languageCode="fr" name="Sistema - Lien vers les propriétés"/>
+                        <nls description="Sistema Tulajdonságok hivatkozása" languageCode="hu" name="Sistema Tulajdonságok hivatkozása"/>
+                        <nls description="Sistema - Collegamento a Proprietà" languageCode="it" name="Sistema - Collegamento a Proprietà"/>
+                        <nls description="Sistema プロパティ リンク" languageCode="ja" name="Sistema プロパティ リンク"/>
+                        <nls description="[ko: Sistema Properties Link]" languageCode="ko" name="[ko: Sistema Properties Link]"/>
+                        <nls description="Sistema - Koppeling voor eigenschappen" languageCode="nl" name="Sistema - Koppeling voor eigenschappen"/>
+                        <nls description="Sistema Kobling til egenskaper" languageCode="no" name="Sistema Kobling til egenskaper"/>
+                        <nls description="Sistema — Łącze do właściwości" languageCode="pl" name="Sistema — Łącze do właściwości"/>
+                        <nls description="Link para propriedades de Sistema" languageCode="pt" name="Link para propriedades de Sistema"/>
+                        <nls description="Sistema: ссылка на свойства" languageCode="ru" name="Sistema: ссылка на свойства"/>
+                        <nls description="Sistema Länken Egenskaper" languageCode="sv" name="Sistema Länken Egenskaper"/>
+                        <nls description="Sistema Özellikler Bağlantısı" languageCode="tr" name="Sistema Özellikler Bağlantısı"/>
+                        <nls description="Sistema属性链接" languageCode="zh" name="Sistema属性链接"/>
+                        <nls description="Sistema特性內容連結" languageCode="zh_TW" name="Sistema特性內容連結"/>
+                        <linkParam dataRef="odf_pk" dataSource="data" paramCode="id"/>
+                    </link>
+                </links>
+                <displayMappings/>
+                <scoreContributions/>
+                <actions>
+                    <action action="odf.objectCopySourceInstances" code="odf_copy_srcobj_sistema" component="odf" isActive="true" isCustom="false" isGeneric="false" isInstance="true" isSingleSelect="false" jobDefinitionCode="NONE" navigateTo="MNP" needUserConfirmation="false" needUserInput="false" needsBridge="false" needsSelection="false" objectCode="obj_sistema" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" processCode="NONE" rendering="cviewAction" targetWidget="none" type="internalaction">
+                        <nls description="Copiar la instància Sistema" languageCode="ca" name="Copiar instància Sistema"/>
+                        <nls description="Kopírovat instanci Sistema" languageCode="cs" name="Kopírovat instanci Sistema"/>
+                        <nls description="Kopier forekomsten Sistema" languageCode="da" name="Kopier forekomst Sistema"/>
+                        <nls description="Instanz Sistema kopieren" languageCode="de" name="Instanz 'Sistema' kopieren"/>
+                        <nls description="Copy the Sistema instance" languageCode="en" name="Copy Sistema instance"/>
+                        <nls description="Copiar la instancia Sistema" languageCode="es" name="Copiar instancia Sistema"/>
+                        <nls description="Kopioi kohteen Sistema esiintymä" languageCode="fi" name="Kopioi Sistema esiintymä"/>
+                        <nls description="Copier l'instance Sistema" languageCode="fr" name="Copier l'instance Sistema"/>
+                        <nls description="A(z) Sistema példány másolása" languageCode="hu" name="Sistema példány másolása"/>
+                        <nls description="Copia l'istanza Sistema" languageCode="it" name="Copia istanza di Sistema"/>
+                        <nls description="Sistema インスタンスのコピー" languageCode="ja" name="Sistema インスタンスのコピー"/>
+                        <nls description="[ko: Copy the Sistema instance]" languageCode="ko" name="[ko: Copy Sistema instance]"/>
+                        <nls description="Kopieer de instantie van Sistema" languageCode="nl" name="Instantie van Sistema kopiëren"/>
+                        <nls description="Kopier Sistema-forekomsten" languageCode="no" name="Kopier Sistema forekomst"/>
+                        <nls description="Kopiuj wystąpienie obiektu Sistema" languageCode="pl" name="Kopiuj wystąpienie obiektu Sistema"/>
+                        <nls description="Copiar a instância do Sistema" languageCode="pt" name="Copiar a instância de Sistema"/>
+                        <nls description="Копировать экземпляр Sistema" languageCode="ru" name="Копировать экземпляр Sistema"/>
+                        <nls description="Kopiera Sistema-instansen" languageCode="sv" name="Kopiera Sistema-instans"/>
+                        <nls description="Sistema olayını kopyala" languageCode="tr" name="Sistema örneğini kopyala"/>
+                        <nls description="复制 Sistema 实例" languageCode="zh" name="复制 Sistema 实例"/>
+                        <nls description="複製 Sistema 例項" languageCode="zh_TW" name="複製 Sistema 個例項"/>
+                        <linkParam dataRef="obj_sistema" dataSource="static" paramCode="odf_code"/>
+                        <linkParam dataRef="obj_sistema" dataSource="static" paramCode="src_object_code"/>
+                        <linkParam dataRef="obj_sistema" dataSource="static" paramCode="dest_object_code"/>
+                        <linkParam dataRef="odf_pk" dataSource="data" paramCode="id"/>
+                        <linkParam dataRef="odf_pk" dataSource="data" paramCode="odf_pk"/>
+                        <linkParam dataRef="partition_code" dataSource="data" paramCode="partition_code"/>
+                        <linkParam dataRef="/data/odf_view/@value" dataSource="input" paramCode="odf_view"/>
+                        <linkParam dataRef="odf.obj_sistemaProperties" dataSource="static" paramCode="odf_error_action"/>
+                        <availableView viewCode="obj_sistemaProperties" viewType="property"/>
+                    </action>
+                    <action action="npt.setObjectUserPartitions" code="odf.obj_sistemaCreate" component="odf" isActive="true" isCustom="false" isGeneric="true" isInstance="false" isSingleSelect="false" jobDefinitionCode="NONE" navigateTo="MNP" needUserConfirmation="false" needUserInput="false" needsBridge="false" needsSelection="false" objectCode="obj_sistema" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" processCode="NONE" rendering="cviewAction" targetWidget="none" type="internallink">
+                        <nls description="Crear nou Sistema" languageCode="ca" name="Nou Sistema"/>
+                        <nls description="Vytvořit novou položku Sistema" languageCode="cs" name="Nová položka Sistema"/>
+                        <nls description="Opret ny Sistema" languageCode="da" name="Ny Sistema"/>
+                        <nls description="Neues Sistema-Objekt erstellen" languageCode="de" name="Neue Sistema-Objektinstanz"/>
+                        <nls description="Create new Sistema" languageCode="en" name="New Sistema"/>
+                        <nls description="Crear nuevo Sistema" languageCode="es" name="Nuevo Sistema"/>
+                        <nls description="Luo uusi Sistema" languageCode="fi" name="Uusi Sistema"/>
+                        <nls description="Créer un(e) Sistema" languageCode="fr" name="Création de Sistema"/>
+                        <nls description="Új Sistema létrehozása" languageCode="hu" name="Új Sistema"/>
+                        <nls description="Crea nuovo Sistema" languageCode="it" name="Nuovo Sistema"/>
+                        <nls description="Sistema の新規作成" languageCode="ja" name="新規 Sistema"/>
+                        <nls description="[ko: Create new Sistema]" languageCode="ko" name="[ko: New Sistema]"/>
+                        <nls description="Nieuw(e) Sistema maken" languageCode="nl" name="Nieuw - Sistema"/>
+                        <nls description="Opprett ny Sistema" languageCode="no" name="Ny Sistema"/>
+                        <nls description="Utwórz nowy element Sistema" languageCode="pl" name="Nowy element Sistema"/>
+                        <nls description="Criar Sistema" languageCode="pt" name="Novo(a) Sistema"/>
+                        <nls description="Новый Sistema" languageCode="ru" name="Новый Sistema"/>
+                        <nls description="Skapa ny Sistema" languageCode="sv" name="Ny Sistema"/>
+                        <nls description="Yeni Sistema Oluştur" languageCode="tr" name="Yeni Sistema"/>
+                        <nls description="创建新 Sistema" languageCode="zh" name="新建 Sistema"/>
+                        <nls description="建立新的 Sistema" languageCode="zh_TW" name="新的 Sistema"/>
+                        <linkParam dataRef="odf.obj_sistemaList" dataSource="static" paramCode="navFromActionId"/>
+                        <linkParam dataRef="odf.obj_sistemaCreate" dataSource="static" paramCode="navToActionId"/>
+                        <linkParam dataRef="obj_sistema" dataSource="static" paramCode="objectCode"/>
+                        <linkParam dataRef="odf.obj_sistemaList" dataSource="static" paramCode="ui.page.space"/>
+                    </action>
+                    <action action="odf.objectMappings" code="odf_copy_mapobj_sistema" component="odf" isActive="true" isCustom="false" isGeneric="false" isInstance="true" isSingleSelect="false" jobDefinitionCode="NONE" navigateTo="MNP" needUserConfirmation="false" needUserInput="false" needsBridge="false" needsSelection="false" objectCode="obj_sistema" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" processCode="NONE" rendering="cviewAction" targetWidget="none" type="internalaction">
+                        <nls description="Copiar la instància Sistema, en funció de les assignacions d'objecte" languageCode="ca" name="Copiar mitjançant assignacions"/>
+                        <nls description="Kopírovat instanci Sistema na základě mapování objektů" languageCode="cs" name="Kopírovat pomocí mapování"/>
+                        <nls description="Kopier forekomsten Sistema, baseret på objekttilknytninger" languageCode="da" name="Kopiér ved hjælp af tilknytninger"/>
+                        <nls description="Instanz Sistema basierend auf Objektzuordnungen kopieren" languageCode="de" name="Mit Zuordnungen kopieren"/>
+                        <nls description="Copy the Sistema instance, based on object mappings" languageCode="en" name="Copy using Mappings"/>
+                        <nls description="Copiar la instancia Sistema, en función de las asignaciones de objeto" languageCode="es" name="Copiar mediante asignaciones"/>
+                        <nls description="Kopioi kohteen Sistema esiintymä objektimääritysten perusteella" languageCode="fi" name="Kopioi käyttäen määrityksiä"/>
+                        <nls description="Copier l'instance Sistema selon les mappages d'objets" languageCode="fr" name="Copier à l'aide de mappages"/>
+                        <nls description="A(z) Sistema példány másolása az objektum-hozzárendelések alapján" languageCode="hu" name="Másolás leképezésekkel"/>
+                        <nls description="Copia l'istanza Sistema in base ai mapping dell'oggetto" languageCode="it" name="Copia con mapping"/>
+                        <nls description="オブジェクト マッピングに従い、Sistema インスタンスをコピーします" languageCode="ja" name="マッピングを使用してコピー"/>
+                        <nls description="[ko: Copy the Sistema instance, based on object mappings]" languageCode="ko" name="[ko: Copy using Mappings]"/>
+                        <nls description="Kopieer de instantie van Sistema op basis van objectkoppelingen" languageCode="nl" name="Kopiëren op basis van koppelingen"/>
+                        <nls description="Kopier Sistema-forekomsten basert på objekttilordninger" languageCode="no" name="Kopier med tilordninger"/>
+                        <nls description="Kopiuj wystąpienie obiektu Sistema na podstawie mapowań obiektu" languageCode="pl" name="Kopiuj przy użyciu mapowań"/>
+                        <nls description="Copiar a instância do Sistema, com base nos mapeamentos de objetos" languageCode="pt" name="Copiar usando mapeamentos"/>
+                        <nls description="Копировать экземпляр Sistema на основе сопоставления объектов" languageCode="ru" name="Копировать с помощью сопоставлений"/>
+                        <nls description="Kopiera Sistema-instansen, baserat på objektmappningar" languageCode="sv" name="Kopiera med mappningar"/>
+                        <nls description="Sistema olayını nesne eşlemelerine göre kopyala" languageCode="tr" name="Eşleşmeleri kullanarak kopyala"/>
+                        <nls description="基于对象映射复制 Sistema 实例" languageCode="zh" name="使用映射复制"/>
+                        <nls description="按照物件對應複製 Sistema 例項" languageCode="zh_TW" name="使用對應複製"/>
+                        <linkParam dataRef="obj_sistema" dataSource="static" paramCode="odf_code"/>
+                        <linkParam dataRef="odf_pk" dataSource="data" paramCode="id"/>
+                        <linkParam dataRef="odf_pk" dataSource="data" paramCode="odf_pk"/>
+                        <linkParam dataRef="partition_code" dataSource="data" paramCode="partition_code"/>
+                        <linkParam dataRef="/data/odf_view/@value" dataSource="input" paramCode="odf_view"/>
+                        <linkParam dataRef="odf.obj_sistemaProperties" dataSource="static" paramCode="odf_error_action"/>
+                        <availableView viewCode="obj_sistemaProperties" viewType="property"/>
+                    </action>
+                    <action action="projmgr.capacity" code="action_cas_xog" component="odf" internalLinkCode="obj_sistema.lk_teste" isActive="true" isCustom="true" isGeneric="false" isInstance="true" isSingleSelect="false" jobDefinitionCode="NONE" navigateTo="MNP" needUserConfirmation="false" needUserInput="false" needsBridge="false" needsSelection="false" objectCode="obj_sistema" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" processCode="NONE" rendering="cviewAction" targetWidget="none" type="internallink">
+                        <nls languageCode="de" name="Ação para testar o CAS_XOG"/>
+                        <nls languageCode="ca" name="Ação para testar o CAS_XOG"/>
+                        <nls languageCode="cs" name="Ação para testar o CAS_XOG"/>
+                        <nls languageCode="da" name="Ação para testar o CAS_XOG"/>
+                        <nls languageCode="en" name="Ação para testar o CAS_XOG"/>
+                        <nls languageCode="es" name="Ação para testar o CAS_XOG"/>
+                        <nls languageCode="fi" name="Ação para testar o CAS_XOG"/>
+                        <nls languageCode="fr" name="Ação para testar o CAS_XOG"/>
+                        <nls languageCode="hu" name="Ação para testar o CAS_XOG"/>
+                        <nls languageCode="it" name="Ação para testar o CAS_XOG"/>
+                        <nls languageCode="ja" name="Ação para testar o CAS_XOG"/>
+                        <nls languageCode="ko" name="Ação para testar o CAS_XOG"/>
+                        <nls languageCode="nl" name="Ação para testar o CAS_XOG"/>
+                        <nls languageCode="no" name="Ação para testar o CAS_XOG"/>
+                        <nls languageCode="pl" name="Ação para testar o CAS_XOG"/>
+                        <nls languageCode="pt" name="Ação para testar o CAS_XOG"/>
+                        <nls languageCode="ru" name="Ação para testar o CAS_XOG"/>
+                        <nls languageCode="sv" name="Ação para testar o CAS_XOG"/>
+                        <nls languageCode="tr" name="Ação para testar o CAS_XOG"/>
+                        <nls languageCode="zh" name="Ação para testar o CAS_XOG"/>
+                        <nls languageCode="zh_TW" name="Ação para testar o CAS_XOG"/>
+                    </action>
+                    <action action="odf.completeCustomObject" code="odf_completeobj_sistema" component="odf" isActive="true" isCustom="false" isGeneric="false" isInstance="true" isSingleSelect="false" jobDefinitionCode="NONE" navigateTo="MNP" needUserConfirmation="false" needUserInput="false" needsBridge="false" needsSelection="false" objectCode="obj_sistema" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" processCode="NONE" rendering="cviewAction" targetWidget="none" type="internalaction">
+                        <nls description="Veure instància Sistema completa" languageCode="ca" name="Veure tots"/>
+                        <nls description="Zobrazit úplnou instanci Sistema" languageCode="cs" name="Zobrazit vše"/>
+                        <nls description="Vis hele forekomsten Sistema" languageCode="da" name="Vis alle"/>
+                        <nls description="Instanzen des Typs 'Sistema' vollständig anzeigen" languageCode="de" name="Alle anzeigen"/>
+                        <nls description="View complete Sistema instance" languageCode="en" name="View All"/>
+                        <nls description="Ver instancia Sistema completa" languageCode="es" name="Ver todos"/>
+                        <nls description="Näytä kohteen Sistema koko esiintymä" languageCode="fi" name="Näytä kaikki"/>
+                        <nls description="Afficher l'instance complète Sistema" languageCode="fr" name="Tout afficher"/>
+                        <nls description="A kész Sistema példány megtekintése" languageCode="hu" name="Az összes megtekintése"/>
+                        <nls description="Visualizza l'istanza completa Sistema" languageCode="it" name="Visualizza tutto"/>
+                        <nls description="Sistema インスタンスをすべて表示" languageCode="ja" name="すべて表示"/>
+                        <nls description="[ko: View complete Sistema instance]" languageCode="ko" name="[ko: View All]"/>
+                        <nls description="Complete instantie van Sistema weergeven" languageCode="nl" name="Alle weergeven"/>
+                        <nls description="Vis fullstendig Sistema-forekomst" languageCode="no" name="Vis alle"/>
+                        <nls description="Wyświetl pełne wystąpienie obiektu Sistema" languageCode="pl" name="Wyświetl wszystko"/>
+                        <nls description="Exibir todas as instância do Sistema" languageCode="pt" name="Visualizar tudo"/>
+                        <nls description="Просмотреть все экземпляры: Sistema" languageCode="ru" name="Просмотреть все"/>
+                        <nls description="Visa fullständig Sistema-instans" languageCode="sv" name="Visa alla"/>
+                        <nls description="Tamamlanmış Sistema olay görüntüle" languageCode="tr" name="Tümünü Görüntüle"/>
+                        <nls description="查看完整的 Sistema 实例" languageCode="zh" name="查看全部"/>
+                        <nls description="檢視完整的 Sistema 例項" languageCode="zh_TW" name="全部檢視"/>
+                        <linkParam dataRef="obj_sistema" dataSource="static" paramCode="odf_code"/>
+                        <linkParam dataRef="odf_pk" dataSource="data" paramCode="id"/>
+                        <linkParam dataRef="odf_pk" dataSource="data" paramCode="odf_pk"/>
+                        <linkParam dataRef="partition_code" dataSource="data" paramCode="partition_code"/>
+                        <availableView viewCode="obj_sistemaProperties" viewType="property"/>
+                    </action>
+                    <action action="odf.exportToXML" code="odf_XMLExportobj_sistema" component="odf" isActive="true" isCustom="false" isGeneric="false" isInstance="true" isSingleSelect="false" jobDefinitionCode="NONE" navigateTo="NONE" needUserConfirmation="false" needUserInput="false" needsBridge="true" needsSelection="false" objectCode="obj_sistema" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" processCode="NONE" rendering="cviewAction" targetWidget="none" type="internalaction">
+                        <nls description="Exportar Sistema instància d'objecte al format XML de XOG" languageCode="ca" name="Exportar XML"/>
+                        <nls description="Exportovat instanci objektu Sistema do formátu XOG XML" languageCode="cs" name="Exportovat do souboru XML"/>
+                        <nls description="Eksporter objektforekomsten Sistema til et XOG XML-format" languageCode="da" name="Eksporter til XML"/>
+                        <nls description="Objektinstanz Sistema in XOG-XML-Format exportieren" languageCode="de" name="In XML exportieren"/>
+                        <nls description="Export Sistema Object Instance to a XOG XML format" languageCode="en" name="Export to XML"/>
+                        <nls description="Exportar Sistema instancia de objeto al formato XML de XOG" languageCode="es" name="Exportar a XML"/>
+                        <nls description="Vie objektin Sistema esiintymä XOG XML -muotoon" languageCode="fi" name="Vie XML:ään"/>
+                        <nls description="Exporter l'instance d'objet Sistema vers un format XML XOG" languageCode="fr" name="Exporter au format XML"/>
+                        <nls description="A(z) Sistema objektumpéldány exportálása XOG XML formátumba" languageCode="hu" name="Exportálás XML-fájlba"/>
+                        <nls description="Esporta l'istanza oggetto Sistema in formato XML XOG" languageCode="it" name="Esporta in XML"/>
+                        <nls description="Sistema オブジェクト インスタンスを XOG XML 形式でエクスポートします" languageCode="ja" name="XML にエクスポート"/>
+                        <nls description="[ko: Export Sistema Object Instance to a XOG XML format]" languageCode="ko" name="[ko: Export to XML]"/>
+                        <nls description="Exporteer de instantie van het object Sistema naar een XOG XML-indeling" languageCode="nl" name="Exporteren naar XML"/>
+                        <nls description="Eksporter Sistema-objektforekomsten til et XOG XML-format" languageCode="no" name="Eksporter til XML"/>
+                        <nls description="Eksportuj wystąpienie obiektu Sistema do formatu XML interfejsu XOG" languageCode="pl" name="Eksportuj do pliku XML"/>
+                        <nls description="Exportar a instância de objeto do Sistema para um formato XML do XOG" languageCode="pt" name="Exportar para XML"/>
+                        <nls description="Экспортировать экземпляр объекта Sistema в XML-формат XOG" languageCode="ru" name="Экспорт в XML"/>
+                        <nls description="Exportera Sistema objektinstanser till ett XOG XML-format" languageCode="sv" name="Exportera till XML"/>
+                        <nls description="Sistema Nesne Olayını XOG XML formatına aktar" languageCode="tr" name="XML'e dışa aktar"/>
+                        <nls description="将 Sistema 对象实例导出为 XOG XML 格式" languageCode="zh" name="导出到 XML"/>
+                        <nls description="將 Sistema 物件例項匯出為 XOG XML 格式" languageCode="zh_TW" name="匯出至 XML"/>
+                        <linkParam dataRef="obj_sistema" dataSource="static" paramCode="odf_code"/>
+                        <linkParam dataRef="odf_pk" dataSource="data" paramCode="id"/>
+                        <linkParam dataRef="odf_pk" dataSource="data" paramCode="odf_pk"/>
+                        <linkParam dataRef="/data/odf_view/@value" dataSource="input" paramCode="odf_view"/>
+                        <availableView viewCode="obj_sistemaProperties" viewType="property"/>
+                    </action>
+                </actions>
+                <autonumbering>
+                    <attributeAutonumbering autonumbered="true" code="code">
+                        <schemes>
+                            <scheme isActive="1" maxLength="30" partitionCode="NIKU.ROOT">
+                                <segments>
+                                    <segment autoExtended="1" length="8" position="1" startValue="1" type="NUMERIC"/>
+                                </segments>
+                            </scheme>
+                        </schemes>
+                    </attributeAutonumbering>
+                </autonumbering>
+                <object code="obj_sub_sistema" entityCodeAttribute="odf_entity_code" fiscalPeriodTypeAttribute="odf_period_type" pageInstanceType="obj_sub_sistema" pageLayoutAttribute="page_layout" parentObjectCode="obj_sistema" partitionModelCode="partitionModel1" periodEndAttribute="odf_period_end" periodStartAttribute="odf_period_start" raiseEvents="false" source="customer" update="true">
+                    <nls languageCode="ca" name="Sub sistema"/>
+                    <nls languageCode="cs" name="Sub sistema"/>
+                    <nls languageCode="da" name="Sub sistema"/>
+                    <nls languageCode="de" name="Sub sistema"/>
+                    <nls languageCode="en" name="Sub sistema"/>
+                    <nls languageCode="es" name="Sub sistema"/>
+                    <nls languageCode="fi" name="Sub sistema"/>
+                    <nls languageCode="fr" name="Sub sistema"/>
+                    <nls languageCode="hu" name="Sub sistema"/>
+                    <nls languageCode="it" name="Sub sistema"/>
+                    <nls languageCode="ja" name="Sub sistema"/>
+                    <nls languageCode="ko" name="Sub sistema"/>
+                    <nls languageCode="nl" name="Sub sistema"/>
+                    <nls languageCode="no" name="Sub sistema"/>
+                    <nls languageCode="pl" name="Sub sistema"/>
+                    <nls languageCode="pt" name="Sub sistema"/>
+                    <nls languageCode="ru" name="Sub sistema"/>
+                    <nls languageCode="sv" name="Sub sistema"/>
+                    <nls languageCode="tr" name="Sub sistema"/>
+                    <nls languageCode="zh" name="Sub sistema"/>
+                    <nls languageCode="zh_TW" name="Sub sistema"/>
+                    <customAttribute active="true" code="status" column="status" constant="false" currencyConnected="false" custom="true" dataSize="20" dataType="number" editable="true" minValue="0" multiValued="false" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" presenceRequired="false" private="false" required="true" unique="false" virtual="false">
+                        <nls languageCode="ca" name="Status"/>
+                        <nls languageCode="cs" name="Status"/>
+                        <nls languageCode="da" name="Status"/>
+                        <nls languageCode="de" name="Status"/>
+                        <nls languageCode="en" name="Status"/>
+                        <nls languageCode="es" name="Status"/>
+                        <nls languageCode="fi" name="Status"/>
+                        <nls languageCode="fr" name="Status"/>
+                        <nls languageCode="hu" name="Status"/>
+                        <nls languageCode="it" name="Status"/>
+                        <nls languageCode="ja" name="Status"/>
+                        <nls languageCode="ko" name="Status"/>
+                        <nls languageCode="nl" name="Status"/>
+                        <nls languageCode="no" name="Status"/>
+                        <nls languageCode="pl" name="Status"/>
+                        <nls languageCode="pt" name="Status"/>
+                        <nls languageCode="ru" name="Status"/>
+                        <nls languageCode="sv" name="Status"/>
+                        <nls languageCode="tr" name="Status"/>
+                        <nls languageCode="zh" name="Status"/>
+                        <nls languageCode="zh_TW" name="Status"/>
+                        <default value="0"/>
+                    </customAttribute>
+                    <customAttribute active="true" code="version" column="version" constant="false" currencyConnected="false" custom="true" dataSize="20" dataType="string" editable="true" multiValued="false" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" presenceRequired="false" private="false" required="true" unique="false" virtual="false">
+                        <nls languageCode="ca" name="Versão"/>
+                        <nls languageCode="cs" name="Versão"/>
+                        <nls languageCode="da" name="Versão"/>
+                        <nls languageCode="de" name="Versão"/>
+                        <nls languageCode="en" name="Versão"/>
+                        <nls languageCode="es" name="Versão"/>
+                        <nls languageCode="fi" name="Versão"/>
+                        <nls languageCode="fr" name="Versão"/>
+                        <nls languageCode="hu" name="Versão"/>
+                        <nls languageCode="it" name="Versão"/>
+                        <nls languageCode="ja" name="Versão"/>
+                        <nls languageCode="ko" name="Versão"/>
+                        <nls languageCode="nl" name="Versão"/>
+                        <nls languageCode="no" name="Versão"/>
+                        <nls languageCode="pl" name="Versão"/>
+                        <nls languageCode="pt" name="Versão"/>
+                        <nls languageCode="ru" name="Versão"/>
+                        <nls languageCode="sv" name="Versão"/>
+                        <nls languageCode="tr" name="Versão"/>
+                        <nls languageCode="zh" name="Versão"/>
+                        <nls languageCode="zh_TW" name="Versão"/>
+                    </customAttribute>
+                    <attributeDefault code="status" value="0"/>
+                    <links objectCode="obj_sub_sistema">
+                        <link action="odf.obj_sub_sistemaProperties" active="true" code="obj_sub_sistema.properties" isObjectInstanceLink="false" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" system="true">
+                            <nls description="Sub sistema Vincle de propietats" languageCode="ca" name="Sub sistema Vincle de propietats"/>
+                            <nls description="Sub sistema – Odkaz na vlastnosti" languageCode="cs" name="Sub sistema – Odkaz na vlastnosti"/>
+                            <nls description="Link til Egenskaber for Sub sistema" languageCode="da" name="Link til Egenskaber for Sub sistema"/>
+                            <nls description="Verknüpfung mit Eigenschaften von: 'Sub sistema'" languageCode="de" name="Verknüpfung mit Eigenschaften von: 'Sub sistema'"/>
+                            <nls description="Sub sistema Properties Link" languageCode="en" name="Sub sistema Properties Link"/>
+                            <nls description="Sub sistema Vínculo de propiedades" languageCode="es" name="Sub sistema Vínculo de propiedades"/>
+                            <nls description="Sub sistema Ominaisuuslinkki" languageCode="fi" name="Sub sistema Ominaisuuslinkki"/>
+                            <nls description="Sub sistema - Lien vers les propriétés" languageCode="fr" name="Sub sistema - Lien vers les propriétés"/>
+                            <nls description="Sub sistema Tulajdonságok hivatkozása" languageCode="hu" name="Sub sistema Tulajdonságok hivatkozása"/>
+                            <nls description="Sub sistema - Collegamento a Proprietà" languageCode="it" name="Sub sistema - Collegamento a Proprietà"/>
+                            <nls description="Sub sistema プロパティ リンク" languageCode="ja" name="Sub sistema プロパティ リンク"/>
+                            <nls description="[ko: Sub sistema Properties Link]" languageCode="ko" name="[ko: Sub sistema Properties Link]"/>
+                            <nls description="Sub sistema - Koppeling voor eigenschappen" languageCode="nl" name="Sub sistema - Koppeling voor eigenschappen"/>
+                            <nls description="Sub sistema Kobling til egenskaper" languageCode="no" name="Sub sistema Kobling til egenskaper"/>
+                            <nls description="Sub sistema — Łącze do właściwości" languageCode="pl" name="Sub sistema — Łącze do właściwości"/>
+                            <nls description="Link para propriedades de Sub sistema" languageCode="pt" name="Link para propriedades de Sub sistema"/>
+                            <nls description="Sub sistema: ссылка на свойства" languageCode="ru" name="Sub sistema: ссылка на свойства"/>
+                            <nls description="Sub sistema Länken Egenskaper" languageCode="sv" name="Sub sistema Länken Egenskaper"/>
+                            <nls description="Sub sistema Özellikler Bağlantısı" languageCode="tr" name="Sub sistema Özellikler Bağlantısı"/>
+                            <nls description="Sub sistema属性链接" languageCode="zh" name="Sub sistema属性链接"/>
+                            <nls description="Sub sistema特性內容連結" languageCode="zh_TW" name="Sub sistema特性內容連結"/>
+                            <linkParam dataRef="odf_pk" dataSource="data" paramCode="odf_pk"/>
+                            <linkParam dataRef="odf_pk" dataSource="data" paramCode="id"/>
+                            <linkParam dataRef="/data/odf_view/@value" dataSource="input" paramCode="parent_odf_view"/>
+                            <linkParam dataRef="obj_sub_sistema" dataSource="static" paramCode="odf_code"/>
+                            <linkParam dataRef="/data/parent_odf_view/@value" dataSource="input" paramCode="grandparent_odf_view"/>
+                            <linkParam dataRef="odf.obj_sistemaList" dataSource="static" paramCode="ui.page.space"/>
+                            <linkParam dataRef="/data/odf_concrete_parent_object_code/@value" dataSource="input" paramCode="odf_concrete_parent_object_code"/>
+                        </link>
+                    </links>
+                    <displayMappings>
+                        <displayMapping attributeCode="status" defaultTypeCode="" type="color">
+                            <mapping hi="0" lo="0" mappingCode="range-0-0-null" typeCode="red" value="">
+                                <nls description="Error" languageCode="ca" name="Error"/>
+                                <nls description="Error" languageCode="cs" name="Error"/>
+                                <nls description="Error" languageCode="da" name="Error"/>
+                                <nls description="Error" languageCode="de" name="Error"/>
+                                <nls description="Error" languageCode="en" name="Error"/>
+                                <nls description="Error" languageCode="es" name="Error"/>
+                                <nls description="Error" languageCode="fi" name="Error"/>
+                                <nls description="Error" languageCode="fr" name="Error"/>
+                                <nls description="Error" languageCode="hu" name="Error"/>
+                                <nls description="Error" languageCode="it" name="Error"/>
+                                <nls description="Error" languageCode="ja" name="Error"/>
+                                <nls description="Error" languageCode="ko" name="Error"/>
+                                <nls description="Error" languageCode="nl" name="Error"/>
+                                <nls description="Error" languageCode="no" name="Error"/>
+                                <nls description="Error" languageCode="pl" name="Error"/>
+                                <nls description="Error" languageCode="pt" name="Error"/>
+                                <nls description="Error" languageCode="ru" name="Error"/>
+                                <nls description="Error" languageCode="sv" name="Error"/>
+                                <nls description="Error" languageCode="tr" name="Error"/>
+                                <nls description="Error" languageCode="zh" name="Error"/>
+                                <nls description="Error" languageCode="zh_TW" name="Error"/>
+                            </mapping>
+                            <mapping hi="1" lo="1" mappingCode="range-1-1-null" typeCode="yellow" value="">
+                                <nls description="Warning" languageCode="ca" name="Warning"/>
+                                <nls description="Warning" languageCode="cs" name="Warning"/>
+                                <nls description="Warning" languageCode="da" name="Warning"/>
+                                <nls description="Warning" languageCode="de" name="Warning"/>
+                                <nls description="Warning" languageCode="en" name="Warning"/>
+                                <nls description="Warning" languageCode="es" name="Warning"/>
+                                <nls description="Warning" languageCode="fi" name="Warning"/>
+                                <nls description="Warning" languageCode="fr" name="Warning"/>
+                                <nls description="Warning" languageCode="hu" name="Warning"/>
+                                <nls description="Warning" languageCode="it" name="Warning"/>
+                                <nls description="Warning" languageCode="ja" name="Warning"/>
+                                <nls description="Warning" languageCode="ko" name="Warning"/>
+                                <nls description="Warning" languageCode="nl" name="Warning"/>
+                                <nls description="Warning" languageCode="no" name="Warning"/>
+                                <nls description="Warning" languageCode="pl" name="Warning"/>
+                                <nls description="Warning" languageCode="pt" name="Warning"/>
+                                <nls description="Warning" languageCode="ru" name="Warning"/>
+                                <nls description="Warning" languageCode="sv" name="Warning"/>
+                                <nls description="Warning" languageCode="tr" name="Warning"/>
+                                <nls description="Warning" languageCode="zh" name="Warning"/>
+                                <nls description="Warning" languageCode="zh_TW" name="Warning"/>
+                            </mapping>
+                            <mapping hi="2" lo="2" mappingCode="range-2-2-null" typeCode="green" value="">
+                                <nls description="Success" languageCode="ca" name="Success"/>
+                                <nls description="Success" languageCode="cs" name="Success"/>
+                                <nls description="Success" languageCode="da" name="Success"/>
+                                <nls description="Success" languageCode="de" name="Success"/>
+                                <nls description="Success" languageCode="en" name="Success"/>
+                                <nls description="Success" languageCode="es" name="Success"/>
+                                <nls description="Success" languageCode="fi" name="Success"/>
+                                <nls description="Success" languageCode="fr" name="Success"/>
+                                <nls description="Success" languageCode="hu" name="Success"/>
+                                <nls description="Success" languageCode="it" name="Success"/>
+                                <nls description="Success" languageCode="ja" name="Success"/>
+                                <nls description="Success" languageCode="ko" name="Success"/>
+                                <nls description="Success" languageCode="nl" name="Success"/>
+                                <nls description="Success" languageCode="no" name="Success"/>
+                                <nls description="Success" languageCode="pl" name="Success"/>
+                                <nls description="Success" languageCode="pt" name="Success"/>
+                                <nls description="Success" languageCode="ru" name="Success"/>
+                                <nls description="Success" languageCode="sv" name="Success"/>
+                                <nls description="Success" languageCode="tr" name="Success"/>
+                                <nls description="Success" languageCode="zh" name="Success"/>
+                                <nls description="Success" languageCode="zh_TW" name="Success"/>
+                            </mapping>
+                        </displayMapping>
+                    </displayMappings>
+                    <scoreContributions/>
+                    <actions>
+                        <action action="odf.subObjectProperties" code="odf_newobj_sub_sistema" component="odf" isActive="true" isCustom="false" isGeneric="true" isInstance="false" isSingleSelect="false" jobDefinitionCode="NONE" navigateTo="MNP" needUserConfirmation="false" needUserInput="false" needsBridge="false" needsSelection="false" objectCode="obj_sub_sistema" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" processCode="NONE" rendering="cviewAction" targetWidget="none" type="internallink">
+                            <nls description="Crear nou Sub sistema" languageCode="ca" name="Nou Sub sistema"/>
+                            <nls description="Vytvořit novou položku Sub sistema" languageCode="cs" name="Nová položka Sub sistema"/>
+                            <nls description="Opret ny Sub sistema" languageCode="da" name="Ny Sub sistema"/>
+                            <nls description="Neues Sub sistema-Objekt erstellen" languageCode="de" name="Neue Sub sistema-Objektinstanz"/>
+                            <nls description="Create new Sub sistema" languageCode="en" name="New Sub sistema"/>
+                            <nls description="Crear nuevo Sub sistema" languageCode="es" name="Nuevo Sub sistema"/>
+                            <nls description="Luo uusi Sub sistema" languageCode="fi" name="Uusi Sub sistema"/>
+                            <nls description="Créer un(e) Sub sistema" languageCode="fr" name="Création de Sub sistema"/>
+                            <nls description="Új Sub sistema létrehozása" languageCode="hu" name="Új Sub sistema"/>
+                            <nls description="Crea nuovo Sub sistema" languageCode="it" name="Nuovo Sub sistema"/>
+                            <nls description="Sub sistema の新規作成" languageCode="ja" name="新規 Sub sistema"/>
+                            <nls description="[ko: Create new Sub sistema]" languageCode="ko" name="[ko: New Sub sistema]"/>
+                            <nls description="Nieuw(e) Sub sistema maken" languageCode="nl" name="Nieuw - Sub sistema"/>
+                            <nls description="Opprett ny Sub sistema" languageCode="no" name="Ny Sub sistema"/>
+                            <nls description="Utwórz nowy element Sub sistema" languageCode="pl" name="Nowy element Sub sistema"/>
+                            <nls description="Criar Sub sistema" languageCode="pt" name="Novo(a) Sub sistema"/>
+                            <nls description="Новый Sub sistema" languageCode="ru" name="Новый Sub sistema"/>
+                            <nls description="Skapa ny Sub sistema" languageCode="sv" name="Ny Sub sistema"/>
+                            <nls description="Yeni Sub sistema Oluştur" languageCode="tr" name="Yeni Sub sistema"/>
+                            <nls description="创建新 Sub sistema" languageCode="zh" name="新建 Sub sistema"/>
+                            <nls description="建立新的 Sub sistema" languageCode="zh_TW" name="新的 Sub sistema"/>
+                            <linkParam dataRef="/data/parent_odf_view/@value" dataSource="input" paramCode="grandparent_odf_view"/>
+                            <linkParam dataRef="/data/odf_parent_id/@value" dataSource="input" paramCode="odf_cncrt_parent_id"/>
+                            <linkParam dataRef="obj_sub_sistema" dataSource="static" paramCode="odf_code"/>
+                            <linkParam dataRef="/data/odf_parent_id/@value" dataSource="input" paramCode="odf_parent_id"/>
+                            <linkParam dataRef="obj_sistema" dataSource="input" paramCode="parentObjectCode"/>
+                            <linkParam dataRef="obj_sistemaCreate.subObjList.obj_sub_sistema" dataSource="static" paramCode="parent_odf_view"/>
+                            <linkParam dataRef="NIKU.ROOT" dataSource="static" paramCode="partition_code"/>
+                        </action>
+                        <action action="odf.objectMappings" code="odf_copy_mapobj_sub_sistema" component="odf" isActive="true" isCustom="false" isGeneric="false" isInstance="true" isSingleSelect="false" jobDefinitionCode="NONE" navigateTo="MNP" needUserConfirmation="false" needUserInput="false" needsBridge="false" needsSelection="false" objectCode="obj_sub_sistema" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" processCode="NONE" rendering="cviewAction" targetWidget="none" type="internalaction">
+                            <nls description="Copiar la instància Sub sistema, en funció de les assignacions d'objecte" languageCode="ca" name="Copiar"/>
+                            <nls description="Kopírovat instanci Sub sistema na základě mapování objektů" languageCode="cs" name="Kopírovat"/>
+                            <nls description="Kopier forekomsten Sub sistema, baseret på objekttilknytninger" languageCode="da" name="Kopier"/>
+                            <nls description="Instanz Sub sistema basierend auf Objektzuordnungen kopieren" languageCode="de" name="Kopieren"/>
+                            <nls description="Copy the Sub sistema instance, based on object mappings" languageCode="en" name="Copy"/>
+                            <nls description="Copiar la instancia Sub sistema, en función de las asignaciones de objeto" languageCode="es" name="Copiar"/>
+                            <nls description="Kopioi kohteen Sub sistema esiintymä objektimääritysten perusteella" languageCode="fi" name="Kopio"/>
+                            <nls description="Copier l'instance Sub sistema selon les mappages d'objets" languageCode="fr" name="Copier"/>
+                            <nls description="A(z) Sub sistema példány másolása az objektum-hozzárendelések alapján" languageCode="hu" name="Másolás"/>
+                            <nls description="Copia l'istanza Sub sistema in base ai mapping dell'oggetto" languageCode="it" name="Copia"/>
+                            <nls description="オブジェクト マッピングに従い、Sub sistema インスタンスをコピーします" languageCode="ja" name="コピー"/>
+                            <nls description="[ko: Copy the Sub sistema instance, based on object mappings]" languageCode="ko" name="[ko: Copy]"/>
+                            <nls description="Kopieer de instantie van Sub sistema op basis van objectkoppelingen" languageCode="nl" name="Kopiëren"/>
+                            <nls description="Kopier Sub sistema-forekomsten basert på objekttilordninger" languageCode="no" name="Kopier"/>
+                            <nls description="Kopiuj wystąpienie obiektu Sub sistema na podstawie mapowań obiektu" languageCode="pl" name="Kopiuj"/>
+                            <nls description="Copiar a instância do Sub sistema, com base nos mapeamentos de objetos" languageCode="pt" name="Copiar"/>
+                            <nls description="Копировать экземпляр Sub sistema на основе сопоставления объектов" languageCode="ru" name="Копировать"/>
+                            <nls description="Kopiera Sub sistema-instansen, baserat på objektmappningar" languageCode="sv" name="Kopiera"/>
+                            <nls description="Sub sistema olayını nesne eşlemelerine göre kopyala" languageCode="tr" name="Kopyala"/>
+                            <nls description="基于对象映射复制 Sub sistema 实例" languageCode="zh" name="复制"/>
+                            <nls description="按照物件對應複製 Sub sistema 例項" languageCode="zh_TW" name="複製"/>
+                            <linkParam dataRef="obj_sub_sistema" dataSource="static" paramCode="odf_code"/>
+                            <linkParam dataRef="odf_pk" dataSource="data" paramCode="id"/>
+                            <linkParam dataRef="odf_pk" dataSource="data" paramCode="odf_pk"/>
+                            <linkParam dataRef="partition_code" dataSource="data" paramCode="partition_code"/>
+                            <availableView viewCode="obj_sub_sistemaProperties" viewType="property"/>
+                        </action>
+                        <action action="odf.objectCopySourceInstances" code="odf_copy_srcobj_sub_sistema" component="odf" isActive="true" isCustom="false" isGeneric="false" isInstance="true" isSingleSelect="false" jobDefinitionCode="NONE" navigateTo="MNP" needUserConfirmation="false" needUserInput="false" needsBridge="false" needsSelection="false" objectCode="obj_sub_sistema" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" processCode="NONE" rendering="cviewAction" targetWidget="none" type="internalaction">
+                            <nls description="Copiar la instància Sub sistema" languageCode="ca" name="Copiar"/>
+                            <nls description="Kopírovat instanci Sub sistema" languageCode="cs" name="Kopírovat"/>
+                            <nls description="Kopier forekomsten Sub sistema" languageCode="da" name="Kopier"/>
+                            <nls description="Instanz Sub sistema kopieren" languageCode="de" name="Kopieren"/>
+                            <nls description="Copy the Sub sistema instance" languageCode="en" name="Copy"/>
+                            <nls description="Copiar la instancia Sub sistema" languageCode="es" name="Copiar"/>
+                            <nls description="Kopioi kohteen Sub sistema esiintymä" languageCode="fi" name="Kopio"/>
+                            <nls description="Copier l'instance Sub sistema" languageCode="fr" name="Copier"/>
+                            <nls description="A(z) Sub sistema példány másolása" languageCode="hu" name="Másolás"/>
+                            <nls description="Copia l'istanza Sub sistema" languageCode="it" name="Copia"/>
+                            <nls description="Sub sistema インスタンスのコピー" languageCode="ja" name="コピー"/>
+                            <nls description="[ko: Copy the Sub sistema instance]" languageCode="ko" name="[ko: Copy]"/>
+                            <nls description="Kopieer de instantie van Sub sistema" languageCode="nl" name="Kopiëren"/>
+                            <nls description="Kopier Sub sistema-forekomsten" languageCode="no" name="Kopier"/>
+                            <nls description="Kopiuj wystąpienie obiektu Sub sistema" languageCode="pl" name="Kopiuj"/>
+                            <nls description="Copiar a instância do Sub sistema" languageCode="pt" name="Copiar"/>
+                            <nls description="Копировать экземпляр Sub sistema" languageCode="ru" name="Копировать"/>
+                            <nls description="Kopiera Sub sistema-instansen" languageCode="sv" name="Kopiera"/>
+                            <nls description="Sub sistema olayını kopyala" languageCode="tr" name="Kopyala"/>
+                            <nls description="复制 Sub sistema 实例" languageCode="zh" name="复制"/>
+                            <nls description="複製 Sub sistema 例項" languageCode="zh_TW" name="複製"/>
+                            <linkParam dataRef="obj_sub_sistema" dataSource="static" paramCode="odf_code"/>
+                            <linkParam dataRef="obj_sub_sistema" dataSource="static" paramCode="src_object_code"/>
+                            <linkParam dataRef="obj_sub_sistema" dataSource="static" paramCode="dest_object_code"/>
+                            <linkParam dataRef="odf_pk" dataSource="data" paramCode="id"/>
+                            <linkParam dataRef="odf_pk" dataSource="data" paramCode="odf_pk"/>
+                            <availableView viewCode="obj_sub_sistemaProperties" viewType="property"/>
+                        </action>
+                    </actions>
+                    <autonumbering/>
+                </object>
+            </object>
+        </objects>
+        <lookups update="true">
+            <staticLookup autoSuggestEnabled="true" autoSuggestMaxSuggestions="10" code="CMN_CATEGORIES" hiddenAttributeName="id" sortStyle="alphanumeric" source="niku.com" status="active" update="true">
+                <nls description="Categories per a portlets" languageCode="ca" name="Categories de portlet"/>
+                <nls description="Kategorie portletů" languageCode="cs" name="Kategorie portletu"/>
+                <nls description="Portletkategorier" languageCode="da" name="Portletkategorier"/>
+                <nls description="Kategorien für Portlets" languageCode="de" name="Portlet-Kategorien"/>
+                <nls description="Categories for Portlets" languageCode="en" name="Portlet Categories"/>
+                <nls description="Categorías para portlets" languageCode="es" name="Categorías de portlet"/>
+                <nls description="Portletien kategoriat" languageCode="fi" name="Portlet-kategoriat"/>
+                <nls description="Catégories des portlets" languageCode="fr" name="Catégories de portlets"/>
+                <nls description="Kategóriák portletekhez" languageCode="hu" name="Portletkategóriák"/>
+                <nls description="Categorie per portlet" languageCode="it" name="Categorie portlet"/>
+                <nls description="ポートレットのカテゴリ" languageCode="ja" name="ポートレット カテゴリ"/>
+                <nls description="[ko: Categories for Portlets]" languageCode="ko" name="[ko: Portlet Categories]"/>
+                <nls description="Categorieën voor portlets" languageCode="nl" name="Portletcategorieën"/>
+                <nls description="Kategorier for portleter" languageCode="no" name="Portletkategorier"/>
+                <nls description="Kategorie dla portletów" languageCode="pl" name="Kategorie portletów"/>
+                <nls description="Categorias para portlets" languageCode="pt" name="Categorias de portlet"/>
+                <nls description="Категории для портлетов" languageCode="ru" name="Категории портлетов"/>
+                <nls description="Kategorier för portlets" languageCode="sv" name="Portlet-kategorier"/>
+                <nls description="Portlet Kategorileri" languageCode="tr" name="Portlet Kategorileri"/>
+                <nls description="Portlet 类别" languageCode="zh" name="Portlet 类别"/>
+                <nls description="Portlet 的類別" languageCode="zh_TW" name="Portlet 類別"/>
+                <lookupValue code="COLLABORATION" enum="0" sortOrder="0" status="active">
+                    <nls description="Col·laboració" languageCode="ca" name="Col·laboració"/>
+                    <nls description="Spolupráce" languageCode="cs" name="Spolupráce"/>
+                    <nls description="Samarbejde" languageCode="da" name="Samarbejde"/>
+                    <nls description="Zusammenarbeit" languageCode="de" name="Zusammenarbeit"/>
+                    <nls description="Collaboration" languageCode="en" name="Collaboration"/>
+                    <nls description="Colaboración" languageCode="es" name="Colaboración"/>
+                    <nls description="Yhteistyö" languageCode="fi" name="Yhteistyö"/>
+                    <nls description="Collaboration" languageCode="fr" name="Collaboration"/>
+                    <nls description="Együttműködés" languageCode="hu" name="Együttműködés"/>
+                    <nls description="Collaborazione" languageCode="it" name="Collaborazione"/>
+                    <nls description="コラボレーション" languageCode="ja" name="コラボレーション"/>
+                    <nls description="[ko: Collaboration]" languageCode="ko" name="[ko: Collaboration]"/>
+                    <nls description="Samenwerking" languageCode="nl" name="Samenwerking"/>
+                    <nls description="Samarbeid" languageCode="no" name="Samarbeid"/>
+                    <nls description="Współpraca" languageCode="pl" name="Współpraca"/>
+                    <nls description="Colaboração" languageCode="pt" name="Colaboração"/>
+                    <nls description="Совместная работа" languageCode="ru" name="Совместная работа"/>
+                    <nls description="Samarbete" languageCode="sv" name="Samarbete"/>
+                    <nls description="İşbirliği" languageCode="tr" name="İşbirliği"/>
+                    <nls description="协作" languageCode="zh" name="协作"/>
+                    <nls description="共同作業" languageCode="zh_TW" name="共同作業"/>
+                </lookupValue>
+                <lookupValue code="npd.ca.com" sortOrder="0" status="active">
+                    <nls description="Categoria de portlet per al desenvolupament de nous productes (DNP)" languageCode="ca" name="Nou desenvolupament de producte"/>
+                    <nls description="Kategorie portletu pro vývoj nového produktu (NPD)" languageCode="cs" name="Vývoj nového produktu"/>
+                    <nls description="Portlet til kategori for ny produktudvikling (NPD)" languageCode="da" name="Ny produktudvikling"/>
+                    <nls description="Portlet-Kategorie für Entwicklung neuer Produkte (NPE)" languageCode="de" name="Entwicklung neuer Produkte"/>
+                    <nls description="Portlet category for New Product Development (NPD)" languageCode="en" name="New Product Development"/>
+                    <nls description="Categoría de portlet para el desarrollo de nuevos productos (DNP)" languageCode="es" name="Nuevo desarrollo de producto"/>
+                    <nls description="Portlet-kategoria uutta tuotekehitystä (NPD) varten" languageCode="fi" name="Uusi tuotekehitys"/>
+                    <nls description="Catégorie de portlet pour le développement d'un nouveau produit (DNP)" languageCode="fr" name="Développement d'un nouveau produit"/>
+                    <nls description="Portletkategória termékfejlesztéshez (NPD)" languageCode="hu" name="Új termék fejlesztése"/>
+                    <nls description="Categoria portlet per Sviluppo nuovo prodotto (NPD)" languageCode="it" name="Sviluppo nuovo prodotto"/>
+                    <nls description="NPD (新製品開発) のポートレット カテゴリ" languageCode="ja" name="新製品開発"/>
+                    <nls description="[ko: Portlet category for New Product Development (NPD)]" languageCode="ko" name="[ko: New Product Development]"/>
+                    <nls description="Portletcategorie voor Productontwikkeling" languageCode="nl" name="Ontwikkeling nieuw product"/>
+                    <nls description="Portletkategori for produktutvikling (NPD)" languageCode="no" name="Nytt produkt under utvikling"/>
+                    <nls description="Kategoria portletu dotycząca rozwoju nowego produktu (RNP)" languageCode="pl" name="Rozwój nowego produktu"/>
+                    <nls description="Categoria de portlet para Desenvolvimento de novos produtos" languageCode="pt" name="Desenvolvimento de novos produtos"/>
+                    <nls description="Категория портлета для разработки нового продукта (NPD)" languageCode="ru" name="Разработка нового продукта"/>
+                    <nls description="Portletkategori för Ny produktutveckling (NPD)" languageCode="sv" name="Ny produktutveckling"/>
+                    <nls description="Yeni Ürün Geliştirme (YÜG) için portlet kategorisi" languageCode="tr" name="Yeni Ürün Geliştirme"/>
+                    <nls description="新产品开发 (NPD) 组件的 Portlet 类别" languageCode="zh" name="新产品开发"/>
+                    <nls description="新產品開發 (NPD) 的 Portlet 類別" languageCode="zh_TW" name="新產品開發"/>
+                </lookupValue>
+                <lookupValue code="framework" enum="0" sortOrder="30" status="active">
+                    <nls description="Categoria de portlet de marc" languageCode="ca" name="Marc"/>
+                    <nls description="Kategorie portletu rámců" languageCode="cs" name="Rámec"/>
+                    <nls description="Portletkategori for ramme" languageCode="da" name="Ramme"/>
+                    <nls description="Framework-Portlet - Kategorie" languageCode="de" name="Framework"/>
+                    <nls description="Framework Portlet Category" languageCode="en" name="Framework"/>
+                    <nls description="Categoría de portlet de marco" languageCode="es" name="Marco"/>
+                    <nls description="Kehys-portletin kategoria" languageCode="fi" name="Kehys"/>
+                    <nls description="Catégorie de portlet de cadre d'applications" languageCode="fr" name="Cadre d'applications"/>
+                    <nls description="Keretrendszer portlet-kategória" languageCode="hu" name="Keretrendszer"/>
+                    <nls description="Categoria portlet schema" languageCode="it" name="Schema"/>
+                    <nls description="フレームワーク ポートレット カテゴリ" languageCode="ja" name="フレームワーク"/>
+                    <nls description="[ko: Framework Portlet Category]" languageCode="ko" name="[ko: Framework]"/>
+                    <nls description="Raamwerk portletcategorie" languageCode="nl" name="Raamwerk"/>
+                    <nls description="Portletkategori for rammeverk" languageCode="no" name="Rammeverk"/>
+                    <nls description="Kategoria portletów struktury" languageCode="pl" name="Struktura"/>
+                    <nls description="Categoria de portlet de estrutura" languageCode="pt" name="Estrutura"/>
+                    <nls description="Категория портлета платформы" languageCode="ru" name="Платформа"/>
+                    <nls description="Ramverk Portletkategori" languageCode="sv" name="Ramverk"/>
+                    <nls description="Çerçeve Portleti Kategorisi" languageCode="tr" name="Çerçeve"/>
+                    <nls description="框架 Portlet 类别" languageCode="zh" name="框架"/>
+                    <nls description="架構 Portlet 類別" languageCode="zh_TW" name="架構"/>
+                </lookupValue>
+                <lookupValue code="businessIntelligence" enum="0" sortOrder="30" status="active">
+                    <nls description="Categoria de portlet d'intel·ligència de negocis" languageCode="ca" name="Intel·ligència de negocis"/>
+                    <nls description="Kategorie portletu obchodních informací" languageCode="cs" name="Obchodní informace"/>
+                    <nls description="Business Intelligence - portletkategori" languageCode="da" name="Business Intelligence"/>
+                    <nls description="Business Intelligence-Portlet - Kategorie" languageCode="de" name="Business Intelligence"/>
+                    <nls description="Business Intelligence Portlet Category" languageCode="en" name="Business Intelligence"/>
+                    <nls description="Categoría de portlet de inteligencia de negocios" languageCode="es" name="Inteligencia de negocios"/>
+                    <nls description="Business Intelligence -portletin kategoria" languageCode="fi" name="Business Intelligence"/>
+                    <nls description="Catégorie de portlet d'aide à la décision" languageCode="fr" name="Aide à la décision"/>
+                    <nls description="Business Intelligence portletkategóriája" languageCode="hu" name="Business Intelligence"/>
+                    <nls description="Categoria portlet Business Intelligence" languageCode="it" name="Business Intelligence"/>
+                    <nls description="ビジネス インテリジェンス ポートレット カテゴリ" languageCode="ja" name="ビジネス インテリジェンス"/>
+                    <nls description="[ko: Business Intelligence Portlet Category]" languageCode="ko" name="[ko: Business Intelligence]"/>
+                    <nls description="Portletcategorie bedrijfsinlichtingen" languageCode="nl" name="Bedrijfsinlichtingen"/>
+                    <nls description="Business Intelligence - portletkategori" languageCode="no" name="Business Intelligence"/>
+                    <nls description="Kategoria portletu Business Intelligence" languageCode="pl" name="Business Intelligence"/>
+                    <nls description="Categoria de portlet da inteligência de negócios" languageCode="pt" name="Inteligência de negócios"/>
+                    <nls description="Категория портлета бизнес-аналитики" languageCode="ru" name="Бизнес-аналитика"/>
+                    <nls description="Företagsintelligens Portletkategori" languageCode="sv" name="Företagsintelligens"/>
+                    <nls description="İş Zekası Portlet Kategorisi" languageCode="tr" name="İş Zekası"/>
+                    <nls description="商业智能 Portlet 类别" languageCode="zh" name="Business Intelligence"/>
+                    <nls description="商務智慧 Portlet 類別" languageCode="zh_TW" name="商務智慧"/>
+                </lookupValue>
+                <lookupValue code="PERSONALIZATION" enum="0" sortOrder="0" status="active">
+                    <nls description="Personal" languageCode="ca" name="Personal"/>
+                    <nls description="Osobní" languageCode="cs" name="Osobní"/>
+                    <nls description="Personlig" languageCode="da" name="Personlig"/>
+                    <nls description="Persönlich" languageCode="de" name="Persönlich"/>
+                    <nls description="Personal" languageCode="en" name="Personal"/>
+                    <nls description="Personal" languageCode="es" name="Personal"/>
+                    <nls description="Henkilökohtainen" languageCode="fi" name="Henkilökohtainen"/>
+                    <nls description="Personnel" languageCode="fr" name="Personnel"/>
+                    <nls description="Személyes" languageCode="hu" name="Személyes"/>
+                    <nls description="Personale" languageCode="it" name="Personale"/>
+                    <nls description="パーソナル" languageCode="ja" name="パーソナル"/>
+                    <nls description="[ko: Personal]" languageCode="ko" name="[ko: Personal]"/>
+                    <nls description="Persoonlijk" languageCode="nl" name="Persoonlijk"/>
+                    <nls description="Personlig" languageCode="no" name="Personlig"/>
+                    <nls description="Osobiste" languageCode="pl" name="Osobiste"/>
+                    <nls description="Pessoal" languageCode="pt" name="Pessoal"/>
+                    <nls description="Личные данные" languageCode="ru" name="Личные данные"/>
+                    <nls description="Personligt" languageCode="sv" name="Personligt"/>
+                    <nls description="Kişisel" languageCode="tr" name="Kişisel"/>
+                    <nls description="个人" languageCode="zh" name="个人"/>
+                    <nls description="個人" languageCode="zh_TW" name="個人"/>
+                </lookupValue>
+                <lookupValue code="PRODUCTIVITY" enum="0" sortOrder="0" status="active">
+                    <nls description="Ajuda de productivitat" languageCode="ca" name="Productivitat"/>
+                    <nls description="Nástroj pro zvýšení produktivity" languageCode="cs" name="Produktivita"/>
+                    <nls description="Produktivitetshjælp" languageCode="da" name="Produktivitet"/>
+                    <nls description="Produktivitätshilfe" languageCode="de" name="Produktivität"/>
+                    <nls description="Productivity aid" languageCode="en" name="Productivity"/>
+                    <nls description="Ayuda de productividad" languageCode="es" name="Productividad"/>
+                    <nls description="Tuottavuusapu" languageCode="fi" name="Tuottavuus"/>
+                    <nls description="Aide à la productivité" languageCode="fr" name="Productivité"/>
+                    <nls description="Produktivitási segédlet" languageCode="hu" name="Produktivitás"/>
+                    <nls description="Bonus di produttività" languageCode="it" name="Produttività"/>
+                    <nls description="生産性向上支援" languageCode="ja" name="生産性"/>
+                    <nls description="[ko: Productivity aid]" languageCode="ko" name="[ko: Productivity]"/>
+                    <nls description="Productiviteitshulp" languageCode="nl" name="Productiviteit"/>
+                    <nls description="Produktivitetsbistand" languageCode="no" name="Produktivitet"/>
+                    <nls description="Wspomaganie produktywności" languageCode="pl" name="Produktywność"/>
+                    <nls description="Auxílio produtivo" languageCode="pt" name="Produtividade"/>
+                    <nls description="Поддержка производительности" languageCode="ru" name="Производительность"/>
+                    <nls description="Produktivitetshjälp" languageCode="sv" name="Produktivitet"/>
+                    <nls description="Üretkenlik yardımı" languageCode="tr" name="Üretkenlik"/>
+                    <nls description="生产力援助" languageCode="zh" name="生产力"/>
+                    <nls description="生產力輔助" languageCode="zh_TW" name="生產力"/>
+                </lookupValue>
+                <lookupValue code="PROJECT" enum="0" sortOrder="0" status="active">
+                    <nls description="Projecte" languageCode="ca" name="Projecte"/>
+                    <nls description="Projekt" languageCode="cs" name="Projekt"/>
+                    <nls description="Projekt" languageCode="da" name="Projekt"/>
+                    <nls description="Projekt" languageCode="de" name="Projekt"/>
+                    <nls description="Project" languageCode="en" name="Project"/>
+                    <nls description="Proyecto" languageCode="es" name="Proyecto"/>
+                    <nls description="Projekti" languageCode="fi" name="Projekti"/>
+                    <nls description="Projet" languageCode="fr" name="Projet"/>
+                    <nls description="Projekt" languageCode="hu" name="Projekt"/>
+                    <nls description="Progetto" languageCode="it" name="Progetto"/>
+                    <nls description="プロジェクト" languageCode="ja" name="プロジェクト"/>
+                    <nls description="[ko: Project]" languageCode="ko" name="[ko: Project]"/>
+                    <nls description="Project" languageCode="nl" name="Project"/>
+                    <nls description="Prosjekt" languageCode="no" name="Prosjekt"/>
+                    <nls description="Projekt" languageCode="pl" name="Projekt"/>
+                    <nls description="Projeto" languageCode="pt" name="Projeto"/>
+                    <nls description="Проект" languageCode="ru" name="Проект"/>
+                    <nls description="Projekt" languageCode="sv" name="Projekt"/>
+                    <nls description="Proje" languageCode="tr" name="Proje"/>
+                    <nls description="项目" languageCode="zh" name="项目"/>
+                    <nls description="專案" languageCode="zh_TW" name="專案"/>
+                </lookupValue>
+                <lookupValue code="RESOURCE" enum="0" sortOrder="0" status="active">
+                    <nls description="Recurs" languageCode="ca" name="Recurs"/>
+                    <nls description="Zdroj" languageCode="cs" name="Zdroj"/>
+                    <nls description="Ressource" languageCode="da" name="Ressource"/>
+                    <nls description="Ressource" languageCode="de" name="Ressource"/>
+                    <nls description="Resource" languageCode="en" name="Resource"/>
+                    <nls description="Recurso" languageCode="es" name="Recurso"/>
+                    <nls description="Resurssi" languageCode="fi" name="Resurssi"/>
+                    <nls description="Ressource" languageCode="fr" name="Ressource"/>
+                    <nls description="Erőforrás" languageCode="hu" name="Erőforrás"/>
+                    <nls description="Risorsa" languageCode="it" name="Risorsa"/>
+                    <nls description="リソース" languageCode="ja" name="リソース"/>
+                    <nls description="[ko: Resource]" languageCode="ko" name="[ko: Resource]"/>
+                    <nls description="Resource" languageCode="nl" name="Resource"/>
+                    <nls description="Ressurs" languageCode="no" name="Ressurs"/>
+                    <nls description="Zasób" languageCode="pl" name="Zasób"/>
+                    <nls description="Recurso" languageCode="pt" name="Recurso"/>
+                    <nls description="Ресурс" languageCode="ru" name="Ресурс"/>
+                    <nls description="Resurs" languageCode="sv" name="Resurs"/>
+                    <nls description="Kaynak" languageCode="tr" name="Kaynak"/>
+                    <nls description="资源" languageCode="zh" name="资源"/>
+                    <nls description="資源" languageCode="zh_TW" name="資源"/>
+                </lookupValue>
+                <displayedSuggestionAttributes>
+                    <displayedSuggestionAttribute value="name"/>
+                </displayedSuggestionAttributes>
+                <searchedSuggestionAttributes>
+                    <searchedSuggestionAttribute value="name"/>
+                </searchedSuggestionAttributes>
+            </staticLookup>
+        </lookups>
+        <partitionModels>
+            <partitionModel code="partitionModel1" isActive="true">
+                <nls description="Organization" languageCode="ca" name="Organization"/>
+                <nls description="Organization" languageCode="cs" name="Organization"/>
+                <nls description="Organization" languageCode="da" name="Organization"/>
+                <nls description="Organization" languageCode="de" name="Organization"/>
+                <nls description="Organization" languageCode="en" name="Organization"/>
+                <nls description="Organization" languageCode="es" name="Organization"/>
+                <nls description="Organization" languageCode="fi" name="Organization"/>
+                <nls description="Organization" languageCode="fr" name="Organization"/>
+                <nls description="Organization" languageCode="hu" name="Organization"/>
+                <nls description="Organization" languageCode="it" name="Organization"/>
+                <nls description="Organization" languageCode="ja" name="Organization"/>
+                <nls description="Organization" languageCode="ko" name="Organization"/>
+                <nls description="Organization" languageCode="nl" name="Organization"/>
+                <nls description="Organization" languageCode="no" name="Organization"/>
+                <nls description="Organization" languageCode="pl" name="Organization"/>
+                <nls description="Organization" languageCode="pt" name="Organization"/>
+                <nls description="Organization" languageCode="ru" name="Organization"/>
+                <nls description="Organization" languageCode="sv" name="Organization"/>
+                <nls description="Organization" languageCode="tr" name="Organization"/>
+                <nls description="Organization" languageCode="zh" name="Organization"/>
+                <nls description="Organization" languageCode="zh_TW" name="Organization"/>
+                <partition code="partition1" isActive="true" uiThemeCode="strat_ui">
+                    <nls description="All Organizations" languageCode="ca" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="cs" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="da" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="de" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="en" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="es" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="fi" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="fr" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="hu" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="it" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="ja" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="ko" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="nl" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="no" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="pl" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="pt" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="ru" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="sv" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="tr" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="zh" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="zh_TW" name="All Organizations"/>
+                    <partitionMembers>
+                        <groupMember groupCode="roleAdministrator"/>
+                    </partitionMembers>
+                    <partition code="partition20" isActive="true" uiThemeCode="strat_ui">
+                        <nls description="NPD" languageCode="ca" name="NPD"/>
+                        <nls description="NPD" languageCode="cs" name="NPD"/>
+                        <nls description="NPD" languageCode="da" name="NPD"/>
+                        <nls description="NPD" languageCode="de" name="NPD"/>
+                        <nls description="NPD" languageCode="en" name="NPD"/>
+                        <nls description="NPD" languageCode="es" name="NPD"/>
+                        <nls description="NPD" languageCode="fi" name="NPD"/>
+                        <nls description="NPD" languageCode="fr" name="NPD"/>
+                        <nls description="NPD" languageCode="hu" name="NPD"/>
+                        <nls description="NPD" languageCode="it" name="NPD"/>
+                        <nls description="NPD" languageCode="ja" name="NPD"/>
+                        <nls description="NPD" languageCode="ko" name="NPD"/>
+                        <nls description="NPD" languageCode="nl" name="NPD"/>
+                        <nls description="NPD" languageCode="no" name="NPD"/>
+                        <nls description="NPD" languageCode="pl" name="NPD"/>
+                        <nls description="NPD" languageCode="pt" name="NPD"/>
+                        <nls description="NPD" languageCode="ru" name="NPD"/>
+                        <nls description="NPD" languageCode="sv" name="NPD"/>
+                        <nls description="NPD" languageCode="tr" name="NPD"/>
+                        <nls description="NPD" languageCode="zh" name="NPD"/>
+                        <nls description="NPD" languageCode="zh_TW" name="NPD"/>
+                        <partitionMembers>
+                            <groupMember groupCode="partitionNPD"/>
+                        </partitionMembers>
+                        <partition code="partition21" isActive="true" uiThemeCode="strat_ui">
+                            <nls description="Business Transformation" languageCode="ca" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="cs" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="da" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="de" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="en" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="es" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="fi" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="fr" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="hu" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="it" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="ja" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="ko" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="nl" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="no" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="pl" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="pt" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="ru" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="sv" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="tr" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="zh" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="zh_TW" name="Business Transformation"/>
+                            <partitionMembers>
+                                <groupMember groupCode="partitionBT"/>
+                            </partitionMembers>
+                        </partition>
+                    </partition>
+                    <partition code="partition10" isActive="true" uiThemeCode="strat_ui">
+                        <nls description="Information Technology" languageCode="ca" name="IT"/>
+                        <nls description="Information Technology" languageCode="cs" name="IT"/>
+                        <nls description="Information Technology" languageCode="da" name="IT"/>
+                        <nls description="Information Technology" languageCode="de" name="IT"/>
+                        <nls description="Information Technology" languageCode="en" name="IT"/>
+                        <nls description="Information Technology" languageCode="es" name="IT"/>
+                        <nls description="Information Technology" languageCode="fi" name="IT"/>
+                        <nls description="Information Technology" languageCode="fr" name="IT"/>
+                        <nls description="Information Technology" languageCode="hu" name="IT"/>
+                        <nls description="Information Technology" languageCode="it" name="IT"/>
+                        <nls description="Information Technology" languageCode="ja" name="IT"/>
+                        <nls description="Information Technology" languageCode="ko" name="IT"/>
+                        <nls description="Information Technology" languageCode="nl" name="IT"/>
+                        <nls description="Information Technology" languageCode="no" name="IT"/>
+                        <nls description="Information Technology" languageCode="pl" name="IT"/>
+                        <nls description="Information Technology" languageCode="pt" name="IT"/>
+                        <nls description="Information Technology" languageCode="ru" name="IT"/>
+                        <nls description="Information Technology" languageCode="sv" name="IT"/>
+                        <nls description="Information Technology" languageCode="tr" name="IT"/>
+                        <nls description="Information Technology" languageCode="zh" name="IT"/>
+                        <nls description="Information Technology" languageCode="zh_TW" name="IT"/>
+                        <partitionMembers>
+                            <groupMember groupCode="partitionIT"/>
+                        </partitionMembers>
+                        <partition code="partition11" isActive="true" uiThemeCode="strat_ui">
+                            <nls description="SAFe" languageCode="ca" name="SAFe"/>
+                            <nls description="SAFe" languageCode="cs" name="SAFe"/>
+                            <nls description="SAFe" languageCode="da" name="SAFe"/>
+                            <nls description="SAFe" languageCode="de" name="SAFe"/>
+                            <nls description="SAFe" languageCode="en" name="SAFe"/>
+                            <nls description="SAFe" languageCode="es" name="SAFe"/>
+                            <nls description="SAFe" languageCode="fi" name="SAFe"/>
+                            <nls description="SAFe" languageCode="fr" name="SAFe"/>
+                            <nls description="SAFe" languageCode="hu" name="SAFe"/>
+                            <nls description="SAFe" languageCode="it" name="SAFe"/>
+                            <nls description="SAFe" languageCode="ja" name="SAFe"/>
+                            <nls description="SAFe" languageCode="ko" name="SAFe"/>
+                            <nls description="SAFe" languageCode="nl" name="SAFe"/>
+                            <nls description="SAFe" languageCode="no" name="SAFe"/>
+                            <nls description="SAFe" languageCode="pl" name="SAFe"/>
+                            <nls description="SAFe" languageCode="pt" name="SAFe"/>
+                            <nls description="SAFe" languageCode="ru" name="SAFe"/>
+                            <nls description="SAFe" languageCode="sv" name="SAFe"/>
+                            <nls description="SAFe" languageCode="tr" name="SAFe"/>
+                            <nls description="SAFe" languageCode="zh" name="SAFe"/>
+                            <nls description="SAFe" languageCode="zh_TW" name="SAFe"/>
+                            <partitionMembers>
+                                <groupMember groupCode="partitionSAFe"/>
+                            </partitionMembers>
+                        </partition>
+                        <partition code="partition12" isActive="true" uiThemeCode="strat_ui">
+                            <nls description="Agile" languageCode="ca" name="Agile"/>
+                            <nls description="Agile" languageCode="cs" name="Agile"/>
+                            <nls description="Agile" languageCode="da" name="Agile"/>
+                            <nls description="Agile" languageCode="de" name="Agile"/>
+                            <nls description="Agile" languageCode="en" name="Agile"/>
+                            <nls description="Agile" languageCode="es" name="Agile"/>
+                            <nls description="Agile" languageCode="fi" name="Agile"/>
+                            <nls description="Agile" languageCode="fr" name="Agile"/>
+                            <nls description="Agile" languageCode="hu" name="Agile"/>
+                            <nls description="Agile" languageCode="it" name="Agile"/>
+                            <nls description="Agile" languageCode="ja" name="Agile"/>
+                            <nls description="Agile" languageCode="ko" name="Agile"/>
+                            <nls description="Agile" languageCode="nl" name="Agile"/>
+                            <nls description="Agile" languageCode="no" name="Agile"/>
+                            <nls description="Agile" languageCode="pl" name="Agile"/>
+                            <nls description="Agile" languageCode="pt" name="Agile"/>
+                            <nls description="Agile" languageCode="ru" name="Agile"/>
+                            <nls description="Agile" languageCode="sv" name="Agile"/>
+                            <nls description="Agile" languageCode="tr" name="Agile"/>
+                            <nls description="Agile" languageCode="zh" name="Agile"/>
+                            <nls description="Agile" languageCode="zh_TW" name="Agile"/>
+                            <partitionMembers>
+                                <groupMember groupCode="partitionAgile"/>
+                            </partitionMembers>
+                        </partition>
+                    </partition>
+                    <partition code="partition30" isActive="true" uiThemeCode="strat_ui">
+                        <nls description="Professional Services" languageCode="ca" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="cs" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="da" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="de" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="en" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="es" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="fi" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="fr" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="hu" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="it" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="ja" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="ko" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="nl" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="no" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="pl" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="pt" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="ru" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="sv" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="tr" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="zh" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="zh_TW" name="Professional Services"/>
+                        <partitionMembers>
+                            <groupMember groupCode="partitionPS"/>
+                        </partitionMembers>
+                    </partition>
+                    <partition code="partition40" isActive="false" uiThemeCode="strat_ui">
+                        <nls description="Business Transformation" languageCode="ca" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="cs" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="da" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="de" name="Business Transformation"/>
+                        <nls description="TBD" languageCode="en" name="TBD"/>
+                        <nls description="Business Transformation" languageCode="es" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="fi" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="fr" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="hu" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="it" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="ja" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="ko" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="nl" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="no" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="pl" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="pt" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="ru" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="sv" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="tr" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="zh" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="zh_TW" name="Business Transformation"/>
+                        <partitionMembers>
+                            <resourceMember userName="admin"/>
+                        </partitionMembers>
+                    </partition>
+                    <partition code="todo" isActive="true" uiThemeCode="strat_ui">
+                        <nls languageCode="ca" name="ToDo"/>
+                        <nls languageCode="cs" name="ToDo"/>
+                        <nls languageCode="da" name="ToDo"/>
+                        <nls languageCode="de" name="ToDo"/>
+                        <nls description="To Do" languageCode="en" name="To Do"/>
+                        <nls languageCode="es" name="ToDo"/>
+                        <nls languageCode="fi" name="ToDo"/>
+                        <nls languageCode="fr" name="ToDo"/>
+                        <nls languageCode="hu" name="ToDo"/>
+                        <nls languageCode="it" name="ToDo"/>
+                        <nls languageCode="ja" name="ToDo"/>
+                        <nls languageCode="ko" name="ToDo"/>
+                        <nls languageCode="nl" name="ToDo"/>
+                        <nls languageCode="no" name="ToDo"/>
+                        <nls languageCode="pl" name="ToDo"/>
+                        <nls languageCode="pt" name="ToDo"/>
+                        <nls languageCode="ru" name="ToDo"/>
+                        <nls languageCode="sv" name="ToDo"/>
+                        <nls languageCode="tr" name="ToDo"/>
+                        <nls languageCode="zh" name="ToDo"/>
+                        <nls languageCode="zh_TW" name="ToDo"/>
+                        <partitionMembers>
+                            <groupMember groupCode="SystemAdminRl"/>
+                        </partitionMembers>
+                    </partition>
+                </partition>
+            </partitionModel>
+        </partitionModels>
+    </contentPack>
+</NikuDataBus>

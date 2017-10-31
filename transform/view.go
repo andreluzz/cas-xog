@@ -207,6 +207,15 @@ func processSectionByType(section common.ViewSection, sourceView, targetView *et
 	return nil
 }
 
+func validateCodeAndRemoveElementsFromParent(xog *etree.Document, path, code string) {
+	for _, e := range xog.FindElements(path) {
+		elementCode := e.SelectAttrValue("code", "")
+		if elementCode != code {
+			e.Parent().RemoveChild(e)
+		}
+	}
+}
+
 func updatePropertySet(xog, aux *etree.Document, file common.DriverFile) {
 	sourcePropertySetView := xog.FindElement("//propertySet/update/view[@code='" + file.Code + "']")
 	if sourcePropertySetView != nil {

@@ -1,0 +1,1259 @@
+<NikuDataBus>
+    <Header action="write" externalSource="NIKU" objectType="contentPack" version="15.2.0.213"/>
+    <contentPack update="true">
+        <portlets update="true">
+            <graphPortlet allowConfigure="true" allowConfigureLabel="true" category="PRODUCTIVITY" code="apm.appByQuadrant" dataProviderId="apm.appByQuadrant" dataProviderPartitionId="NIKU.ROOT" dataProviderType="nsql" datapointLabels="percent" firstSliceAngle="0" forceFilter="false" link="applicationDrillDown" mouseoverLabels="labelvalue" objectType="SYSTEM" querySource="customer" showLegend="false" showLineMarkers="true" showLines="true" showSubtitle="false" showTitle="false" size="small" sortColumn="sort" source="customer" stacked="false" type="BAR">
+                <nls description="Applications by Quadrant" languageCode="de" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="no" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="fi" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="ru" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="sv" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="ko" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="pt" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="en" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="it" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="fr" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="hu" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="es" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="zh" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="cs" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="zh_TW" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="ja" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="pl" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="da" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="ca" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="nl" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="tr" name="Applications by Quadrant"/>
+                <xAxis decimalPlaces="0" displayUnits="none" labelType="automatic" logarithmic="false" majorTickMark="none" minValue="0" minorTickMark="none" reverse="false" showAxis="true" showMajorGridlines="true" showMinorGridlines="false" showSeparator="false" showTickLabels="true" tickLabelAngle="0" zoned="false"/>
+                <yAxis decimalPlaces="0" displayUnits="none" labelType="none" logarithmic="false" majorTickMark="outside" minorTickMark="none" reverse="false" showAxis="true" showMajorGridlines="false" showMinorGridlines="false" showSeparator="false" showTickLabels="true" tickLabelAngle="0" zoned="false"/>
+                <metric code="app_count" location="xAxis" seriesType="BAR">
+                    <nls languageCode="de" name="Count"/>
+                    <nls languageCode="no" name="Count"/>
+                    <nls languageCode="fi" name="Count"/>
+                    <nls languageCode="ru" name="Count"/>
+                    <nls languageCode="sv" name="Count"/>
+                    <nls languageCode="ko" name="Count"/>
+                    <nls languageCode="pt" name="Count"/>
+                    <nls languageCode="en" name="Count"/>
+                    <nls languageCode="it" name="Count"/>
+                    <nls languageCode="fr" name="Count"/>
+                    <nls languageCode="hu" name="Count"/>
+                    <nls languageCode="es" name="Count"/>
+                    <nls languageCode="zh" name="Count"/>
+                    <nls languageCode="cs" name="Count"/>
+                    <nls languageCode="zh_TW" name="Count"/>
+                    <nls languageCode="ja" name="Count"/>
+                    <nls languageCode="pl" name="Count"/>
+                    <nls languageCode="da" name="Count"/>
+                    <nls languageCode="ca" name="Número"/>
+                    <nls languageCode="nl" name="Count"/>
+                    <nls languageCode="tr" name="Count"/>
+                </metric>
+                <labels>
+                    <datapoint decimalPlaces="0" displayUnits="none" showSeparator="false" showValueSeparator="false" valueDecimalPlaces="0"/>
+                    <mouseover code="label" decimalPlaces="0" displayUnits="none" position="bottom" showSeparator="false" showValueSeparator="false" valueDecimalPlaces="0"/>
+                    <legend code="label" decimalPlaces="0" displayUnits="none" showSeparator="false" showValueSeparator="false" valueDecimalPlaces="0"/>
+                    <categoryAxis code="label" decimalPlaces="0" displayUnits="none" showSeparator="false" showValueSeparator="false" valueDecimalPlaces="0"/>
+                </labels>
+                <OBSAssocs complete="false"/>
+                <Security/>
+                <filter code="apm.appByQuadrant" componentCode="odf" dataProviderId="apm.appByQuadrant" dataProviderType="nsql" objectCode="apm.appByQuadrant" partitionCode="NIKU.ROOT">
+                    <section collapsed="true" currentState="collapsed" filterByExpression="false">
+                        <nls languageCode="ca" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="cs" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="da" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="de" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="en" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="es" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="fi" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="fr" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="hu" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="it" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="ja" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="ko" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="nl" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="no" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="pl" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="pt" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="ru" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="sv" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="tr" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="zh" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="zh_TW" name="Applications by Quadrant Filter"/>
+                    </section>
+                    <defaultDisplay>
+                        <viewFieldDescriptor active="true" aggregate="false" attributeCode="app_count" dataSize="30" decimals="0" extType="double" fixedWidget="false" hidden="false" isMVLookup="false" multiValued="false" notEqualXPath="false" numRows="0" readOnly="false" required="false" virtual="false" widgetType="numeric">
+                            <nls languageCode="ca" name="Número"/>
+                            <nls languageCode="cs" name="Count"/>
+                            <nls languageCode="da" name="Count"/>
+                            <nls languageCode="de" name="Count"/>
+                            <nls languageCode="en" name="Count"/>
+                            <nls languageCode="es" name="Count"/>
+                            <nls languageCode="fi" name="Count"/>
+                            <nls languageCode="fr" name="Count"/>
+                            <nls languageCode="hu" name="Count"/>
+                            <nls languageCode="it" name="Count"/>
+                            <nls languageCode="ja" name="Count"/>
+                            <nls languageCode="ko" name="Count"/>
+                            <nls languageCode="nl" name="Count"/>
+                            <nls languageCode="no" name="Count"/>
+                            <nls languageCode="pl" name="Count"/>
+                            <nls languageCode="pt" name="Count"/>
+                            <nls languageCode="ru" name="Count"/>
+                            <nls languageCode="sv" name="Count"/>
+                            <nls languageCode="tr" name="Count"/>
+                            <nls languageCode="zh" name="Count"/>
+                            <nls languageCode="zh_TW" name="Count"/>
+                        </viewFieldDescriptor>
+                        <viewFieldDescriptor active="true" aggregate="false" attributeCode="code" dataSize="200" decimals="0" fixedWidget="false" hidden="false" isMVLookup="false" multiValued="false" notEqualXPath="false" numRows="0" readOnly="false" required="false" virtual="false" widgetType="text" width="30">
+                            <nls languageCode="ca" name="Codi"/>
+                            <nls languageCode="cs" name="Code"/>
+                            <nls languageCode="da" name="Code"/>
+                            <nls languageCode="de" name="Code"/>
+                            <nls languageCode="en" name="Code"/>
+                            <nls languageCode="es" name="Code"/>
+                            <nls languageCode="fi" name="Code"/>
+                            <nls languageCode="fr" name="Code"/>
+                            <nls languageCode="hu" name="Code"/>
+                            <nls languageCode="it" name="Code"/>
+                            <nls languageCode="ja" name="Code"/>
+                            <nls languageCode="ko" name="Code"/>
+                            <nls languageCode="nl" name="Code"/>
+                            <nls languageCode="no" name="Code"/>
+                            <nls languageCode="pl" name="Code"/>
+                            <nls languageCode="pt" name="Code"/>
+                            <nls languageCode="ru" name="Code"/>
+                            <nls languageCode="sv" name="Code"/>
+                            <nls languageCode="tr" name="Code"/>
+                            <nls languageCode="zh" name="Code"/>
+                            <nls languageCode="zh_TW" name="Code"/>
+                        </viewFieldDescriptor>
+                        <viewFieldDescriptor active="true" aggregate="false" attributeCode="label" dataSize="200" decimals="0" fixedWidget="false" hidden="false" isMVLookup="false" multiValued="false" notEqualXPath="false" numRows="0" readOnly="false" required="false" virtual="false" widgetType="text" width="30">
+                            <nls languageCode="ca" name="Label"/>
+                            <nls languageCode="cs" name="Label"/>
+                            <nls languageCode="da" name="Label"/>
+                            <nls languageCode="de" name="Label"/>
+                            <nls languageCode="en" name="Label"/>
+                            <nls languageCode="es" name="Label"/>
+                            <nls languageCode="fi" name="Label"/>
+                            <nls languageCode="fr" name="Label"/>
+                            <nls languageCode="hu" name="Label"/>
+                            <nls languageCode="it" name="Label"/>
+                            <nls languageCode="ja" name="Label"/>
+                            <nls languageCode="ko" name="Label"/>
+                            <nls languageCode="nl" name="Label"/>
+                            <nls languageCode="no" name="Label"/>
+                            <nls languageCode="pl" name="Label"/>
+                            <nls languageCode="pt" name="Label"/>
+                            <nls languageCode="ru" name="Label"/>
+                            <nls languageCode="sv" name="Label"/>
+                            <nls languageCode="tr" name="Label"/>
+                            <nls languageCode="zh" name="Label"/>
+                            <nls languageCode="zh_TW" name="Label"/>
+                        </viewFieldDescriptor>
+                        <viewFieldDescriptor active="true" aggregate="false" attributeCode="param_install_type" dataSize="30" decimals="0" extType="enum" fixedWidget="false" hidden="false" isMVLookup="false" lookupType="APM_INSTALLATION_TYPE" multiValued="false" notEqualXPath="false" numRows="0" readOnly="false" required="false" virtual="false" widgetType="browse" width="30">
+                            <nls languageCode="ca" name="param_install_type"/>
+                            <nls languageCode="cs" name="param_install_type"/>
+                            <nls languageCode="da" name="param_install_type"/>
+                            <nls languageCode="de" name="param_install_type"/>
+                            <nls languageCode="en" name="param_install_type"/>
+                            <nls languageCode="es" name="param_install_type"/>
+                            <nls languageCode="fi" name="param_install_type"/>
+                            <nls languageCode="fr" name="param_install_type"/>
+                            <nls languageCode="hu" name="param_install_type"/>
+                            <nls languageCode="it" name="param_install_type"/>
+                            <nls languageCode="ja" name="param_install_type"/>
+                            <nls languageCode="ko" name="param_install_type"/>
+                            <nls languageCode="nl" name="param_install_type"/>
+                            <nls languageCode="no" name="param_install_type"/>
+                            <nls languageCode="pl" name="param_install_type"/>
+                            <nls languageCode="pt" name="param_install_type"/>
+                            <nls languageCode="ru" name="param_install_type"/>
+                            <nls languageCode="sv" name="param_install_type"/>
+                            <nls languageCode="tr" name="param_install_type"/>
+                            <nls languageCode="zh" name="param_install_type"/>
+                            <nls languageCode="zh_TW" name="param_install_type"/>
+                            <autoSuggest enabled="true" maxSuggestions="10"/>
+                        </viewFieldDescriptor>
+                        <viewFieldDescriptor active="true" aggregate="false" attributeCode="param_vendor" dataSize="30" decimals="0" extType="enum" fixedWidget="false" hidden="false" isMVLookup="false" lookupType="LOOKUP_COMPANIES" multiValued="false" notEqualXPath="false" numRows="0" readOnly="false" required="false" virtual="false" widgetType="browse">
+                            <nls languageCode="ca" name="param_vendor"/>
+                            <nls languageCode="cs" name="param_vendor"/>
+                            <nls languageCode="da" name="param_vendor"/>
+                            <nls languageCode="de" name="param_vendor"/>
+                            <nls languageCode="en" name="param_vendor"/>
+                            <nls languageCode="es" name="param_vendor"/>
+                            <nls languageCode="fi" name="param_vendor"/>
+                            <nls languageCode="fr" name="param_vendor"/>
+                            <nls languageCode="hu" name="param_vendor"/>
+                            <nls languageCode="it" name="param_vendor"/>
+                            <nls languageCode="ja" name="param_vendor"/>
+                            <nls languageCode="ko" name="param_vendor"/>
+                            <nls languageCode="nl" name="param_vendor"/>
+                            <nls languageCode="no" name="param_vendor"/>
+                            <nls languageCode="pl" name="param_vendor"/>
+                            <nls languageCode="pt" name="param_vendor"/>
+                            <nls languageCode="ru" name="param_vendor"/>
+                            <nls languageCode="sv" name="param_vendor"/>
+                            <nls languageCode="tr" name="param_vendor"/>
+                            <nls languageCode="zh" name="param_vendor"/>
+                            <nls languageCode="zh_TW" name="param_vendor"/>
+                            <autoSuggest enabled="true" maxSuggestions="10"/>
+                        </viewFieldDescriptor>
+                        <viewFieldDescriptor active="true" aggregate="false" attributeCode="sort" dataSize="30" decimals="0" extType="double" fixedWidget="false" hidden="false" isMVLookup="false" multiValued="false" notEqualXPath="false" numRows="0" readOnly="false" required="false" virtual="false" widgetType="numeric">
+                            <nls languageCode="ca" name="Sort"/>
+                            <nls languageCode="cs" name="Sort"/>
+                            <nls languageCode="da" name="Sort"/>
+                            <nls languageCode="de" name="Sort"/>
+                            <nls languageCode="en" name="Sort"/>
+                            <nls languageCode="es" name="Sort"/>
+                            <nls languageCode="fi" name="Sort"/>
+                            <nls languageCode="fr" name="Sort"/>
+                            <nls languageCode="hu" name="Sort"/>
+                            <nls languageCode="it" name="Sort"/>
+                            <nls languageCode="ja" name="Sort"/>
+                            <nls languageCode="ko" name="Sort"/>
+                            <nls languageCode="nl" name="Sort"/>
+                            <nls languageCode="no" name="Sort"/>
+                            <nls languageCode="pl" name="Sort"/>
+                            <nls languageCode="pt" name="Sort"/>
+                            <nls languageCode="ru" name="Sort"/>
+                            <nls languageCode="sv" name="Sort"/>
+                            <nls languageCode="tr" name="Sort"/>
+                            <nls languageCode="zh" name="Sort"/>
+                            <nls languageCode="zh_TW" name="Sort"/>
+                        </viewFieldDescriptor>
+                        <viewFieldDescriptor active="true" aggregate="false" attributeCode="param_category_filter" dataSize="20" decimals="0" extType="enum" fixedWidget="false" hidden="false" isMVLookup="false" lookupType="INV_APPLICATION_CATEGORY_TYPE" multiValued="false" notEqualXPath="false" numRows="0" readOnly="false" required="false" virtual="false" widgetType="text" width="20">
+                            <nls languageCode="ca" name="param_category_filter"/>
+                            <nls languageCode="cs" name="param_category_filter"/>
+                            <nls languageCode="da" name="param_category_filter"/>
+                            <nls languageCode="de" name="param_category_filter"/>
+                            <nls languageCode="en" name="param_category_filter"/>
+                            <nls languageCode="es" name="param_category_filter"/>
+                            <nls languageCode="fi" name="param_category_filter"/>
+                            <nls languageCode="fr" name="param_category_filter"/>
+                            <nls languageCode="hu" name="param_category_filter"/>
+                            <nls languageCode="it" name="param_category_filter"/>
+                            <nls languageCode="ja" name="param_category_filter"/>
+                            <nls languageCode="ko" name="param_category_filter"/>
+                            <nls languageCode="nl" name="param_category_filter"/>
+                            <nls languageCode="no" name="param_category_filter"/>
+                            <nls languageCode="pl" name="param_category_filter"/>
+                            <nls languageCode="pt" name="param_category_filter"/>
+                            <nls languageCode="ru" name="param_category_filter"/>
+                            <nls languageCode="sv" name="param_category_filter"/>
+                            <nls languageCode="tr" name="param_category_filter"/>
+                            <nls languageCode="zh" name="param_category_filter"/>
+                            <nls languageCode="zh_TW" name="param_category_filter"/>
+                            <autoSuggest enabled="true" maxSuggestions="10"/>
+                        </viewFieldDescriptor>
+                    </defaultDisplay>
+                </filter>
+            </graphPortlet>
+        </portlets>
+        <queries update="true">
+            <query category="PRODUCTIVITY" code="apm.appByQuadrant" isUserPortletAvailable="1" source="customer">
+                <nls description="apm.appByQuadrant" languageCode="ca" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="cs" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="da" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="de" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="en" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="es" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="fi" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="fr" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="hu" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="it" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="ja" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="ko" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="nl" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="no" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="pl" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="pt" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="ru" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="sv" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="tr" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="zh" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="zh_TW" name="Applications by Quadrant"/>
+                <nsql dbId="Niku" dbVendor="all">SELECT  @SELECT:DIM:USER_DEF:IMPLIED:APPLICATION:b.sort:sort@,
+                    @SELECT:DIM_PROP:USER_DEF:IMPLIED:APPLICATION:b.label:label@,
+                    @SELECT:DIM_PROP:USER_DEF:IMPLIED:APPLICATION:b.app_count:app_count@,
+                    @SELECT:DIM_PROP:USER_DEF:IMPLIED:APPLICATION:b.code:code@
+                    FROM (
+                    SELECT count(DISTINCT inv.id) app_count, &apos;Good Fit&apos; label, 1 sort, &apos;Q1&apos; code
+                    FROM INV_INVESTMENTS inv
+                    INNER JOIN ODF_APPLICATION_V2 a on inv.id = a.odf_pk
+                    WHERE a.apm_business_score &gt;= 50 AND a.apm_technology_score &gt;= 50
+                    AND (@WHERE:PARAM:USER_DEF:STRING:install_type@ IS NULL OR @WHERE:PARAM:USER_DEF:STRING:install_type@ = a.apm_install_type)
+                    AND (@WHERE:PARAM:USER_DEF:INTEGER:vendor@ IS NULL OR @WHERE:PARAM:USER_DEF:INTEGER:vendor@ = a.apm_vendor)
+                    AND (@WHERE:PARAM:USER_DEF:STRING:category_filter@ IS NULL OR @WHERE:PARAM:USER_DEF:STRING:category_filter@ = a.category_code)
+                    UNION
+                    SELECT count(DISTINCT inv.id), &apos;Poor Technology Score&apos; label, 2 sort, &apos;Q4&apos; code
+                    FROM INV_INVESTMENTS inv
+                    INNER JOIN ODF_APPLICATION_V2 a on inv.id = a.odf_pk
+                    WHERE a.apm_business_score &gt;= 50 AND a.apm_technology_score &lt; 50
+                    AND (@WHERE:PARAM:USER_DEF:STRING:install_type@ IS NULL OR @WHERE:PARAM:USER_DEF:STRING:install_type@ = a.apm_install_type)
+                    AND (@WHERE:PARAM:USER_DEF:INTEGER:vendor@ IS NULL OR @WHERE:PARAM:USER_DEF:INTEGER:vendor@ = a.apm_vendor)
+                    AND (@WHERE:PARAM:USER_DEF:STRING:category_filter@ IS NULL OR @WHERE:PARAM:USER_DEF:STRING:category_filter@ = a.category_code)
+                    UNION
+                    SELECT count(DISTINCT inv.id), &apos;Poor Business Value&apos; label, 3 sort, &apos;Q2&apos; code
+                    FROM INV_INVESTMENTS inv
+                    INNER JOIN ODF_APPLICATION_V2 a on inv.id = a.odf_pk
+                    WHERE a.apm_business_score &lt; 50 AND a.apm_technology_score &gt;= 50
+                    AND (@WHERE:PARAM:USER_DEF:STRING:install_type@ IS NULL OR @WHERE:PARAM:USER_DEF:STRING:install_type@ = a.apm_install_type)
+                    AND (@WHERE:PARAM:USER_DEF:INTEGER:vendor@ IS NULL OR @WHERE:PARAM:USER_DEF:INTEGER:vendor@ = a.apm_vendor)
+                    AND (@WHERE:PARAM:USER_DEF:STRING:category_filter@ IS NULL OR @WHERE:PARAM:USER_DEF:STRING:category_filter@ = a.category_code)
+                    UNION
+                    SELECT count(DISTINCT inv.id), &apos;Poor Fit&apos; label, 4 sort, &apos;Q3&apos; code
+                    FROM INV_INVESTMENTS inv
+                    INNER JOIN ODF_APPLICATION_V2 a on inv.id = a.odf_pk
+                    WHERE a.apm_business_score &lt; 50 AND a.apm_technology_score &lt; 50
+                    AND (@WHERE:PARAM:USER_DEF:STRING:install_type@ IS NULL OR @WHERE:PARAM:USER_DEF:STRING:install_type@ = a.apm_install_type)
+                    AND (@WHERE:PARAM:USER_DEF:INTEGER:vendor@ IS NULL OR @WHERE:PARAM:USER_DEF:INTEGER:vendor@ = a.apm_vendor)
+                    AND (@WHERE:PARAM:USER_DEF:STRING:category_filter@ IS NULL OR @WHERE:PARAM:USER_DEF:STRING:category_filter@ = a.category_code)
+                    ) b
+                    WHERE @FILTER@</nsql>
+                <attribute id="sort" required="false">
+                    <nls languageCode="ca" name="Sort"/>
+                    <nls languageCode="cs" name="Sort"/>
+                    <nls languageCode="da" name="Sort"/>
+                    <nls languageCode="de" name="Sort"/>
+                    <nls languageCode="en" name="Sort"/>
+                    <nls languageCode="es" name="Sort"/>
+                    <nls languageCode="fi" name="Sort"/>
+                    <nls languageCode="fr" name="Sort"/>
+                    <nls languageCode="hu" name="Sort"/>
+                    <nls languageCode="it" name="Sort"/>
+                    <nls languageCode="ja" name="Sort"/>
+                    <nls languageCode="ko" name="Sort"/>
+                    <nls languageCode="nl" name="Sort"/>
+                    <nls languageCode="no" name="Sort"/>
+                    <nls languageCode="pl" name="Sort"/>
+                    <nls languageCode="pt" name="Sort"/>
+                    <nls languageCode="ru" name="Sort"/>
+                    <nls languageCode="sv" name="Sort"/>
+                    <nls languageCode="tr" name="Sort"/>
+                    <nls languageCode="zh" name="Sort"/>
+                    <nls languageCode="zh_TW" name="Sort"/>
+                </attribute>
+                <attribute id="label" required="false">
+                    <nls languageCode="ca" name="Label"/>
+                    <nls languageCode="cs" name="Label"/>
+                    <nls languageCode="da" name="Label"/>
+                    <nls languageCode="de" name="Label"/>
+                    <nls languageCode="en" name="Label"/>
+                    <nls languageCode="es" name="Label"/>
+                    <nls languageCode="fi" name="Label"/>
+                    <nls languageCode="fr" name="Label"/>
+                    <nls languageCode="hu" name="Label"/>
+                    <nls languageCode="it" name="Label"/>
+                    <nls languageCode="ja" name="Label"/>
+                    <nls languageCode="ko" name="Label"/>
+                    <nls languageCode="nl" name="Label"/>
+                    <nls languageCode="no" name="Label"/>
+                    <nls languageCode="pl" name="Label"/>
+                    <nls languageCode="pt" name="Label"/>
+                    <nls languageCode="ru" name="Label"/>
+                    <nls languageCode="sv" name="Label"/>
+                    <nls languageCode="tr" name="Label"/>
+                    <nls languageCode="zh" name="Label"/>
+                    <nls languageCode="zh_TW" name="Label"/>
+                </attribute>
+                <attribute id="app_count" required="false">
+                    <nls languageCode="ca" name="Número"/>
+                    <nls languageCode="cs" name="Count"/>
+                    <nls languageCode="da" name="Count"/>
+                    <nls languageCode="de" name="Count"/>
+                    <nls languageCode="en" name="Count"/>
+                    <nls languageCode="es" name="Count"/>
+                    <nls languageCode="fi" name="Count"/>
+                    <nls languageCode="fr" name="Count"/>
+                    <nls languageCode="hu" name="Count"/>
+                    <nls languageCode="it" name="Count"/>
+                    <nls languageCode="ja" name="Count"/>
+                    <nls languageCode="ko" name="Count"/>
+                    <nls languageCode="nl" name="Count"/>
+                    <nls languageCode="no" name="Count"/>
+                    <nls languageCode="pl" name="Count"/>
+                    <nls languageCode="pt" name="Count"/>
+                    <nls languageCode="ru" name="Count"/>
+                    <nls languageCode="sv" name="Count"/>
+                    <nls languageCode="tr" name="Count"/>
+                    <nls languageCode="zh" name="Count"/>
+                    <nls languageCode="zh_TW" name="Count"/>
+                </attribute>
+                <attribute id="code" required="false">
+                    <nls languageCode="ca" name="Codi"/>
+                    <nls languageCode="cs" name="Code"/>
+                    <nls languageCode="da" name="Code"/>
+                    <nls languageCode="de" name="Code"/>
+                    <nls languageCode="en" name="Code"/>
+                    <nls languageCode="es" name="Code"/>
+                    <nls languageCode="fi" name="Code"/>
+                    <nls languageCode="fr" name="Code"/>
+                    <nls languageCode="hu" name="Code"/>
+                    <nls languageCode="it" name="Code"/>
+                    <nls languageCode="ja" name="Code"/>
+                    <nls languageCode="ko" name="Code"/>
+                    <nls languageCode="nl" name="Code"/>
+                    <nls languageCode="no" name="Code"/>
+                    <nls languageCode="pl" name="Code"/>
+                    <nls languageCode="pt" name="Code"/>
+                    <nls languageCode="ru" name="Code"/>
+                    <nls languageCode="sv" name="Code"/>
+                    <nls languageCode="tr" name="Code"/>
+                    <nls languageCode="zh" name="Code"/>
+                    <nls languageCode="zh_TW" name="Code"/>
+                </attribute>
+                <attribute id="param_vendor" lookup="LOOKUP_COMPANIES" required="false">
+                    <nls languageCode="ca" name="param_vendor"/>
+                    <nls languageCode="cs" name="param_vendor"/>
+                    <nls languageCode="da" name="param_vendor"/>
+                    <nls languageCode="de" name="param_vendor"/>
+                    <nls languageCode="en" name="param_vendor"/>
+                    <nls languageCode="es" name="param_vendor"/>
+                    <nls languageCode="fi" name="param_vendor"/>
+                    <nls languageCode="fr" name="param_vendor"/>
+                    <nls languageCode="hu" name="param_vendor"/>
+                    <nls languageCode="it" name="param_vendor"/>
+                    <nls languageCode="ja" name="param_vendor"/>
+                    <nls languageCode="ko" name="param_vendor"/>
+                    <nls languageCode="nl" name="param_vendor"/>
+                    <nls languageCode="no" name="param_vendor"/>
+                    <nls languageCode="pl" name="param_vendor"/>
+                    <nls languageCode="pt" name="param_vendor"/>
+                    <nls languageCode="ru" name="param_vendor"/>
+                    <nls languageCode="sv" name="param_vendor"/>
+                    <nls languageCode="tr" name="param_vendor"/>
+                    <nls languageCode="zh" name="param_vendor"/>
+                    <nls languageCode="zh_TW" name="param_vendor"/>
+                </attribute>
+                <attribute id="param_category_filter" lookup="INV_APPLICATION_CATEGORY_TYPE" required="false">
+                    <nls languageCode="ca" name="param_category_filter"/>
+                    <nls languageCode="cs" name="param_category_filter"/>
+                    <nls languageCode="da" name="param_category_filter"/>
+                    <nls languageCode="de" name="param_category_filter"/>
+                    <nls languageCode="en" name="param_category_filter"/>
+                    <nls languageCode="es" name="param_category_filter"/>
+                    <nls languageCode="fi" name="param_category_filter"/>
+                    <nls languageCode="fr" name="param_category_filter"/>
+                    <nls languageCode="hu" name="param_category_filter"/>
+                    <nls languageCode="it" name="param_category_filter"/>
+                    <nls languageCode="ja" name="param_category_filter"/>
+                    <nls languageCode="ko" name="param_category_filter"/>
+                    <nls languageCode="nl" name="param_category_filter"/>
+                    <nls languageCode="no" name="param_category_filter"/>
+                    <nls languageCode="pl" name="param_category_filter"/>
+                    <nls languageCode="pt" name="param_category_filter"/>
+                    <nls languageCode="ru" name="param_category_filter"/>
+                    <nls languageCode="sv" name="param_category_filter"/>
+                    <nls languageCode="tr" name="param_category_filter"/>
+                    <nls languageCode="zh" name="param_category_filter"/>
+                    <nls languageCode="zh_TW" name="param_category_filter"/>
+                </attribute>
+                <attribute id="param_install_type" lookup="APM_INSTALLATION_TYPE" required="false">
+                    <nls languageCode="ca" name="param_install_type"/>
+                    <nls languageCode="cs" name="param_install_type"/>
+                    <nls languageCode="da" name="param_install_type"/>
+                    <nls languageCode="de" name="param_install_type"/>
+                    <nls languageCode="en" name="param_install_type"/>
+                    <nls languageCode="es" name="param_install_type"/>
+                    <nls languageCode="fi" name="param_install_type"/>
+                    <nls languageCode="fr" name="param_install_type"/>
+                    <nls languageCode="hu" name="param_install_type"/>
+                    <nls languageCode="it" name="param_install_type"/>
+                    <nls languageCode="ja" name="param_install_type"/>
+                    <nls languageCode="ko" name="param_install_type"/>
+                    <nls languageCode="nl" name="param_install_type"/>
+                    <nls languageCode="no" name="param_install_type"/>
+                    <nls languageCode="pl" name="param_install_type"/>
+                    <nls languageCode="pt" name="param_install_type"/>
+                    <nls languageCode="ru" name="param_install_type"/>
+                    <nls languageCode="sv" name="param_install_type"/>
+                    <nls languageCode="tr" name="param_install_type"/>
+                    <nls languageCode="zh" name="param_install_type"/>
+                    <nls languageCode="zh_TW" name="param_install_type"/>
+                </attribute>
+                <links>
+                    <link action="apm.appByQuadrant" code="applicationDrillDown">
+                        <nls description="Application Drill Down" languageCode="ca" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="cs" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="da" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="de" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="en" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="es" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="fi" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="fr" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="hu" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="it" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="ja" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="ko" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="nl" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="no" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="pl" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="pt" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="ru" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="sv" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="tr" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="zh" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="zh_TW" name="Application Drill Down"/>
+                        <linkParam dataRef="code" dataSource="data" paramCode="code"/>
+                    </link>
+                </links>
+            </query>
+        </queries>
+        <lookups update="true">
+            <dynamicLookup autoSuggestEnabled="true" autoSuggestMaxSuggestions="10" code="LOOKUP_COMPANIES" displayAttributeName="company_name" hiddenAttributeName="id" objectCode="company" sortAttributeName="company_name" sortDirection="asc" source="niku.com" status="active" update="true">
+                <nls description="Llista de companyies actives" languageCode="ca" name="Companyies actives"/>
+                <nls description="Seznam aktivních společností" languageCode="cs" name="Aktivní společnosti"/>
+                <nls description="Liste over aktive virksomheder" languageCode="da" name="Aktive virksomheder"/>
+                <nls description="Liste der aktiven Unternehmen" languageCode="de" name="Aktive Unternehmen"/>
+                <nls description="List of active companies" languageCode="en" name="Active Companies"/>
+                <nls description="Lista de compañías activas" languageCode="es" name="Compañías activas"/>
+                <nls description="Aktiivisten yritysten luettelo" languageCode="fi" name="Aktiiviset yritykset"/>
+                <nls description="Liste des sociétés actives" languageCode="fr" name="Sociétés actives"/>
+                <nls description="Aktív vállalatok listája" languageCode="hu" name="Aktív vállalatok"/>
+                <nls description="Elenco aziende attive" languageCode="it" name="Aziende attive"/>
+                <nls description="アクティブな会社のリスト" languageCode="ja" name="アクティブな会社"/>
+                <nls description="[ko: List of active companies]" languageCode="ko" name="[ko: Active Companies]"/>
+                <nls description="Lijst met actieve ondernemingen" languageCode="nl" name="Actieve bedrijven"/>
+                <nls description="Liste over aktive selskaper" languageCode="no" name="Aktive selskap"/>
+                <nls description="Lista aktywnych firm" languageCode="pl" name="Aktywne przedsiębiorstwa"/>
+                <nls description="Lista de empresas ativas" languageCode="pt" name="Empresas ativas"/>
+                <nls description="Список активных компаний" languageCode="ru" name="Активные компании"/>
+                <nls description="Lista över aktiva företag" languageCode="sv" name="Aktiva företag"/>
+                <nls description="Etkin şirketler listesi" languageCode="tr" name="Etkin Şirketler"/>
+                <nls description="活动公司列表" languageCode="zh" name="活动公司"/>
+                <nls description="使用中公司清單" languageCode="zh_TW" name="使用中公司"/>
+                <nsql databaseId="Niku" dbVendor="all"><![CDATA[SELECT  @SELECT:c.id:id@,
+  @SELECT:c.company_id:company_id@,
+  @SELECT:c.company_id:UNIQUE_CODE@,
+  @SELECT:c.company_name:company_name@,
+@SELECT:c.LAST_UPDATED_DATE:LAST_UPDATED_DATE@
+  FROM    srm_companies c,
+                cmn_lookups s
+  WHERE   c.status = s.id
+  AND @FILTER@
+  @BROWSE-ONLY:
+      AND     s.lookup_code IN ('ACTIVE')
+    :BROWSE-ONLY@]]></nsql>
+                <displayedSuggestionAttributes>
+                    <displayedSuggestionAttribute value="company_name"/>
+                    <displayedSuggestionAttribute value="company_id"/>
+                </displayedSuggestionAttributes>
+                <searchedSuggestionAttributes>
+                    <searchedSuggestionAttribute value="company_name"/>
+                    <searchedSuggestionAttribute value="company_id"/>
+                </searchedSuggestionAttributes>
+                <browsePage>
+                    <singleSelectPageTitles>
+                        <nls description="Companyies" languageCode="ca" name="Companyies"/>
+                        <nls description="Společnosti" languageCode="cs" name="Společnosti"/>
+                        <nls description="Virksomheder" languageCode="da" name="Virksomheder"/>
+                        <nls description="Unternehmen" languageCode="de" name="Unternehmen"/>
+                        <nls description="Companies" languageCode="en" name="Companies"/>
+                        <nls description="Compañías" languageCode="es" name="Compañías"/>
+                        <nls description="Yritykset" languageCode="fi" name="Yritykset"/>
+                        <nls description="Sociétés" languageCode="fr" name="Sociétés"/>
+                        <nls description="Vállalatok" languageCode="hu" name="Vállalatok"/>
+                        <nls description="Aziende" languageCode="it" name="Aziende"/>
+                        <nls description="会社情報" languageCode="ja" name="会社情報"/>
+                        <nls description="[ko: Companies]" languageCode="ko" name="[ko: Companies]"/>
+                        <nls description="Bedrijven" languageCode="nl" name="Bedrijven"/>
+                        <nls description="Selskaper" languageCode="no" name="Selskaper"/>
+                        <nls description="Firmy" languageCode="pl" name="Firmy"/>
+                        <nls description="Empresas" languageCode="pt" name="Empresas"/>
+                        <nls description="Компании" languageCode="ru" name="Компании"/>
+                        <nls description="Företag" languageCode="sv" name="Företag"/>
+                        <nls description="Şirketler" languageCode="tr" name="Şirketler"/>
+                        <nls description="公司" languageCode="zh" name="公司"/>
+                        <nls description="公司" languageCode="zh_TW" name="公司"/>
+                    </singleSelectPageTitles>
+                    <multiSelectPageTitles>
+                        <nls description="Companyies" languageCode="ca" name="Companyies"/>
+                        <nls description="Společnosti" languageCode="cs" name="Společnosti"/>
+                        <nls description="Virksomheder" languageCode="da" name="Virksomheder"/>
+                        <nls description="Unternehmen" languageCode="de" name="Unternehmen"/>
+                        <nls description="Companies" languageCode="en" name="Companies"/>
+                        <nls description="Compañías" languageCode="es" name="Compañías"/>
+                        <nls description="Yritykset" languageCode="fi" name="Yritykset"/>
+                        <nls description="Sociétés" languageCode="fr" name="Sociétés"/>
+                        <nls description="Vállalatok" languageCode="hu" name="Vállalatok"/>
+                        <nls description="Aziende" languageCode="it" name="Aziende"/>
+                        <nls description="会社情報" languageCode="ja" name="会社情報"/>
+                        <nls description="[ko: Companies]" languageCode="ko" name="[ko: Companies]"/>
+                        <nls description="Bedrijven" languageCode="nl" name="Bedrijven"/>
+                        <nls description="Selskaper" languageCode="no" name="Selskaper"/>
+                        <nls description="Firmy" languageCode="pl" name="Firmy"/>
+                        <nls description="Empresas" languageCode="pt" name="Empresas"/>
+                        <nls description="Компании" languageCode="ru" name="Компании"/>
+                        <nls description="Företag" languageCode="sv" name="Företag"/>
+                        <nls description="Şirketler" languageCode="tr" name="Şirketler"/>
+                        <nls description="公司" languageCode="zh" name="公司"/>
+                        <nls description="公司" languageCode="zh_TW" name="公司"/>
+                    </multiSelectPageTitles>
+                    <filter code="company_id" defaultValue="" order="2" widgetType="text">
+                        <nls description="No existeix cap descripció" languageCode="ca" name="ID"/>
+                        <nls description="Bez popisu" languageCode="cs" name="ID"/>
+                        <nls description="Ingen beskrivelse" languageCode="da" name="Id"/>
+                        <nls description="Keine Beschreibung" languageCode="de" name="ID"/>
+                        <nls description="No description" languageCode="en" name="ID"/>
+                        <nls description="No existe ninguna descripción" languageCode="es" name="ID"/>
+                        <nls description="Ei kuvausta" languageCode="fi" name="Tunnus"/>
+                        <nls description="Aucune description" languageCode="fr" name="ID"/>
+                        <nls description="Nincs leírás" languageCode="hu" name="Azonosító"/>
+                        <nls description="Nessuna descrizione" languageCode="it" name="ID"/>
+                        <nls description="説明がありません" languageCode="ja" name="ID"/>
+                        <nls description="[ko: No description]" languageCode="ko" name="[ko: ID]"/>
+                        <nls description="Geen omschrijving" languageCode="nl" name="ID"/>
+                        <nls description="Ingen beskrivelse" languageCode="no" name="ID"/>
+                        <nls description="Brak opisu" languageCode="pl" name="Identyfikator"/>
+                        <nls description="Nenhuma descrição" languageCode="pt" name="ID"/>
+                        <nls description="Нет описания" languageCode="ru" name="Код"/>
+                        <nls description="Ingen beskrivning" languageCode="sv" name="ID"/>
+                        <nls description="Açıklama yok" languageCode="tr" name="Kimlik"/>
+                        <nls description="无说明" languageCode="zh" name="ID"/>
+                        <nls description="沒有說明" languageCode="zh_TW" name="ID"/>
+                    </filter>
+                    <filter code="company_name" defaultValue="" order="1" widgetType="text">
+                        <nls description="No existeix cap descripció" languageCode="ca" name="Companyia"/>
+                        <nls description="Bez popisu" languageCode="cs" name="Společnost"/>
+                        <nls description="Ingen beskrivelse" languageCode="da" name="Virksomhed"/>
+                        <nls description="Keine Beschreibung" languageCode="de" name="Unternehmen"/>
+                        <nls description="No description" languageCode="en" name="Company"/>
+                        <nls description="No existe ninguna descripción" languageCode="es" name="Compañía"/>
+                        <nls description="Ei kuvausta" languageCode="fi" name="Yritys"/>
+                        <nls description="Aucune description" languageCode="fr" name="Société"/>
+                        <nls description="Nincs leírás" languageCode="hu" name="Vállalat"/>
+                        <nls description="Nessuna descrizione" languageCode="it" name="Azienda"/>
+                        <nls description="説明がありません" languageCode="ja" name="会社"/>
+                        <nls description="[ko: No description]" languageCode="ko" name="[ko: Company]"/>
+                        <nls description="Geen omschrijving" languageCode="nl" name="Bedrijf"/>
+                        <nls description="Ingen beskrivelse" languageCode="no" name="Selskap"/>
+                        <nls description="Brak opisu" languageCode="pl" name="Firma"/>
+                        <nls description="Nenhuma descrição" languageCode="pt" name="Empresa"/>
+                        <nls description="Нет описания" languageCode="ru" name="Компания"/>
+                        <nls description="Ingen beskrivning" languageCode="sv" name="Företag"/>
+                        <nls description="Açıklama yok" languageCode="tr" name="Şirket"/>
+                        <nls description="无说明" languageCode="zh" name="公司"/>
+                        <nls description="沒有說明" languageCode="zh_TW" name="公司"/>
+                    </filter>
+                    <listColumn code="id" order="3" widgetType="hidden">
+                        <nls description="No existeix cap descripció" languageCode="ca" name="ID"/>
+                        <nls description="Bez popisu" languageCode="cs" name="ID"/>
+                        <nls description="Ingen beskrivelse" languageCode="da" name="id"/>
+                        <nls description="Keine Beschreibung" languageCode="de" name="ID"/>
+                        <nls description="No description" languageCode="en" name="id"/>
+                        <nls description="No existe ninguna descripción" languageCode="es" name="ID"/>
+                        <nls description="Ei kuvausta" languageCode="fi" name="tunnus"/>
+                        <nls description="Aucune description" languageCode="fr" name="ID"/>
+                        <nls description="Nincs leírás" languageCode="hu" name="azonosító"/>
+                        <nls description="Nessuna descrizione" languageCode="it" name="ID"/>
+                        <nls description="説明がありません" languageCode="ja" name="ID"/>
+                        <nls description="[ko: No description]" languageCode="ko" name="[ko: id]"/>
+                        <nls description="Geen omschrijving" languageCode="nl" name="id"/>
+                        <nls description="Ingen beskrivelse" languageCode="no" name="id"/>
+                        <nls description="Brak opisu" languageCode="pl" name="identyfikator"/>
+                        <nls description="Nenhuma descrição" languageCode="pt" name="id"/>
+                        <nls description="Нет описания" languageCode="ru" name="код"/>
+                        <nls description="Ingen beskrivning" languageCode="sv" name="id"/>
+                        <nls description="Açıklama yok" languageCode="tr" name="kimlik"/>
+                        <nls description="无说明" languageCode="zh" name="ID"/>
+                        <nls description="沒有說明" languageCode="zh_TW" name="ID"/>
+                    </listColumn>
+                    <listColumn code="company_id" order="2" widgetType="text">
+                        <nls description="No existeix cap descripció" languageCode="ca" name="ID"/>
+                        <nls description="Bez popisu" languageCode="cs" name="ID"/>
+                        <nls description="Ingen beskrivelse" languageCode="da" name="Id"/>
+                        <nls description="Keine Beschreibung" languageCode="de" name="ID"/>
+                        <nls description="No description" languageCode="en" name="ID"/>
+                        <nls description="No existe ninguna descripción" languageCode="es" name="ID"/>
+                        <nls description="Ei kuvausta" languageCode="fi" name="Tunnus"/>
+                        <nls description="Aucune description" languageCode="fr" name="ID"/>
+                        <nls description="Nincs leírás" languageCode="hu" name="Azonosító"/>
+                        <nls description="Nessuna descrizione" languageCode="it" name="ID"/>
+                        <nls description="説明がありません" languageCode="ja" name="ID"/>
+                        <nls description="[ko: No description]" languageCode="ko" name="[ko: ID]"/>
+                        <nls description="Geen omschrijving" languageCode="nl" name="ID"/>
+                        <nls description="Ingen beskrivelse" languageCode="no" name="ID"/>
+                        <nls description="Brak opisu" languageCode="pl" name="Identyfikator"/>
+                        <nls description="Nenhuma descrição" languageCode="pt" name="ID"/>
+                        <nls description="Нет описания" languageCode="ru" name="Код"/>
+                        <nls description="Ingen beskrivning" languageCode="sv" name="ID"/>
+                        <nls description="Açıklama yok" languageCode="tr" name="Kimlik"/>
+                        <nls description="无说明" languageCode="zh" name="ID"/>
+                        <nls description="沒有說明" languageCode="zh_TW" name="ID"/>
+                    </listColumn>
+                    <listColumn code="company_name" order="1" widgetType="text">
+                        <nls description="No existeix cap descripció" languageCode="ca" name="Companyia"/>
+                        <nls description="Bez popisu" languageCode="cs" name="Společnost"/>
+                        <nls description="Ingen beskrivelse" languageCode="da" name="Virksomhed"/>
+                        <nls description="Keine Beschreibung" languageCode="de" name="Unternehmen"/>
+                        <nls description="No description" languageCode="en" name="Company"/>
+                        <nls description="No existe ninguna descripción" languageCode="es" name="Compañía"/>
+                        <nls description="Ei kuvausta" languageCode="fi" name="Yritys"/>
+                        <nls description="Aucune description" languageCode="fr" name="Société"/>
+                        <nls description="Nincs leírás" languageCode="hu" name="Vállalat"/>
+                        <nls description="Nessuna descrizione" languageCode="it" name="Azienda"/>
+                        <nls description="説明がありません" languageCode="ja" name="会社"/>
+                        <nls description="[ko: No description]" languageCode="ko" name="[ko: Company]"/>
+                        <nls description="Geen omschrijving" languageCode="nl" name="Bedrijf"/>
+                        <nls description="Ingen beskrivelse" languageCode="no" name="Selskap"/>
+                        <nls description="Brak opisu" languageCode="pl" name="Firma"/>
+                        <nls description="Nenhuma descrição" languageCode="pt" name="Empresa"/>
+                        <nls description="Нет описания" languageCode="ru" name="Компания"/>
+                        <nls description="Ingen beskrivning" languageCode="sv" name="Företag"/>
+                        <nls description="Açıklama yok" languageCode="tr" name="Şirket"/>
+                        <nls description="无说明" languageCode="zh" name="公司"/>
+                        <nls description="沒有說明" languageCode="zh_TW" name="公司"/>
+                    </listColumn>
+                </browsePage>
+            </dynamicLookup>
+            <staticLookup autoSuggestEnabled="true" autoSuggestMaxSuggestions="10" code="CMN_CATEGORIES" hiddenAttributeName="id" sortStyle="alphanumeric" source="niku.com" status="active" update="true">
+                <nls description="Categories per a portlets" languageCode="ca" name="Categories de portlet"/>
+                <nls description="Kategorie portletů" languageCode="cs" name="Kategorie portletu"/>
+                <nls description="Portletkategorier" languageCode="da" name="Portletkategorier"/>
+                <nls description="Kategorien für Portlets" languageCode="de" name="Portlet-Kategorien"/>
+                <nls description="Categories for Portlets" languageCode="en" name="Portlet Categories"/>
+                <nls description="Categorías para portlets" languageCode="es" name="Categorías de portlet"/>
+                <nls description="Portletien kategoriat" languageCode="fi" name="Portlet-kategoriat"/>
+                <nls description="Catégories des portlets" languageCode="fr" name="Catégories de portlets"/>
+                <nls description="Kategóriák portletekhez" languageCode="hu" name="Portletkategóriák"/>
+                <nls description="Categorie per portlet" languageCode="it" name="Categorie portlet"/>
+                <nls description="ポートレットのカテゴリ" languageCode="ja" name="ポートレット カテゴリ"/>
+                <nls description="[ko: Categories for Portlets]" languageCode="ko" name="[ko: Portlet Categories]"/>
+                <nls description="Categorieën voor portlets" languageCode="nl" name="Portletcategorieën"/>
+                <nls description="Kategorier for portleter" languageCode="no" name="Portletkategorier"/>
+                <nls description="Kategorie dla portletów" languageCode="pl" name="Kategorie portletów"/>
+                <nls description="Categorias para portlets" languageCode="pt" name="Categorias de portlet"/>
+                <nls description="Категории для портлетов" languageCode="ru" name="Категории портлетов"/>
+                <nls description="Kategorier för portlets" languageCode="sv" name="Portlet-kategorier"/>
+                <nls description="Portlet Kategorileri" languageCode="tr" name="Portlet Kategorileri"/>
+                <nls description="Portlet 类别" languageCode="zh" name="Portlet 类别"/>
+                <nls description="Portlet 的類別" languageCode="zh_TW" name="Portlet 類別"/>
+                <lookupValue code="COLLABORATION" enum="0" sortOrder="0" status="active">
+                    <nls description="Col·laboració" languageCode="ca" name="Col·laboració"/>
+                    <nls description="Spolupráce" languageCode="cs" name="Spolupráce"/>
+                    <nls description="Samarbejde" languageCode="da" name="Samarbejde"/>
+                    <nls description="Zusammenarbeit" languageCode="de" name="Zusammenarbeit"/>
+                    <nls description="Collaboration" languageCode="en" name="Collaboration"/>
+                    <nls description="Colaboración" languageCode="es" name="Colaboración"/>
+                    <nls description="Yhteistyö" languageCode="fi" name="Yhteistyö"/>
+                    <nls description="Collaboration" languageCode="fr" name="Collaboration"/>
+                    <nls description="Együttműködés" languageCode="hu" name="Együttműködés"/>
+                    <nls description="Collaborazione" languageCode="it" name="Collaborazione"/>
+                    <nls description="コラボレーション" languageCode="ja" name="コラボレーション"/>
+                    <nls description="[ko: Collaboration]" languageCode="ko" name="[ko: Collaboration]"/>
+                    <nls description="Samenwerking" languageCode="nl" name="Samenwerking"/>
+                    <nls description="Samarbeid" languageCode="no" name="Samarbeid"/>
+                    <nls description="Współpraca" languageCode="pl" name="Współpraca"/>
+                    <nls description="Colaboração" languageCode="pt" name="Colaboração"/>
+                    <nls description="Совместная работа" languageCode="ru" name="Совместная работа"/>
+                    <nls description="Samarbete" languageCode="sv" name="Samarbete"/>
+                    <nls description="İşbirliği" languageCode="tr" name="İşbirliği"/>
+                    <nls description="协作" languageCode="zh" name="协作"/>
+                    <nls description="共同作業" languageCode="zh_TW" name="共同作業"/>
+                </lookupValue>
+                <lookupValue code="npd.ca.com" sortOrder="0" status="active">
+                    <nls description="Categoria de portlet per al desenvolupament de nous productes (DNP)" languageCode="ca" name="Nou desenvolupament de producte"/>
+                    <nls description="Kategorie portletu pro vývoj nového produktu (NPD)" languageCode="cs" name="Vývoj nového produktu"/>
+                    <nls description="Portlet til kategori for ny produktudvikling (NPD)" languageCode="da" name="Ny produktudvikling"/>
+                    <nls description="Portlet-Kategorie für Entwicklung neuer Produkte (NPE)" languageCode="de" name="Entwicklung neuer Produkte"/>
+                    <nls description="Portlet category for New Product Development (NPD)" languageCode="en" name="New Product Development"/>
+                    <nls description="Categoría de portlet para el desarrollo de nuevos productos (DNP)" languageCode="es" name="Nuevo desarrollo de producto"/>
+                    <nls description="Portlet-kategoria uutta tuotekehitystä (NPD) varten" languageCode="fi" name="Uusi tuotekehitys"/>
+                    <nls description="Catégorie de portlet pour le développement d'un nouveau produit (DNP)" languageCode="fr" name="Développement d'un nouveau produit"/>
+                    <nls description="Portletkategória termékfejlesztéshez (NPD)" languageCode="hu" name="Új termék fejlesztése"/>
+                    <nls description="Categoria portlet per Sviluppo nuovo prodotto (NPD)" languageCode="it" name="Sviluppo nuovo prodotto"/>
+                    <nls description="NPD (新製品開発) のポートレット カテゴリ" languageCode="ja" name="新製品開発"/>
+                    <nls description="[ko: Portlet category for New Product Development (NPD)]" languageCode="ko" name="[ko: New Product Development]"/>
+                    <nls description="Portletcategorie voor Productontwikkeling" languageCode="nl" name="Ontwikkeling nieuw product"/>
+                    <nls description="Portletkategori for produktutvikling (NPD)" languageCode="no" name="Nytt produkt under utvikling"/>
+                    <nls description="Kategoria portletu dotycząca rozwoju nowego produktu (RNP)" languageCode="pl" name="Rozwój nowego produktu"/>
+                    <nls description="Categoria de portlet para Desenvolvimento de novos produtos" languageCode="pt" name="Desenvolvimento de novos produtos"/>
+                    <nls description="Категория портлета для разработки нового продукта (NPD)" languageCode="ru" name="Разработка нового продукта"/>
+                    <nls description="Portletkategori för Ny produktutveckling (NPD)" languageCode="sv" name="Ny produktutveckling"/>
+                    <nls description="Yeni Ürün Geliştirme (YÜG) için portlet kategorisi" languageCode="tr" name="Yeni Ürün Geliştirme"/>
+                    <nls description="新产品开发 (NPD) 组件的 Portlet 类别" languageCode="zh" name="新产品开发"/>
+                    <nls description="新產品開發 (NPD) 的 Portlet 類別" languageCode="zh_TW" name="新產品開發"/>
+                </lookupValue>
+                <lookupValue code="framework" enum="0" sortOrder="30" status="active">
+                    <nls description="Categoria de portlet de marc" languageCode="ca" name="Marc"/>
+                    <nls description="Kategorie portletu rámců" languageCode="cs" name="Rámec"/>
+                    <nls description="Portletkategori for ramme" languageCode="da" name="Ramme"/>
+                    <nls description="Framework-Portlet - Kategorie" languageCode="de" name="Framework"/>
+                    <nls description="Framework Portlet Category" languageCode="en" name="Framework"/>
+                    <nls description="Categoría de portlet de marco" languageCode="es" name="Marco"/>
+                    <nls description="Kehys-portletin kategoria" languageCode="fi" name="Kehys"/>
+                    <nls description="Catégorie de portlet de cadre d'applications" languageCode="fr" name="Cadre d'applications"/>
+                    <nls description="Keretrendszer portlet-kategória" languageCode="hu" name="Keretrendszer"/>
+                    <nls description="Categoria portlet schema" languageCode="it" name="Schema"/>
+                    <nls description="フレームワーク ポートレット カテゴリ" languageCode="ja" name="フレームワーク"/>
+                    <nls description="[ko: Framework Portlet Category]" languageCode="ko" name="[ko: Framework]"/>
+                    <nls description="Raamwerk portletcategorie" languageCode="nl" name="Raamwerk"/>
+                    <nls description="Portletkategori for rammeverk" languageCode="no" name="Rammeverk"/>
+                    <nls description="Kategoria portletów struktury" languageCode="pl" name="Struktura"/>
+                    <nls description="Categoria de portlet de estrutura" languageCode="pt" name="Estrutura"/>
+                    <nls description="Категория портлета платформы" languageCode="ru" name="Платформа"/>
+                    <nls description="Ramverk Portletkategori" languageCode="sv" name="Ramverk"/>
+                    <nls description="Çerçeve Portleti Kategorisi" languageCode="tr" name="Çerçeve"/>
+                    <nls description="框架 Portlet 类别" languageCode="zh" name="框架"/>
+                    <nls description="架構 Portlet 類別" languageCode="zh_TW" name="架構"/>
+                </lookupValue>
+                <lookupValue code="businessIntelligence" enum="0" sortOrder="30" status="active">
+                    <nls description="Categoria de portlet d'intel·ligència de negocis" languageCode="ca" name="Intel·ligència de negocis"/>
+                    <nls description="Kategorie portletu obchodních informací" languageCode="cs" name="Obchodní informace"/>
+                    <nls description="Business Intelligence - portletkategori" languageCode="da" name="Business Intelligence"/>
+                    <nls description="Business Intelligence-Portlet - Kategorie" languageCode="de" name="Business Intelligence"/>
+                    <nls description="Business Intelligence Portlet Category" languageCode="en" name="Business Intelligence"/>
+                    <nls description="Categoría de portlet de inteligencia de negocios" languageCode="es" name="Inteligencia de negocios"/>
+                    <nls description="Business Intelligence -portletin kategoria" languageCode="fi" name="Business Intelligence"/>
+                    <nls description="Catégorie de portlet d'aide à la décision" languageCode="fr" name="Aide à la décision"/>
+                    <nls description="Business Intelligence portletkategóriája" languageCode="hu" name="Business Intelligence"/>
+                    <nls description="Categoria portlet Business Intelligence" languageCode="it" name="Business Intelligence"/>
+                    <nls description="ビジネス インテリジェンス ポートレット カテゴリ" languageCode="ja" name="ビジネス インテリジェンス"/>
+                    <nls description="[ko: Business Intelligence Portlet Category]" languageCode="ko" name="[ko: Business Intelligence]"/>
+                    <nls description="Portletcategorie bedrijfsinlichtingen" languageCode="nl" name="Bedrijfsinlichtingen"/>
+                    <nls description="Business Intelligence - portletkategori" languageCode="no" name="Business Intelligence"/>
+                    <nls description="Kategoria portletu Business Intelligence" languageCode="pl" name="Business Intelligence"/>
+                    <nls description="Categoria de portlet da inteligência de negócios" languageCode="pt" name="Inteligência de negócios"/>
+                    <nls description="Категория портлета бизнес-аналитики" languageCode="ru" name="Бизнес-аналитика"/>
+                    <nls description="Företagsintelligens Portletkategori" languageCode="sv" name="Företagsintelligens"/>
+                    <nls description="İş Zekası Portlet Kategorisi" languageCode="tr" name="İş Zekası"/>
+                    <nls description="商业智能 Portlet 类别" languageCode="zh" name="Business Intelligence"/>
+                    <nls description="商務智慧 Portlet 類別" languageCode="zh_TW" name="商務智慧"/>
+                </lookupValue>
+                <lookupValue code="PERSONALIZATION" enum="0" sortOrder="0" status="active">
+                    <nls description="Personal" languageCode="ca" name="Personal"/>
+                    <nls description="Osobní" languageCode="cs" name="Osobní"/>
+                    <nls description="Personlig" languageCode="da" name="Personlig"/>
+                    <nls description="Persönlich" languageCode="de" name="Persönlich"/>
+                    <nls description="Personal" languageCode="en" name="Personal"/>
+                    <nls description="Personal" languageCode="es" name="Personal"/>
+                    <nls description="Henkilökohtainen" languageCode="fi" name="Henkilökohtainen"/>
+                    <nls description="Personnel" languageCode="fr" name="Personnel"/>
+                    <nls description="Személyes" languageCode="hu" name="Személyes"/>
+                    <nls description="Personale" languageCode="it" name="Personale"/>
+                    <nls description="パーソナル" languageCode="ja" name="パーソナル"/>
+                    <nls description="[ko: Personal]" languageCode="ko" name="[ko: Personal]"/>
+                    <nls description="Persoonlijk" languageCode="nl" name="Persoonlijk"/>
+                    <nls description="Personlig" languageCode="no" name="Personlig"/>
+                    <nls description="Osobiste" languageCode="pl" name="Osobiste"/>
+                    <nls description="Pessoal" languageCode="pt" name="Pessoal"/>
+                    <nls description="Личные данные" languageCode="ru" name="Личные данные"/>
+                    <nls description="Personligt" languageCode="sv" name="Personligt"/>
+                    <nls description="Kişisel" languageCode="tr" name="Kişisel"/>
+                    <nls description="个人" languageCode="zh" name="个人"/>
+                    <nls description="個人" languageCode="zh_TW" name="個人"/>
+                </lookupValue>
+                <lookupValue code="PRODUCTIVITY" enum="0" sortOrder="0" status="active">
+                    <nls description="Ajuda de productivitat" languageCode="ca" name="Productivitat"/>
+                    <nls description="Nástroj pro zvýšení produktivity" languageCode="cs" name="Produktivita"/>
+                    <nls description="Produktivitetshjælp" languageCode="da" name="Produktivitet"/>
+                    <nls description="Produktivitätshilfe" languageCode="de" name="Produktivität"/>
+                    <nls description="Productivity aid" languageCode="en" name="Productivity"/>
+                    <nls description="Ayuda de productividad" languageCode="es" name="Productividad"/>
+                    <nls description="Tuottavuusapu" languageCode="fi" name="Tuottavuus"/>
+                    <nls description="Aide à la productivité" languageCode="fr" name="Productivité"/>
+                    <nls description="Produktivitási segédlet" languageCode="hu" name="Produktivitás"/>
+                    <nls description="Bonus di produttività" languageCode="it" name="Produttività"/>
+                    <nls description="生産性向上支援" languageCode="ja" name="生産性"/>
+                    <nls description="[ko: Productivity aid]" languageCode="ko" name="[ko: Productivity]"/>
+                    <nls description="Productiviteitshulp" languageCode="nl" name="Productiviteit"/>
+                    <nls description="Produktivitetsbistand" languageCode="no" name="Produktivitet"/>
+                    <nls description="Wspomaganie produktywności" languageCode="pl" name="Produktywność"/>
+                    <nls description="Auxílio produtivo" languageCode="pt" name="Produtividade"/>
+                    <nls description="Поддержка производительности" languageCode="ru" name="Производительность"/>
+                    <nls description="Produktivitetshjälp" languageCode="sv" name="Produktivitet"/>
+                    <nls description="Üretkenlik yardımı" languageCode="tr" name="Üretkenlik"/>
+                    <nls description="生产力援助" languageCode="zh" name="生产力"/>
+                    <nls description="生產力輔助" languageCode="zh_TW" name="生產力"/>
+                </lookupValue>
+                <lookupValue code="PROJECT" enum="0" sortOrder="0" status="active">
+                    <nls description="Projecte" languageCode="ca" name="Projecte"/>
+                    <nls description="Projekt" languageCode="cs" name="Projekt"/>
+                    <nls description="Projekt" languageCode="da" name="Projekt"/>
+                    <nls description="Projekt" languageCode="de" name="Projekt"/>
+                    <nls description="Project" languageCode="en" name="Project"/>
+                    <nls description="Proyecto" languageCode="es" name="Proyecto"/>
+                    <nls description="Projekti" languageCode="fi" name="Projekti"/>
+                    <nls description="Projet" languageCode="fr" name="Projet"/>
+                    <nls description="Projekt" languageCode="hu" name="Projekt"/>
+                    <nls description="Progetto" languageCode="it" name="Progetto"/>
+                    <nls description="プロジェクト" languageCode="ja" name="プロジェクト"/>
+                    <nls description="[ko: Project]" languageCode="ko" name="[ko: Project]"/>
+                    <nls description="Project" languageCode="nl" name="Project"/>
+                    <nls description="Prosjekt" languageCode="no" name="Prosjekt"/>
+                    <nls description="Projekt" languageCode="pl" name="Projekt"/>
+                    <nls description="Projeto" languageCode="pt" name="Projeto"/>
+                    <nls description="Проект" languageCode="ru" name="Проект"/>
+                    <nls description="Projekt" languageCode="sv" name="Projekt"/>
+                    <nls description="Proje" languageCode="tr" name="Proje"/>
+                    <nls description="项目" languageCode="zh" name="项目"/>
+                    <nls description="專案" languageCode="zh_TW" name="專案"/>
+                </lookupValue>
+                <lookupValue code="RESOURCE" enum="0" sortOrder="0" status="active">
+                    <nls description="Recurs" languageCode="ca" name="Recurs"/>
+                    <nls description="Zdroj" languageCode="cs" name="Zdroj"/>
+                    <nls description="Ressource" languageCode="da" name="Ressource"/>
+                    <nls description="Ressource" languageCode="de" name="Ressource"/>
+                    <nls description="Resource" languageCode="en" name="Resource"/>
+                    <nls description="Recurso" languageCode="es" name="Recurso"/>
+                    <nls description="Resurssi" languageCode="fi" name="Resurssi"/>
+                    <nls description="Ressource" languageCode="fr" name="Ressource"/>
+                    <nls description="Erőforrás" languageCode="hu" name="Erőforrás"/>
+                    <nls description="Risorsa" languageCode="it" name="Risorsa"/>
+                    <nls description="リソース" languageCode="ja" name="リソース"/>
+                    <nls description="[ko: Resource]" languageCode="ko" name="[ko: Resource]"/>
+                    <nls description="Resource" languageCode="nl" name="Resource"/>
+                    <nls description="Ressurs" languageCode="no" name="Ressurs"/>
+                    <nls description="Zasób" languageCode="pl" name="Zasób"/>
+                    <nls description="Recurso" languageCode="pt" name="Recurso"/>
+                    <nls description="Ресурс" languageCode="ru" name="Ресурс"/>
+                    <nls description="Resurs" languageCode="sv" name="Resurs"/>
+                    <nls description="Kaynak" languageCode="tr" name="Kaynak"/>
+                    <nls description="资源" languageCode="zh" name="资源"/>
+                    <nls description="資源" languageCode="zh_TW" name="資源"/>
+                </lookupValue>
+                <displayedSuggestionAttributes>
+                    <displayedSuggestionAttribute value="name"/>
+                </displayedSuggestionAttributes>
+                <searchedSuggestionAttributes>
+                    <searchedSuggestionAttribute value="name"/>
+                </searchedSuggestionAttributes>
+            </staticLookup>
+            <staticLookup autoSuggestEnabled="true" autoSuggestMaxSuggestions="10" code="INV_APPLICATION_CATEGORY_TYPE" hiddenAttributeName="lookup_code" sortStyle="alphanumeric" source="niku.com" status="active" update="true">
+                <nls description="Categoria de l'aplicació" languageCode="ca" name="Categoria de l'aplicació"/>
+                <nls description="Kategorie aplikace" languageCode="cs" name="Kategorie aplikace"/>
+                <nls description="Applikationskategori" languageCode="da" name="Applikationskategori"/>
+                <nls description="Anwendungskategorie" languageCode="de" name="Anwendungskategorie"/>
+                <nls description="Application Category" languageCode="en" name="Application Category"/>
+                <nls description="Categoría de la aplicación" languageCode="es" name="Categoría de la aplicación"/>
+                <nls description="Sovelluskategoria" languageCode="fi" name="Sovelluskategoria"/>
+                <nls description="Catégorie d'application" languageCode="fr" name="Catégorie d'application"/>
+                <nls description="Alkalmazáskategória" languageCode="hu" name="Alkalmazáskategória"/>
+                <nls description="Categoria applicazione" languageCode="it" name="Categoria applicazione"/>
+                <nls description="アプリケーション カテゴリ" languageCode="ja" name="アプリケーション カテゴリ"/>
+                <nls description="애플리케이션 범주" languageCode="ko" name="애플리케이션 범주"/>
+                <nls description="Toepassingscategorie" languageCode="nl" name="Toepassingscategorie"/>
+                <nls description="Applikasjonskategori" languageCode="no" name="Applikasjonskategori"/>
+                <nls description="Kategoria aplikacji" languageCode="pl" name="Kategoria aplikacji"/>
+                <nls description="Categoria do aplicativo" languageCode="pt" name="Categoria do aplicativo"/>
+                <nls description="Категория приложения" languageCode="ru" name="Категория приложения"/>
+                <nls description="Applikation - Kategori" languageCode="sv" name="Applikation - Kategori"/>
+                <nls description="Uygulama Kategorisi" languageCode="tr" name="Uygulama Kategorisi"/>
+                <nls description="应用程序类别" languageCode="zh" name="应用程序类别"/>
+                <nls description="應用程式類別" languageCode="zh_TW" name="應用程式類別"/>
+                <lookupValue code="COMMUNICATION" sortOrder="0" status="active">
+                    <nls description="Comunicació" languageCode="ca" name="Comunicació"/>
+                    <nls description="Komunikace" languageCode="cs" name="Komunikace"/>
+                    <nls description="Kommunikation" languageCode="da" name="Kommunikation"/>
+                    <nls description="Kommunikation" languageCode="de" name="Kommunikation"/>
+                    <nls description="Communication" languageCode="en" name="Communication"/>
+                    <nls description="Comunicación" languageCode="es" name="Comunicación"/>
+                    <nls description="Viestintä" languageCode="fi" name="Viestintä"/>
+                    <nls description="Communication" languageCode="fr" name="Communication"/>
+                    <nls description="Kommunikáció" languageCode="hu" name="Kommunikáció"/>
+                    <nls description="Comunicazione" languageCode="it" name="Comunicazione"/>
+                    <nls description="コミュニケーション" languageCode="ja" name="コミュニケーション"/>
+                    <nls description="커뮤니케이션" languageCode="ko" name="커뮤니케이션"/>
+                    <nls description="Communicatie" languageCode="nl" name="Communicatie"/>
+                    <nls description="Kommunikasjon" languageCode="no" name="Kommunikasjon"/>
+                    <nls description="Komunikacja" languageCode="pl" name="Komunikacja"/>
+                    <nls description="Comunicação" languageCode="pt" name="Comunicação"/>
+                    <nls description="Взаимодействие" languageCode="ru" name="Взаимодействие"/>
+                    <nls description="Kommunikation" languageCode="sv" name="Kommunikation"/>
+                    <nls description="İletişim" languageCode="tr" name="İletişim"/>
+                    <nls description="沟通" languageCode="zh" name="沟通"/>
+                    <nls description="溝通" languageCode="zh_TW" name="溝通"/>
+                </lookupValue>
+                <lookupValue code="CRM" sortOrder="0" status="active">
+                    <nls description="CRM" languageCode="ca" name="CRM"/>
+                    <nls description="CRM" languageCode="cs" name="CRM"/>
+                    <nls description="CRM" languageCode="da" name="CRM"/>
+                    <nls description="CRM" languageCode="de" name="CRM"/>
+                    <nls description="CRM" languageCode="en" name="CRM"/>
+                    <nls description="CRM" languageCode="es" name="CRM"/>
+                    <nls description="CRM" languageCode="fi" name="CRM"/>
+                    <nls description="CRM" languageCode="fr" name="CRM"/>
+                    <nls description="CRM" languageCode="hu" name="CRM"/>
+                    <nls description="CRM" languageCode="it" name="CRM"/>
+                    <nls description="CRM" languageCode="ja" name="CRM"/>
+                    <nls description="CRM" languageCode="ko" name="CRM"/>
+                    <nls description="CRM" languageCode="nl" name="CRM"/>
+                    <nls description="CRM" languageCode="no" name="CRM"/>
+                    <nls description="CRM" languageCode="pl" name="CRM"/>
+                    <nls description="CRM" languageCode="pt" name="CRM"/>
+                    <nls description="CRM" languageCode="ru" name="CRM"/>
+                    <nls description="CRM" languageCode="sv" name="CRM"/>
+                    <nls description="CRM" languageCode="tr" name="CRM"/>
+                    <nls description="CRM" languageCode="zh" name="CRM"/>
+                    <nls description="CRM" languageCode="zh_TW" name="CRM"/>
+                </lookupValue>
+                <lookupValue code="DESIGN" sortOrder="0" status="active">
+                    <nls description="Disseny" languageCode="ca" name="Disseny"/>
+                    <nls description="Návrh" languageCode="cs" name="Návrh"/>
+                    <nls description="Design" languageCode="da" name="Design"/>
+                    <nls description="Entwurf" languageCode="de" name="Entwurf"/>
+                    <nls description="Design" languageCode="en" name="Design"/>
+                    <nls description="Diseño" languageCode="es" name="Diseño"/>
+                    <nls description="Suunnittelu" languageCode="fi" name="Suunnittelu"/>
+                    <nls description="Conception" languageCode="fr" name="Conception"/>
+                    <nls description="Tervezés" languageCode="hu" name="Tervezés"/>
+                    <nls description="Progettazione" languageCode="it" name="Progettazione"/>
+                    <nls description="設計" languageCode="ja" name="設計"/>
+                    <nls description="설계" languageCode="ko" name="설계"/>
+                    <nls description="Ontwerp" languageCode="nl" name="Ontwerp"/>
+                    <nls description="Utforming" languageCode="no" name="Utforming"/>
+                    <nls description="Projekt" languageCode="pl" name="Projekt"/>
+                    <nls description="Design" languageCode="pt" name="Design"/>
+                    <nls description="Проектирование" languageCode="ru" name="Проектирование"/>
+                    <nls description="Design" languageCode="sv" name="Design"/>
+                    <nls description="Tasarım" languageCode="tr" name="Tasarım"/>
+                    <nls description="设计" languageCode="zh" name="设计"/>
+                    <nls description="設計" languageCode="zh_TW" name="設計"/>
+                </lookupValue>
+                <lookupValue code="ERP" sortOrder="0" status="active">
+                    <nls description="ERP" languageCode="ca" name="ERP"/>
+                    <nls description="ERP" languageCode="cs" name="ERP"/>
+                    <nls description="ERP" languageCode="da" name="ERP"/>
+                    <nls description="ERP" languageCode="de" name="ERP"/>
+                    <nls description="ERP" languageCode="en" name="ERP"/>
+                    <nls description="ERP" languageCode="es" name="ERP"/>
+                    <nls description="ERP" languageCode="fi" name="ERP"/>
+                    <nls description="ERP" languageCode="fr" name="ERP"/>
+                    <nls description="ERP" languageCode="hu" name="ERP"/>
+                    <nls description="ERP" languageCode="it" name="ERP"/>
+                    <nls description="ERP" languageCode="ja" name="ERP"/>
+                    <nls description="ERP" languageCode="ko" name="ERP"/>
+                    <nls description="ERP" languageCode="nl" name="ERP"/>
+                    <nls description="ERP" languageCode="no" name="ERP"/>
+                    <nls description="ERP" languageCode="pl" name="ERP"/>
+                    <nls description="ERP" languageCode="pt" name="ERP"/>
+                    <nls description="ERP" languageCode="ru" name="ERP"/>
+                    <nls description="ERP" languageCode="sv" name="ERP"/>
+                    <nls description="ERP" languageCode="tr" name="ERP"/>
+                    <nls description="ERP" languageCode="zh" name="ERP"/>
+                    <nls description="ERP" languageCode="zh_TW" name="ERP"/>
+                </lookupValue>
+                <lookupValue code="PORTFOLIO MANAGEMENT" sortOrder="0" status="active">
+                    <nls description="Gestió de la cartera" languageCode="ca" name="Gestió de la cartera"/>
+                    <nls description="Správa portfolia" languageCode="cs" name="Správa portfolia"/>
+                    <nls description="Porteføljestyring" languageCode="da" name="Porteføljestyring"/>
+                    <nls description="Portfoliomanagement" languageCode="de" name="Portfoliomanagement"/>
+                    <nls description="Portfolio Management" languageCode="en" name="Portfolio Management"/>
+                    <nls description="Gestión de la cartera" languageCode="es" name="Gestión de la cartera"/>
+                    <nls description="Portfolionhallinta" languageCode="fi" name="Portfolionhallinta"/>
+                    <nls description="Gestion des portefeuilles" languageCode="fr" name="Gestion des portefeuilles"/>
+                    <nls description="Portfóliókezelés" languageCode="hu" name="Portfóliókezelés"/>
+                    <nls description="Gestione portfolio" languageCode="it" name="Gestione portfolio"/>
+                    <nls description="ポートフォリオ管理" languageCode="ja" name="ポートフォリオ管理"/>
+                    <nls description="포트폴리오 관리" languageCode="ko" name="포트폴리오 관리"/>
+                    <nls description="Portfoliomanagement" languageCode="nl" name="Portfoliomanagement"/>
+                    <nls description="Porteføljebehandling" languageCode="no" name="Porteføljebehandling"/>
+                    <nls description="Zarządzanie portfelem" languageCode="pl" name="Zarządzanie portfelem"/>
+                    <nls description="Gestão de portfólio" languageCode="pt" name="Gestão de portfólio"/>
+                    <nls description="Управление портфолио" languageCode="ru" name="Управление портфелями"/>
+                    <nls description="Portföljadministration" languageCode="sv" name="Portföljadministration"/>
+                    <nls description="Portföy Yönetimi" languageCode="tr" name="Portföy Yönetimi"/>
+                    <nls description="项目组合管理" languageCode="zh" name="项目组合管理"/>
+                    <nls description="投資組合管理" languageCode="zh_TW" name="投資組合管理"/>
+                </lookupValue>
+                <lookupValue code="INTERNET BROWSER" sortOrder="0" status="active">
+                    <nls description="Explorador d'Internet" languageCode="ca" name="Explorador d'Internet"/>
+                    <nls description="Internetový prohlížeč" languageCode="cs" name="Internetový prohlížeč"/>
+                    <nls description="Internetbrowser" languageCode="da" name="Internetbrowser"/>
+                    <nls description="Internet-Browser" languageCode="de" name="Internet-Browser"/>
+                    <nls description="Internet Browser" languageCode="en" name="Internet Browser"/>
+                    <nls description="Explorador de Internet" languageCode="es" name="Explorador de Internet"/>
+                    <nls description="Internet-selain" languageCode="fi" name="Internet-selain"/>
+                    <nls description="Navigateur Internet" languageCode="fr" name="Navigateur Internet"/>
+                    <nls description="Internetböngésző" languageCode="hu" name="Internetböngésző"/>
+                    <nls description="Browser Internet" languageCode="it" name="Browser Internet"/>
+                    <nls description="内部ブラウザ" languageCode="ja" name="内部ブラウザ"/>
+                    <nls description="인터넷 브라우저" languageCode="ko" name="인터넷 브라우저"/>
+                    <nls description="Internetbrowser" languageCode="nl" name="Internetbrowser"/>
+                    <nls description="Internett-leser" languageCode="no" name="Internett-leser"/>
+                    <nls description="Przeglądarka internetowa" languageCode="pl" name="Przeglądarka internetowa"/>
+                    <nls description="Navegador da internet" languageCode="pt" name="Navegador da internet"/>
+                    <nls description="Интернет-браузер" languageCode="ru" name="Интернет-браузер"/>
+                    <nls description="Webbläsare" languageCode="sv" name="Webbläsare"/>
+                    <nls description="Internet Tarayıcısı" languageCode="tr" name="Internet Tarayıcısı"/>
+                    <nls description="Internet 浏览器" languageCode="zh" name="Internet 浏览器"/>
+                    <nls description="網際網路瀏覽器" languageCode="zh_TW" name="網際網路瀏覽器"/>
+                </lookupValue>
+                <lookupValue code="PRODUCTIVITY" sortOrder="0" status="active">
+                    <nls description="Productivitat" languageCode="ca" name="Productivitat"/>
+                    <nls description="Produktivita" languageCode="cs" name="Produktivita"/>
+                    <nls description="Produktivitet" languageCode="da" name="Produktivitet"/>
+                    <nls description="Produktivität" languageCode="de" name="Produktivität"/>
+                    <nls description="Productivity" languageCode="en" name="Productivity"/>
+                    <nls description="Productividad" languageCode="es" name="Productividad"/>
+                    <nls description="Tuottavuus" languageCode="fi" name="Tuottavuus"/>
+                    <nls description="Productivité" languageCode="fr" name="Productivité"/>
+                    <nls description="Produktivitás" languageCode="hu" name="Produktivitás"/>
+                    <nls description="Produttività" languageCode="it" name="Produttività"/>
+                    <nls description="生産性" languageCode="ja" name="生産性"/>
+                    <nls description="생산성" languageCode="ko" name="생산성"/>
+                    <nls description="Productiviteit" languageCode="nl" name="Productiviteit"/>
+                    <nls description="Produktivitet" languageCode="no" name="Produktivitet"/>
+                    <nls description="Produktywność" languageCode="pl" name="Produktywność"/>
+                    <nls description="Produtividade" languageCode="pt" name="Produtividade"/>
+                    <nls description="Производительность" languageCode="ru" name="Производительность"/>
+                    <nls description="Produktivitet" languageCode="sv" name="Produktivitet"/>
+                    <nls description="Üretkenlik" languageCode="tr" name="Üretkenlik"/>
+                    <nls description="生产力" languageCode="zh" name="生产力"/>
+                    <nls description="生產力" languageCode="zh_TW" name="生產力"/>
+                </lookupValue>
+                <lookupValue code="ASSISTIVE TECHNOLOGY" sortOrder="0" status="active">
+                    <nls description="Tecnologia d'ajuda" languageCode="ca" name="Tecnologia d'ajuda"/>
+                    <nls description="Podpůrné technologie" languageCode="cs" name="Podpůrné technologie"/>
+                    <nls description="Hjælpeteknologi" languageCode="da" name="Hjælpeteknologi"/>
+                    <nls description="Unterstützende Technologie" languageCode="de" name="Unterstützende Technologie"/>
+                    <nls description="Assistive Technology" languageCode="en" name="Assistive Technology"/>
+                    <nls description="Tecnología de ayuda" languageCode="es" name="Tecnología de ayuda"/>
+                    <nls description="Avustava teknologia" languageCode="fi" name="Avustava teknologia"/>
+                    <nls description="Technologie d'aide" languageCode="fr" name="Technologie d'aide"/>
+                    <nls description="Támogató technológia" languageCode="hu" name="Támogató technológia"/>
+                    <nls description="Tecnologia assistiva" languageCode="it" name="Tecnologia assistiva"/>
+                    <nls description="補助技術" languageCode="ja" name="補助技術"/>
+                    <nls description="지원 기술" languageCode="ko" name="지원 기술"/>
+                    <nls description="Hulptechnologie" languageCode="nl" name="Hulptechnologie"/>
+                    <nls description="Hjelpeteknologi" languageCode="no" name="Hjelpeteknologi"/>
+                    <nls description="Technologia wspomagająca" languageCode="pl" name="Technologia wspomagająca"/>
+                    <nls description="Tecnologia assistencial" languageCode="pt" name="Tecnologia assistencial"/>
+                    <nls description="Вспомогательная технология" languageCode="ru" name="Вспомогательная технология"/>
+                    <nls description="Assisterande teknik" languageCode="sv" name="Assisterande teknik"/>
+                    <nls description="Yardımcı Teknoloji" languageCode="tr" name="Yardımcı Teknoloji"/>
+                    <nls description="辅助技术" languageCode="zh" name="辅助技术"/>
+                    <nls description="輔助技術" languageCode="zh_TW" name="輔助技術"/>
+                </lookupValue>
+                <displayedSuggestionAttributes>
+                    <displayedSuggestionAttribute value="name"/>
+                </displayedSuggestionAttributes>
+                <searchedSuggestionAttributes>
+                    <searchedSuggestionAttribute value="name"/>
+                </searchedSuggestionAttributes>
+            </staticLookup>
+            <staticLookup autoSuggestEnabled="true" autoSuggestMaxSuggestions="10" code="APM_INSTALLATION_TYPE" hiddenAttributeName="lookup_code" sortStyle="manual" source="niku.com" status="active" update="true">
+                <nls description="Llista de tipus d'instal·lació d'una aplicació" languageCode="ca" name="Tipus d'instal·lació"/>
+                <nls description="Seznam typů instalace pro aplikaci" languageCode="cs" name="Typ instalace"/>
+                <nls description="Liste over installationstyper for et program" languageCode="da" name="Installationstype"/>
+                <nls description="Liste der Installationstypen für eine Anwendung" languageCode="de" name="Installationstyp"/>
+                <nls description="List of installation types for an application" languageCode="en" name="Installation Type"/>
+                <nls description="Lista de tipos de instalación de una aplicación" languageCode="es" name="Tipo de instalación"/>
+                <nls description="Sovelluksen asennustyyppien luettelo" languageCode="fi" name="Asennustyyppi"/>
+                <nls description="Liste des types d'installation pour une application" languageCode="fr" name="Type d'installation"/>
+                <nls description="A telepítési típusok listája egy alkalmazás esetében" languageCode="hu" name="Telepítés típusa"/>
+                <nls description="Elenco di tipi di installazione per un'applicazione" languageCode="it" name="Tipo di installazione"/>
+                <nls description="アプリケーション用のインストール タイプのリスト" languageCode="ja" name="インストール タイプ"/>
+                <nls description="[ko: List of installation types for an application]" languageCode="ko" name="[ko: Installation Type]"/>
+                <nls description="Lijst van installatietypen voor een toepassing" languageCode="nl" name="Installatietype"/>
+                <nls description="Liste over installasjonstyper for en applikasjon" languageCode="no" name="Installasjonstype"/>
+                <nls description="Lista typów instalacji aplikacji" languageCode="pl" name="Typ instalacji"/>
+                <nls description="Lista de tipos de instalação de um aplicativo" languageCode="pt" name="Tipo de instalação"/>
+                <nls description="Список типов установки для приложения" languageCode="ru" name="Тип установки"/>
+                <nls description="Lista över installationstyper för en applikation" languageCode="sv" name="Installationstyp"/>
+                <nls description="Bir uygulama için kurulum türlerinin listesi" languageCode="tr" name="Yükleme Türü"/>
+                <nls description="应用程序的安装类型列表" languageCode="zh" name="安装类型"/>
+                <nls description="應用程式安裝類型的清單" languageCode="zh_TW" name="安裝類型"/>
+                <lookupValue code="ON_PREMISE" sortOrder="1" status="active">
+                    <nls description="Local" languageCode="ca" name="Local"/>
+                    <nls description="Na místě" languageCode="cs" name="Na místě"/>
+                    <nls description="På stedet" languageCode="da" name="På stedet"/>
+                    <nls description="On-Premise" languageCode="de" name="On-Premise"/>
+                    <nls description="On Premise" languageCode="en" name="On Premise"/>
+                    <nls description="Local" languageCode="es" name="Local"/>
+                    <nls description="Paikallinen" languageCode="fi" name="Paikallinen"/>
+                    <nls description="Sur site" languageCode="fr" name="Sur site"/>
+                    <nls description="Helyszíni" languageCode="hu" name="Helyszíni"/>
+                    <nls description="On-premise" languageCode="it" name="On-premise"/>
+                    <nls description="オンプレミス" languageCode="ja" name="オンプレミス"/>
+                    <nls description="[ko: On Premise]" languageCode="ko" name="[ko: On Premise]"/>
+                    <nls description="Op locatie" languageCode="nl" name="Op locatie"/>
+                    <nls description="På stedet" languageCode="no" name="På stedet"/>
+                    <nls description="Lokalny" languageCode="pl" name="Lokalny"/>
+                    <nls description="Local" languageCode="pt" name="Local"/>
+                    <nls description="Локальные" languageCode="ru" name="Локальные"/>
+                    <nls description="On Premise" languageCode="sv" name="On Premise"/>
+                    <nls description="Yerinde" languageCode="tr" name="Yerinde"/>
+                    <nls description="内部部署" languageCode="zh" name="内部部署"/>
+                    <nls description="就地部署" languageCode="zh_TW" name="就地部署"/>
+                </lookupValue>
+                <lookupValue code="OnPremise" sortOrder="1" status="inactive">
+                    <nls description="On-Premise" languageCode="ca" name="On-Premise"/>
+                    <nls description="On-Premise" languageCode="cs" name="On-Premise"/>
+                    <nls description="On-Premise" languageCode="da" name="On-Premise"/>
+                    <nls description="On-Premise" languageCode="de" name="On-Premise"/>
+                    <nls description="On-Premise" languageCode="en" name="On-Premise"/>
+                    <nls description="On-Premise" languageCode="es" name="On-Premise"/>
+                    <nls description="On-Premise" languageCode="fi" name="On-Premise"/>
+                    <nls description="On-Premise" languageCode="fr" name="On-Premise"/>
+                    <nls description="On-Premise" languageCode="hu" name="On-Premise"/>
+                    <nls description="On-Premise" languageCode="it" name="On-Premise"/>
+                    <nls description="On-Premise" languageCode="ja" name="On-Premise"/>
+                    <nls description="On-Premise" languageCode="ko" name="On-Premise"/>
+                    <nls description="On-Premise" languageCode="nl" name="On-Premise"/>
+                    <nls description="On-Premise" languageCode="no" name="On-Premise"/>
+                    <nls description="On-Premise" languageCode="pl" name="On-Premise"/>
+                    <nls description="On-Premise" languageCode="pt" name="On-Premise"/>
+                    <nls description="On-Premise" languageCode="ru" name="On-Premise"/>
+                    <nls description="On-Premise" languageCode="sv" name="On-Premise"/>
+                    <nls description="On-Premise" languageCode="tr" name="On-Premise"/>
+                    <nls description="On-Premise" languageCode="zh" name="On-Premise"/>
+                    <nls description="On-Premise" languageCode="zh_TW" name="On-Premise"/>
+                </lookupValue>
+                <lookupValue code="SAAS" sortOrder="2" status="active">
+                    <nls description="SaaS" languageCode="ca" name="SaaS"/>
+                    <nls description="SaaS" languageCode="cs" name="SaaS"/>
+                    <nls description="SaaS" languageCode="da" name="SaaS"/>
+                    <nls description="SaaS" languageCode="de" name="SaaS"/>
+                    <nls description="SaaS" languageCode="en" name="SaaS"/>
+                    <nls description="SaaS" languageCode="es" name="SaaS"/>
+                    <nls description="SaaS" languageCode="fi" name="SaaS"/>
+                    <nls description="Logiciel à la demande" languageCode="fr" name="Logiciel à la demande"/>
+                    <nls description="Szoftver mint szolgáltatás (SaaS)" languageCode="hu" name="Szoftver mint szolgáltatás (SaaS)"/>
+                    <nls description="SaaS" languageCode="it" name="SaaS"/>
+                    <nls description="SaaS" languageCode="ja" name="SaaS"/>
+                    <nls description="[ko: SaaS]" languageCode="ko" name="[ko: SaaS]"/>
+                    <nls description="SaaS" languageCode="nl" name="SaaS"/>
+                    <nls description="SaaS" languageCode="no" name="SaaS"/>
+                    <nls description="SaaS" languageCode="pl" name="SaaS"/>
+                    <nls description="SaaS" languageCode="pt" name="SaaS"/>
+                    <nls description="SaaS" languageCode="ru" name="SaaS"/>
+                    <nls description="SaaS" languageCode="sv" name="SaaS"/>
+                    <nls description="SaaS" languageCode="tr" name="SaaS"/>
+                    <nls description="SaaS" languageCode="zh" name="SaaS"/>
+                    <nls description="SaaS" languageCode="zh_TW" name="SaaS"/>
+                </lookupValue>
+                <lookupValue code="Cloud" sortOrder="2" status="inactive">
+                    <nls description="Cloud" languageCode="ca" name="Cloud"/>
+                    <nls description="Cloud" languageCode="cs" name="Cloud"/>
+                    <nls description="Cloud" languageCode="da" name="Cloud"/>
+                    <nls description="Cloud" languageCode="de" name="Cloud"/>
+                    <nls description="Cloud" languageCode="en" name="Cloud"/>
+                    <nls description="Cloud" languageCode="es" name="Cloud"/>
+                    <nls description="Cloud" languageCode="fi" name="Cloud"/>
+                    <nls description="Cloud" languageCode="fr" name="Cloud"/>
+                    <nls description="Cloud" languageCode="hu" name="Cloud"/>
+                    <nls description="Cloud" languageCode="it" name="Cloud"/>
+                    <nls description="Cloud" languageCode="ja" name="Cloud"/>
+                    <nls description="Cloud" languageCode="ko" name="Cloud"/>
+                    <nls description="Cloud" languageCode="nl" name="Cloud"/>
+                    <nls description="Cloud" languageCode="no" name="Cloud"/>
+                    <nls description="Cloud" languageCode="pl" name="Cloud"/>
+                    <nls description="Cloud" languageCode="pt" name="Cloud"/>
+                    <nls description="Cloud" languageCode="ru" name="Cloud"/>
+                    <nls description="Cloud" languageCode="sv" name="Cloud"/>
+                    <nls description="Cloud" languageCode="tr" name="Cloud"/>
+                    <nls description="Cloud" languageCode="zh" name="Cloud"/>
+                    <nls description="Cloud" languageCode="zh_TW" name="Cloud"/>
+                </lookupValue>
+                <displayedSuggestionAttributes>
+                    <displayedSuggestionAttribute value="name"/>
+                </displayedSuggestionAttributes>
+                <searchedSuggestionAttributes>
+                    <searchedSuggestionAttribute value="name"/>
+                </searchedSuggestionAttributes>
+            </staticLookup>
+        </lookups>
+    </contentPack>
+</NikuDataBus>

@@ -1,0 +1,37 @@
+<NikuDataBus>
+    <Header action="write" externalSource="NIKU" objectType="group" version="8.0"/>
+    <groups>
+        <group code="ObjectAdmin" isActive="true">
+            <nls languageCode="ca" name="Administradors d&apos;objecte personalitzat"/>
+            <nls description="Uživatelé, kteří spravují uživatelsky definované objekty" languageCode="cs" name="Správci uživatelsky definovaných objektů"/>
+            <nls description="Brugere, der administrerer de brugerdefinerede objekter" languageCode="da" name="Administratorer for brugerdefinerede objekter"/>
+            <nls description="Benutzer, der die benutzerdefinierten Objekte verwaltet" languageCode="de" name="Benutzerdefinierte Objektverwalter"/>
+            <nls description="Users who administer the custom objects" languageCode="en" name="Custom Object Administrators"/>
+            <nls description="Usuarios que administran los objetos personalizados" languageCode="es" name="Administradores de objeto personalizado"/>
+            <nls description="Mukautettuja objekteja hallinnoivat käyttäjät" languageCode="fi" name="Mukautettujen objektien pääkäyttäjät"/>
+            <nls description="Administrateurs d&apos;objets personnalisés" languageCode="fr" name="Administrateurs des objets personnalisés"/>
+            <nls description="Az egyéni objektumokat adminisztráló felhasználók" languageCode="hu" name="Egyéni objektumadminisztrátorok"/>
+            <nls description="Utenti che amministrano gli oggetti personalizzati" languageCode="it" name="Amministratori oggetto personalizzato"/>
+            <nls description="カスタム オブジェクトを管理するユーザ" languageCode="ja" name="カスタム オブジェクト管理者"/>
+            <nls description="사용자 지정 개체를 관리하는 사용자" languageCode="ko" name="사용자 지정 개체 관리자"/>
+            <nls description="De gebruikers die de aangepaste objecten beheren" languageCode="nl" name="Beheerders aangepaste objecten"/>
+            <nls description="Brukere som administrerer de egendefinerte objektene" languageCode="no" name="Egendefinert objekt-administratorer"/>
+            <nls description="Użytkownicy administrujący obiektami niestandardowymi" languageCode="pl" name="Administratorzy obiektów niestandardowych"/>
+            <nls description="Usuários que administram os objetos personalizados" languageCode="pt" name="Administradores do objeto personalizados"/>
+            <nls description="Пользователи, являющиеся администраторами настраиваемых объектов" languageCode="ru" name="Администраторы пользовательских объектов"/>
+            <nls description="Användare som administrerar anpassade objekt" languageCode="sv" name="Anpassad objektadministratörer"/>
+            <nls description="Özel nesneleri yöneten kullanıcılar" languageCode="tr" name="Özel Nesne Yöneticileri"/>
+            <nls description="管理自定义对象的用户" languageCode="zh" name="自定义对象管理员"/>
+            <nls description="管理自訂物件的使用者" languageCode="zh_TW" name="自訂物件管理員"/>
+            <rights>
+                <GlobalRights>
+                    <Right id="ObjectAdminRight"/>
+                    <Right id="CustomObjectsEditorAll"/>
+                    <Right id="SystemPartitionAdmin"/>
+                </GlobalRights>
+                <InstanceRights/>
+                <InstanceOBSRights/>
+            </rights>
+        </group>
+    </groups>
+</NikuDataBus>

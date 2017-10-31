@@ -1,0 +1,504 @@
+<NikuDataBus>
+    <Header action="write" externalSource="NIKU" objectType="contentPack" version="8.0"/>
+    <contentPack update="true">
+        <portlets update="true">
+            <graphPortlet allowConfigure="true" allowConfigureLabel="true" category="PRODUCTIVITY" code="apm.appByQuadrant" dataProviderId="apm.appByQuadrant" dataProviderPartitionId="NIKU.ROOT" dataProviderType="nsql" datapointLabels="percent" firstSliceAngle="0" forceFilter="false" link="applicationDrillDown" mouseoverLabels="labelvalue" objectType="SYSTEM" querySource="customer" showLegend="false" showLineMarkers="true" showLines="true" showSubtitle="false" showTitle="false" size="small" sortColumn="sort" source="customer" stacked="false" type="BAR">
+                <nls description="Applications by Quadrant" languageCode="de" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="no" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="fi" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="ru" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="sv" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="ko" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="pt" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="en" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="it" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="fr" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="hu" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="es" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="zh" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="cs" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="zh_TW" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="ja" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="pl" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="da" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="ca" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="nl" name="Applications by Quadrant"/>
+                <nls description="Applications by Quadrant" languageCode="tr" name="Applications by Quadrant"/>
+                <xAxis decimalPlaces="0" displayUnits="none" labelType="automatic" logarithmic="false" majorTickMark="none" minValue="0" minorTickMark="none" reverse="false" showAxis="true" showMajorGridlines="true" showMinorGridlines="false" showSeparator="false" showTickLabels="true" tickLabelAngle="0" zoned="false"/>
+                <yAxis decimalPlaces="0" displayUnits="none" labelType="none" logarithmic="false" majorTickMark="outside" minorTickMark="none" reverse="false" showAxis="true" showMajorGridlines="false" showMinorGridlines="false" showSeparator="false" showTickLabels="true" tickLabelAngle="0" zoned="false"/>
+                <metric code="app_count" location="xAxis" seriesType="BAR">
+                    <nls languageCode="de" name="Count"/>
+                    <nls languageCode="no" name="Count"/>
+                    <nls languageCode="fi" name="Count"/>
+                    <nls languageCode="ru" name="Count"/>
+                    <nls languageCode="sv" name="Count"/>
+                    <nls languageCode="ko" name="Count"/>
+                    <nls languageCode="pt" name="Count"/>
+                    <nls languageCode="en" name="Count"/>
+                    <nls languageCode="it" name="Count"/>
+                    <nls languageCode="fr" name="Count"/>
+                    <nls languageCode="hu" name="Count"/>
+                    <nls languageCode="es" name="Count"/>
+                    <nls languageCode="zh" name="Count"/>
+                    <nls languageCode="cs" name="Count"/>
+                    <nls languageCode="zh_TW" name="Count"/>
+                    <nls languageCode="ja" name="Count"/>
+                    <nls languageCode="pl" name="Count"/>
+                    <nls languageCode="da" name="Count"/>
+                    <nls languageCode="ca" name="Número"/>
+                    <nls languageCode="nl" name="Count"/>
+                    <nls languageCode="tr" name="Count"/>
+                </metric>
+                <labels>
+                    <datapoint decimalPlaces="0" displayUnits="none" showSeparator="false" showValueSeparator="false" valueDecimalPlaces="0"/>
+                    <mouseover code="label" decimalPlaces="0" displayUnits="none" position="bottom" showSeparator="false" showValueSeparator="false" valueDecimalPlaces="0"/>
+                    <legend code="label" decimalPlaces="0" displayUnits="none" showSeparator="false" showValueSeparator="false" valueDecimalPlaces="0"/>
+                    <categoryAxis code="label" decimalPlaces="0" displayUnits="none" showSeparator="false" showValueSeparator="false" valueDecimalPlaces="0"/>
+                </labels>
+                <OBSAssocs complete="false"/>
+                <Security/>
+                <filter code="apm.appByQuadrant" componentCode="odf" dataProviderId="apm.appByQuadrant" dataProviderType="nsql" objectCode="apm.appByQuadrant" partitionCode="NIKU.ROOT">
+                    <section collapsed="true" currentState="collapsed" filterByExpression="false">
+                        <nls languageCode="ca" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="cs" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="da" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="de" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="en" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="es" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="fi" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="fr" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="hu" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="it" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="ja" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="ko" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="nl" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="no" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="pl" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="pt" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="ru" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="sv" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="tr" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="zh" name="Applications by Quadrant Filter"/>
+                        <nls languageCode="zh_TW" name="Applications by Quadrant Filter"/>
+                    </section>
+                    <defaultDisplay>
+                        <viewFieldDescriptor active="true" aggregate="false" attributeCode="app_count" dataSize="30" decimals="0" extType="double" fixedWidget="false" hidden="false" isMVLookup="false" multiValued="false" notEqualXPath="false" numRows="0" readOnly="false" required="false" virtual="false" widgetType="numeric">
+                            <nls languageCode="ca" name="Número"/>
+                            <nls languageCode="cs" name="Count"/>
+                            <nls languageCode="da" name="Count"/>
+                            <nls languageCode="de" name="Count"/>
+                            <nls languageCode="en" name="Count"/>
+                            <nls languageCode="es" name="Count"/>
+                            <nls languageCode="fi" name="Count"/>
+                            <nls languageCode="fr" name="Count"/>
+                            <nls languageCode="hu" name="Count"/>
+                            <nls languageCode="it" name="Count"/>
+                            <nls languageCode="ja" name="Count"/>
+                            <nls languageCode="ko" name="Count"/>
+                            <nls languageCode="nl" name="Count"/>
+                            <nls languageCode="no" name="Count"/>
+                            <nls languageCode="pl" name="Count"/>
+                            <nls languageCode="pt" name="Count"/>
+                            <nls languageCode="ru" name="Count"/>
+                            <nls languageCode="sv" name="Count"/>
+                            <nls languageCode="tr" name="Count"/>
+                            <nls languageCode="zh" name="Count"/>
+                            <nls languageCode="zh_TW" name="Count"/>
+                        </viewFieldDescriptor>
+                        <viewFieldDescriptor active="true" aggregate="false" attributeCode="code" dataSize="200" decimals="0" fixedWidget="false" hidden="false" isMVLookup="false" multiValued="false" notEqualXPath="false" numRows="0" readOnly="false" required="false" virtual="false" widgetType="text" width="30">
+                            <nls languageCode="ca" name="Codi"/>
+                            <nls languageCode="cs" name="Code"/>
+                            <nls languageCode="da" name="Code"/>
+                            <nls languageCode="de" name="Code"/>
+                            <nls languageCode="en" name="Code"/>
+                            <nls languageCode="es" name="Code"/>
+                            <nls languageCode="fi" name="Code"/>
+                            <nls languageCode="fr" name="Code"/>
+                            <nls languageCode="hu" name="Code"/>
+                            <nls languageCode="it" name="Code"/>
+                            <nls languageCode="ja" name="Code"/>
+                            <nls languageCode="ko" name="Code"/>
+                            <nls languageCode="nl" name="Code"/>
+                            <nls languageCode="no" name="Code"/>
+                            <nls languageCode="pl" name="Code"/>
+                            <nls languageCode="pt" name="Code"/>
+                            <nls languageCode="ru" name="Code"/>
+                            <nls languageCode="sv" name="Code"/>
+                            <nls languageCode="tr" name="Code"/>
+                            <nls languageCode="zh" name="Code"/>
+                            <nls languageCode="zh_TW" name="Code"/>
+                        </viewFieldDescriptor>
+                        <viewFieldDescriptor active="true" aggregate="false" attributeCode="label" dataSize="200" decimals="0" fixedWidget="false" hidden="false" isMVLookup="false" multiValued="false" notEqualXPath="false" numRows="0" readOnly="false" required="false" virtual="false" widgetType="text" width="30">
+                            <nls languageCode="ca" name="Label"/>
+                            <nls languageCode="cs" name="Label"/>
+                            <nls languageCode="da" name="Label"/>
+                            <nls languageCode="de" name="Label"/>
+                            <nls languageCode="en" name="Label"/>
+                            <nls languageCode="es" name="Label"/>
+                            <nls languageCode="fi" name="Label"/>
+                            <nls languageCode="fr" name="Label"/>
+                            <nls languageCode="hu" name="Label"/>
+                            <nls languageCode="it" name="Label"/>
+                            <nls languageCode="ja" name="Label"/>
+                            <nls languageCode="ko" name="Label"/>
+                            <nls languageCode="nl" name="Label"/>
+                            <nls languageCode="no" name="Label"/>
+                            <nls languageCode="pl" name="Label"/>
+                            <nls languageCode="pt" name="Label"/>
+                            <nls languageCode="ru" name="Label"/>
+                            <nls languageCode="sv" name="Label"/>
+                            <nls languageCode="tr" name="Label"/>
+                            <nls languageCode="zh" name="Label"/>
+                            <nls languageCode="zh_TW" name="Label"/>
+                        </viewFieldDescriptor>
+                        <viewFieldDescriptor active="true" aggregate="false" attributeCode="param_install_type" dataSize="30" decimals="0" extType="enum" fixedWidget="false" hidden="false" isMVLookup="false" lookupType="APM_INSTALLATION_TYPE" multiValued="false" notEqualXPath="false" numRows="0" readOnly="false" required="false" virtual="false" widgetType="browse" width="30">
+                            <nls languageCode="ca" name="param_install_type"/>
+                            <nls languageCode="cs" name="param_install_type"/>
+                            <nls languageCode="da" name="param_install_type"/>
+                            <nls languageCode="de" name="param_install_type"/>
+                            <nls languageCode="en" name="param_install_type"/>
+                            <nls languageCode="es" name="param_install_type"/>
+                            <nls languageCode="fi" name="param_install_type"/>
+                            <nls languageCode="fr" name="param_install_type"/>
+                            <nls languageCode="hu" name="param_install_type"/>
+                            <nls languageCode="it" name="param_install_type"/>
+                            <nls languageCode="ja" name="param_install_type"/>
+                            <nls languageCode="ko" name="param_install_type"/>
+                            <nls languageCode="nl" name="param_install_type"/>
+                            <nls languageCode="no" name="param_install_type"/>
+                            <nls languageCode="pl" name="param_install_type"/>
+                            <nls languageCode="pt" name="param_install_type"/>
+                            <nls languageCode="ru" name="param_install_type"/>
+                            <nls languageCode="sv" name="param_install_type"/>
+                            <nls languageCode="tr" name="param_install_type"/>
+                            <nls languageCode="zh" name="param_install_type"/>
+                            <nls languageCode="zh_TW" name="param_install_type"/>
+                            <autoSuggest enabled="true" maxSuggestions="10"/>
+                        </viewFieldDescriptor>
+                        <viewFieldDescriptor active="true" aggregate="false" attributeCode="param_vendor" dataSize="30" decimals="0" extType="enum" fixedWidget="false" hidden="false" isMVLookup="false" lookupType="LOOKUP_COMPANIES" multiValued="false" notEqualXPath="false" numRows="0" readOnly="false" required="false" virtual="false" widgetType="browse">
+                            <nls languageCode="ca" name="param_vendor"/>
+                            <nls languageCode="cs" name="param_vendor"/>
+                            <nls languageCode="da" name="param_vendor"/>
+                            <nls languageCode="de" name="param_vendor"/>
+                            <nls languageCode="en" name="param_vendor"/>
+                            <nls languageCode="es" name="param_vendor"/>
+                            <nls languageCode="fi" name="param_vendor"/>
+                            <nls languageCode="fr" name="param_vendor"/>
+                            <nls languageCode="hu" name="param_vendor"/>
+                            <nls languageCode="it" name="param_vendor"/>
+                            <nls languageCode="ja" name="param_vendor"/>
+                            <nls languageCode="ko" name="param_vendor"/>
+                            <nls languageCode="nl" name="param_vendor"/>
+                            <nls languageCode="no" name="param_vendor"/>
+                            <nls languageCode="pl" name="param_vendor"/>
+                            <nls languageCode="pt" name="param_vendor"/>
+                            <nls languageCode="ru" name="param_vendor"/>
+                            <nls languageCode="sv" name="param_vendor"/>
+                            <nls languageCode="tr" name="param_vendor"/>
+                            <nls languageCode="zh" name="param_vendor"/>
+                            <nls languageCode="zh_TW" name="param_vendor"/>
+                            <autoSuggest enabled="true" maxSuggestions="10"/>
+                        </viewFieldDescriptor>
+                        <viewFieldDescriptor active="true" aggregate="false" attributeCode="sort" dataSize="30" decimals="0" extType="double" fixedWidget="false" hidden="false" isMVLookup="false" multiValued="false" notEqualXPath="false" numRows="0" readOnly="false" required="false" virtual="false" widgetType="numeric">
+                            <nls languageCode="ca" name="Sort"/>
+                            <nls languageCode="cs" name="Sort"/>
+                            <nls languageCode="da" name="Sort"/>
+                            <nls languageCode="de" name="Sort"/>
+                            <nls languageCode="en" name="Sort"/>
+                            <nls languageCode="es" name="Sort"/>
+                            <nls languageCode="fi" name="Sort"/>
+                            <nls languageCode="fr" name="Sort"/>
+                            <nls languageCode="hu" name="Sort"/>
+                            <nls languageCode="it" name="Sort"/>
+                            <nls languageCode="ja" name="Sort"/>
+                            <nls languageCode="ko" name="Sort"/>
+                            <nls languageCode="nl" name="Sort"/>
+                            <nls languageCode="no" name="Sort"/>
+                            <nls languageCode="pl" name="Sort"/>
+                            <nls languageCode="pt" name="Sort"/>
+                            <nls languageCode="ru" name="Sort"/>
+                            <nls languageCode="sv" name="Sort"/>
+                            <nls languageCode="tr" name="Sort"/>
+                            <nls languageCode="zh" name="Sort"/>
+                            <nls languageCode="zh_TW" name="Sort"/>
+                        </viewFieldDescriptor>
+                        <viewFieldDescriptor active="true" aggregate="false" attributeCode="param_category_filter" dataSize="20" decimals="0" extType="enum" fixedWidget="false" hidden="false" isMVLookup="false" lookupType="INV_APPLICATION_CATEGORY_TYPE" multiValued="false" notEqualXPath="false" numRows="0" readOnly="false" required="false" virtual="false" widgetType="text" width="20">
+                            <nls languageCode="ca" name="param_category_filter"/>
+                            <nls languageCode="cs" name="param_category_filter"/>
+                            <nls languageCode="da" name="param_category_filter"/>
+                            <nls languageCode="de" name="param_category_filter"/>
+                            <nls languageCode="en" name="param_category_filter"/>
+                            <nls languageCode="es" name="param_category_filter"/>
+                            <nls languageCode="fi" name="param_category_filter"/>
+                            <nls languageCode="fr" name="param_category_filter"/>
+                            <nls languageCode="hu" name="param_category_filter"/>
+                            <nls languageCode="it" name="param_category_filter"/>
+                            <nls languageCode="ja" name="param_category_filter"/>
+                            <nls languageCode="ko" name="param_category_filter"/>
+                            <nls languageCode="nl" name="param_category_filter"/>
+                            <nls languageCode="no" name="param_category_filter"/>
+                            <nls languageCode="pl" name="param_category_filter"/>
+                            <nls languageCode="pt" name="param_category_filter"/>
+                            <nls languageCode="ru" name="param_category_filter"/>
+                            <nls languageCode="sv" name="param_category_filter"/>
+                            <nls languageCode="tr" name="param_category_filter"/>
+                            <nls languageCode="zh" name="param_category_filter"/>
+                            <nls languageCode="zh_TW" name="param_category_filter"/>
+                            <autoSuggest enabled="true" maxSuggestions="10"/>
+                        </viewFieldDescriptor>
+                    </defaultDisplay>
+                </filter>
+            </graphPortlet>
+        </portlets>
+        <queries update="true">
+            <query category="PRODUCTIVITY" code="apm.appByQuadrant" isUserPortletAvailable="1" source="customer">
+                <nls description="apm.appByQuadrant" languageCode="ca" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="cs" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="da" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="de" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="en" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="es" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="fi" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="fr" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="hu" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="it" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="ja" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="ko" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="nl" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="no" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="pl" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="pt" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="ru" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="sv" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="tr" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="zh" name="Applications by Quadrant"/>
+                <nls description="apm.appByQuadrant" languageCode="zh_TW" name="Applications by Quadrant"/>
+                <nsql dbId="Niku" dbVendor="all">SELECT  @SELECT:DIM:USER_DEF:IMPLIED:APPLICATION:b.sort:sort@,
+                    @SELECT:DIM_PROP:USER_DEF:IMPLIED:APPLICATION:b.label:label@,
+                    @SELECT:DIM_PROP:USER_DEF:IMPLIED:APPLICATION:b.app_count:app_count@,
+                    @SELECT:DIM_PROP:USER_DEF:IMPLIED:APPLICATION:b.code:code@
+                    FROM (
+                    SELECT count(DISTINCT inv.id) app_count, &apos;Good Fit&apos; label, 1 sort, &apos;Q1&apos; code
+                    FROM INV_INVESTMENTS inv
+                    INNER JOIN ODF_APPLICATION_V2 a on inv.id = a.odf_pk
+                    WHERE a.apm_business_score &gt;= 50 AND a.apm_technology_score &gt;= 50
+                    AND (@WHERE:PARAM:USER_DEF:STRING:install_type@ IS NULL OR @WHERE:PARAM:USER_DEF:STRING:install_type@ = a.apm_install_type)
+                    AND (@WHERE:PARAM:USER_DEF:INTEGER:vendor@ IS NULL OR @WHERE:PARAM:USER_DEF:INTEGER:vendor@ = a.apm_vendor)
+                    AND (@WHERE:PARAM:USER_DEF:STRING:category_filter@ IS NULL OR @WHERE:PARAM:USER_DEF:STRING:category_filter@ = a.category_code)
+                    UNION
+                    SELECT count(DISTINCT inv.id), &apos;Poor Technology Score&apos; label, 2 sort, &apos;Q4&apos; code
+                    FROM INV_INVESTMENTS inv
+                    INNER JOIN ODF_APPLICATION_V2 a on inv.id = a.odf_pk
+                    WHERE a.apm_business_score &gt;= 50 AND a.apm_technology_score &lt; 50
+                    AND (@WHERE:PARAM:USER_DEF:STRING:install_type@ IS NULL OR @WHERE:PARAM:USER_DEF:STRING:install_type@ = a.apm_install_type)
+                    AND (@WHERE:PARAM:USER_DEF:INTEGER:vendor@ IS NULL OR @WHERE:PARAM:USER_DEF:INTEGER:vendor@ = a.apm_vendor)
+                    AND (@WHERE:PARAM:USER_DEF:STRING:category_filter@ IS NULL OR @WHERE:PARAM:USER_DEF:STRING:category_filter@ = a.category_code)
+                    UNION
+                    SELECT count(DISTINCT inv.id), &apos;Poor Business Value&apos; label, 3 sort, &apos;Q2&apos; code
+                    FROM INV_INVESTMENTS inv
+                    INNER JOIN ODF_APPLICATION_V2 a on inv.id = a.odf_pk
+                    WHERE a.apm_business_score &lt; 50 AND a.apm_technology_score &gt;= 50
+                    AND (@WHERE:PARAM:USER_DEF:STRING:install_type@ IS NULL OR @WHERE:PARAM:USER_DEF:STRING:install_type@ = a.apm_install_type)
+                    AND (@WHERE:PARAM:USER_DEF:INTEGER:vendor@ IS NULL OR @WHERE:PARAM:USER_DEF:INTEGER:vendor@ = a.apm_vendor)
+                    AND (@WHERE:PARAM:USER_DEF:STRING:category_filter@ IS NULL OR @WHERE:PARAM:USER_DEF:STRING:category_filter@ = a.category_code)
+                    UNION
+                    SELECT count(DISTINCT inv.id), &apos;Poor Fit&apos; label, 4 sort, &apos;Q3&apos; code
+                    FROM INV_INVESTMENTS inv
+                    INNER JOIN ODF_APPLICATION_V2 a on inv.id = a.odf_pk
+                    WHERE a.apm_business_score &lt; 50 AND a.apm_technology_score &lt; 50
+                    AND (@WHERE:PARAM:USER_DEF:STRING:install_type@ IS NULL OR @WHERE:PARAM:USER_DEF:STRING:install_type@ = a.apm_install_type)
+                    AND (@WHERE:PARAM:USER_DEF:INTEGER:vendor@ IS NULL OR @WHERE:PARAM:USER_DEF:INTEGER:vendor@ = a.apm_vendor)
+                    AND (@WHERE:PARAM:USER_DEF:STRING:category_filter@ IS NULL OR @WHERE:PARAM:USER_DEF:STRING:category_filter@ = a.category_code)
+                    ) b
+                    WHERE @FILTER@</nsql>
+                <attribute id="sort" required="false">
+                    <nls languageCode="ca" name="Sort"/>
+                    <nls languageCode="cs" name="Sort"/>
+                    <nls languageCode="da" name="Sort"/>
+                    <nls languageCode="de" name="Sort"/>
+                    <nls languageCode="en" name="Sort"/>
+                    <nls languageCode="es" name="Sort"/>
+                    <nls languageCode="fi" name="Sort"/>
+                    <nls languageCode="fr" name="Sort"/>
+                    <nls languageCode="hu" name="Sort"/>
+                    <nls languageCode="it" name="Sort"/>
+                    <nls languageCode="ja" name="Sort"/>
+                    <nls languageCode="ko" name="Sort"/>
+                    <nls languageCode="nl" name="Sort"/>
+                    <nls languageCode="no" name="Sort"/>
+                    <nls languageCode="pl" name="Sort"/>
+                    <nls languageCode="pt" name="Sort"/>
+                    <nls languageCode="ru" name="Sort"/>
+                    <nls languageCode="sv" name="Sort"/>
+                    <nls languageCode="tr" name="Sort"/>
+                    <nls languageCode="zh" name="Sort"/>
+                    <nls languageCode="zh_TW" name="Sort"/>
+                </attribute>
+                <attribute id="label" required="false">
+                    <nls languageCode="ca" name="Label"/>
+                    <nls languageCode="cs" name="Label"/>
+                    <nls languageCode="da" name="Label"/>
+                    <nls languageCode="de" name="Label"/>
+                    <nls languageCode="en" name="Label"/>
+                    <nls languageCode="es" name="Label"/>
+                    <nls languageCode="fi" name="Label"/>
+                    <nls languageCode="fr" name="Label"/>
+                    <nls languageCode="hu" name="Label"/>
+                    <nls languageCode="it" name="Label"/>
+                    <nls languageCode="ja" name="Label"/>
+                    <nls languageCode="ko" name="Label"/>
+                    <nls languageCode="nl" name="Label"/>
+                    <nls languageCode="no" name="Label"/>
+                    <nls languageCode="pl" name="Label"/>
+                    <nls languageCode="pt" name="Label"/>
+                    <nls languageCode="ru" name="Label"/>
+                    <nls languageCode="sv" name="Label"/>
+                    <nls languageCode="tr" name="Label"/>
+                    <nls languageCode="zh" name="Label"/>
+                    <nls languageCode="zh_TW" name="Label"/>
+                </attribute>
+                <attribute id="app_count" required="false">
+                    <nls languageCode="ca" name="Número"/>
+                    <nls languageCode="cs" name="Count"/>
+                    <nls languageCode="da" name="Count"/>
+                    <nls languageCode="de" name="Count"/>
+                    <nls languageCode="en" name="Count"/>
+                    <nls languageCode="es" name="Count"/>
+                    <nls languageCode="fi" name="Count"/>
+                    <nls languageCode="fr" name="Count"/>
+                    <nls languageCode="hu" name="Count"/>
+                    <nls languageCode="it" name="Count"/>
+                    <nls languageCode="ja" name="Count"/>
+                    <nls languageCode="ko" name="Count"/>
+                    <nls languageCode="nl" name="Count"/>
+                    <nls languageCode="no" name="Count"/>
+                    <nls languageCode="pl" name="Count"/>
+                    <nls languageCode="pt" name="Count"/>
+                    <nls languageCode="ru" name="Count"/>
+                    <nls languageCode="sv" name="Count"/>
+                    <nls languageCode="tr" name="Count"/>
+                    <nls languageCode="zh" name="Count"/>
+                    <nls languageCode="zh_TW" name="Count"/>
+                </attribute>
+                <attribute id="code" required="false">
+                    <nls languageCode="ca" name="Codi"/>
+                    <nls languageCode="cs" name="Code"/>
+                    <nls languageCode="da" name="Code"/>
+                    <nls languageCode="de" name="Code"/>
+                    <nls languageCode="en" name="Code"/>
+                    <nls languageCode="es" name="Code"/>
+                    <nls languageCode="fi" name="Code"/>
+                    <nls languageCode="fr" name="Code"/>
+                    <nls languageCode="hu" name="Code"/>
+                    <nls languageCode="it" name="Code"/>
+                    <nls languageCode="ja" name="Code"/>
+                    <nls languageCode="ko" name="Code"/>
+                    <nls languageCode="nl" name="Code"/>
+                    <nls languageCode="no" name="Code"/>
+                    <nls languageCode="pl" name="Code"/>
+                    <nls languageCode="pt" name="Code"/>
+                    <nls languageCode="ru" name="Code"/>
+                    <nls languageCode="sv" name="Code"/>
+                    <nls languageCode="tr" name="Code"/>
+                    <nls languageCode="zh" name="Code"/>
+                    <nls languageCode="zh_TW" name="Code"/>
+                </attribute>
+                <attribute id="param_vendor" lookup="LOOKUP_COMPANIES" required="false">
+                    <nls languageCode="ca" name="param_vendor"/>
+                    <nls languageCode="cs" name="param_vendor"/>
+                    <nls languageCode="da" name="param_vendor"/>
+                    <nls languageCode="de" name="param_vendor"/>
+                    <nls languageCode="en" name="param_vendor"/>
+                    <nls languageCode="es" name="param_vendor"/>
+                    <nls languageCode="fi" name="param_vendor"/>
+                    <nls languageCode="fr" name="param_vendor"/>
+                    <nls languageCode="hu" name="param_vendor"/>
+                    <nls languageCode="it" name="param_vendor"/>
+                    <nls languageCode="ja" name="param_vendor"/>
+                    <nls languageCode="ko" name="param_vendor"/>
+                    <nls languageCode="nl" name="param_vendor"/>
+                    <nls languageCode="no" name="param_vendor"/>
+                    <nls languageCode="pl" name="param_vendor"/>
+                    <nls languageCode="pt" name="param_vendor"/>
+                    <nls languageCode="ru" name="param_vendor"/>
+                    <nls languageCode="sv" name="param_vendor"/>
+                    <nls languageCode="tr" name="param_vendor"/>
+                    <nls languageCode="zh" name="param_vendor"/>
+                    <nls languageCode="zh_TW" name="param_vendor"/>
+                </attribute>
+                <attribute id="param_category_filter" lookup="INV_APPLICATION_CATEGORY_TYPE" required="false">
+                    <nls languageCode="ca" name="param_category_filter"/>
+                    <nls languageCode="cs" name="param_category_filter"/>
+                    <nls languageCode="da" name="param_category_filter"/>
+                    <nls languageCode="de" name="param_category_filter"/>
+                    <nls languageCode="en" name="param_category_filter"/>
+                    <nls languageCode="es" name="param_category_filter"/>
+                    <nls languageCode="fi" name="param_category_filter"/>
+                    <nls languageCode="fr" name="param_category_filter"/>
+                    <nls languageCode="hu" name="param_category_filter"/>
+                    <nls languageCode="it" name="param_category_filter"/>
+                    <nls languageCode="ja" name="param_category_filter"/>
+                    <nls languageCode="ko" name="param_category_filter"/>
+                    <nls languageCode="nl" name="param_category_filter"/>
+                    <nls languageCode="no" name="param_category_filter"/>
+                    <nls languageCode="pl" name="param_category_filter"/>
+                    <nls languageCode="pt" name="param_category_filter"/>
+                    <nls languageCode="ru" name="param_category_filter"/>
+                    <nls languageCode="sv" name="param_category_filter"/>
+                    <nls languageCode="tr" name="param_category_filter"/>
+                    <nls languageCode="zh" name="param_category_filter"/>
+                    <nls languageCode="zh_TW" name="param_category_filter"/>
+                </attribute>
+                <attribute id="param_install_type" lookup="APM_INSTALLATION_TYPE" required="false">
+                    <nls languageCode="ca" name="param_install_type"/>
+                    <nls languageCode="cs" name="param_install_type"/>
+                    <nls languageCode="da" name="param_install_type"/>
+                    <nls languageCode="de" name="param_install_type"/>
+                    <nls languageCode="en" name="param_install_type"/>
+                    <nls languageCode="es" name="param_install_type"/>
+                    <nls languageCode="fi" name="param_install_type"/>
+                    <nls languageCode="fr" name="param_install_type"/>
+                    <nls languageCode="hu" name="param_install_type"/>
+                    <nls languageCode="it" name="param_install_type"/>
+                    <nls languageCode="ja" name="param_install_type"/>
+                    <nls languageCode="ko" name="param_install_type"/>
+                    <nls languageCode="nl" name="param_install_type"/>
+                    <nls languageCode="no" name="param_install_type"/>
+                    <nls languageCode="pl" name="param_install_type"/>
+                    <nls languageCode="pt" name="param_install_type"/>
+                    <nls languageCode="ru" name="param_install_type"/>
+                    <nls languageCode="sv" name="param_install_type"/>
+                    <nls languageCode="tr" name="param_install_type"/>
+                    <nls languageCode="zh" name="param_install_type"/>
+                    <nls languageCode="zh_TW" name="param_install_type"/>
+                </attribute>
+                <links>
+                    <link action="apm.appByQuadrant" code="applicationDrillDown">
+                        <nls description="Application Drill Down" languageCode="ca" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="cs" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="da" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="de" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="en" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="es" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="fi" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="fr" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="hu" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="it" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="ja" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="ko" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="nl" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="no" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="pl" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="pt" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="ru" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="sv" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="tr" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="zh" name="Application Drill Down"/>
+                        <nls description="Application Drill Down" languageCode="zh_TW" name="Application Drill Down"/>
+                        <linkParam dataRef="code" dataSource="data" paramCode="code"/>
+                    </link>
+                </links>
+            </query>
+        </queries>
+    </contentPack>
+</NikuDataBus>

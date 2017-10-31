@@ -26,7 +26,6 @@ func specificObjectTransformations(xog *etree.Document, file common.DriverFile) 
 	}
 
 	if file.PartitionModel != "" {
-
 		element := xog.FindElement("//object[@code='" + file.Code + "']")
 		element.CreateAttr("partitionModelCode", file.PartitionModel)
 	}
@@ -83,7 +82,7 @@ func removeUndefinedIncludes(xog *etree.Document, includes []common.Element) {
 		removeElementFromParent(xog, "//links")
 	}
 	if removeActions {
-		removeElementFromParent(xog, "actions")
+		removeElementFromParent(xog, "//actions")
 	}
 }
 
