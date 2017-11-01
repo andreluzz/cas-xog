@@ -184,3 +184,55 @@ func readMockResultAndCompare(xog *etree.Document, compareXml string) bool {
 	}
 	return true
 }
+
+func TestExecuteToReturnOBS(t *testing.T) {
+	file := common.DriverFile{
+		Code: "strat_plan",
+		Type: common.OBS,
+	}
+
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "obs_full_xog.xml")
+	err := Execute(xog, nil, file)
+
+	if err != nil {
+		t.Fatalf("Error transforming OBS XOG file. Debug: %s", err.Error())
+	}
+
+	if readMockResultAndCompare(xog, "obs_result.xml") == false {
+		t.Errorf("Error transforming OBS XOG file. Invalid result XML.")
+	}
+}
+
+func TestExecuteToReturnOBSWithoutSecurityAndObject(t *testing.T) {
+	file := common.DriverFile{
+		Code: "strat_plan",
+		Type: common.OBS,
+		Elements: []common.Element {
+			{
+				Action: "remove",
+				XPath: "//associatedObject",
+			},
+			{
+				Action: "remove",
+				XPath: "//Security",
+			},
+			{
+				Action: "remove",
+				XPath: "//rights",
+			},
+		},
+	}
+
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "obs_full_xog.xml")
+	err := Execute(xog, nil, file)
+
+	if err != nil {
+		t.Fatalf("Error transforming OBS XOG file. Debug: %s", err.Error())
+	}
+
+	if readMockResultAndCompare(xog, "obs_no_object_and_security_result.xml") == false {
+		t.Errorf("Error transforming OBS XOG file. Invalid result XML.")
+	}
+}

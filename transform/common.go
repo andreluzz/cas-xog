@@ -26,10 +26,7 @@ func Execute(xog, aux *etree.Document, file common.DriverFile) error {
 			return errors.New("[transform error] " + err.Error())
 		}
 	case common.OBJECT:
-		err = specificObjectTransformations(xog, file)
-		if err != nil {
-			return errors.New("[transform error] " + err.Error())
-		}
+		specificObjectTransformations(xog, file)
 	case common.VIEW:
 		err = specificViewTransformations(xog, aux, file)
 		if err != nil {
@@ -39,15 +36,9 @@ func Execute(xog, aux *etree.Document, file common.DriverFile) error {
 		removeElementFromParent(xog, "//lookups")
 		removeElementFromParent(xog, "//objects")
 	case common.MENU:
-		removeElementFromParent(xog, "//objects")
-		removeElementFromParent(xog, "//pages")
-	case common.OBS:
-		if file.RemoveObjAssoc {
-			removeElementsFromParent(xog, "//associatedObject")
-		}
-		if file.RemoveSecurity {
-			removeElementsFromParent(xog, "//Security")
-			removeElementsFromParent(xog, "//rights")
+		err = specificMenuTransformations(xog, aux, file)
+		if err != nil {
+			return errors.New("[transform error] " + err.Error())
 		}
 	case common.RESOURCE_CLASS_INSTANCE, common.WIP_CLASS_INSTANCE, common.TRANSACTION_CLASS_INSTANCE:
 		headerElement.CreateAttr("version", "12.0")

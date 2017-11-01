@@ -2,26 +2,24 @@ package common
 
 import "os"
 
-type Menu struct {
-	Code           string `xml:"code,attr"`
-	Action         string `xml:"action,attr"`
-	TargetPosition int    `xml:"targetPosition,attr"`
-	Links []struct {
-		Code           string `xml:"code,attr"`
-		TargetPosition int    `xml:"targetPosition,attr"`
-	} `xml:"link"`
+type SectionLink struct {
+	Code	string `xml:"code,attr"`
 }
 
-type ViewSection struct {
-	SourcePosition string `xml:"sourcePosition,attr"`
-	TargetPosition string `xml:"targetPosition,attr"`
-	Action string `xml:"action,attr"`
-	Fields []struct {
-		Code         string `xml:"code,attr"`
-		Column       string `xml:"column,attr"`
-		Remove       bool   `xml:"remove,attr"`
-		InsertBefore string `xml:"insertBefore,attr"`
-	}`xml:"field"`
+type SectionField struct {
+	Code         string `xml:"code,attr"`
+	Column       string `xml:"column,attr"`
+	Remove       bool   `xml:"remove,attr"`
+	InsertBefore string `xml:"insertBefore,attr"`
+}
+
+type Section struct {
+	Code 			string 			`xml:"code,attr"`
+	SourcePosition 	string 			`xml:"sourcePosition,attr"`
+	TargetPosition 	string 			`xml:"targetPosition,attr"`
+	Action 			string 			`xml:"action,attr"`
+	Links			[]SectionLink 	`xml:"link"`
+	Fields 			[]SectionField 	`xml:"field"`
 }
 
 type Element struct {
@@ -62,15 +60,12 @@ type DriverFile struct {
 	InsertBeforeIndex string        `xml:"insertBeforeIndex,attr"`
 	UpdateProgram     bool          `xml:"updateProgram,attr"`
 	CopyPermissions   string		`xml:"copyPermissions,attr"`
-	RemoveObjAssoc    bool			`xml:"removeObjectsAssociation,attr"`
-	RemoveSecurity    bool			`xml:"removeSecurity,attr"`
 	Template 		  string 		`xml:"template,attr"`
 	ExcelFile 		  string 		`xml:"excel,attr"`
 	ExcelStartRow 	  string 		`xml:"startRow,attr"`
 	InstanceTag 	  string 		`xml:"instance,attr"`
 	ExportToExcel 	  bool			`xml:"exportToExcel,attr"`
-	Menus             []Menu        `xml:"menu"`
-	Sections 		  []ViewSection `xml:"section"`
+	Sections 		  []Section		`xml:"section"`
 	Elements 		  []Element		`xml:"element"`
 	Replace			  []FileReplace `xml:"replace"`
 	MatchExcel		  []MatchExcel	`xml:"match"`

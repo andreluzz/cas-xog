@@ -106,7 +106,7 @@ func updateSections(xog, aux *etree.Document, file common.DriverFile) error {
 	return nil
 }
 
-func processSectionByType(section common.ViewSection, sourceView, targetView *etree.Element) error {
+func processSectionByType(section common.Section, sourceView, targetView *etree.Element) error {
 	var sourceSection *etree.Element
 	if section.Action != common.ACTION_REMOVE {
 		if section.SourcePosition == "" {

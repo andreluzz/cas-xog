@@ -104,25 +104,28 @@ func ProcessDriverFiles(action string) {
 		if action == "r" {
 			var aux *etree.Document
 			var auxFile common.DriverFile
-			var auxEnv *EnvType
 			loadAuxFile := false
+			auxEnv := TargetEnv.copyEnv()
 
 			switch f.Type {
 			case common.PROCESS:
 				if f.CopyPermissions != "" {
 					loadAuxFile = true
-					auxEnv = env.copyEnv()
 					auxFile = common.DriverFile{Code: f.CopyPermissions, Path: "aux_" + f.CopyPermissions + ".xml", Type: common.PROCESS}
 				}
 			case common.VIEW:
 				if f.Code != "*" {
 					loadAuxFile = true
-					auxEnv = TargetEnv.copyEnv()
 					partition := f.SourcePartition
 					if f.TargetPartition != "" {
 						partition = f.TargetPartition
 					}
 					auxFile = common.DriverFile{Code: f.Code, ObjCode: f.ObjCode, Path: "aux_" + f.Path + ".xml", SourcePartition: partition, Type: common.VIEW}
+				}
+			case common.MENU:
+				if len(f.Sections) > 0 {
+					loadAuxFile = true
+					auxFile = common.DriverFile{Code: f.Code, Path: "aux_" + f.Path + ".xml", Type: common.MENU}
 				}
 			}
 

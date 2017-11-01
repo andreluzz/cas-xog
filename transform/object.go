@@ -5,7 +5,7 @@ import (
 	"github.com/andreluzz/cas-xog/common"
 )
 
-func specificObjectTransformations(xog *etree.Document, file common.DriverFile) error {
+func specificObjectTransformations(xog *etree.Document, file common.DriverFile) {
 
 	object := xog.FindElement("//objects/object")
 	for _, e := range object.FindElements("//object") {
@@ -29,8 +29,6 @@ func specificObjectTransformations(xog *etree.Document, file common.DriverFile) 
 		element := xog.FindElement("//object[@code='" + file.Code + "']")
 		element.CreateAttr("partitionModelCode", file.PartitionModel)
 	}
-
-	return nil
 }
 
 func removeOtherPartitionsAttributes(xog *etree.Document, file common.DriverFile) {

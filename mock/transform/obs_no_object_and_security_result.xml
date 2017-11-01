@@ -1,0 +1,20 @@
+<NikuDataBus>
+	<Header action="write" externalSource="NIKU" objectType="obs" version="8.0"/>
+	<obsTypes>
+		<obs code="strat_plan" isSecurity="true" name="Branch">
+			<level depth="1" name="All"/>
+			<level depth="2" name="Division"/>
+			<level depth="3" name="Branch"/>
+			<objectAssociation associationType="Any Unit" object="strat_kpi"/>
+			<objectAssociation associationType="Any Unit" object="strategic_item"/>
+			<unit code="strat_corp" name="Corporate">
+				<unit code="strat_online_op_bu" name="Online Operations"/>
+				<unit code="strat_id" name="TIC">
+					<unit code="strat_it_dev" name="IT Development"/>
+					<unit code="strat_it_oper" name="IT Operations"/>
+				</unit>
+				<unit code="strat_direct_sales" name="Direct Sales"/>
+			</unit>
+		</obs>
+	</obsTypes>
+</NikuDataBus>
