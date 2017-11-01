@@ -61,11 +61,11 @@ func specificMenuTransformations(xog, aux *etree.Document, file common.DriverFil
 						}
 					}
 				}
-				targetElement := aux.FindElement("//section[" + position + "]")
-				if targetElement == nil {
+				targetElementAtPosition := aux.FindElement("//section[" + position + "]")
+				if targetElementAtPosition == nil {
 					return errors.New("invalid target section position(" + position + ")")
 				}
-				targetElement.Parent().InsertChild(targetElement, sourceSectionElement)
+				targetElementAtPosition.Parent().InsertChild(targetElementAtPosition, sourceSectionElement)
 				for i,e := range aux.FindElements("//section") {
 					e.CreateAttr("position", strconv.Itoa(i))
 				}
