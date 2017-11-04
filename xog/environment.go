@@ -1,11 +1,11 @@
 package xog
 
 import (
-	"errors"
-	"github.com/beevik/etree"
-	"fmt"
 	"os"
+	"fmt"
+	"errors"
 	"strconv"
+	"github.com/beevik/etree"
 	"github.com/andreluzz/cas-xog/common"
 )
 
@@ -136,7 +136,7 @@ func RenderEnvironments(action string) bool {
 			os.Exit(0)
 		}
 
-		common.Info("\r[CAS-XOG]Environment: %s - [green[Login successfully]]\n", SourceEnv.Name)
+		common.Info("\r[CAS-XOG][green[Login successfully]] - Environment: %s \n", SourceEnv.Name)
 	}
 
 	common.Info("Choose writing environment [1]: ")

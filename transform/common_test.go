@@ -180,6 +180,7 @@ func readMockResultAndCompare(xog *etree.Document, compareXml string) bool {
 	xogProcessedToCompareString, _ := xogProcessedToCompare.WriteToString()
 	xogProcessedToCompareString = strings.Replace(xogProcessedToCompareString, " ", "", -1)
 	if xogString != xogProcessedToCompareString {
+		xog.WriteToFile("../" + common.FOLDER_DEBUG + "go_test_debug.xml")
 		return false
 	}
 	return true

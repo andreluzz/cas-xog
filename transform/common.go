@@ -101,13 +101,8 @@ func changePartition(xog *etree.Document, sourcePartition, targetPartition strin
 	for _, e := range elems {
 		e.CreateAttr("partitionCode", targetPartition)
 	}
-	if sourcePartition == "" {
-		for _, e := range xog.FindElements("//*[@dataProviderPartitionId]") {
-			e.CreateAttr("dataProviderPartitionId", targetPartition)
-		}
-	} else {
-		for _, e := range xog.FindElements("//*[@dataProviderPartitionId='" + sourcePartition + "']") {
-			e.CreateAttr("dataProviderPartitionId", targetPartition)
-		}
+
+	for _, e := range xog.FindElements("//*[@dataProviderPartitionId='" + sourcePartition + "']") {
+		e.CreateAttr("dataProviderPartitionId", targetPartition)
 	}
 }

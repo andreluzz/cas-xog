@@ -150,3 +150,8 @@ const UNDEFINED 		= ""
 const OUTPUT_ERROR 		= "error"
 const OUTPUT_WARNING 	= "warning"
 const OUTPUT_SUCCESS 	= "success"
+
+const (
+	COLUMN_LEFT = "left"
+	COLUMN_RIGHT = "right"
+)
