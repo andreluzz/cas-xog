@@ -237,3 +237,65 @@ func TestExecuteToReturnOBSWithoutSecurityAndObject(t *testing.T) {
 		t.Errorf("Error transforming OBS XOG file. Invalid result XML.")
 	}
 }
+
+func TestExecuteToReturnInstanceCorrectHeader(t *testing.T) {
+	file := common.DriverFile{
+		Type: common.RESOURCE_CLASS_INSTANCE,
+	}
+	xog := etree.NewDocument()
+	xog.ReadFromString("<NikuDataBus><Header action=\"write\" externalSource=\"NIKU\" objectType=\"contentPack\" version=\"8.0\"/></NikuDataBus>")
+	err := Execute(xog, nil, file)
+	if err != nil {
+		t.Fatalf("Error transforming instance(RESOURCE_CLASS_INSTANCE) XOG file. Debug: %s", err.Error())
+	}
+
+	headerElement := xog.FindElement("//Header[@version='12.0']")
+	if headerElement == nil {
+		t.Errorf("Error transforming instance(RESOURCE_CLASS_INSTANCE) XOG file. Header wrong version number")
+	}
+
+	file = common.DriverFile{
+		Type: common.WIP_CLASS_INSTANCE,
+	}
+	xog = etree.NewDocument()
+	xog.ReadFromString("<NikuDataBus><Header action=\"write\" externalSource=\"NIKU\" objectType=\"contentPack\" version=\"8.0\"/></NikuDataBus>")
+	err = Execute(xog, nil, file)
+	if err != nil {
+		t.Fatalf("Error transforming instance(WIP_CLASS_INSTANCE) XOG file. Debug: %s", err.Error())
+	}
+
+	headerElement = xog.FindElement("//Header[@version='12.0']")
+	if headerElement == nil {
+		t.Errorf("Error transforming instance(WIP_CLASS_INSTANCE) XOG file. Header wrong version number")
+	}
+
+	file = common.DriverFile{
+		Type: common.TRANSACTION_CLASS_INSTANCE,
+	}
+	xog = etree.NewDocument()
+	xog.ReadFromString("<NikuDataBus><Header action=\"write\" externalSource=\"NIKU\" objectType=\"contentPack\" version=\"8.0\"/></NikuDataBus>")
+	err = Execute(xog, nil, file)
+	if err != nil {
+		t.Fatalf("Error transforming instance(TRANSACTION_CLASS_INSTANCE) XOG file. Debug: %s", err.Error())
+	}
+
+	headerElement = xog.FindElement("//Header[@version='12.0']")
+	if headerElement == nil {
+		t.Errorf("Error transforming instance(TRANSACTION_CLASS_INSTANCE) XOG file. Header wrong version number")
+	}
+
+	file = common.DriverFile{
+		Type: common.INVESTMENT_CLASS_INSTANCE,
+	}
+	xog = etree.NewDocument()
+	xog.ReadFromString("<NikuDataBus><Header action=\"write\" externalSource=\"NIKU\" objectType=\"contentPack\" version=\"8.0\"/></NikuDataBus>")
+	err = Execute(xog, nil, file)
+	if err != nil {
+		t.Fatalf("Error transforming instance(INVESTMENT_CLASS_INSTANCE) XOG file. Debug: %s", err.Error())
+	}
+
+	headerElement = xog.FindElement("//Header[@version='14.1']")
+	if headerElement == nil {
+		t.Errorf("Error transforming instance(INVESTMENT_CLASS_INSTANCE) XOG file. Header wrong version number")
+	}
+}
