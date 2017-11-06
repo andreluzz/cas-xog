@@ -1,0 +1,362 @@
+<NikuDataBus>
+	<Header action="write" externalSource="NIKU" objectType="contentPack" version="15.2.0.213"/>
+	<contentPack update="true">
+		<views update="true">
+			<property code="obj_sistema.auditoria" complete="false" componentId="odf" isCustomized="true" isSecure="false" isSystem="true" linkCode="obj_sistema.auditoria" objectCode="obj_sistema" partitionCode="partition10" sequence="2" type="update">
+				<section currentState="collapsed" sequence="1">
+					<column sequence="1">
+						<viewFieldDescriptor aggregate="false" attributeCode="analista" dataSize="20" decimals="0" enterOnce="false" fixedWidget="false" hidden="false" isMVLookup="false" multiValued="false" presenceRequired="false" readOnly="false" required="false" showValue="true" unique="false" virtual="false" widgetType="text" width="20">
+							<nls languageCode="ca" name="Analista"/>
+							<nls languageCode="cs" name="Analista"/>
+							<nls languageCode="da" name="Analista"/>
+							<nls languageCode="de" name="Analista"/>
+							<nls languageCode="en" name="Analista"/>
+							<nls languageCode="es" name="Analista"/>
+							<nls languageCode="fi" name="Analista"/>
+							<nls languageCode="fr" name="Analista"/>
+							<nls languageCode="hu" name="Analista"/>
+							<nls languageCode="it" name="Analista"/>
+							<nls languageCode="ja" name="Analista"/>
+							<nls languageCode="ko" name="Analista"/>
+							<nls languageCode="nl" name="Analista"/>
+							<nls languageCode="no" name="Analista"/>
+							<nls languageCode="pl" name="Analista"/>
+							<nls languageCode="pt" name="Analista"/>
+							<nls languageCode="ru" name="Analista"/>
+							<nls languageCode="sv" name="Analista"/>
+							<nls languageCode="tr" name="Analista"/>
+							<nls languageCode="zh" name="Analista"/>
+							<nls languageCode="zh_TW" name="Analista"/>
+						</viewFieldDescriptor>
+						<viewFieldDescriptor aggregate="false" attributeCode="status" dataSize="30" decimals="0" enterOnce="false" extType="enum" fixedWidget="false" hidden="false" isMVLookup="false" lookupType="CAL_ACTIONITEM_STATUS" multiValued="false" presenceRequired="false" readOnly="false" required="false" showValue="true" unique="false" virtual="false" widgetType="browse" width="30">
+							<nls languageCode="ca" name="Status"/>
+							<nls languageCode="cs" name="Status"/>
+							<nls languageCode="da" name="Status"/>
+							<nls languageCode="de" name="Status"/>
+							<nls languageCode="en" name="Status"/>
+							<nls languageCode="es" name="Status"/>
+							<nls languageCode="fi" name="Status"/>
+							<nls languageCode="fr" name="Status"/>
+							<nls languageCode="hu" name="Status"/>
+							<nls languageCode="it" name="Status"/>
+							<nls languageCode="ja" name="Status"/>
+							<nls languageCode="ko" name="Status"/>
+							<nls languageCode="nl" name="Status"/>
+							<nls languageCode="no" name="Status"/>
+							<nls languageCode="pl" name="Status"/>
+							<nls languageCode="pt" name="Status"/>
+							<nls languageCode="ru" name="Status"/>
+							<nls languageCode="sv" name="Status"/>
+							<nls languageCode="tr" name="Status"/>
+							<nls languageCode="zh" name="Status"/>
+							<nls languageCode="zh_TW" name="Status"/>
+							<autoSuggest enabled="true" maxSuggestions="10"/>
+						</viewFieldDescriptor>
+						<viewFieldDescriptor aggregate="false" attributeCode="created_by" dataSize="0" decimals="0" enterOnce="false" fixedWidget="false" hidden="false" isMVLookup="false" multiValued="false" numRows="0" presenceRequired="false" readOnly="true" required="false" showValue="true" unique="false" virtual="true" widgetType="text">
+							<nls languageCode="ca" name="Autor"/>
+							<nls languageCode="cs" name="Vytvořil/-a"/>
+							<nls languageCode="da" name="Oprettet af"/>
+							<nls languageCode="de" name="Erstellt von"/>
+							<nls languageCode="en" name="Created By"/>
+							<nls languageCode="es" name="Autor"/>
+							<nls languageCode="fi" name="Laatija"/>
+							<nls languageCode="fr" name="Créé(e) par"/>
+							<nls languageCode="hu" name="Létrehozó"/>
+							<nls languageCode="it" name="Creato da"/>
+							<nls languageCode="ja" name="作成者"/>
+							<nls languageCode="ko" name="[ko: Created By]"/>
+							<nls languageCode="nl" name="Gemaakt door"/>
+							<nls languageCode="no" name="Opprettet av"/>
+							<nls languageCode="pl" name="Utworzone przez"/>
+							<nls languageCode="pt" name="Criado por"/>
+							<nls languageCode="ru" name="Автор"/>
+							<nls languageCode="sv" name="Skapad av"/>
+							<nls languageCode="tr" name="Oluşturan"/>
+							<nls languageCode="zh" name="创建者"/>
+							<nls languageCode="zh_TW" name="建立者"/>
+						</viewFieldDescriptor>
+					</column>
+					<column sequence="2">
+						<viewFieldDescriptor aggregate="false" attributeCode="created_date" dataSize="0" decimals="0" enterOnce="false" fixedWidget="false" hidden="false" isMVLookup="false" multiValued="false" numRows="0" presenceRequired="false" readOnly="true" required="false" showValue="true" unique="false" virtual="true" widgetType="datepicker">
+							<nls languageCode="ca" name="Data de creació"/>
+							<nls languageCode="cs" name="Datum vytvoření"/>
+							<nls languageCode="da" name="Oprettelsesdato"/>
+							<nls languageCode="de" name="Erstellungsdatum"/>
+							<nls languageCode="en" name="Created Date"/>
+							<nls languageCode="es" name="Fecha de creación"/>
+							<nls languageCode="fi" name="Luontipäivä"/>
+							<nls languageCode="fr" name="Date de création"/>
+							<nls languageCode="hu" name="Létrehozás dátuma"/>
+							<nls languageCode="it" name="Data di creazione"/>
+							<nls languageCode="ja" name="作成日"/>
+							<nls languageCode="ko" name="[ko: Created Date]"/>
+							<nls languageCode="nl" name="Gemaakt op"/>
+							<nls languageCode="no" name="Opprettingsdato"/>
+							<nls languageCode="pl" name="Data utworzenia"/>
+							<nls languageCode="pt" name="Data de criação"/>
+							<nls languageCode="ru" name="Дата создания"/>
+							<nls languageCode="sv" name="Skapad datum"/>
+							<nls languageCode="tr" name="Oluşturma Tarihi"/>
+							<nls languageCode="zh" name="创建日期"/>
+							<nls languageCode="zh_TW" name="建立日期"/>
+						</viewFieldDescriptor>
+						<viewFieldDescriptor aggregate="false" attributeCode="status_novo" dataSize="20" decimals="0" enterOnce="false" fixedWidget="false" hidden="false" isMVLookup="false" multiValued="false" presenceRequired="false" readOnly="false" required="false" showValue="true" unique="false" virtual="false" widgetType="text" width="20">
+							<nls languageCode="ca" name="Status novo 2"/>
+							<nls languageCode="cs" name="Status novo 2"/>
+							<nls languageCode="da" name="Status novo 2"/>
+							<nls languageCode="de" name="Status novo 2"/>
+							<nls languageCode="en" name="Status novo 2"/>
+							<nls languageCode="es" name="Status novo 2"/>
+							<nls languageCode="fi" name="Status novo 2"/>
+							<nls languageCode="fr" name="Status novo 2"/>
+							<nls languageCode="hu" name="Status novo 2"/>
+							<nls languageCode="it" name="Status novo 2"/>
+							<nls languageCode="ja" name="Status novo 2"/>
+							<nls languageCode="ko" name="Status novo 2"/>
+							<nls languageCode="nl" name="Status novo 2"/>
+							<nls languageCode="no" name="Status novo 2"/>
+							<nls languageCode="pl" name="Status novo 2"/>
+							<nls languageCode="pt" name="Status novo 2"/>
+							<nls languageCode="ru" name="Status novo 2"/>
+							<nls languageCode="sv" name="Status novo 2"/>
+							<nls languageCode="tr" name="Status novo 2"/>
+							<nls languageCode="zh" name="Status novo 2"/>
+							<nls languageCode="zh_TW" name="Status novo 2"/>
+						</viewFieldDescriptor>
+					</column>
+					<nls languageCode="ca" name="Criação"/>
+					<nls languageCode="cs" name="Criação"/>
+					<nls languageCode="da" name="Criação"/>
+					<nls languageCode="de" name="Criação"/>
+					<nls languageCode="en" name="Criação"/>
+					<nls languageCode="es" name="Criação"/>
+					<nls languageCode="fi" name="Criação"/>
+					<nls languageCode="fr" name="Criação"/>
+					<nls languageCode="hu" name="Criação"/>
+					<nls languageCode="it" name="Criação"/>
+					<nls languageCode="ja" name="Criação"/>
+					<nls languageCode="ko" name="Criação"/>
+					<nls languageCode="nl" name="Criação"/>
+					<nls languageCode="no" name="Criação"/>
+					<nls languageCode="pl" name="Criação"/>
+					<nls languageCode="pt" name="Criação"/>
+					<nls languageCode="ru" name="Criação"/>
+					<nls languageCode="sv" name="Criação"/>
+					<nls languageCode="tr" name="Criação"/>
+					<nls languageCode="zh" name="Criação"/>
+					<nls languageCode="zh_TW" name="Criação"/>
+				</section>
+				<section currentState="collapsed" sequence="2">
+					<column sequence="1">
+						<viewFieldDescriptor aggregate="false" attributeCode="updated_by" dataSize="0" decimals="0" enterOnce="false" fixedWidget="false" hidden="false" isMVLookup="false" multiValued="false" numRows="0" presenceRequired="false" readOnly="true" required="false" showValue="true" unique="false" virtual="true" widgetType="text">
+							<nls languageCode="ca" name="Autor de l&apos;última actualització"/>
+							<nls languageCode="cs" name="Poslední aktualizaci provedl/-a"/>
+							<nls languageCode="da" name="Sidst opdateret af"/>
+							<nls languageCode="de" name="Zuletzt aktualisiert von"/>
+							<nls languageCode="en" name="Last Updated By"/>
+							<nls languageCode="es" name="Autor de la última actualización"/>
+							<nls languageCode="fi" name="Päivittänyt viimeksi"/>
+							<nls languageCode="fr" name="Dernière mise à jour par"/>
+							<nls languageCode="hu" name="Utoljára frissítette"/>
+							<nls languageCode="it" name="Ultimo aggiornamento effettuato da"/>
+							<nls languageCode="ja" name="最終更新者"/>
+							<nls languageCode="ko" name="[ko: Last Updated By]"/>
+							<nls languageCode="nl" name="Laatst bijgewerkt door"/>
+							<nls languageCode="no" name="Sist oppdatert av"/>
+							<nls languageCode="pl" name="Ostatnio zaktualizowane przez"/>
+							<nls languageCode="pt" name="Última atualização realizada por"/>
+							<nls languageCode="ru" name="Кто обновил последним"/>
+							<nls languageCode="sv" name="Senast uppdaterad av"/>
+							<nls languageCode="tr" name="Son Güncelleyen"/>
+							<nls languageCode="zh" name="上一更新者"/>
+							<nls languageCode="zh_TW" name="上次更新者"/>
+						</viewFieldDescriptor>
+					</column>
+					<column sequence="2">
+						<viewFieldDescriptor aggregate="false" attributeCode="last_updated_date" dataSize="0" decimals="0" enterOnce="false" fixedWidget="false" hidden="false" isMVLookup="false" multiValued="false" numRows="0" presenceRequired="false" readOnly="true" required="false" showValue="true" unique="false" virtual="true" widgetType="datepicker">
+							<nls languageCode="ca" name="Data de l&apos;última actualització"/>
+							<nls languageCode="cs" name="Datum poslední aktualizace"/>
+							<nls languageCode="da" name="Seneste opdateringsdato"/>
+							<nls languageCode="de" name="Datum der letzten Aktualisierung"/>
+							<nls languageCode="en" name="Last Updated Date"/>
+							<nls languageCode="es" name="Fecha de la última actualización"/>
+							<nls languageCode="fi" name="Edellinen päivityspäivämäärä"/>
+							<nls languageCode="fr" name="Date de la dernière mise à jour"/>
+							<nls languageCode="hu" name="Utolsó frissítés dátuma"/>
+							<nls languageCode="it" name="Data ultimo aggiornamento"/>
+							<nls languageCode="ja" name="最終更新日"/>
+							<nls languageCode="ko" name="[ko: Last Updated Date]"/>
+							<nls languageCode="nl" name="Datum laatst bijgewerkt"/>
+							<nls languageCode="no" name="Sist oppdatert dato"/>
+							<nls languageCode="pl" name="Data ostatniej aktualizacji"/>
+							<nls languageCode="pt" name="Data da última atualização"/>
+							<nls languageCode="ru" name="Дата последнего обновления"/>
+							<nls languageCode="sv" name="Senaste uppdateringsdatum"/>
+							<nls languageCode="tr" name="Son Güncelleme Tarihi"/>
+							<nls languageCode="zh" name="上次更新日期"/>
+							<nls languageCode="zh_TW" name="上次更新日期"/>
+						</viewFieldDescriptor>
+					</column>
+					<nls languageCode="ca" name="Atualização"/>
+					<nls languageCode="cs" name="Atualização"/>
+					<nls languageCode="da" name="Atualização"/>
+					<nls languageCode="de" name="Atualização"/>
+					<nls languageCode="en" name="Atualização"/>
+					<nls languageCode="es" name="Atualização"/>
+					<nls languageCode="fi" name="Atualização"/>
+					<nls languageCode="fr" name="Atualização"/>
+					<nls languageCode="hu" name="Atualização"/>
+					<nls languageCode="it" name="Atualização"/>
+					<nls languageCode="ja" name="Atualização"/>
+					<nls languageCode="ko" name="Atualização"/>
+					<nls languageCode="nl" name="Atualização"/>
+					<nls languageCode="no" name="Atualização"/>
+					<nls languageCode="pl" name="Atualização"/>
+					<nls languageCode="pt" name="Atualização"/>
+					<nls languageCode="ru" name="Atualização"/>
+					<nls languageCode="sv" name="Atualização"/>
+					<nls languageCode="tr" name="Atualização"/>
+					<nls languageCode="zh" name="Atualização"/>
+					<nls languageCode="zh_TW" name="Atualização"/>
+				</section>
+				<nls languageCode="ca" name="Auditoria"/>
+				<nls languageCode="cs" name="Auditoria"/>
+				<nls languageCode="da" name="Auditoria"/>
+				<nls languageCode="de" name="Auditoria"/>
+				<nls languageCode="en" name="Auditoria"/>
+				<nls languageCode="es" name="Auditoria"/>
+				<nls languageCode="fi" name="Auditoria"/>
+				<nls languageCode="fr" name="Auditoria"/>
+				<nls languageCode="hu" name="Auditoria"/>
+				<nls languageCode="it" name="Auditoria"/>
+				<nls languageCode="ja" name="Auditoria"/>
+				<nls languageCode="ko" name="Auditoria"/>
+				<nls languageCode="nl" name="Auditoria"/>
+				<nls languageCode="no" name="Auditoria"/>
+				<nls languageCode="pl" name="Auditoria"/>
+				<nls languageCode="pt" name="Auditoria 179"/>
+				<nls languageCode="ru" name="Auditoria"/>
+				<nls languageCode="sv" name="Auditoria"/>
+				<nls languageCode="tr" name="Auditoria"/>
+				<nls languageCode="zh" name="Auditoria"/>
+				<nls languageCode="zh_TW" name="Auditoria"/>
+			</property>
+			<propertySet objectCode="obj_sistema" partitionCode="partition10">
+				<create code="obj_sistemaCreate"/>
+				<update>
+					<view code="obj_sistemaProperties">
+						<nls languageCode="ca" name="General"/>
+						<nls languageCode="cs" name="Obecné"/>
+						<nls languageCode="da" name="Generelt"/>
+						<nls languageCode="de" name="Allgemein"/>
+						<nls languageCode="en" name="General"/>
+						<nls languageCode="es" name="General"/>
+						<nls languageCode="fi" name="Yleiset"/>
+						<nls languageCode="fr" name="Général"/>
+						<nls languageCode="hu" name="Általános"/>
+						<nls languageCode="it" name="Generale"/>
+						<nls languageCode="ja" name="概要"/>
+						<nls languageCode="ko" name="[ko: General]"/>
+						<nls languageCode="nl" name="Algemeen"/>
+						<nls languageCode="no" name="Generelt"/>
+						<nls languageCode="pl" name="Ogólne"/>
+						<nls languageCode="pt" name="Geral 179"/>
+						<nls languageCode="ru" name="Общее"/>
+						<nls languageCode="sv" name="Allmänt"/>
+						<nls languageCode="tr" name="Genel"/>
+						<nls languageCode="zh" name="常规"/>
+						<nls languageCode="zh_TW" name="一般"/>
+					</view>
+					<view code="obj_sistema.auditoria">
+						<nls languageCode="ca" name="Auditoria"/>
+						<nls languageCode="cs" name="Auditoria"/>
+						<nls languageCode="da" name="Auditoria"/>
+						<nls languageCode="de" name="Auditoria"/>
+						<nls languageCode="en" name="Auditoria"/>
+						<nls languageCode="es" name="Auditoria"/>
+						<nls languageCode="fi" name="Auditoria"/>
+						<nls languageCode="fr" name="Auditoria"/>
+						<nls languageCode="hu" name="Auditoria"/>
+						<nls languageCode="it" name="Auditoria"/>
+						<nls languageCode="ja" name="Auditoria"/>
+						<nls languageCode="ko" name="Auditoria"/>
+						<nls languageCode="nl" name="Auditoria"/>
+						<nls languageCode="no" name="Auditoria"/>
+						<nls languageCode="pl" name="Auditoria"/>
+						<nls languageCode="pt" name="Auditoria 179"/>
+						<nls languageCode="ru" name="Auditoria"/>
+						<nls languageCode="sv" name="Auditoria"/>
+						<nls languageCode="tr" name="Auditoria"/>
+						<nls languageCode="zh" name="Auditoria"/>
+						<nls languageCode="zh_TW" name="Auditoria"/>
+					</view>
+					<view code="obj_sistemaCreate.subObjList.obj_sub_sistema">
+						<nls description="Sub sistema - Llista" languageCode="ca" name="Sub sistema - Llista"/>
+						<nls description="Sub sistema – Seznam" languageCode="cs" name="Sub sistema – Seznam"/>
+						<nls description="Sub sistema Liste" languageCode="da" name="Sub sistema Liste"/>
+						<nls description="Sub sistema Liste" languageCode="de" name="Sub sistema Liste"/>
+						<nls description="Sub sistema List" languageCode="en" name="Sub sistema List"/>
+						<nls description="Sub sistema - Lista" languageCode="es" name="Sub sistema - Lista"/>
+						<nls description="Kohteen Sub sistema luettelo" languageCode="fi" name="Kohteen Sub sistema luettelo"/>
+						<nls description="Sub sistema - Liste" languageCode="fr" name="Sub sistema - Liste"/>
+						<nls description="Sub sistema Lista" languageCode="hu" name="Sub sistema Lista"/>
+						<nls description="Sub sistema Elenco" languageCode="it" name="Sub sistema Elenco"/>
+						<nls description="Sub sistema リスト" languageCode="ja" name="Sub sistema リスト"/>
+						<nls description="Sub sistema List" languageCode="ko" name="Sub sistema List"/>
+						<nls description="Sub sistema - Lijst" languageCode="nl" name="Sub sistema - Lijst"/>
+						<nls description="Sub sistema Liste" languageCode="no" name="Sub sistema Liste"/>
+						<nls description="Sub sistema — Lista" languageCode="pl" name="Sub sistema — Lista"/>
+						<nls description="Sub sistema - Lista" languageCode="pt" name="Sub sistema - Lista"/>
+						<nls description="Список Sub sistema" languageCode="ru" name="Список Sub sistema"/>
+						<nls description="Sub sistema-lista" languageCode="sv" name="Sub sistema-lista"/>
+						<nls description="Sub sistema Listele" languageCode="tr" name="Sub sistema Listele"/>
+						<nls description="Sub sistema 列表" languageCode="zh" name="Sub sistema 列表"/>
+						<nls description="Sub sistema清單" languageCode="zh_TW" name="Sub sistema清單"/>
+					</view>
+					<nls languageCode="ca" name="Geral 179"/>
+					<nls languageCode="cs" name="Geral 179"/>
+					<nls languageCode="da" name="Geral 179"/>
+					<nls languageCode="de" name="Geral 179"/>
+					<nls languageCode="en" name="Geral 179"/>
+					<nls languageCode="es" name="Geral 179"/>
+					<nls languageCode="fi" name="Geral 179"/>
+					<nls languageCode="fr" name="Geral 179"/>
+					<nls languageCode="hu" name="Geral 179"/>
+					<nls languageCode="it" name="Geral 179"/>
+					<nls languageCode="ja" name="Geral 179"/>
+					<nls languageCode="ko" name="Geral 179"/>
+					<nls languageCode="nl" name="Geral 179"/>
+					<nls languageCode="no" name="Geral 179"/>
+					<nls languageCode="pl" name="Geral 179"/>
+					<nls languageCode="pt" name="Geral 179"/>
+					<nls languageCode="ru" name="Geral 179"/>
+					<nls languageCode="sv" name="Geral 179"/>
+					<nls languageCode="tr" name="Geral 179"/>
+					<nls languageCode="zh" name="Geral 179"/>
+					<nls languageCode="zh_TW" name="Geral 179"/>
+				</update>
+				<nls languageCode="ca" name="Geral 179"/>
+				<nls languageCode="cs" name="Geral 179"/>
+				<nls languageCode="da" name="Geral 179"/>
+				<nls languageCode="de" name="Geral 179"/>
+				<nls languageCode="en" name="Geral 179"/>
+				<nls languageCode="es" name="Geral 179"/>
+				<nls languageCode="fi" name="Geral 179"/>
+				<nls languageCode="fr" name="Geral 179"/>
+				<nls languageCode="hu" name="Geral 179"/>
+				<nls languageCode="it" name="Geral 179"/>
+				<nls languageCode="ja" name="Geral 179"/>
+				<nls languageCode="ko" name="Geral 179"/>
+				<nls languageCode="nl" name="Geral 179"/>
+				<nls languageCode="no" name="Geral 179"/>
+				<nls languageCode="pl" name="Geral 179"/>
+				<nls languageCode="pt" name="Geral 179"/>
+				<nls languageCode="ru" name="Geral 179"/>
+				<nls languageCode="sv" name="Geral 179"/>
+				<nls languageCode="tr" name="Geral 179"/>
+				<nls languageCode="zh" name="Geral 179"/>
+				<nls languageCode="zh_TW" name="Geral 179"/>
+			</propertySet>
+		</views>
+	</contentPack>
+</NikuDataBus>

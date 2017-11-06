@@ -1,0 +1,60 @@
+<NikuDataBus>
+    <Header action="write" externalSource="NIKU" objectType="contentPack" version="8.0"/>
+    <contentPack update="true">
+        <objects>
+            <object code="obj_sistema" entityCodeAttribute="odf_entity_code" fiscalPeriodTypeAttribute="odf_period_type" pageInstanceType="obj_sistema" pageLayoutAttribute="page_layout" partitionModelCode="partitionModel1" periodEndAttribute="odf_period_end" periodStartAttribute="odf_period_start" raiseEvents="false" source="customer" update="true">
+                <nls languageCode="ca" name="Sistema"/>
+                <nls languageCode="cs" name="Sistema"/>
+                <nls languageCode="da" name="Sistema"/>
+                <nls languageCode="de" name="Sistema"/>
+                <nls languageCode="en" name="Sistema"/>
+                <nls languageCode="es" name="Sistema"/>
+                <nls languageCode="fi" name="Sistema"/>
+                <nls languageCode="fr" name="Sistema"/>
+                <nls languageCode="hu" name="Sistema"/>
+                <nls languageCode="it" name="Sistema"/>
+                <nls languageCode="ja" name="Sistema"/>
+                <nls languageCode="ko" name="Sistema"/>
+                <nls languageCode="nl" name="Sistema"/>
+                <nls languageCode="no" name="Sistema"/>
+                <nls languageCode="pl" name="Sistema"/>
+                <nls languageCode="pt" name="Sistema"/>
+                <nls languageCode="ru" name="Sistema"/>
+                <nls languageCode="sv" name="Sistema"/>
+                <nls languageCode="tr" name="Sistema"/>
+                <nls languageCode="zh" name="Sistema"/>
+                <nls languageCode="zh_TW" name="Sistema"/>
+                <links objectCode="obj_sistema">
+                    <link action="pma.ideaProperties" active="true" code="obj_sistema.lk_teste" isObjectInstanceLink="false" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS">
+                        <nls description="teste" languageCode="ca" name="Link teste"/>
+                        <nls description="teste" languageCode="cs" name="Link teste"/>
+                        <nls description="teste" languageCode="da" name="Link teste"/>
+                        <nls description="teste" languageCode="de" name="Link teste"/>
+                        <nls description="teste" languageCode="en" name="Link teste"/>
+                        <nls description="teste" languageCode="es" name="Link teste"/>
+                        <nls description="teste" languageCode="fi" name="Link teste"/>
+                        <nls description="teste" languageCode="fr" name="Link teste"/>
+                        <nls description="teste" languageCode="hu" name="Link teste"/>
+                        <nls description="teste" languageCode="it" name="Link teste"/>
+                        <nls description="teste" languageCode="ja" name="Link teste"/>
+                        <nls description="teste" languageCode="ko" name="Link teste"/>
+                        <nls description="teste" languageCode="nl" name="Link teste"/>
+                        <nls description="teste" languageCode="no" name="Link teste"/>
+                        <nls description="teste" languageCode="pl" name="Link teste"/>
+                        <nls description="teste" languageCode="pt" name="Link teste"/>
+                        <nls description="teste" languageCode="ru" name="Link teste"/>
+                        <nls description="teste" languageCode="sv" name="Link teste"/>
+                        <nls description="teste" languageCode="tr" name="Link teste"/>
+                        <nls description="teste" languageCode="zh" name="Link teste"/>
+                        <nls description="teste" languageCode="zh_TW" name="Link teste"/>
+                        <linkParam dataRef="odf_pk" dataSource="data" paramCode="id"/>
+                        <linkParam dataRef="odf_pk" dataSource="data" paramCode="ownerID"/>
+                    </link>
+                </links>
+                <displayMappings/>
+                <scoreContributions/>
+                <autonumbering/>
+            </object>
+        </objects>
+    </contentPack>
+</NikuDataBus>

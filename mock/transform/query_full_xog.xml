@@ -1,0 +1,1249 @@
+<NikuDataBus>
+    <Header action="write" externalSource="NIKU" objectType="contentPack" version="15.2.0.213"/>
+    <contentPack update="true">
+        <queries update="true">
+            <query category="PRODUCTIVITY" code="cop.processBottlenecks" isUserPortletAvailable="1" source="csk.niku.com">
+                <nls description="Coll d'ampolla del procés" languageCode="ca" name="Coll d'ampolla del procés"/>
+                <nls description="Úzká hrdla procesu" languageCode="cs" name="Úzká hrdla procesu"/>
+                <nls description="Procesflaskehalse" languageCode="da" name="Procesflaskehalse"/>
+                <nls description="Prozessengpässe" languageCode="de" name="Prozessengpässe"/>
+                <nls description="Process Bottlenecks" languageCode="en" name="Process Bottlenecks"/>
+                <nls description="Cuello de botella del proceso" languageCode="es" name="Cuello de botella del proceso"/>
+                <nls description="Prosessin pullonkaulat" languageCode="fi" name="Prosessin pullonkaulat"/>
+                <nls description="Goulots d'étranglement de processus" languageCode="fr" name="Goulots d'étranglement de processus"/>
+                <nls description="Folyamat szűk keresztmetszetei" languageCode="hu" name="Folyamat szűk keresztmetszetei"/>
+                <nls description="Colli di bottiglia relativi al processo" languageCode="it" name="Colli di bottiglia relativi al processo"/>
+                <nls description="プロセス ボトルネック" languageCode="ja" name="プロセス ボトルネック"/>
+                <nls description="[ko: Process Bottlenecks]" languageCode="ko" name="[ko: Process Bottlenecks]"/>
+                <nls description="Knelpunten in proces" languageCode="nl" name="Knelpunten in proces"/>
+                <nls description="Prosessflaskehalser" languageCode="no" name="Prosessflaskehalser"/>
+                <nls description="Wąskie gardła procesu" languageCode="pl" name="Wąskie gardła procesu"/>
+                <nls description="Afunilamentos do processo" languageCode="pt" name="Afunilamentos do processo"/>
+                <nls description="Узкие места процесса" languageCode="ru" name="Узкие места процесса"/>
+                <nls description="Processflaskhalsar" languageCode="sv" name="Processflaskhalsar"/>
+                <nls description="Süreç Darboğazları" languageCode="tr" name="Süreç Darboğazları"/>
+                <nls description="过程瓶颈" languageCode="zh" name="过程瓶颈"/>
+                <nls description="流程瓶頸" languageCode="zh_TW" name="流程瓶頸"/>
+                <nsql dbId="Niku" dbVendor="all"><![CDATA[SELECT @SELECT:DIM:USER_DEF:IMPLIED:PROCESS:RunPro.id:id@,
+   @SELECT:DIM_PROP:USER_DEF:IMPLIED:PROCESS:DefSteps.Is_Milestone:Milestone@,
+   @SELECT:DIM_PROP:USER_DEF:IMPLIED:PROCESS:descPro.Name:Process_Name@,
+   @SELECT:DIM_PROP:USER_DEF:IMPLIED:PROCESS:@NVL@(I.Name, @DBUSER@.COP_GET_OBJECT_NAME_FCT(RunPro.id)):Instance_Name@,
+   @SELECT:DIM_PROP:USER_DEF:IMPLIED:PROCESS:RunPro.Status_code:Process_Status_Code@,
+   @SELECT:DIM_PROP:USER_DEF:IMPLIED:PROCESS:descProStat.Name:Process_Status@,
+   @SELECT:DIM_PROP:USER_DEF:IMPLIED:PROCESS:INITCAP(RunObj.object_type_code):Primary_Object@,
+   @SELECT:DIM_PROP:USER_DEF:IMPLIED:PROCESS:StageName.Name:Stage_name@,
+   @SELECT:DIM_PROP:USER_DEF:IMPLIED:PROCESS:RunPro.Initiated_By:Initiated_By@,
+   @SELECT:DIM_PROP:USER_DEF:IMPLIED:PROCESS:DefStages.Process_version_Id:Prc_Version_Id@,
+   @SELECT:DIM_PROP:USER_DEF:IMPLIED:PROCESS:DefVer.id:DefVer_Id@,
+   @SELECT:DIM_PROP:USER_DEF:IMPLIED:PROCESS:DefVer.Process_Id:DefVer_Process_Id@,
+   @SELECT:DIM_PROP:USER_DEF:IMPLIED:PROCESS:RunPro.id:RunPro_Id@,
+   @SELECT:DIM_PROP:USER_DEF:IMPLIED:PROCESS:Init_User.full_name:Init_By_Name@,
+   @SELECT:DIM_PROP:USER_DEF:IMPLIED:PROCESS:1:iconMap@,
+   @SELECT:DIM_PROP:USER_DEF:IMPLIED:PROCESS:DefStages.Sequence_No:sort2@,
+   @SELECT:DIM:USER_DEF:IMPLIED:STEP:DefSteps.id:Step_Id@,
+   @SELECT:DIM_PROP:USER_DEF:IMPLIED:STEP:DefSteps.Sequence_no:sort3@,
+   @SELECT:DIM_PROP:USER_DEF:IMPLIED:STEP:DefSteps.Sequence_no:sort4@,
+   @SELECT:DIM_PROP:USER_DEF:IMPLIED:STEP:descStep.Name:Step_Name@,
+   @SELECT:metric:USER_DEF:IMPLIED:@DBUSER@.COP_GET_PROCESS_STEPS_FCT(DefVer.id, RunPro.Id, DefSteps.Id, 0):Durations@,
+   @SELECT:metric:USER_DEF:IMPLIED:to_number(@DBUSER@.COP_GET_PROCESS_STEPS_FCT(DefVer.id, RunPro.Id, DefSteps.Id, 1),'9'):Duration_Status@
+FROM   BPM_DEF_Steps DefSteps
+INNER  JOIN  BPM_Def_Stages DefStages
+   ON    DefSTeps.Stage_Id = DefStages.id
+INNER  JOIN  BPM_Run_Processes RunPro
+   ON    RunPro.Process_Version_Id = DefStages.Process_Version_Id
+INNER  JOIN  Bpm_Def_Process_Versions DefVer
+   ON    DefVer.id = RunPro.PROCESS_VERSION_ID
+INNER  JOIN  Bpm_def_objects DefObj
+   ON    DefObj.pk_id = RunPro.Process_Version_Id
+   AND   DefObj.Src_table_Name = 'BPM_DEF_PROCESS_VERSIONS'
+   AND   DefObj.TYPE_CODE = 'BPM_POT_PRIMARY'
+INNER  JOIN  BPM_Run_objects RunObj
+         ON    RunObj.pk_id = RunPro.id
+         AND   RunObj.Type_code = 'BPM_POT_PRIMARY'
+
+LEFT   OUTER JOIN Inv_Investments I
+         ON   I.odf_object_code = RunObj.Object_Type_Code
+         AND  I.id = RunObj.Object_Id
+         AND  I.odf_object_code = RunObj.Object_Type_Code
+         AND  I.id = @WHERE:PARAM:XML:INTEGER:/data/id/@value@
+LEFT   OUTER JOIN CMN_CAPTIONS_NLS descPro
+         ON   descPro.language_Code = @WHERE:PARAM:LANGUAGE@
+         AND  descPro.table_Name = 'BPM_DEF_PROCESSES'
+         AND  descPro.pk_id = DefVer.Process_id
+LEFT   OUTER JOIN CMN_LOOKUPS_V descProStat
+         ON   descProStat.language_Code = @WHERE:PARAM:LANGUAGE@
+         AND  descProStat.Lookup_Type = 'BPM_PROCESS_INSTANCE_STATES'
+         AND  descProStat.Lookup_Code = RunPro.Status_code
+LEFT   OUTER JOIN CMN_CAPTIONS_NLS StageName
+         ON   StageName.language_code = @WHERE:PARAM:LANGUAGE@
+         AND  StageName.pk_id = DefStages.id
+         AND  StageName.Table_Name = 'BPM_DEF_STAGES'
+LEFT   OUTER JOIN CMN_CAPTIONS_NLS descStep
+         ON   descStep.language_Code = @WHERE:PARAM:LANGUAGE@
+         AND  descStep.Table_Name = 'BPM_DEF_STEPS'
+         AND  descStep.Pk_Id = DefSteps.Id
+LEFT   OUTER JOIN SRM_RESOURCES Init_User
+         ON   Init_User.user_id = RunPro.Initiated_By
+
+WHERE  DefSteps.Is_Milestone = 1
+AND    @FILTER@]]></nsql>
+                <attribute id="id" required="false">
+                    <nls description="ID intern del procés" languageCode="ca" name="ID intern del procés"/>
+                    <nls description="Interní ID procesu" languageCode="cs" name="Interní ID procesu"/>
+                    <nls description="Internt proces-id" languageCode="da" name="Internt proces-id"/>
+                    <nls description="Interne Prozess-ID" languageCode="de" name="Interne Prozess-ID"/>
+                    <nls description="Process Internal ID" languageCode="en" name="Process Internal ID"/>
+                    <nls description="ID interno del proceso" languageCode="es" name="ID interno del proceso"/>
+                    <nls description="Prosessin sisäinen tunnus" languageCode="fi" name="Prosessin sisäinen tunnus"/>
+                    <nls description="ID interne du processus" languageCode="fr" name="ID interne du processus"/>
+                    <nls description="Folyamat belső azonosítója" languageCode="hu" name="Folyamat belső azonosítója"/>
+                    <nls description="ID interno processo" languageCode="it" name="ID interno processo"/>
+                    <nls description="プロセス内部 ID" languageCode="ja" name="プロセス内部 ID"/>
+                    <nls description="[ko: Process Internal ID]" languageCode="ko" name="[ko: Process Internal ID]"/>
+                    <nls description="Interne id proces" languageCode="nl" name="Interne id proces"/>
+                    <nls description="Intern prosess-ID" languageCode="no" name="Intern prosess-ID"/>
+                    <nls description="Identyfikator wewnętrzny procesu" languageCode="pl" name="Identyfikator wewnętrzny procesu"/>
+                    <nls description="ID interna do processo" languageCode="pt" name="ID interna do processo"/>
+                    <nls description="Внутренний код процесса" languageCode="ru" name="Внутренний код процесса"/>
+                    <nls description="Process - Internt ID" languageCode="sv" name="Process - Internt ID"/>
+                    <nls description="Süreç Dahili Kimliği" languageCode="tr" name="Süreç Dahili Kimliği"/>
+                    <nls description="过程内部 ID" languageCode="zh" name="过程内部 ID"/>
+                    <nls description="流程內部 ID" languageCode="zh_TW" name="流程內部 ID"/>
+                </attribute>
+                <attribute id="milestone" required="false">
+                    <nls description="És una fita" languageCode="ca" name="És una fita"/>
+                    <nls description="Je milník" languageCode="cs" name="Je milník"/>
+                    <nls description="Er milepæl" languageCode="da" name="Er milepæl"/>
+                    <nls description="Meilenstein" languageCode="de" name="Meilenstein"/>
+                    <nls description="Is Milestone" languageCode="en" name="Is Milestone"/>
+                    <nls description="Es un hito" languageCode="es" name="Es un hito"/>
+                    <nls description="On tarkastuspiste" languageCode="fi" name="On tarkastuspiste"/>
+                    <nls description="Jalon" languageCode="fr" name="Jalon"/>
+                    <nls description="Mérföldkő-e" languageCode="hu" name="Mérföldkő-e"/>
+                    <nls description="Cardine" languageCode="it" name="Cardine"/>
+                    <nls description="マイルストーン" languageCode="ja" name="マイルストーン"/>
+                    <nls description="[ko: Is Milestone]" languageCode="ko" name="[ko: Is Milestone]"/>
+                    <nls description="Is mijlpaal" languageCode="nl" name="Is mijlpaal"/>
+                    <nls description="Er milepæl" languageCode="no" name="Er milepæl"/>
+                    <nls description="Jest punktem kontrolnym" languageCode="pl" name="Jest punktem kontrolnym"/>
+                    <nls description="É marco" languageCode="pt" name="É marco"/>
+                    <nls description="Является контрольным событием" languageCode="ru" name="Является контрольным событием"/>
+                    <nls description="Är milstolpe" languageCode="sv" name="Är milstolpe"/>
+                    <nls description="Kilometre taşı mi?" languageCode="tr" name="Kilometre taşı mi?"/>
+                    <nls description="是否里程碑" languageCode="zh" name="是否里程碑"/>
+                    <nls description="里程碑" languageCode="zh_TW" name="里程碑"/>
+                </attribute>
+                <attribute id="process_name" required="true">
+                    <nls description="Procés" languageCode="ca" name="Procés"/>
+                    <nls description="Proces" languageCode="cs" name="Proces"/>
+                    <nls description="Proces" languageCode="da" name="Proces"/>
+                    <nls description="Prozess" languageCode="de" name="Prozess"/>
+                    <nls description="Process" languageCode="en" name="Process"/>
+                    <nls description="Proceso" languageCode="es" name="Proceso"/>
+                    <nls description="Prosessi" languageCode="fi" name="Prosessi"/>
+                    <nls description="Processus" languageCode="fr" name="Processus"/>
+                    <nls description="Folyamat" languageCode="hu" name="Folyamat"/>
+                    <nls description="Processo" languageCode="it" name="Processo"/>
+                    <nls description="プロセス" languageCode="ja" name="プロセス"/>
+                    <nls description="[ko: Process]" languageCode="ko" name="[ko: Process]"/>
+                    <nls description="Proces" languageCode="nl" name="Proces"/>
+                    <nls description="Prosess" languageCode="no" name="Prosess"/>
+                    <nls description="Proces" languageCode="pl" name="Proces"/>
+                    <nls description="Processo" languageCode="pt" name="Processo"/>
+                    <nls description="Процесс" languageCode="ru" name="Процесс"/>
+                    <nls description="Process" languageCode="sv" name="Process"/>
+                    <nls description="Süreç" languageCode="tr" name="Süreç"/>
+                    <nls description="过程" languageCode="zh" name="过程"/>
+                    <nls description="流程" languageCode="zh_TW" name="流程"/>
+                </attribute>
+                <attribute id="instance_name" required="false">
+                    <nls description="Instància" languageCode="ca" name="Instància"/>
+                    <nls description="Instance" languageCode="cs" name="Instance"/>
+                    <nls description="Forekomst" languageCode="da" name="Forekomst"/>
+                    <nls description="Instanz" languageCode="de" name="Instanz"/>
+                    <nls description="Instance" languageCode="en" name="Instance"/>
+                    <nls description="Instancia" languageCode="es" name="Instancia"/>
+                    <nls description="Esiintymä" languageCode="fi" name="Esiintymä"/>
+                    <nls description="Instance" languageCode="fr" name="Instance"/>
+                    <nls description="Példány" languageCode="hu" name="Példány"/>
+                    <nls description="Istanza" languageCode="it" name="Istanza"/>
+                    <nls description="インスタンス" languageCode="ja" name="インスタンス"/>
+                    <nls description="[ko: Instance]" languageCode="ko" name="[ko: Instance]"/>
+                    <nls description="Instantie" languageCode="nl" name="Instantie"/>
+                    <nls description="Forekomst" languageCode="no" name="Forekomst"/>
+                    <nls description="Wystąpienie" languageCode="pl" name="Wystąpienie"/>
+                    <nls description="Instância" languageCode="pt" name="Instância"/>
+                    <nls description="Экземпляр" languageCode="ru" name="Экземпляр"/>
+                    <nls description="Instans" languageCode="sv" name="Instans"/>
+                    <nls description="Örnek" languageCode="tr" name="Örnek"/>
+                    <nls description="实例" languageCode="zh" name="实例"/>
+                    <nls description="例項" languageCode="zh_TW" name="例項"/>
+                </attribute>
+                <attribute id="process_status_code" required="false">
+                    <nls description="Codi de l'estat de procés" languageCode="ca" name="Codi de l'estat de procés"/>
+                    <nls description="Kód stavu procesu" languageCode="cs" name="Kód stavu procesu"/>
+                    <nls description="Processtatuskode" languageCode="da" name="Processtatuskode"/>
+                    <nls description="Prozessstatuscode" languageCode="de" name="Prozessstatuscode"/>
+                    <nls description="Process Status Code" languageCode="en" name="Process Status Code"/>
+                    <nls description="Código del estado de proceso" languageCode="es" name="Código del estado de proceso"/>
+                    <nls description="Prosessin tilakoodi" languageCode="fi" name="Prosessin tilakoodi"/>
+                    <nls description="Code du statut du processus" languageCode="fr" name="Code du statut du processus"/>
+                    <nls description="Folyamat állapotkódja" languageCode="hu" name="Folyamat állapotkódja"/>
+                    <nls description="Codice di stato processo" languageCode="it" name="Codice di stato processo"/>
+                    <nls description="プロセス ステータス コード" languageCode="ja" name="プロセス ステータス コード"/>
+                    <nls description="[ko: Process Status Code]" languageCode="ko" name="[ko: Process Status Code]"/>
+                    <nls description="Processtatuscode" languageCode="nl" name="Processtatuscode"/>
+                    <nls description="Prosesstatuskode" languageCode="no" name="Prosesstatuskode"/>
+                    <nls description="Kod stanu procesu" languageCode="pl" name="Kod stanu procesu"/>
+                    <nls description="Código de status do processo" languageCode="pt" name="Código de status do processo"/>
+                    <nls description="Код состояния процесса" languageCode="ru" name="Код состояния процесса"/>
+                    <nls description="Process - Statuskod" languageCode="sv" name="Process - Statuskod"/>
+                    <nls description="Süreç Durum Kodu" languageCode="tr" name="Süreç Durum Kodu"/>
+                    <nls description="过程状态代码" languageCode="zh" name="过程状态代码"/>
+                    <nls description="流程狀態代碼" languageCode="zh_TW" name="流程狀態代碼"/>
+                </attribute>
+                <attribute id="process_status" lookup="COP_PORTLET_PROCESS_STATUS" required="false">
+                    <nls description="Estat de procés" languageCode="ca" name="Estat de procés"/>
+                    <nls description="Stav procesu" languageCode="cs" name="Stav procesu"/>
+                    <nls description="Processtatus" languageCode="da" name="Processtatus"/>
+                    <nls description="Prozess - Status" languageCode="de" name="Prozess - Status"/>
+                    <nls description="Process Status" languageCode="en" name="Process Status"/>
+                    <nls description="Estado de proceso" languageCode="es" name="Estado de proceso"/>
+                    <nls description="Prosessin tila" languageCode="fi" name="Prosessin tila"/>
+                    <nls description="Statut du processus" languageCode="fr" name="Statut du processus"/>
+                    <nls description="Folyamatállapot" languageCode="hu" name="Folyamatállapot"/>
+                    <nls description="Stato processo" languageCode="it" name="Stato processo"/>
+                    <nls description="プロセス ステータス" languageCode="ja" name="プロセス ステータス"/>
+                    <nls description="[ko: Process Status]" languageCode="ko" name="[ko: Process Status]"/>
+                    <nls description="Status proces" languageCode="nl" name="Status proces"/>
+                    <nls description="Prosesstatus" languageCode="no" name="Prosesstatus"/>
+                    <nls description="Stan procesu" languageCode="pl" name="Stan procesu"/>
+                    <nls description="Status do processo" languageCode="pt" name="Status do processo"/>
+                    <nls description="Статус процесса" languageCode="ru" name="Статус процесса"/>
+                    <nls description="Processtatus" languageCode="sv" name="Processtatus"/>
+                    <nls description="Süreç Durumu" languageCode="tr" name="Süreç Durumu"/>
+                    <nls description="过程状态" languageCode="zh" name="过程状态"/>
+                    <nls description="流程狀態" languageCode="zh_TW" name="流程狀態"/>
+                </attribute>
+                <attribute id="primary_object" required="false">
+                    <nls description="Objecte principal" languageCode="ca" name="Objecte principal"/>
+                    <nls description="Primární objekt" languageCode="cs" name="Primární objekt"/>
+                    <nls description="Primært objekt" languageCode="da" name="Primært objekt"/>
+                    <nls description="Primäres Objekt" languageCode="de" name="Primäres Objekt"/>
+                    <nls description="Primary Object" languageCode="en" name="Primary Object"/>
+                    <nls description="Objeto principal" languageCode="es" name="Objeto principal"/>
+                    <nls description="Ensisijainen objekti" languageCode="fi" name="Ensisijainen objekti"/>
+                    <nls description="Objet principal" languageCode="fr" name="Objet principal"/>
+                    <nls description="Elsődleges objektum" languageCode="hu" name="Elsődleges objektum"/>
+                    <nls description="Oggetto principale" languageCode="it" name="Oggetto principale"/>
+                    <nls description="主要オブジェクト" languageCode="ja" name="主要オブジェクト"/>
+                    <nls description="[ko: Primary Object]" languageCode="ko" name="[ko: Primary Object]"/>
+                    <nls description="Primair object" languageCode="nl" name="Primair object"/>
+                    <nls description="Hovedobjekt" languageCode="no" name="Hovedobjekt"/>
+                    <nls description="Obiekt podstawowy" languageCode="pl" name="Obiekt podstawowy"/>
+                    <nls description="Objeto principal" languageCode="pt" name="Objeto principal"/>
+                    <nls description="Основной объект" languageCode="ru" name="Основной объект"/>
+                    <nls description="Primärt objekt" languageCode="sv" name="Primärt objekt"/>
+                    <nls description="Birincil Nesne" languageCode="tr" name="Birincil Nesne"/>
+                    <nls description="主要对象" languageCode="zh" name="主要对象"/>
+                    <nls description="主要物件" languageCode="zh_TW" name="主要物件"/>
+                </attribute>
+                <attribute id="stage_name" required="false">
+                    <nls description="Etapa" languageCode="ca" name="Etapa"/>
+                    <nls description="Fáze" languageCode="cs" name="Fáze"/>
+                    <nls description="Fase" languageCode="da" name="Fase"/>
+                    <nls description="Stage" languageCode="de" name="Stage"/>
+                    <nls description="Stage" languageCode="en" name="Stage"/>
+                    <nls description="Etapa" languageCode="es" name="Etapa"/>
+                    <nls description="Vaihe" languageCode="fi" name="Vaihe"/>
+                    <nls description="Etape" languageCode="fr" name="Etape"/>
+                    <nls description="Szint" languageCode="hu" name="Szint"/>
+                    <nls description="Fase" languageCode="it" name="Fase"/>
+                    <nls description="ステージ" languageCode="ja" name="ステージ"/>
+                    <nls description="[ko: Stage]" languageCode="ko" name="[ko: Stage]"/>
+                    <nls description="Fase" languageCode="nl" name="Fase"/>
+                    <nls description="Fase" languageCode="no" name="Fase"/>
+                    <nls description="Etap" languageCode="pl" name="Etap"/>
+                    <nls description="Etapa" languageCode="pt" name="Etapa"/>
+                    <nls description="Стадия" languageCode="ru" name="Стадия"/>
+                    <nls description="Nivå" languageCode="sv" name="Nivå"/>
+                    <nls description="Aşama" languageCode="tr" name="Aşama"/>
+                    <nls description="阶段" languageCode="zh" name="阶段"/>
+                    <nls description="階段" languageCode="zh_TW" name="階段"/>
+                </attribute>
+                <attribute id="initiated_by" required="false">
+                    <nls description="Iniciat per ID intern" languageCode="ca" name="Iniciat per ID intern"/>
+                    <nls description="Iniciátor – interní ID" languageCode="cs" name="Iniciátor – interní ID"/>
+                    <nls description="Initieret pr. internt id" languageCode="da" name="Initieret pr. internt id"/>
+                    <nls description="Initiiert von (Interne ID)" languageCode="de" name="Initiiert von (Interne ID)"/>
+                    <nls description="Initiated By Internal ID" languageCode="en" name="Initiated By Internal ID"/>
+                    <nls description="Iniciado por ID interno" languageCode="es" name="Iniciado por ID interno"/>
+                    <nls description="Aloittajana sisäinen tunnus" languageCode="fi" name="Aloittajana sisäinen tunnus"/>
+                    <nls description="ID interne de la personne ayant effectué le lancement" languageCode="fr" name="ID interne de la personne ayant effectué le lancement"/>
+                    <nls description="Kezdeményezve belső azonosító szerint" languageCode="hu" name="Kezdeményezve belső azonosító szerint"/>
+                    <nls description="Avviato da ID interno" languageCode="it" name="Avviato da ID interno"/>
+                    <nls description="開始者内部 ID" languageCode="ja" name="開始者内部 ID"/>
+                    <nls description="[ko: Initiated By Internal ID]" languageCode="ko" name="[ko: Initiated By Internal ID]"/>
+                    <nls description="Geïnitieerd op interne id" languageCode="nl" name="Geïnitieerd op interne id"/>
+                    <nls description="Intern ID for startet av" languageCode="no" name="Intern ID for startet av"/>
+                    <nls description="Zainicjowane przez - identyfikator wewnętrzny" languageCode="pl" name="Zainicjowane przez - identyfikator wewnętrzny"/>
+                    <nls description="Iniciado por ID interna" languageCode="pt" name="Iniciado por ID interna"/>
+                    <nls description="Инициировано по внутреннему коду" languageCode="ru" name="Инициировано по внутреннему коду"/>
+                    <nls description="Initierat av internt ID" languageCode="sv" name="Initierat av internt ID"/>
+                    <nls description="Dahili Kimlik Tarafından Başlatıldı" languageCode="tr" name="Dahili Kimlik Tarafından Başlatıldı"/>
+                    <nls description="启动者内部 ID" languageCode="zh" name="启动者内部 ID"/>
+                    <nls description="發起人內部 ID" languageCode="zh_TW" name="發起人內部 ID"/>
+                </attribute>
+                <attribute id="prc_version_id" required="false">
+                    <nls description="ID intern de la versió" languageCode="ca" name="ID intern de la versió"/>
+                    <nls description="Interní ID verze" languageCode="cs" name="Interní ID verze"/>
+                    <nls description="Internt versions-id" languageCode="da" name="Internt versions-id"/>
+                    <nls description="Interne Versions-ID" languageCode="de" name="Interne Versions-ID"/>
+                    <nls description="Version Internal ID" languageCode="en" name="Version Internal ID"/>
+                    <nls description="ID interno de la versión" languageCode="es" name="ID interno de la versión"/>
+                    <nls description="Version sisäinen tunnus" languageCode="fi" name="Version sisäinen tunnus"/>
+                    <nls description="ID interne de la version" languageCode="fr" name="ID interne de la version"/>
+                    <nls description="Verzió belső azonosítója" languageCode="hu" name="Verzió belső azonosítója"/>
+                    <nls description="ID interno versione" languageCode="it" name="ID interno versione"/>
+                    <nls description="バージョン内部 ID" languageCode="ja" name="バージョン内部 ID"/>
+                    <nls description="[ko: Version Internal ID]" languageCode="ko" name="[ko: Version Internal ID]"/>
+                    <nls description="Interne id versie" languageCode="nl" name="Interne id versie"/>
+                    <nls description="Intern versjons-ID" languageCode="no" name="Intern versjons-ID"/>
+                    <nls description="Identyfikator wewnętrzny wersji" languageCode="pl" name="Identyfikator wewnętrzny wersji"/>
+                    <nls description="ID interna da versão" languageCode="pt" name="ID interna da versão"/>
+                    <nls description="Внутренний код версии" languageCode="ru" name="Внутренний код версии"/>
+                    <nls description="Version - Internt ID" languageCode="sv" name="Version - Internt ID"/>
+                    <nls description="Sürüm Dahili Kimliği" languageCode="tr" name="Sürüm Dahili Kimliği"/>
+                    <nls description="版本内部 ID" languageCode="zh" name="版本内部 ID"/>
+                    <nls description="版本內部 ID" languageCode="zh_TW" name="版本內部 ID"/>
+                </attribute>
+                <attribute id="defver_id" lookup="COP_PORTLET_PROCESS_TYPE" required="false">
+                    <nls description="Filtre Tipus de procés" languageCode="ca" name="Filtre Tipus de procés"/>
+                    <nls description="Filtr typu procesu" languageCode="cs" name="Filtr typu procesu"/>
+                    <nls description="Procestypefilter" languageCode="da" name="Procestypefilter"/>
+                    <nls description="Prozesstyp - Filter" languageCode="de" name="Prozesstyp - Filter"/>
+                    <nls description="Process Type Filter" languageCode="en" name="Process Type Filter"/>
+                    <nls description="Filtro Tipo de proceso" languageCode="es" name="Filtro Tipo de proceso"/>
+                    <nls description="Prosessityyppi-suodatin" languageCode="fi" name="Prosessityyppi-suodatin"/>
+                    <nls description="Filtre Type de processus" languageCode="fr" name="Filtre Type de processus"/>
+                    <nls description="Folyamattípus szűrő" languageCode="hu" name="Folyamattípus szűrő"/>
+                    <nls description="Filtro Tipo di processo" languageCode="it" name="Filtro Tipo di processo"/>
+                    <nls description="プロセス タイプ フィルタ" languageCode="ja" name="プロセス タイプ フィルタ"/>
+                    <nls description="[ko: Process Type Filter]" languageCode="ko" name="[ko: Process Type Filter]"/>
+                    <nls description="Filter Procestype" languageCode="nl" name="Filter Procestype"/>
+                    <nls description="Prosesstypefilter" languageCode="no" name="Prosesstypefilter"/>
+                    <nls description="Filtr typu procesu" languageCode="pl" name="Filtr typu procesu"/>
+                    <nls description="Filtro do tipo de processos" languageCode="pt" name="Filtro do tipo de processos"/>
+                    <nls description="Фильтр &quot;Тип процесса&quot;" languageCode="ru" name="Фильтр &quot;Тип процесса&quot;"/>
+                    <nls description="Processtyp - Filter" languageCode="sv" name="Processtyp - Filter"/>
+                    <nls description="Süreç Türü Filtresi" languageCode="tr" name="Süreç Türü Filtresi"/>
+                    <nls description="过程类型筛选" languageCode="zh" name="过程类型筛选"/>
+                    <nls description="流程類型篩選器" languageCode="zh_TW" name="流程類型篩選器"/>
+                </attribute>
+                <attribute id="defver_process_id" required="false">
+                    <nls description="ID intern del tipus de procés" languageCode="ca" name="ID intern del tipus de procés"/>
+                    <nls description="Interní ID typu procesu" languageCode="cs" name="Interní ID typu procesu"/>
+                    <nls description="Internt procestype-id" languageCode="da" name="Internt procestype-id"/>
+                    <nls description="Interne Prozesstyp-ID" languageCode="de" name="Interne Prozesstyp-ID"/>
+                    <nls description="Process Type Internal ID" languageCode="en" name="Process Type Internal ID"/>
+                    <nls description="ID interno del tipo de proceso" languageCode="es" name="ID interno del tipo de proceso"/>
+                    <nls description="Prosessityypin sisäinen tunnus" languageCode="fi" name="Prosessityypin sisäinen tunnus"/>
+                    <nls description="ID interne du type de processus" languageCode="fr" name="ID interne du type de processus"/>
+                    <nls description="Folyamattípus belső azonosítója" languageCode="hu" name="Folyamattípus belső azonosítója"/>
+                    <nls description="ID interno tipo di processo" languageCode="it" name="ID interno tipo di processo"/>
+                    <nls description="プロセス タイプ内部 ID" languageCode="ja" name="プロセス タイプ内部 ID"/>
+                    <nls description="[ko: Process Type Internal ID]" languageCode="ko" name="[ko: Process Type Internal ID]"/>
+                    <nls description="Interne id procestype" languageCode="nl" name="Interne id procestype"/>
+                    <nls description="Intern ID for prosesstype" languageCode="no" name="Intern ID for prosesstype"/>
+                    <nls description="Identyfikator wewnętrzny typu procesu" languageCode="pl" name="Identyfikator wewnętrzny typu procesu"/>
+                    <nls description="ID interna do tipo de processo" languageCode="pt" name="ID interna do tipo de processo"/>
+                    <nls description="Внутренний код типа процесса" languageCode="ru" name="Внутренний код типа процесса"/>
+                    <nls description="Processthp - Internt ID" languageCode="sv" name="Processthp - Internt ID"/>
+                    <nls description="Süreç Türü Dahili Kimliği" languageCode="tr" name="Süreç Türü Dahili Kimliği"/>
+                    <nls description="过程类型内部 ID" languageCode="zh" name="过程类型内部 ID"/>
+                    <nls description="流程類型內部 ID" languageCode="zh_TW" name="流程類型內部 ID"/>
+                </attribute>
+                <attribute id="runpro_id" required="false">
+                    <nls description="ID intern del procés d'execució" languageCode="ca" name="ID intern del procés d'execució"/>
+                    <nls description="Spustit interní ID procesu" languageCode="cs" name="Spustit interní ID procesu"/>
+                    <nls description="Internt køreproces-id" languageCode="da" name="Internt køreproces-id"/>
+                    <nls description="Interne Prozessausführungs-ID" languageCode="de" name="Interne Prozessausführungs-ID"/>
+                    <nls description="Run Process Internal ID" languageCode="en" name="Run Process Internal ID"/>
+                    <nls description="ID interno del proceso de ejecución" languageCode="es" name="ID interno del proceso de ejecución"/>
+                    <nls description="Suorita prosessin sisäinen tunnus" languageCode="fi" name="Suorita prosessin sisäinen tunnus"/>
+                    <nls description="ID interne du processus d'exécution" languageCode="fr" name="ID interne du processus d'exécution"/>
+                    <nls description="Futtatási folyamat belső azonosítója" languageCode="hu" name="Futtatási folyamat belső azonosítója"/>
+                    <nls description="ID interno esecuzione processo" languageCode="it" name="ID interno esecuzione processo"/>
+                    <nls description="実行プロセス内部 ID" languageCode="ja" name="実行プロセス内部 ID"/>
+                    <nls description="[ko: Run Process Internal ID]" languageCode="ko" name="[ko: Run Process Internal ID]"/>
+                    <nls description="Interne id Uitgevoerd proces" languageCode="nl" name="Interne id Uitgevoerd proces"/>
+                    <nls description="Intern ID for kjør prosess" languageCode="no" name="Intern ID for kjør prosess"/>
+                    <nls description="Identyfikator wewnętrzny procesu uruchamiania" languageCode="pl" name="Identyfikator wewnętrzny procesu uruchamiania"/>
+                    <nls description="ID interna do processo de execução" languageCode="pt" name="ID interna do processo de execução"/>
+                    <nls description="Внутренний код выполнения процесса" languageCode="ru" name="Внутренний код выполнения процесса"/>
+                    <nls description="Kör process - Internt ID" languageCode="sv" name="Kör process - Internt ID"/>
+                    <nls description="Süreç Dahili Kimliğini Çalıştır" languageCode="tr" name="Süreç Dahili Kimliğini Çalıştır"/>
+                    <nls description="运行过程内部 ID" languageCode="zh" name="运行过程内部 ID"/>
+                    <nls description="執行流程內部 ID" languageCode="zh_TW" name="執行流程內部 ID"/>
+                </attribute>
+                <attribute id="init_by_name" required="false">
+                    <nls description="Iniciat per" languageCode="ca" name="Iniciat per"/>
+                    <nls description="Inicioval/-a" languageCode="cs" name="Inicioval/-a"/>
+                    <nls description="Startet af" languageCode="da" name="Startet af"/>
+                    <nls description="Initiiert von" languageCode="de" name="Initiiert von"/>
+                    <nls description="Initiated By" languageCode="en" name="Initiated By"/>
+                    <nls description="Iniciado por" languageCode="es" name="Iniciado por"/>
+                    <nls description="Aloittaja" languageCode="fi" name="Aloittaja"/>
+                    <nls description="Lancé(e) par" languageCode="fr" name="Lancé(e) par"/>
+                    <nls description="Kezdeményezte" languageCode="hu" name="Kezdeményezte"/>
+                    <nls description="Avviato da" languageCode="it" name="Avviato da"/>
+                    <nls description="開始者" languageCode="ja" name="開始者"/>
+                    <nls description="[ko: Initiated By]" languageCode="ko" name="[ko: Initiated By]"/>
+                    <nls description="Geïnitieerd door" languageCode="nl" name="Geïnitieerd door"/>
+                    <nls description="Startet av" languageCode="no" name="Startet av"/>
+                    <nls description="Zainicjowane przez" languageCode="pl" name="Zainicjowane przez"/>
+                    <nls description="Iniciado por" languageCode="pt" name="Iniciado por"/>
+                    <nls description="Инициировано" languageCode="ru" name="Инициировано"/>
+                    <nls description="Initierad av" languageCode="sv" name="Initierad av"/>
+                    <nls description="Başlatan" languageCode="tr" name="Başlatan"/>
+                    <nls description="启动者" languageCode="zh" name="启动者"/>
+                    <nls description="發起人" languageCode="zh_TW" name="發起人"/>
+                </attribute>
+                <attribute id="iconmap" required="false">
+                    <nls description="Diagrama de flux" languageCode="ca" name="Diagrama de flux"/>
+                    <nls description="Schéma průběhu" languageCode="cs" name="Schéma průběhu"/>
+                    <nls description="Flowdiagram" languageCode="da" name="Flowdiagram"/>
+                    <nls description="Flussdiagramm" languageCode="de" name="Flussdiagramm"/>
+                    <nls description="Flow Diagram" languageCode="en" name="Flow Diagram"/>
+                    <nls description="Diagrama de flujo" languageCode="es" name="Diagrama de flujo"/>
+                    <nls description="Vuokaavio" languageCode="fi" name="Vuokaavio"/>
+                    <nls description="Diagramme de flux" languageCode="fr" name="Diagramme de flux"/>
+                    <nls description="Folyamatábra" languageCode="hu" name="Folyamatábra"/>
+                    <nls description="Diagramma di flusso" languageCode="it" name="Diagramma di flusso"/>
+                    <nls description="フロー図" languageCode="ja" name="フロー図"/>
+                    <nls description="[ko: Flow Diagram]" languageCode="ko" name="[ko: Flow Diagram]"/>
+                    <nls description="Stroomdiagram" languageCode="nl" name="Stroomdiagram"/>
+                    <nls description="Flytdiagram" languageCode="no" name="Flytdiagram"/>
+                    <nls description="Diagram przepływu" languageCode="pl" name="Diagram przepływu"/>
+                    <nls description="Diagrama de fluxo" languageCode="pt" name="Diagrama de fluxo"/>
+                    <nls description="Схема операций" languageCode="ru" name="Схема операций"/>
+                    <nls description="Flödesdiagram" languageCode="sv" name="Flödesdiagram"/>
+                    <nls description="Akış Diyagramı" languageCode="tr" name="Akış Diyagramı"/>
+                    <nls description="流程图" languageCode="zh" name="流程图"/>
+                    <nls description="流程圖" languageCode="zh_TW" name="流程圖"/>
+                    <displayMapping type="image">
+                        <mapping hi="1" lo="1" mappingCode="mapping-1" typeCode="OrgWorkflow"/>
+                    </displayMapping>
+                </attribute>
+                <attribute id="sort2" required="false">
+                    <nls description="Seqüència d'etapes" languageCode="ca" name="Seqüència d'etapes"/>
+                    <nls description="Posloupnost fáze" languageCode="cs" name="Posloupnost fáze"/>
+                    <nls description="Fasesekvens" languageCode="da" name="Fasesekvens"/>
+                    <nls description="Stage-Sequenz" languageCode="de" name="Stage-Sequenz"/>
+                    <nls description="Stage Sequence" languageCode="en" name="Stage Sequence"/>
+                    <nls description="Secuencia de etapas" languageCode="es" name="Secuencia de etapas"/>
+                    <nls description="Vaiheiden järjestys" languageCode="fi" name="Vaiheiden järjestys"/>
+                    <nls description="Séquence de l'étape" languageCode="fr" name="Séquence de l'étape"/>
+                    <nls description="Szintsorozat" languageCode="hu" name="Szintsorozat"/>
+                    <nls description="Sequenza della fase" languageCode="it" name="Sequenza della fase"/>
+                    <nls description="ステージ シーケンス" languageCode="ja" name="ステージ シーケンス"/>
+                    <nls description="[ko: Stage Sequence]" languageCode="ko" name="[ko: Stage Sequence]"/>
+                    <nls description="Volgorde van fasen" languageCode="nl" name="Volgorde van fasen"/>
+                    <nls description="Fasesekvens" languageCode="no" name="Fasesekvens"/>
+                    <nls description="Sekwencja etapów" languageCode="pl" name="Sekwencja etapów"/>
+                    <nls description="Sequência de etapas" languageCode="pt" name="Sequência de etapas"/>
+                    <nls description="Последовательность этапов" languageCode="ru" name="Последовательность этапов"/>
+                    <nls description="Nivåsekvens" languageCode="sv" name="Nivåsekvens"/>
+                    <nls description="Aşama Sırası" languageCode="tr" name="Aşama Sırası"/>
+                    <nls description="阶段顺序" languageCode="zh" name="阶段顺序"/>
+                    <nls description="階段順序" languageCode="zh_TW" name="階段順序"/>
+                </attribute>
+                <attribute id="step_id" required="false">
+                    <nls description="ID intern del pas" languageCode="ca" name="ID intern del pas"/>
+                    <nls description="Interní ID kroku" languageCode="cs" name="Interní ID kroku"/>
+                    <nls description="Internt trin-id" languageCode="da" name="Internt trin-id"/>
+                    <nls description="Interne Schritt-ID" languageCode="de" name="Interne Schritt-ID"/>
+                    <nls description="Step Internal ID" languageCode="en" name="Step Internal ID"/>
+                    <nls description="ID interno del paso" languageCode="es" name="ID interno del paso"/>
+                    <nls description="Vaiheen sisäinen tunnus" languageCode="fi" name="Vaiheen sisäinen tunnus"/>
+                    <nls description="ID interne de l'étape" languageCode="fr" name="ID interne de l'étape"/>
+                    <nls description="Lépés belső azonosítója" languageCode="hu" name="Lépés belső azonosítója"/>
+                    <nls description="ID interno operazione" languageCode="it" name="ID interno operazione"/>
+                    <nls description="ステップ内部 ID" languageCode="ja" name="ステップ内部 ID"/>
+                    <nls description="[ko: Step Internal ID]" languageCode="ko" name="[ko: Step Internal ID]"/>
+                    <nls description="Interne id stap" languageCode="nl" name="Interne id stap"/>
+                    <nls description="Intern delaktivitets-ID" languageCode="no" name="Intern delaktivitets-ID"/>
+                    <nls description="Identyfikator wewnętrzny kroku" languageCode="pl" name="Identyfikator wewnętrzny kroku"/>
+                    <nls description="ID interna da etapa" languageCode="pt" name="ID interna da etapa"/>
+                    <nls description="Внутренний код шага" languageCode="ru" name="Внутренний код шага"/>
+                    <nls description="Steg - Internt ID" languageCode="sv" name="Steg - Internt ID"/>
+                    <nls description="Adım Dahili Kimliği" languageCode="tr" name="Adım Dahili Kimliği"/>
+                    <nls description="步骤内部 ID" languageCode="zh" name="步骤内部 ID"/>
+                    <nls description="步驟內部 ID" languageCode="zh_TW" name="步驟內部 ID"/>
+                </attribute>
+                <attribute id="sort3" required="false">
+                    <nls description="Seqüència de passos" languageCode="ca" name="Seqüència de passos"/>
+                    <nls description="Posloupnost kroku" languageCode="cs" name="Posloupnost kroku"/>
+                    <nls description="Trinsekvens" languageCode="da" name="Trinsekvens"/>
+                    <nls description="Schrittfolge" languageCode="de" name="Schrittfolge"/>
+                    <nls description="Step Sequence" languageCode="en" name="Step Sequence"/>
+                    <nls description="Secuencia de pasos" languageCode="es" name="Secuencia de pasos"/>
+                    <nls description="Vaihejärjestys" languageCode="fi" name="Vaihejärjestys"/>
+                    <nls description="Séquence de l'étape" languageCode="fr" name="Séquence de l'étape"/>
+                    <nls description="Lépéssorozat" languageCode="hu" name="Lépéssorozat"/>
+                    <nls description="Sequenza operazioni" languageCode="it" name="Sequenza operazioni"/>
+                    <nls description="ステップ シーケンス" languageCode="ja" name="ステップ シーケンス"/>
+                    <nls description="[ko: Step Sequence]" languageCode="ko" name="[ko: Step Sequence]"/>
+                    <nls description="Volgorde van stappen" languageCode="nl" name="Volgorde van stappen"/>
+                    <nls description="Delaktivitetssekvens" languageCode="no" name="Delaktivitetssekvens"/>
+                    <nls description="Sekwencja kroków" languageCode="pl" name="Sekwencja kroków"/>
+                    <nls description="Sequência da etapa" languageCode="pt" name="Sequência da etapa"/>
+                    <nls description="Последовательность шагов" languageCode="ru" name="Последовательность шагов"/>
+                    <nls description="Stegsekvens" languageCode="sv" name="Stegsekvens"/>
+                    <nls description="Adım Sırası" languageCode="tr" name="Adım Sırası"/>
+                    <nls description="步骤顺序" languageCode="zh" name="步骤顺序"/>
+                    <nls description="步驟順序" languageCode="zh_TW" name="步驟順序"/>
+                </attribute>
+                <attribute id="sort4" required="false">
+                    <nls description="Seqüència de passos" languageCode="ca" name="Seqüència de passos (2)"/>
+                    <nls description="Posloupnost kroku" languageCode="cs" name="Posloupnost kroku (2)"/>
+                    <nls description="Trinsekvens" languageCode="da" name="Trinsekvens (2)"/>
+                    <nls description="Schrittfolge" languageCode="de" name="Schrittfolge (2)"/>
+                    <nls description="Step Sequence" languageCode="en" name="Step Sequence (2)"/>
+                    <nls description="Secuencia de pasos" languageCode="es" name="Secuencia de pasos (2)"/>
+                    <nls description="Vaihejärjestys" languageCode="fi" name="Vaihejärjestys (2)"/>
+                    <nls description="Séquence de l'étape" languageCode="fr" name="Séquence de l'étape (2)"/>
+                    <nls description="Lépéssorozat" languageCode="hu" name="Lépéssorozat (2)"/>
+                    <nls description="Sequenza operazioni" languageCode="it" name="Sequenza operazioni (2)"/>
+                    <nls description="ステップ シーケンス" languageCode="ja" name="ステップ シーケンス (2)"/>
+                    <nls description="[ko: Step Sequence]" languageCode="ko" name="[ko: Step Sequence (2)]"/>
+                    <nls description="Volgorde van stappen" languageCode="nl" name="Volgorde van stappen (2)"/>
+                    <nls description="Delaktivitetssekvens" languageCode="no" name="Delaktivitetssekvens (2)"/>
+                    <nls description="Sekwencja kroków" languageCode="pl" name="Sekwencja kroków (2)"/>
+                    <nls description="Sequência da etapa" languageCode="pt" name="Sequência da etapa (2)"/>
+                    <nls description="Последовательность шагов" languageCode="ru" name="Последовательность шагов (2)"/>
+                    <nls description="Stegsekvens" languageCode="sv" name="Stegsekvens (2)"/>
+                    <nls description="Adım Sırası" languageCode="tr" name="Adım Sırası (2)"/>
+                    <nls description="步骤顺序" languageCode="zh" name="步骤顺序 (2)"/>
+                    <nls description="步驟順序" languageCode="zh_TW" name="步驟順序 (2)"/>
+                </attribute>
+                <attribute id="step_name" required="false">
+                    <nls description="Pas" languageCode="ca" name="Pas"/>
+                    <nls description="Krok" languageCode="cs" name="Krok"/>
+                    <nls description="Trin" languageCode="da" name="Trin"/>
+                    <nls description="Schritt" languageCode="de" name="Schritt"/>
+                    <nls description="Step" languageCode="en" name="Step"/>
+                    <nls description="Paso" languageCode="es" name="Paso"/>
+                    <nls description="Vaihe" languageCode="fi" name="Vaihe"/>
+                    <nls description="Etape" languageCode="fr" name="Etape"/>
+                    <nls description="Lépés" languageCode="hu" name="Lépés"/>
+                    <nls description="Operazione" languageCode="it" name="Operazione"/>
+                    <nls description="ステップ" languageCode="ja" name="ステップ"/>
+                    <nls description="[ko: Step]" languageCode="ko" name="[ko: Step]"/>
+                    <nls description="Stap" languageCode="nl" name="Stap"/>
+                    <nls description="Delaktivitet" languageCode="no" name="Delaktivitet"/>
+                    <nls description="Etap" languageCode="pl" name="Etap"/>
+                    <nls description="Etapa" languageCode="pt" name="Etapa"/>
+                    <nls description="Шаг" languageCode="ru" name="Шаг"/>
+                    <nls description="Steg" languageCode="sv" name="Steg"/>
+                    <nls description="Adım" languageCode="tr" name="Adım"/>
+                    <nls description="步骤" languageCode="zh" name="步骤"/>
+                    <nls description="步驟" languageCode="zh_TW" name="步驟"/>
+                </attribute>
+                <attribute id="durations" required="false">
+                    <nls description="Durada" languageCode="ca" name="Durada"/>
+                    <nls description="Doba trvání" languageCode="cs" name="Doba trvání"/>
+                    <nls description="Varighed" languageCode="da" name="Varighed"/>
+                    <nls description="Dauer" languageCode="de" name="Dauer"/>
+                    <nls description="Duration" languageCode="en" name="Duration"/>
+                    <nls description="Duración" languageCode="es" name="Duración"/>
+                    <nls description="Kesto" languageCode="fi" name="Kesto"/>
+                    <nls description="Durée" languageCode="fr" name="Durée"/>
+                    <nls description="Időtartam" languageCode="hu" name="Időtartam"/>
+                    <nls description="Durata" languageCode="it" name="Durata"/>
+                    <nls description="期間" languageCode="ja" name="期間"/>
+                    <nls description="[ko: Duration]" languageCode="ko" name="[ko: Duration]"/>
+                    <nls description="Duur" languageCode="nl" name="Duur"/>
+                    <nls description="Varighet" languageCode="no" name="Varighet"/>
+                    <nls description="Czas trwania" languageCode="pl" name="Czas trwania"/>
+                    <nls description="Duração" languageCode="pt" name="Duração"/>
+                    <nls description="Длительность" languageCode="ru" name="Длительность"/>
+                    <nls description="Varaktighet" languageCode="sv" name="Varaktighet"/>
+                    <nls description="Süre" languageCode="tr" name="Süre"/>
+                    <nls description="持续时间" languageCode="zh" name="持续时间"/>
+                    <nls description="持續期間" languageCode="zh_TW" name="持續期間"/>
+                </attribute>
+                <attribute id="duration_status" lookup="COP_PORTLET_PROCESS_DURATION" required="false">
+                    <nls description="Estat de durada" languageCode="ca" name="Estat de durada"/>
+                    <nls description="Stav doby trvání" languageCode="cs" name="Stav doby trvání"/>
+                    <nls description="Status for varighed" languageCode="da" name="Status for varighed"/>
+                    <nls description="Dauer-Status" languageCode="de" name="Dauer-Status"/>
+                    <nls description="Duration Status" languageCode="en" name="Duration Status"/>
+                    <nls description="Estado de duración" languageCode="es" name="Estado de duración"/>
+                    <nls description="Keston tila" languageCode="fi" name="Keston tila"/>
+                    <nls description="Statut de la durée" languageCode="fr" name="Statut de la durée"/>
+                    <nls description="Időtartam állapota" languageCode="hu" name="Időtartam állapota"/>
+                    <nls description="Stato durata" languageCode="it" name="Stato durata"/>
+                    <nls description="期間ステータス" languageCode="ja" name="期間ステータス"/>
+                    <nls description="[ko: Duration Status]" languageCode="ko" name="[ko: Duration Status]"/>
+                    <nls description="Status van duur" languageCode="nl" name="Status van duur"/>
+                    <nls description="Varighetsstatus" languageCode="no" name="Varighetsstatus"/>
+                    <nls description="Czas trwania - stan" languageCode="pl" name="Czas trwania - stan"/>
+                    <nls description="Status de duração" languageCode="pt" name="Status de duração"/>
+                    <nls description="Статус длительности" languageCode="ru" name="Статус длительности"/>
+                    <nls description="Varaktighet Status" languageCode="sv" name="Varaktighet Status"/>
+                    <nls description="Süre Durumu" languageCode="tr" name="Süre Durumu"/>
+                    <nls description="持续时间状态" languageCode="zh" name="持续时间状态"/>
+                    <nls description="持續期間狀態" languageCode="zh_TW" name="持續期間狀態"/>
+                    <displayMapping type="color">
+                        <mapping mappingCode="mapping-1" typeCode="green" value="1"/>
+                        <mapping mappingCode="mapping-2" typeCode="yellow" value="2"/>
+                        <mapping mappingCode="mapping-3" typeCode="red" value="3"/>
+                    </displayMapping>
+                </attribute>
+                <links>
+                    <link action="bpm.stepHistory" code="process">
+                        <nls description="Process" languageCode="ca" name="Process"/>
+                        <nls description="Process" languageCode="cs" name="Process"/>
+                        <nls description="Process" languageCode="da" name="Process"/>
+                        <nls description="Process" languageCode="de" name="Process"/>
+                        <nls description="Process" languageCode="en" name="Process"/>
+                        <nls description="Process" languageCode="es" name="Process"/>
+                        <nls description="Process" languageCode="fi" name="Process"/>
+                        <nls description="Process" languageCode="fr" name="Process"/>
+                        <nls description="Process" languageCode="hu" name="Process"/>
+                        <nls description="Process" languageCode="it" name="Process"/>
+                        <nls description="Process" languageCode="ja" name="Process"/>
+                        <nls description="Process" languageCode="ko" name="Process"/>
+                        <nls description="Process" languageCode="nl" name="Process"/>
+                        <nls description="Process" languageCode="no" name="Process"/>
+                        <nls description="Process" languageCode="pl" name="Process"/>
+                        <nls description="Process" languageCode="pt" name="Process"/>
+                        <nls description="Process" languageCode="ru" name="Process"/>
+                        <nls description="Process" languageCode="sv" name="Process"/>
+                        <nls description="Process" languageCode="tr" name="Process"/>
+                        <nls description="Process" languageCode="zh" name="Process"/>
+                        <nls description="Process" languageCode="zh_TW" name="Process"/>
+                        <linkParam dataRef="runpro_id" dataSource="data" paramCode="process_instance_id"/>
+                    </link>
+                    <link action="bpm.processFlowLayoutPopup" code="processFlowDiagram">
+                        <nls description="Process Flow Diagram" languageCode="ca" name="Process Flow Diagram"/>
+                        <nls description="Process Flow Diagram" languageCode="cs" name="Process Flow Diagram"/>
+                        <nls description="Process Flow Diagram" languageCode="da" name="Process Flow Diagram"/>
+                        <nls description="Process Flow Diagram" languageCode="de" name="Process Flow Diagram"/>
+                        <nls description="Process Flow Diagram" languageCode="en" name="Process Flow Diagram"/>
+                        <nls description="Process Flow Diagram" languageCode="es" name="Process Flow Diagram"/>
+                        <nls description="Process Flow Diagram" languageCode="fi" name="Process Flow Diagram"/>
+                        <nls description="Process Flow Diagram" languageCode="fr" name="Process Flow Diagram"/>
+                        <nls description="Process Flow Diagram" languageCode="hu" name="Process Flow Diagram"/>
+                        <nls description="Process Flow Diagram" languageCode="it" name="Process Flow Diagram"/>
+                        <nls description="Process Flow Diagram" languageCode="ja" name="Process Flow Diagram"/>
+                        <nls description="Process Flow Diagram" languageCode="ko" name="Process Flow Diagram"/>
+                        <nls description="Process Flow Diagram" languageCode="nl" name="Process Flow Diagram"/>
+                        <nls description="Process Flow Diagram" languageCode="no" name="Process Flow Diagram"/>
+                        <nls description="Process Flow Diagram" languageCode="pl" name="Process Flow Diagram"/>
+                        <nls description="Process Flow Diagram" languageCode="pt" name="Process Flow Diagram"/>
+                        <nls description="Process Flow Diagram" languageCode="ru" name="Process Flow Diagram"/>
+                        <nls description="Process Flow Diagram" languageCode="sv" name="Process Flow Diagram"/>
+                        <nls description="Process Flow Diagram" languageCode="tr" name="Process Flow Diagram"/>
+                        <nls description="Process Flow Diagram" languageCode="zh" name="Process Flow Diagram"/>
+                        <nls description="Process Flow Diagram" languageCode="zh_TW" name="Process Flow Diagram"/>
+                        <linkParam dataRef="runpro_id" dataSource="data" paramCode="process_instance_id"/>
+                        <linkParam dataRef="defver_id" dataSource="data" paramCode="process_version_id"/>
+                    </link>
+                </links>
+            </query>
+        </queries>
+        <lookups update="true">
+            <dynamicLookup autoSuggestEnabled="true" autoSuggestMaxSuggestions="10" code="COP_PORTLET_PROCESS_STATUS" displayAttributeName="status_desc" hiddenAttributeName="int_id" objectCode="" sortAttributeName="status_desc" sortDirection="asc" source="niku.com" status="active" update="true">
+                <nls description="Displays the status codes available to each instance, step and action item." languageCode="ca" name="Portlet Process Status"/>
+                <nls description="Zobrazuje kódy stavu dostupné pro každou instanci, krok a akci." languageCode="cs" name="Portlet Stav procesu"/>
+                <nls description="Vis statuskoder, som er tilgængelige for hver forekomst, trin og handlingspunkt." languageCode="da" name="Portlet - processtatus"/>
+                <nls description="Zeigt die Statuscodes an, die für die einzelnen Instanzen, Schritte und Aktionen verfügbar sind." languageCode="de" name="Portlet - Prozessstatus"/>
+                <nls description="Displays the status codes available to each instance, step and action item." languageCode="en" name="Portlet Process Status"/>
+                <nls description="Muestra los códigos de estado disponibles para cada instancia, paso y acción." languageCode="es" name="Estado del proceso del portlet"/>
+                <nls description="Näyttää kunkin esiintymän käytössä olevat tilakoodit, vaiheen ja toimenpiteen." languageCode="fi" name="Prosessin tila -portletti"/>
+                <nls description="Afficher les codes de statut disponibles pour chaque instance, étape et action" languageCode="fr" name="Statut du processus de portlet"/>
+                <nls description="Megjeleníti az egyes példányokhoz, lépésekhez és elvégzendő feladatokhoz rendelkezésre álló állapotkódokat." languageCode="hu" name="Portletfolyamat állapota"/>
+                <nls description="Mostra i codici di stato disponibili per ciascuna istanza, operazione ed azione." languageCode="it" name="Stato processo del portlet"/>
+                <nls description="インスタンス、ステップ、およびアクション アイテムのそれぞれで利用可能なステータス コードを表示します。" languageCode="ja" name="ポートレット プロセス ステータス"/>
+                <nls description="Displays the status codes available to each instance, step and action item." languageCode="ko" name="Portlet Process Status"/>
+                <nls description="Geeft de statuscodes weer die beschikbaar zijn voor elke instantie, elke stap en elk actiepunt." languageCode="nl" name="Portlet Status proces"/>
+                <nls description="Viser statuskodene som er tilgjengelige for hver forekomst, hvert trinn og hvert aksjonspunkt." languageCode="no" name="Portletprosesstatus"/>
+                <nls description="Wyświetla kody stanów dostępne w każdym wystąpieniu, kroku i w czynności do wykonania." languageCode="pl" name="Portlet Stan procesu"/>
+                <nls description="Exibe os códigos de status disponíveis para cada instância, etapa e item de ação." languageCode="pt" name="Status do processo de portlet"/>
+                <nls description="Отображение кодов статуса, доступных для каждого экземпляра, шага и элемента действия." languageCode="ru" name="Статус процесса портлета"/>
+                <nls description="Visar statuskoder som är tillgängliga för varje instans, steg och åtgärdsalternativ." languageCode="sv" name="Portlet Processtatus"/>
+                <nls description="Her örnek, adım ve eylem öğesi için kullanılabilecek durum kodlarını görüntüler." languageCode="tr" name="Portlet Süreç Durumu"/>
+                <nls description="Displays the status codes available to each instance, step and action item." languageCode="zh" name="Portlet Process Status"/>
+                <nls description="Displays the status codes available to each instance, step and action item." languageCode="zh_TW" name="Portlet Process Status"/>
+                <nsql databaseId="Niku" dbVendor="all"><![CDATA[SELECT
+@SELECT:Id:Int_Id@,
+@SELECT:Status_Name:Status_Desc@
+FROM
+(
+SELECT
+Name id, Name Status_Name
+FROM
+CMN_LOOKUPS_V L
+WHERE L.language_code = @WHERE:PARAM:LANGUAGE@
+AND lookup_type = 'BPM_PROCESS_INSTANCE_STATES'
+) theTable]]></nsql>
+                <displayedSuggestionAttributes>
+                    <displayedSuggestionAttribute value="status_desc"/>
+                </displayedSuggestionAttributes>
+                <searchedSuggestionAttributes>
+                    <searchedSuggestionAttribute value="status_desc"/>
+                </searchedSuggestionAttributes>
+                <browsePage>
+                    <singleSelectPageTitles>
+                        <nls description="" languageCode="ca" name="Process Status"/>
+                        <nls description="Bez popisu" languageCode="cs" name="Stav procesu"/>
+                        <nls description="Ingen beskrivelse" languageCode="da" name="Processtatus"/>
+                        <nls description="Keine Beschreibung" languageCode="de" name="Prozess - Status"/>
+                        <nls description="No description" languageCode="en" name="Process Status"/>
+                        <nls description="No existe ninguna descripción" languageCode="es" name="Estado de proceso"/>
+                        <nls description="Ei kuvausta" languageCode="fi" name="Prosessin tila"/>
+                        <nls description="Aucune description" languageCode="fr" name="Statut du processus"/>
+                        <nls description="Nincs leírás" languageCode="hu" name="Folyamatállapot"/>
+                        <nls description="Nessuna descrizione" languageCode="it" name="Stato processo"/>
+                        <nls description="説明がありません" languageCode="ja" name="プロセス ステータス"/>
+                        <nls description="Process Status" languageCode="ko" name="Process Status"/>
+                        <nls description="Geen omschrijving" languageCode="nl" name="Status proces"/>
+                        <nls description="Ingen beskrivelse" languageCode="no" name="Prosesstatus"/>
+                        <nls description="Brak opisu" languageCode="pl" name="Stan procesu"/>
+                        <nls description="Nenhuma descrição" languageCode="pt" name="Status do processo"/>
+                        <nls description="Нет описания" languageCode="ru" name="Статус процесса"/>
+                        <nls description="Ingen beskrivning" languageCode="sv" name="Processtatus"/>
+                        <nls description="Açıklama yok" languageCode="tr" name="Süreç Durumu"/>
+                        <nls description="Process Status" languageCode="zh" name="Process Status"/>
+                        <nls description="Process Status" languageCode="zh_TW" name="Process Status"/>
+                    </singleSelectPageTitles>
+                    <multiSelectPageTitles>
+                        <nls description="" languageCode="ca" name="Process Status"/>
+                        <nls description="Bez popisu" languageCode="cs" name="Stav procesu"/>
+                        <nls description="Ingen beskrivelse" languageCode="da" name="Processtatus"/>
+                        <nls description="Keine Beschreibung" languageCode="de" name="Prozess - Status"/>
+                        <nls description="No description" languageCode="en" name="Process Status"/>
+                        <nls description="No existe ninguna descripción" languageCode="es" name="Estado de proceso"/>
+                        <nls description="Ei kuvausta" languageCode="fi" name="Prosessin tila"/>
+                        <nls description="Aucune description" languageCode="fr" name="Statut du processus"/>
+                        <nls description="Nincs leírás" languageCode="hu" name="Folyamatállapot"/>
+                        <nls description="Nessuna descrizione" languageCode="it" name="Stato processo"/>
+                        <nls description="説明がありません" languageCode="ja" name="プロセス ステータス"/>
+                        <nls description="Process Status" languageCode="ko" name="Process Status"/>
+                        <nls description="Geen omschrijving" languageCode="nl" name="Status proces"/>
+                        <nls description="Ingen beskrivelse" languageCode="no" name="Prosesstatus"/>
+                        <nls description="Brak opisu" languageCode="pl" name="Stan procesu"/>
+                        <nls description="Nenhuma descrição" languageCode="pt" name="Status do processo"/>
+                        <nls description="Нет описания" languageCode="ru" name="Статус процесса"/>
+                        <nls description="Ingen beskrivning" languageCode="sv" name="Processtatus"/>
+                        <nls description="Açıklama yok" languageCode="tr" name="Süreç Durumu"/>
+                        <nls description="Process Status" languageCode="zh" name="Process Status"/>
+                        <nls description="Process Status" languageCode="zh_TW" name="Process Status"/>
+                    </multiSelectPageTitles>
+                    <filter code="int_id" defaultValue="" order="1" widgetType="text">
+                        <nls description="" languageCode="ca" name="Instance Id"/>
+                        <nls description="Bez popisu" languageCode="cs" name="ID Instance"/>
+                        <nls description="Ingen beskrivelse" languageCode="da" name="Forekomst-id"/>
+                        <nls description="Keine Beschreibung" languageCode="de" name="Instanz-ID"/>
+                        <nls description="No description" languageCode="en" name="Instance Id"/>
+                        <nls description="No existe ninguna descripción" languageCode="es" name="ID de instancia"/>
+                        <nls description="Ei kuvausta" languageCode="fi" name="Instanssin tunnus"/>
+                        <nls description="Aucune description" languageCode="fr" name="ID de l'instance"/>
+                        <nls description="Nincs leírás" languageCode="hu" name="Példányazonosító"/>
+                        <nls description="Nessuna descrizione" languageCode="it" name="ID istanza"/>
+                        <nls description="説明がありません" languageCode="ja" name="インスタンス ID"/>
+                        <nls description="" languageCode="ko" name="int_id"/>
+                        <nls description="Geen omschrijving" languageCode="nl" name="Id instantie"/>
+                        <nls description="Ingen beskrivelse" languageCode="no" name="Forekomst-ID"/>
+                        <nls description="Brak opisu" languageCode="pl" name="Identyfikator wystąpienia"/>
+                        <nls description="Nenhuma descrição" languageCode="pt" name="Id da instância"/>
+                        <nls description="Нет описания" languageCode="ru" name="Код экземпляра"/>
+                        <nls description="Ingen beskrivning" languageCode="sv" name="Instans-ID"/>
+                        <nls description="Açıklama yok" languageCode="tr" name="Örnek Kimliği"/>
+                        <nls description="" languageCode="zh" name="int_id"/>
+                        <nls description="" languageCode="zh_TW" name="int_id"/>
+                    </filter>
+                    <filter code="status_desc" defaultValue="" order="2" widgetType="text">
+                        <nls description="" languageCode="ca" name="Estat"/>
+                        <nls description="Bez popisu" languageCode="cs" name="Stav"/>
+                        <nls description="Ingen beskrivelse" languageCode="da" name="Status"/>
+                        <nls description="Keine Beschreibung" languageCode="de" name="Status"/>
+                        <nls description="No description" languageCode="en" name="Status"/>
+                        <nls description="No existe ninguna descripción" languageCode="es" name="Estado"/>
+                        <nls description="Ei kuvausta" languageCode="fi" name="Tila"/>
+                        <nls description="Aucune description" languageCode="fr" name="Statut"/>
+                        <nls description="Nincs leírás" languageCode="hu" name="Állapot"/>
+                        <nls description="Nessuna descrizione" languageCode="it" name="Stato"/>
+                        <nls description="説明がありません" languageCode="ja" name="ステータス"/>
+                        <nls description="" languageCode="ko" name="status_desc"/>
+                        <nls description="Geen omschrijving" languageCode="nl" name="Status"/>
+                        <nls description="Ingen beskrivelse" languageCode="no" name="Status"/>
+                        <nls description="Brak opisu" languageCode="pl" name="Status"/>
+                        <nls description="Nenhuma descrição" languageCode="pt" name="Status"/>
+                        <nls description="Нет описания" languageCode="ru" name="Статус"/>
+                        <nls description="Ingen beskrivning" languageCode="sv" name="Status"/>
+                        <nls description="Açıklama yok" languageCode="tr" name="Durum"/>
+                        <nls description="" languageCode="zh" name="status_desc"/>
+                        <nls description="" languageCode="zh_TW" name="status_desc"/>
+                    </filter>
+                    <listColumn code="int_id" order="1" widgetType="text">
+                        <nls description="" languageCode="ca" name="Instance Id"/>
+                        <nls description="Bez popisu" languageCode="cs" name="ID Instance"/>
+                        <nls description="Ingen beskrivelse" languageCode="da" name="Forekomst-id"/>
+                        <nls description="Keine Beschreibung" languageCode="de" name="Instanz-ID"/>
+                        <nls description="No description" languageCode="en" name="Instance Id"/>
+                        <nls description="No existe ninguna descripción" languageCode="es" name="ID de instancia"/>
+                        <nls description="Ei kuvausta" languageCode="fi" name="Instanssin tunnus"/>
+                        <nls description="Aucune description" languageCode="fr" name="ID de l'instance"/>
+                        <nls description="Nincs leírás" languageCode="hu" name="Példányazonosító"/>
+                        <nls description="Nessuna descrizione" languageCode="it" name="ID istanza"/>
+                        <nls description="説明がありません" languageCode="ja" name="インスタンス ID"/>
+                        <nls description="" languageCode="ko" name="int_id"/>
+                        <nls description="Geen omschrijving" languageCode="nl" name="Id instantie"/>
+                        <nls description="Ingen beskrivelse" languageCode="no" name="Forekomst-ID"/>
+                        <nls description="Brak opisu" languageCode="pl" name="Identyfikator wystąpienia"/>
+                        <nls description="Nenhuma descrição" languageCode="pt" name="Id da instância"/>
+                        <nls description="Нет описания" languageCode="ru" name="Код экземпляра"/>
+                        <nls description="Ingen beskrivning" languageCode="sv" name="Instans-ID"/>
+                        <nls description="Açıklama yok" languageCode="tr" name="Örnek Kimliği"/>
+                        <nls description="" languageCode="zh" name="int_id"/>
+                        <nls description="" languageCode="zh_TW" name="int_id"/>
+                    </listColumn>
+                    <listColumn code="status_desc" order="2" widgetType="text">
+                        <nls description="" languageCode="ca" name="Estat"/>
+                        <nls description="Bez popisu" languageCode="cs" name="Stav"/>
+                        <nls description="Ingen beskrivelse" languageCode="da" name="Status"/>
+                        <nls description="Keine Beschreibung" languageCode="de" name="Status"/>
+                        <nls description="No description" languageCode="en" name="Status"/>
+                        <nls description="No existe ninguna descripción" languageCode="es" name="Estado"/>
+                        <nls description="Ei kuvausta" languageCode="fi" name="Tila"/>
+                        <nls description="Aucune description" languageCode="fr" name="Statut"/>
+                        <nls description="Nincs leírás" languageCode="hu" name="Állapot"/>
+                        <nls description="Nessuna descrizione" languageCode="it" name="Stato"/>
+                        <nls description="説明がありません" languageCode="ja" name="ステータス"/>
+                        <nls description="" languageCode="ko" name="status_desc"/>
+                        <nls description="Geen omschrijving" languageCode="nl" name="Status"/>
+                        <nls description="Ingen beskrivelse" languageCode="no" name="Status"/>
+                        <nls description="Brak opisu" languageCode="pl" name="Status"/>
+                        <nls description="Nenhuma descrição" languageCode="pt" name="Status"/>
+                        <nls description="Нет описания" languageCode="ru" name="Статус"/>
+                        <nls description="Ingen beskrivning" languageCode="sv" name="Status"/>
+                        <nls description="Açıklama yok" languageCode="tr" name="Durum"/>
+                        <nls description="" languageCode="zh" name="status_desc"/>
+                        <nls description="" languageCode="zh_TW" name="status_desc"/>
+                    </listColumn>
+                </browsePage>
+            </dynamicLookup>
+            <dynamicLookup autoSuggestEnabled="true" autoSuggestMaxSuggestions="10" code="COP_PORTLET_PROCESS_TYPE" displayAttributeName="process_name" hiddenAttributeName="int_id" objectCode="" sortAttributeName="process_name" sortDirection="asc" source="niku.com" status="active" update="true">
+                <nls description="Display Processes that have been validated and activated." languageCode="ca" name="Portlet Process Type"/>
+                <nls description="Procesy zobrazení, které byly ověřeny a aktivovány." languageCode="cs" name="Portlet Typ procesu"/>
+                <nls description="Vis processer, der er blevet valideret og aktiveret." languageCode="da" name="Portlet - procestype"/>
+                <nls description="Aktive, validierte Prozesse anzeigen." languageCode="de" name="Portlet - Prozesstyp"/>
+                <nls description="Display Processes that have been validated and activated." languageCode="en" name="Portlet Process Type"/>
+                <nls description="Mostrar los procesos que se han validado y activado." languageCode="es" name="Tipo de proceso del portlet"/>
+                <nls description="Näyttöprosessit, jotka on vahvistettu ja aktivoitu." languageCode="fi" name="Prosessin tyyppi -portletti"/>
+                <nls description="Afficher les processus validés et activés" languageCode="fr" name="Type de processus de portlet"/>
+                <nls description="Az érvényesített és aktivált folyamatok megjelenítése." languageCode="hu" name="Portletfolyamat típusa"/>
+                <nls description="Mostra i processi convalidati ed attivati." languageCode="it" name="Tipo di processo portlet"/>
+                <nls description="検証済みで有効化されたプロセスを表示します。" languageCode="ja" name="ポートレット プロセス タイプ"/>
+                <nls description="Display Processes that have been validated and activated." languageCode="ko" name="Portlet Process Type"/>
+                <nls description="Processen weergeven die zijn gevalideerd en ingeschakeld." languageCode="nl" name="Portlet Type proces"/>
+                <nls description="Vis prosesser som er validert og aktivert." languageCode="no" name="Portletprosesstype"/>
+                <nls description="Wyświetl procesy, które zostały sprawdzone i aktywowane." languageCode="pl" name="Portlet Typ procesu"/>
+                <nls description="Exibir processos que foram validados e ativados." languageCode="pt" name="Tipo de processo de portlet"/>
+                <nls description="Отображать процессы, которые были проверены и активированы." languageCode="ru" name="Тип процесса портлета"/>
+                <nls description="Visa processer som har validerats och aktiverats." languageCode="sv" name="Portlet Processtyp"/>
+                <nls description="Doğrulanmış ve etkinleştirilmiş Süreçleri görüntüleyin." languageCode="tr" name="Portlet Süreç Türü"/>
+                <nls description="Display Processes that have been validated and activated." languageCode="zh" name="Portlet Process Type"/>
+                <nls description="Display Processes that have been validated and activated." languageCode="zh_TW" name="Portlet Process Type"/>
+                <nsql databaseId="Niku" dbVendor="all"><![CDATA[SELECT
+@SELECT:DefVer.id:Int_Id@,
+@select:descPro.Name:Process_Name@
+FROM BPM_DEF_PROCESS_VERSIONS DefVer
+LEFT OUTER JOIN CMN_CAPTIONS_NLS descPro ON descPro.language_Code = @WHERE:PARAM:LANGUAGE@ AND descPro.table_Name = 'BPM_DEF_PROCESSES' AND descPro.pk_id = DefVer.Process_id
+WHERE Is_Editable = 0
+AND Internal_Status_Code = 'BPM_PIS_VALIDATED'
+AND User_Status_Code = 'BPM_PUS_ACTIVE']]></nsql>
+                <displayedSuggestionAttributes>
+                    <displayedSuggestionAttribute value="process_name"/>
+                </displayedSuggestionAttributes>
+                <searchedSuggestionAttributes>
+                    <searchedSuggestionAttribute value="process_name"/>
+                </searchedSuggestionAttributes>
+                <browsePage>
+                    <singleSelectPageTitles>
+                        <nls description="" languageCode="ca" name="Active Processes"/>
+                        <nls description="Bez popisu" languageCode="cs" name="Aktivní procesy"/>
+                        <nls description="Ingen beskrivelse" languageCode="da" name="Aktive processer"/>
+                        <nls description="Keine Beschreibung" languageCode="de" name="Aktive Prozesse"/>
+                        <nls description="No description" languageCode="en" name="Active Processes"/>
+                        <nls description="No existe ninguna descripción" languageCode="es" name="Procesos activos"/>
+                        <nls description="Ei kuvausta" languageCode="fi" name="Aktiiviset prosessit"/>
+                        <nls description="Aucune description" languageCode="fr" name="Processus actifs"/>
+                        <nls description="Nincs leírás" languageCode="hu" name="Aktív folyamatok"/>
+                        <nls description="Nessuna descrizione" languageCode="it" name="Processi attivi"/>
+                        <nls description="説明がありません" languageCode="ja" name="アクティブなプロセス"/>
+                        <nls description="Active Processes" languageCode="ko" name="Active Processes"/>
+                        <nls description="Geen omschrijving" languageCode="nl" name="Actieve processen"/>
+                        <nls description="Ingen beskrivelse" languageCode="no" name="Aktive prosesser"/>
+                        <nls description="Brak opisu" languageCode="pl" name="Aktywne procesy"/>
+                        <nls description="Nenhuma descrição" languageCode="pt" name="Processos ativos"/>
+                        <nls description="Нет описания" languageCode="ru" name="Активные процессы"/>
+                        <nls description="Ingen beskrivning" languageCode="sv" name="Aktiva processer"/>
+                        <nls description="Açıklama yok" languageCode="tr" name="Etkin Süreçler"/>
+                        <nls description="Active Processes" languageCode="zh" name="Active Processes"/>
+                        <nls description="Active Processes" languageCode="zh_TW" name="Active Processes"/>
+                    </singleSelectPageTitles>
+                    <multiSelectPageTitles>
+                        <nls description="" languageCode="ca" name="Active Processes"/>
+                        <nls description="Bez popisu" languageCode="cs" name="Aktivní procesy"/>
+                        <nls description="Ingen beskrivelse" languageCode="da" name="Aktive processer"/>
+                        <nls description="Keine Beschreibung" languageCode="de" name="Aktive Prozesse"/>
+                        <nls description="No description" languageCode="en" name="Active Processes"/>
+                        <nls description="No existe ninguna descripción" languageCode="es" name="Procesos activos"/>
+                        <nls description="Ei kuvausta" languageCode="fi" name="Aktiiviset prosessit"/>
+                        <nls description="Aucune description" languageCode="fr" name="Processus actifs"/>
+                        <nls description="Nincs leírás" languageCode="hu" name="Aktív folyamatok"/>
+                        <nls description="Nessuna descrizione" languageCode="it" name="Processi attivi"/>
+                        <nls description="説明がありません" languageCode="ja" name="アクティブなプロセス"/>
+                        <nls description="Active Processes" languageCode="ko" name="Active Processes"/>
+                        <nls description="Geen omschrijving" languageCode="nl" name="Actieve processen"/>
+                        <nls description="Ingen beskrivelse" languageCode="no" name="Aktive prosesser"/>
+                        <nls description="Brak opisu" languageCode="pl" name="Aktywne procesy"/>
+                        <nls description="Nenhuma descrição" languageCode="pt" name="Processos ativos"/>
+                        <nls description="Нет описания" languageCode="ru" name="Активные процессы"/>
+                        <nls description="Ingen beskrivning" languageCode="sv" name="Aktiva processer"/>
+                        <nls description="Açıklama yok" languageCode="tr" name="Etkin Süreçler"/>
+                        <nls description="Active Processes" languageCode="zh" name="Active Processes"/>
+                        <nls description="Active Processes" languageCode="zh_TW" name="Active Processes"/>
+                    </multiSelectPageTitles>
+                    <filter code="int_id" defaultValue="" order="1" widgetType="text">
+                        <nls description="" languageCode="ca" name="ID del procés"/>
+                        <nls description="Bez popisu" languageCode="cs" name="ID procesu"/>
+                        <nls description="Ingen beskrivelse" languageCode="da" name="Proces-id"/>
+                        <nls description="Keine Beschreibung" languageCode="de" name="Prozess-ID"/>
+                        <nls description="No description" languageCode="en" name="Process ID"/>
+                        <nls description="No existe ninguna descripción" languageCode="es" name="ID del proceso"/>
+                        <nls description="Ei kuvausta" languageCode="fi" name="Prosessin tunnus"/>
+                        <nls description="Aucune description" languageCode="fr" name="ID du processus"/>
+                        <nls description="Nincs leírás" languageCode="hu" name="Folyamat azonosítója"/>
+                        <nls description="Nessuna descrizione" languageCode="it" name="ID processo"/>
+                        <nls description="説明がありません" languageCode="ja" name="プロセス ID"/>
+                        <nls description="" languageCode="ko" name="int_id"/>
+                        <nls description="Geen omschrijving" languageCode="nl" name="Id proces"/>
+                        <nls description="Ingen beskrivelse" languageCode="no" name="Prosess-ID"/>
+                        <nls description="Brak opisu" languageCode="pl" name="Identyfikator procesu"/>
+                        <nls description="Nenhuma descrição" languageCode="pt" name="ID do processo"/>
+                        <nls description="Нет описания" languageCode="ru" name="Код процесса"/>
+                        <nls description="Ingen beskrivning" languageCode="sv" name="Process-ID"/>
+                        <nls description="Açıklama yok" languageCode="tr" name="Süreç Kimliği"/>
+                        <nls description="" languageCode="zh" name="int_id"/>
+                        <nls description="" languageCode="zh_TW" name="int_id"/>
+                    </filter>
+                    <filter code="process_name" defaultValue="" order="2" widgetType="text">
+                        <nls description="" languageCode="ca" name="Nom del procés"/>
+                        <nls description="Bez popisu" languageCode="cs" name="Název procesu"/>
+                        <nls description="Ingen beskrivelse" languageCode="da" name="Procesnavn"/>
+                        <nls description="Keine Beschreibung" languageCode="de" name="Prozessname"/>
+                        <nls description="No description" languageCode="en" name="Process Name"/>
+                        <nls description="No existe ninguna descripción" languageCode="es" name="Nombre del proceso"/>
+                        <nls description="Ei kuvausta" languageCode="fi" name="Prosessin nimi"/>
+                        <nls description="Aucune description" languageCode="fr" name="Nom du processus"/>
+                        <nls description="Nincs leírás" languageCode="hu" name="Folyamat neve"/>
+                        <nls description="Nessuna descrizione" languageCode="it" name="Nome processo"/>
+                        <nls description="説明がありません" languageCode="ja" name="プロセス名"/>
+                        <nls description="" languageCode="ko" name="process_name"/>
+                        <nls description="Geen omschrijving" languageCode="nl" name="Naam proces"/>
+                        <nls description="Ingen beskrivelse" languageCode="no" name="Prosessnavn"/>
+                        <nls description="Brak opisu" languageCode="pl" name="Nazwa procesu"/>
+                        <nls description="Nenhuma descrição" languageCode="pt" name="Nome do processo"/>
+                        <nls description="Нет описания" languageCode="ru" name="Имя процесса"/>
+                        <nls description="Ingen beskrivning" languageCode="sv" name="Processnamn"/>
+                        <nls description="Açıklama yok" languageCode="tr" name="Süreç Adı"/>
+                        <nls description="" languageCode="zh" name="process_name"/>
+                        <nls description="" languageCode="zh_TW" name="process_name"/>
+                    </filter>
+                    <listColumn code="int_id" order="1" widgetType="text">
+                        <nls description="" languageCode="ca" name="ID del procés"/>
+                        <nls description="Bez popisu" languageCode="cs" name="ID procesu"/>
+                        <nls description="Ingen beskrivelse" languageCode="da" name="Proces-id"/>
+                        <nls description="Keine Beschreibung" languageCode="de" name="Prozess-ID"/>
+                        <nls description="No description" languageCode="en" name="Process ID"/>
+                        <nls description="No existe ninguna descripción" languageCode="es" name="ID del proceso"/>
+                        <nls description="Ei kuvausta" languageCode="fi" name="Prosessin tunnus"/>
+                        <nls description="Aucune description" languageCode="fr" name="ID du processus"/>
+                        <nls description="Nincs leírás" languageCode="hu" name="Folyamat azonosítója"/>
+                        <nls description="Nessuna descrizione" languageCode="it" name="ID processo"/>
+                        <nls description="説明がありません" languageCode="ja" name="プロセス ID"/>
+                        <nls description="" languageCode="ko" name="int_id"/>
+                        <nls description="Geen omschrijving" languageCode="nl" name="Id proces"/>
+                        <nls description="Ingen beskrivelse" languageCode="no" name="Prosess-ID"/>
+                        <nls description="Brak opisu" languageCode="pl" name="Identyfikator procesu"/>
+                        <nls description="Nenhuma descrição" languageCode="pt" name="ID do processo"/>
+                        <nls description="Нет описания" languageCode="ru" name="Код процесса"/>
+                        <nls description="Ingen beskrivning" languageCode="sv" name="Process-ID"/>
+                        <nls description="Açıklama yok" languageCode="tr" name="Süreç Kimliği"/>
+                        <nls description="" languageCode="zh" name="int_id"/>
+                        <nls description="" languageCode="zh_TW" name="int_id"/>
+                    </listColumn>
+                    <listColumn code="process_name" order="2" widgetType="text">
+                        <nls description="" languageCode="ca" name="Nom del procés"/>
+                        <nls description="Bez popisu" languageCode="cs" name="Název procesu"/>
+                        <nls description="Ingen beskrivelse" languageCode="da" name="Procesnavn"/>
+                        <nls description="Keine Beschreibung" languageCode="de" name="Prozessname"/>
+                        <nls description="No description" languageCode="en" name="Process Name"/>
+                        <nls description="No existe ninguna descripción" languageCode="es" name="Nombre del proceso"/>
+                        <nls description="Ei kuvausta" languageCode="fi" name="Prosessin nimi"/>
+                        <nls description="Aucune description" languageCode="fr" name="Nom du processus"/>
+                        <nls description="Nincs leírás" languageCode="hu" name="Folyamat neve"/>
+                        <nls description="Nessuna descrizione" languageCode="it" name="Nome processo"/>
+                        <nls description="説明がありません" languageCode="ja" name="プロセス名"/>
+                        <nls description="" languageCode="ko" name="process_name"/>
+                        <nls description="Geen omschrijving" languageCode="nl" name="Naam proces"/>
+                        <nls description="Ingen beskrivelse" languageCode="no" name="Prosessnavn"/>
+                        <nls description="Brak opisu" languageCode="pl" name="Nazwa procesu"/>
+                        <nls description="Nenhuma descrição" languageCode="pt" name="Nome do processo"/>
+                        <nls description="Нет описания" languageCode="ru" name="Имя процесса"/>
+                        <nls description="Ingen beskrivning" languageCode="sv" name="Processnamn"/>
+                        <nls description="Açıklama yok" languageCode="tr" name="Süreç Adı"/>
+                        <nls description="" languageCode="zh" name="process_name"/>
+                        <nls description="" languageCode="zh_TW" name="process_name"/>
+                    </listColumn>
+                </browsePage>
+            </dynamicLookup>
+            <staticLookup autoSuggestEnabled="true" autoSuggestMaxSuggestions="10" code="COP_PORTLET_PROCESS_DURATION" hiddenAttributeName="lookup_enum" sortStyle="manual" source="niku.com" status="active" update="true">
+                <nls description="Display values to be used for stoplighting the Process Durations." languageCode="ca" name="Portlet Process Duration Status"/>
+                <nls description="Zobrazované hodnoty, které budou použity pro semafory trvání procesu." languageCode="cs" name="Portlet Stav doby trvání procesu"/>
+                <nls description="Vis værdier, der skal anvendes for stoplys for procesvarigheder." languageCode="da" name="Portlet - status for procesvarighed"/>
+                <nls description="Werte anzeigen, die als Ampeln für die Prozessdauer verwendet werden sollen." languageCode="de" name="Portlet - Status der Prozessdauer"/>
+                <nls description="Display values to be used for stoplighting the Process Durations." languageCode="en" name="Portlet Process Duration Status"/>
+                <nls description="Mostrar los valores que deben usarse para indicar el estado de las duraciones de proceso." languageCode="es" name="Estado de duración del proceso de portlet"/>
+                <nls description="Näyttöarvot, joita käytetään prosessin kestojen loppumerkeissä." languageCode="fi" name="Prosessin keston tila -portletti"/>
+                <nls description="Afficher les valeurs utilisées pour les indicateurs d'état de durée des processus" languageCode="fr" name="Statut de la durée du processus de portlet"/>
+                <nls description="A folyamat-időtartamok pillanatképeihez használt értékek megjelenítése." languageCode="hu" name="Portletfolyamat időtartam-állapota"/>
+                <nls description="Visualizzazione dei valori da utilizzare per indicare le durate del processo." languageCode="it" name="Stato durata processo del portlet"/>
+                <nls description="プロセス期間の信号として使用する値を表示します。" languageCode="ja" name="ポートレット プロセス期間ステータス"/>
+                <nls description="COP_PORTLET_PROCESS_DURATION" languageCode="ko" name="COP_PORTLET_PROCESS_DURATION"/>
+                <nls description="Waarden weergeven die moeten worden gebruikt voor de bepaling van stoplichten voor de waarden voor Procesduur." languageCode="nl" name="Portlet Status duur proces"/>
+                <nls description="Viser verdier som skal brukes til stopplys for prosessvarigheter." languageCode="no" name="Varighetsstatus for portletprosess"/>
+                <nls description="Wyświetl wartości do użycia przy sygnalizowaniu czasów trwania procesów." languageCode="pl" name="Portlet Stan czasu trwania procesu"/>
+                <nls description="Valores de exibição a serem usados para destacar as durações do processo." languageCode="pt" name="Status da duração do processo de portlet"/>
+                <nls description="Отображать значения, которые будут использоваться для цветовой индикации длительности процесса." languageCode="ru" name="Статус длительности процесса портлета"/>
+                <nls description="Visa värden som ska användas som stoppljus för processvaraktighet." languageCode="sv" name="Portlet Processvaraktighet Status"/>
+                <nls description="Süreç Süreleri için trafik ışığı görevi görecek değerleri görüntüleyin." languageCode="tr" name="Portlet Süreç Süresi Durumu"/>
+                <nls description="COP_PORTLET_PROCESS_DURATION" languageCode="zh" name="COP_PORTLET_PROCESS_DURATION"/>
+                <nls description="COP_PORTLET_PROCESS_DURATION" languageCode="zh_TW" name="COP_PORTLET_PROCESS_DURATION"/>
+                <lookupValue code="1" enum="1" sortOrder="1" status="active">
+                    <nls description="The duration is less than 3 days." languageCode="ca" name="Normal"/>
+                    <nls description="Doba trvání méně než 3 dny." languageCode="cs" name="Normální"/>
+                    <nls description="Varighed er mindre end 3 dage." languageCode="da" name="Normal"/>
+                    <nls description="Die Dauer beträgt weniger als 3 Tage." languageCode="de" name="Normal"/>
+                    <nls description="The duration is less than 3 days." languageCode="en" name="Normal"/>
+                    <nls description="La duración es menor a 3 días." languageCode="es" name="Normal"/>
+                    <nls description="Kesto on vähemmän kuin kolme päivää." languageCode="fi" name="Normaali"/>
+                    <nls description="La durée est inférieure à 3 jours." languageCode="fr" name="Normal"/>
+                    <nls description="Az időtartam 3 napnál rövidebb." languageCode="hu" name="Normál"/>
+                    <nls description="Durata inferiore a 3 giorni." languageCode="it" name="Normale"/>
+                    <nls description="期間は 3 日未満です。" languageCode="ja" name="標準"/>
+                    <nls description="1" languageCode="ko" name="1"/>
+                    <nls description="De duur is minder dan 3 dagen." languageCode="nl" name="Normaal"/>
+                    <nls description="Varigheten er på under 3 dager." languageCode="no" name="Normalt"/>
+                    <nls description="Czas trwania wynosi mniej niż 3 dni." languageCode="pl" name="Normalny"/>
+                    <nls description="A duração é de menos do que 3 dias." languageCode="pt" name="Normal"/>
+                    <nls description="Длительность меньше трех дней." languageCode="ru" name="Нормальный"/>
+                    <nls description="Varaktigheten är mindre än 3 dagar." languageCode="sv" name="Normal"/>
+                    <nls description="Süre, 3 günden azdır." languageCode="tr" name="Normal"/>
+                    <nls description="1" languageCode="zh" name="1"/>
+                    <nls description="1" languageCode="zh_TW" name="1"/>
+                </lookupValue>
+                <lookupValue code="2" enum="2" sortOrder="2" status="active">
+                    <nls description="The duration is between 3 and 5 days." languageCode="ca" name="Marginal"/>
+                    <nls description="Doba trvání 3 až 5 dnů." languageCode="cs" name="Malý"/>
+                    <nls description="Varighed er mellem 3 og 5 dage." languageCode="da" name="Marginal"/>
+                    <nls description="Die Dauer beträgt zwischen 3 und 5 Tagen." languageCode="de" name="Geringfügig"/>
+                    <nls description="The duration is between 3 and 5 days." languageCode="en" name="Marginal"/>
+                    <nls description="La duración está entre 3 y 5 días." languageCode="es" name="Marginal"/>
+                    <nls description="Kesto on kolmesta viiteen päivää." languageCode="fi" name="Marginaalinen"/>
+                    <nls description="La durée est comprise entre 3 et 5 jours." languageCode="fr" name="Marginal"/>
+                    <nls description="Az időtartam 3 és 5 nap között van." languageCode="hu" name="Marginális"/>
+                    <nls description="Durata compresa fra 3 e 5 giorni." languageCode="it" name="Marginale"/>
+                    <nls description="期間は 3 ～ 5 日です。" languageCode="ja" name="最低限"/>
+                    <nls description="2" languageCode="ko" name="2"/>
+                    <nls description="De duur is tussen 3 en 5 dagen." languageCode="nl" name="Marginaal"/>
+                    <nls description="Varigheten er på mellom 3 og 5 dager." languageCode="no" name="Marginal"/>
+                    <nls description="Czas trwania wynosi od 3 do 5 dni." languageCode="pl" name="Marginalne"/>
+                    <nls description="A duração é entre 3 e 5 dias." languageCode="pt" name="Margem"/>
+                    <nls description="Длительность находится в диапазоне от 3 до 5 дней." languageCode="ru" name="Малодоходный"/>
+                    <nls description="Varaktigheten är mellan 3 och 5 dagar." languageCode="sv" name="Marginal"/>
+                    <nls description="Süre, 3 ila 5 gündür." languageCode="tr" name="Marjinal"/>
+                    <nls description="2" languageCode="zh" name="2"/>
+                    <nls description="2" languageCode="zh_TW" name="2"/>
+                </lookupValue>
+                <lookupValue code="3" enum="3" sortOrder="3" status="active">
+                    <nls description="The duration is more the 5 days." languageCode="ca" name="Overdue"/>
+                    <nls description="Doba trvání více než 5 dnů." languageCode="cs" name="Opožděno"/>
+                    <nls description="Varighed er mere end 5 dage." languageCode="da" name="Forfaldet"/>
+                    <nls description="Die Dauer beträgt mehr als 5 Tage." languageCode="de" name="Überfällig"/>
+                    <nls description="The duration is more the 5 days." languageCode="en" name="Overdue"/>
+                    <nls description="La duración es mayor a 5 días." languageCode="es" name="Vencido"/>
+                    <nls description="Kesto on enemmän kuin viisi päivää." languageCode="fi" name="Vanhentunut"/>
+                    <nls description="La durée est supérieure à 5 jours." languageCode="fr" name="En retard"/>
+                    <nls description="Az időtartam 5 napnál hosszabb." languageCode="hu" name="Késésben lévő"/>
+                    <nls description="Durata superiore a 5 giorni." languageCode="it" name="Scaduto"/>
+                    <nls description="期間は 6 日以上です。" languageCode="ja" name="期限超過"/>
+                    <nls description="3" languageCode="ko" name="3"/>
+                    <nls description="De duur is meer dan 5 dagen." languageCode="nl" name="Te laat"/>
+                    <nls description="Varigheten er på over 5 dager." languageCode="no" name="Forfalt"/>
+                    <nls description="Czas trwania wynosi więcej niż 5 dni." languageCode="pl" name="Zaległy"/>
+                    <nls description="A duração é de mais do que 5 dias." languageCode="pt" name="Em atraso"/>
+                    <nls description="Длительность больше пяти дней." languageCode="ru" name="Просроченный"/>
+                    <nls description="Varaktigheten är mer än 5 dagar." languageCode="sv" name="Förfallen"/>
+                    <nls description="Süre, 5 günden fazladır." languageCode="tr" name="Zamanı Geçmiş"/>
+                    <nls description="3" languageCode="zh" name="3"/>
+                    <nls description="3" languageCode="zh_TW" name="3"/>
+                </lookupValue>
+                <displayedSuggestionAttributes>
+                    <displayedSuggestionAttribute value="name"/>
+                </displayedSuggestionAttributes>
+                <searchedSuggestionAttributes>
+                    <searchedSuggestionAttribute value="name"/>
+                </searchedSuggestionAttributes>
+            </staticLookup>
+            <staticLookup autoSuggestEnabled="true" autoSuggestMaxSuggestions="10" code="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS" hiddenAttributeName="lookup_code" sortStyle="alphanumeric" source="niku.com" status="active" update="true">
+                <nls description="" languageCode="ca" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS" languageCode="cs" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS" languageCode="da" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS" languageCode="de" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS" languageCode="en" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS" languageCode="es" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS" languageCode="fi" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS" languageCode="fr" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS" languageCode="hu" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS" languageCode="it" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS" languageCode="ja" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS" languageCode="ko" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS" languageCode="nl" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS" languageCode="no" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS" languageCode="pl" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS" languageCode="pt" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS" languageCode="ru" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS" languageCode="sv" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS" languageCode="tr" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS" languageCode="zh" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS" languageCode="zh_TW" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.DURATION_STATUS"/>
+                <lookupValue code="mapping-3" sortOrder="2" status="active">
+                    <nls description="Overdue" languageCode="ca" name="Overdue"/>
+                    <nls description="Opožděno" languageCode="cs" name="Opožděno"/>
+                    <nls description="Forfaldet" languageCode="da" name="Forfaldet"/>
+                    <nls description="Überfällig" languageCode="de" name="Überfällig"/>
+                    <nls description="Overdue" languageCode="en" name="Overdue"/>
+                    <nls description="Vencido" languageCode="es" name="Vencido"/>
+                    <nls description="Vanhentunut" languageCode="fi" name="Vanhentunut"/>
+                    <nls description="En retard" languageCode="fr" name="En retard"/>
+                    <nls description="Késésben lévő" languageCode="hu" name="Késésben lévő"/>
+                    <nls description="Scaduto" languageCode="it" name="Scaduto"/>
+                    <nls description="期限超過" languageCode="ja" name="期限超過"/>
+                    <nls description="mapping-3" languageCode="ko" name="mapping-3"/>
+                    <nls description="Te laat" languageCode="nl" name="Te laat"/>
+                    <nls description="Forfalt" languageCode="no" name="Forfalt"/>
+                    <nls description="Zaległy" languageCode="pl" name="Zaległy"/>
+                    <nls description="Em atraso" languageCode="pt" name="Em atraso"/>
+                    <nls description="Просроченный" languageCode="ru" name="Просроченный"/>
+                    <nls description="Förfallen" languageCode="sv" name="Förfallen"/>
+                    <nls description="Zamanı Geçmiş" languageCode="tr" name="Zamanı Geçmiş"/>
+                    <nls description="mapping-3" languageCode="zh" name="mapping-3"/>
+                    <nls description="mapping-3" languageCode="zh_TW" name="mapping-3"/>
+                </lookupValue>
+                <lookupValue code="mapping-2" sortOrder="1" status="active">
+                    <nls description="" languageCode="ca" name="Marginal"/>
+                    <nls description="Malý" languageCode="cs" name="Malý"/>
+                    <nls description="Marginal" languageCode="da" name="Marginal"/>
+                    <nls description="Geringfügig" languageCode="de" name="Geringfügig"/>
+                    <nls description="Marginal" languageCode="en" name="Marginal"/>
+                    <nls description="Marginal" languageCode="es" name="Marginal"/>
+                    <nls description="Marginaalinen" languageCode="fi" name="Marginaalinen"/>
+                    <nls description="Marginal" languageCode="fr" name="Marginal"/>
+                    <nls description="Marginális" languageCode="hu" name="Marginális"/>
+                    <nls description="Marginale" languageCode="it" name="Marginale"/>
+                    <nls description="最低限" languageCode="ja" name="最低限"/>
+                    <nls description="mapping-2" languageCode="ko" name="mapping-2"/>
+                    <nls description="Marginaal" languageCode="nl" name="Marginaal"/>
+                    <nls description="Marginal" languageCode="no" name="Marginal"/>
+                    <nls description="Marginalne" languageCode="pl" name="Marginalne"/>
+                    <nls description="Margem" languageCode="pt" name="Margem"/>
+                    <nls description="Малодоходный" languageCode="ru" name="Малодоходный"/>
+                    <nls description="Marginal" languageCode="sv" name="Marginal"/>
+                    <nls description="Marjinal" languageCode="tr" name="Marjinal"/>
+                    <nls description="mapping-2" languageCode="zh" name="mapping-2"/>
+                    <nls description="mapping-2" languageCode="zh_TW" name="mapping-2"/>
+                </lookupValue>
+                <lookupValue code="mapping-1" sortOrder="0" status="active">
+                    <nls description="" languageCode="ca" name="Normal"/>
+                    <nls description="Normální" languageCode="cs" name="Normální"/>
+                    <nls description="Normal" languageCode="da" name="Normal"/>
+                    <nls description="Normal" languageCode="de" name="Normal"/>
+                    <nls description="Normal" languageCode="en" name="Normal"/>
+                    <nls description="Normal" languageCode="es" name="Normal"/>
+                    <nls description="Normaali" languageCode="fi" name="Normaali"/>
+                    <nls description="Normal" languageCode="fr" name="Normal"/>
+                    <nls description="Normál" languageCode="hu" name="Normál"/>
+                    <nls description="Normale" languageCode="it" name="Normale"/>
+                    <nls description="標準" languageCode="ja" name="標準"/>
+                    <nls description="mapping-1" languageCode="ko" name="mapping-1"/>
+                    <nls description="Normaal" languageCode="nl" name="Normaal"/>
+                    <nls description="Normalt" languageCode="no" name="Normalt"/>
+                    <nls description="Normalny" languageCode="pl" name="Normalny"/>
+                    <nls description="Normal" languageCode="pt" name="Normal"/>
+                    <nls description="Нормальный" languageCode="ru" name="Нормальный"/>
+                    <nls description="Normal" languageCode="sv" name="Normal"/>
+                    <nls description="Normal" languageCode="tr" name="Normal"/>
+                    <nls description="mapping-1" languageCode="zh" name="mapping-1"/>
+                    <nls description="mapping-1" languageCode="zh_TW" name="mapping-1"/>
+                </lookupValue>
+                <displayedSuggestionAttributes>
+                    <displayedSuggestionAttribute value="name"/>
+                </displayedSuggestionAttributes>
+                <searchedSuggestionAttributes>
+                    <searchedSuggestionAttribute value="name"/>
+                </searchedSuggestionAttributes>
+            </staticLookup>
+            <staticLookup autoSuggestEnabled="true" autoSuggestMaxSuggestions="10" code="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP" hiddenAttributeName="lookup_code" sortStyle="alphanumeric" source="niku.com" status="active" update="true">
+                <nls description="" languageCode="ca" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP" languageCode="cs" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP" languageCode="da" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP" languageCode="de" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP" languageCode="en" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP" languageCode="es" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP" languageCode="fi" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP" languageCode="fr" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP" languageCode="hu" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP" languageCode="it" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP" languageCode="ja" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP" languageCode="ko" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP" languageCode="nl" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP" languageCode="no" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP" languageCode="pl" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP" languageCode="pt" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP" languageCode="ru" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP" languageCode="sv" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP" languageCode="tr" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP" languageCode="zh" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP"/>
+                <nls description="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP" languageCode="zh_TW" name="ODF.NSQL.COP.PROCESSBOTTLENECKS.ICONMAP"/>
+                <displayedSuggestionAttributes>
+                    <displayedSuggestionAttribute value="name"/>
+                </displayedSuggestionAttributes>
+                <searchedSuggestionAttributes>
+                    <searchedSuggestionAttribute value="name"/>
+                </searchedSuggestionAttributes>
+            </staticLookup>
+        </lookups>
+    </contentPack>
+    <XOGOutput>
+        <Object type="contentPack"/>
+        <Status state="SUCCESS"/>
+        <Statistics failureRecords="0" insertedRecords="0" totalNumberOfRecords="6" updatedRecords="0"/>
+        <Records/>
+    </XOGOutput>
+</NikuDataBus>

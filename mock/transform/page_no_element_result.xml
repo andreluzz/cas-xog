@@ -1,0 +1,739 @@
+<NikuDataBus>
+    <Header action="write" externalSource="NIKU" objectType="contentPack" version="8.0"/>
+    <contentPack update="true">
+        <pages update="true">
+            <tabbedPage active="true" code="projmgr.projectPageFrame" customizable="false" hidden="false" isSystem="true" layout="two-column-layout-66-34" linkable="false" objectType="SRM_PROJECTS" personalizable="true" source="niku.com" space="mainnav.work" template="application" update="true">
+                <nls description="Disseny de la pàgina predeterminada Projecte" languageCode="ca" name="Disseny predeterminat del projecte"/>
+                <nls description="Výchozí rozvržení stránky projektu" languageCode="cs" name="Výchozí rozvržení projektu"/>
+                <nls description="Projektsidens standardlayout" languageCode="da" name="Projektets standardlayout"/>
+                <nls description="Standardlayout der Projektseiten" languageCode="de" name="Projekt-Standardlayout"/>
+                <nls description="Project Default Page layout" languageCode="en" name="Project Default Layout"/>
+                <nls description="Diseño de página predeterminado del proyecto" languageCode="es" name="Diseño predeterminado del proyecto"/>
+                <nls description="Projektin oletussivuasettelu" languageCode="fi" name="Projektin oletusnäkymä"/>
+                <nls description="Mises en page par défaut du projet" languageCode="fr" name="Disposition par défaut du projet"/>
+                <nls description="Projekt alapértelmezett oldalelrendezése" languageCode="hu" name="Projekt alapértelmezett elrendezése"/>
+                <nls description="Layout di pagina predefinito del progetto" languageCode="it" name="Layout predefinito del progetto"/>
+                <nls description="プロジェクトの既定ページ レイアウト" languageCode="ja" name="プロジェクト既定レイアウト"/>
+                <nls description="[ko: Project Default Page layout]" languageCode="ko" name="[ko: Project Default Layout]"/>
+                <nls description="Standaardpaginalay-out project" languageCode="nl" name="Standaardlay-out project"/>
+                <nls description="Standard sideoppsett for prosjekt" languageCode="no" name="Standardoppsett for prosjekt"/>
+                <nls description="Domyślny układ strony projektu" languageCode="pl" name="Domyślny układ projektu"/>
+                <nls description="Layout de página padrão do projeto" languageCode="pt" name="Layout padrão do projeto"/>
+                <nls description="Компоновка страницы проекта по умолчанию" languageCode="ru" name="Компоновка проекта по умолчанию"/>
+                <nls description="Standardsidlayout för projekt" languageCode="sv" name="Standardlayout för projekt"/>
+                <nls description="Proje Varsayılan Sayfa düzeni" languageCode="tr" name="Proje Varsayılan Düzen"/>
+                <nls description="项目默认页面布局" languageCode="zh" name="项目默认布局"/>
+                <nls description="專案預設頁面配置" languageCode="zh_TW" name="專案預設配置"/>
+                <tab active="true" code="projmgr.projectDashboard" customizable="true" default="true" hidden="false" isSystem="true" layout="two-column-layout-66-34" linkable="false" objectType="SRM_PROJECTS" personalizable="true" shared="false" source="niku.com" space="mainnav.work" update="true">
+                    <nls description="Quadre de comandaments del projecte" languageCode="ca" name="Quadre de comandaments"/>
+                    <nls description="Panel" languageCode="cs" name="Panel"/>
+                    <nls description="Kontrolpanel" languageCode="da" name="Kontrolpanel"/>
+                    <nls description="Dashboard" languageCode="de" name="Dashboard"/>
+                    <nls description="Dashboard" languageCode="en" name="Dashboard"/>
+                    <nls description="Cuadro de mandos" languageCode="es" name="Cuadro de mandos"/>
+                    <nls description="Mittarit" languageCode="fi" name="Mittarit"/>
+                    <nls description="Tableau de bord" languageCode="fr" name="Tableau de bord"/>
+                    <nls description="Irányítópult" languageCode="hu" name="Irányítópult"/>
+                    <nls description="Dashboard" languageCode="it" name="Dashboard"/>
+                    <nls description="ダッシュボード" languageCode="ja" name="ダッシュボード"/>
+                    <nls description="[ko: Dashboard]" languageCode="ko" name="[ko: Dashboard]"/>
+                    <nls description="Dashboard" languageCode="nl" name="Dashboard"/>
+                    <nls description="Dashbord" languageCode="no" name="Dashbord"/>
+                    <nls description="Pulpit nawigacyjny" languageCode="pl" name="Pulpit nawigacyjny"/>
+                    <nls description="Painel" languageCode="pt" name="Painel"/>
+                    <nls description="Информационная панель" languageCode="ru" name="Информационная панель"/>
+                    <nls description="Panel" languageCode="sv" name="Panel"/>
+                    <nls description="Gösterge Tablosu" languageCode="tr" name="Gösterge Tablosu"/>
+                    <nls description="显示板" languageCode="zh" name="显示板"/>
+                    <nls description="儀表板" languageCode="zh_TW" name="儀表板"/>
+                    <portlet code="project.tentativFilter" col="0" required="false" row="0" source="customer"/>
+                    <portlet code="project.General" col="0" required="false" row="1" source="niku.com"/>
+                    <portlet code="projmgr.teamUtilization" col="0" required="false" row="1" source="niku.com"/>
+                    <portlet code="project.Effort" col="1" required="false" row="0" source="niku.com"/>
+                </tab>
+                <tab active="true" code="projmgr.projectProperties" customizable="false" hidden="false" isObjectInstance="true" isSystem="true" layout="properties" linkable="true" objectType="SRM_PROJECTS" personalizable="false" shared="false" source="niku.com" space="mainnav.work" update="true">
+                    <nls description="Propietats del projecte" languageCode="ca" name="Propietats"/>
+                    <nls description="Informace o základní investici" languageCode="cs" name="Vlastnosti"/>
+                    <nls description="Oplysninger om basisinvestering" languageCode="da" name="Egenskaber"/>
+                    <nls description="Informationen zur grundlegenden Investition" languageCode="de" name="Eigenschaften"/>
+                    <nls description="Base investment information" languageCode="en" name="Properties"/>
+                    <nls description="Información de inversión base" languageCode="es" name="Propiedades"/>
+                    <nls description="Perusinvestoinnin tiedot" languageCode="fi" name="Ominaisuudet"/>
+                    <nls description="Informations sur l&apos;investissement de base" languageCode="fr" name="Propriétés"/>
+                    <nls description="Alapvető befektetési információk" languageCode="hu" name="Tulajdonságok"/>
+                    <nls description="Informazioni investimento di base" languageCode="it" name="Proprietà"/>
+                    <nls description="基準投資情報" languageCode="ja" name="プロパティ"/>
+                    <nls description="[ko: Base investment information]" languageCode="ko" name="[ko: Properties]"/>
+                    <nls description="Basisinformatie investering" languageCode="nl" name="Eigenschappen"/>
+                    <nls description="Grunnleggende investeringsinformasjon" languageCode="no" name="Egenskaper"/>
+                    <nls description="Podstawa - informacje dotyczące inwestycji" languageCode="pl" name="Właściwości"/>
+                    <nls description="Informações sobre investimento base" languageCode="pt" name="Propriedades"/>
+                    <nls description="Базовые сведения об активности" languageCode="ru" name="Свойства"/>
+                    <nls description="Grundläggande investeringsinformation" languageCode="sv" name="Egenskaper"/>
+                    <nls description="Taban yatırım bilgileri" languageCode="tr" name="Özellikler"/>
+                    <nls description="基本投资信息" languageCode="zh" name="属性"/>
+                    <nls description="基礎投資資訊" languageCode="zh_TW" name="特性內容"/>
+                    <parameter dataRef="project_id" dataSource="data" paramCode="id">
+                        <nls description="ID del projecte" languageCode="ca" name="ID del projecte"/>
+                        <nls description="ID projektu" languageCode="cs" name="ID projektu"/>
+                        <nls description="Projekt-id" languageCode="da" name="Projekt-id"/>
+                        <nls description="Projekt-ID" languageCode="de" name="Projekt-ID"/>
+                        <nls description="Project ID" languageCode="en" name="Project ID"/>
+                        <nls description="ID del proyecto" languageCode="es" name="ID del proyecto"/>
+                        <nls description="Projektin tunnus" languageCode="fi" name="Projektin tunnus"/>
+                        <nls description="ID du projet" languageCode="fr" name="ID du projet"/>
+                        <nls description="Projekt azonosítója" languageCode="hu" name="Projekt azonosítója"/>
+                        <nls description="ID progetto" languageCode="it" name="ID progetto"/>
+                        <nls description="プロジェクト ID" languageCode="ja" name="プロジェクト ID"/>
+                        <nls description="[ko: Project ID]" languageCode="ko" name="[ko: Project ID]"/>
+                        <nls description="Id project" languageCode="nl" name="Id project"/>
+                        <nls description="Prosjekt-ID" languageCode="no" name="Prosjekt-ID"/>
+                        <nls description="Identyfikator projektu" languageCode="pl" name="Identyfikator projektu"/>
+                        <nls description="ID do projeto" languageCode="pt" name="ID do projeto"/>
+                        <nls description="Код проекта" languageCode="ru" name="Код проекта"/>
+                        <nls description="Projekt-ID" languageCode="sv" name="Projekt-ID"/>
+                        <nls description="Proje Kimliği" languageCode="tr" name="Proje Kimliği"/>
+                        <nls description="项目 ID" languageCode="zh" name="项目 ID"/>
+                        <nls description="專案 ID" languageCode="zh_TW" name="專案 ID"/>
+                    </parameter>
+                    <subtab active="true" code="projmgr.projectProperties" customizable="true" layout="properties" linkable="true" objectType="SRM_PROJECTS" personalizable="false" source="niku.com" space="mainnav.work">
+                        <nls description="Propietats del projecte" languageCode="ca" name="Propietats del projecte"/>
+                        <nls description="Vlastnosti projektů" languageCode="cs" name="Vlastnosti projektů"/>
+                        <nls description="Projektegenskaber" languageCode="da" name="Projektegenskaber"/>
+                        <nls description="Projekteigenschaften" languageCode="de" name="Projekteigenschaften"/>
+                        <nls description="Project Properties" languageCode="en" name="Project Properties"/>
+                        <nls description="Propiedades del proyecto" languageCode="es" name="Propiedades del proyecto"/>
+                        <nls description="Projektin tiedot" languageCode="fi" name="Projektin tiedot"/>
+                        <nls description="Propriétés du projet" languageCode="fr" name="Propriétés du projet"/>
+                        <nls description="Projekt tulajdonságai" languageCode="hu" name="Projekt tulajdonságai"/>
+                        <nls description="Proprietà progetto" languageCode="it" name="Proprietà progetto"/>
+                        <nls description="プロジェクトのプロパティ" languageCode="ja" name="プロジェクトのプロパティ"/>
+                        <nls description="[ko: Project Properties]" languageCode="ko" name="[ko: Project Properties]"/>
+                        <nls description="Projecteigenschappen" languageCode="nl" name="Projecteigenschappen"/>
+                        <nls description="Prosjektegenskaper" languageCode="no" name="Prosjektegenskaper"/>
+                        <nls description="Właściwości projektu" languageCode="pl" name="Właściwości projektu"/>
+                        <nls description="Propriedades do projeto" languageCode="pt" name="Propriedades do projeto"/>
+                        <nls description="Свойства проекта" languageCode="ru" name="Свойства проекта"/>
+                        <nls description="Projektegenskaper" languageCode="sv" name="Projektegenskaper"/>
+                        <nls description="Proje Özellikleri" languageCode="tr" name="Proje Özellikleri"/>
+                        <nls description="项目属性" languageCode="zh" name="项目属性"/>
+                        <nls description="專案內容" languageCode="zh_TW" name="專案內容"/>
+                        <parameter dataRef="project_id" dataSource="data" paramCode="id">
+                            <nls description="ID del projecte" languageCode="ca" name="ID del projecte"/>
+                            <nls description="ID projektu" languageCode="cs" name="ID projektu"/>
+                            <nls description="Projekt-id" languageCode="da" name="Projekt-id"/>
+                            <nls description="Projekt-ID" languageCode="de" name="Projekt-ID"/>
+                            <nls description="Project ID" languageCode="en" name="Project ID"/>
+                            <nls description="ID del proyecto" languageCode="es" name="ID del proyecto"/>
+                            <nls description="Projektin tunnus" languageCode="fi" name="Projektin tunnus"/>
+                            <nls description="ID du projet" languageCode="fr" name="ID du projet"/>
+                            <nls description="Projekt azonosítója" languageCode="hu" name="Projekt azonosítója"/>
+                            <nls description="ID progetto" languageCode="it" name="ID progetto"/>
+                            <nls description="プロジェクト ID" languageCode="ja" name="プロジェクト ID"/>
+                            <nls description="[ko: Project ID]" languageCode="ko" name="[ko: Project ID]"/>
+                            <nls description="Id project" languageCode="nl" name="Id project"/>
+                            <nls description="Prosjekt-ID" languageCode="no" name="Prosjekt-ID"/>
+                            <nls description="Identyfikator projektu" languageCode="pl" name="Identyfikator projektu"/>
+                            <nls description="ID do projeto" languageCode="pt" name="ID do projeto"/>
+                            <nls description="Код проекта" languageCode="ru" name="Код проекта"/>
+                            <nls description="Projekt-ID" languageCode="sv" name="Projekt-ID"/>
+                            <nls description="Proje Kimliği" languageCode="tr" name="Proje Kimliği"/>
+                            <nls description="项目 ID" languageCode="zh" name="项目 ID"/>
+                            <nls description="專案 ID" languageCode="zh_TW" name="專案 ID"/>
+                        </parameter>
+                        <pageViewMapping objectCode="project" pageCode="projmgr.projectProperties" viewCode="projectGeneral" viewType="property"/>
+                    </subtab>
+                    <subtab active="true" code="projmgr.baselineRevisionList" customizable="true" layout="properties" linkable="true" objectType="SRM_PROJECTS" personalizable="false" source="niku.com" space="mainnav.work">
+                        <nls description="Línia de referència" languageCode="ca" name="Línia de referència"/>
+                        <nls description="Směrný plán" languageCode="cs" name="Směrný plán"/>
+                        <nls description="Baseline" languageCode="da" name="Baseline"/>
+                        <nls description="Basisplan" languageCode="de" name="Basisplan"/>
+                        <nls description="Baseline" languageCode="en" name="Baseline"/>
+                        <nls description="Línea de referencia" languageCode="es" name="Línea de referencia"/>
+                        <nls description="Tavoitesuunnitelma" languageCode="fi" name="Tavoitesuunnitelma"/>
+                        <nls description="Référence" languageCode="fr" name="Référence"/>
+                        <nls description="Baseline" languageCode="hu" name="Baseline"/>
+                        <nls description="Previsione" languageCode="it" name="Previsione"/>
+                        <nls description="ベースライン" languageCode="ja" name="ベースライン"/>
+                        <nls description="[ko: Baseline]" languageCode="ko" name="[ko: Baseline]"/>
+                        <nls description="Baseline" languageCode="nl" name="Baseline"/>
+                        <nls description="Opprinnelig plan" languageCode="no" name="Opprinnelig plan"/>
+                        <nls description="Plan bazowy" languageCode="pl" name="Plan bazowy"/>
+                        <nls description="Linha de base" languageCode="pt" name="Linha de base"/>
+                        <nls description="Базовый план" languageCode="ru" name="Базовый план"/>
+                        <nls description="Originalplan" languageCode="sv" name="Originalplan"/>
+                        <nls description="Anahat" languageCode="tr" name="Anahat"/>
+                        <nls description="基准" languageCode="zh" name="基准"/>
+                        <nls description="比較基準" languageCode="zh_TW" name="比較基準"/>
+                        <parameter dataRef="odf_pk" dataSource="data" paramCode="id">
+                            <nls description="ID de l&apos;objecte" languageCode="ca" name="ID de l&apos;objecte"/>
+                            <nls description="ID objektu" languageCode="cs" name="Interní ID objektu"/>
+                            <nls description="Objekt-id" languageCode="da" name="Internt id for objekt"/>
+                            <nls description="Objekt-ID" languageCode="de" name="Interne Objekt-ID"/>
+                            <nls description="Object ID" languageCode="en" name="Object Internal ID"/>
+                            <nls description="ID del objeto" languageCode="es" name="ID interno del objeto"/>
+                            <nls description="Objektin tunnus" languageCode="fi" name="Objektin sisäinen tunnus"/>
+                            <nls description="ID de l&apos;objet" languageCode="fr" name="ID interne de l&apos;objet"/>
+                            <nls description="Objektumazonosító" languageCode="hu" name="Objektumazonosító"/>
+                            <nls description="ID oggetto" languageCode="it" name="ID interno oggetto"/>
+                            <nls description="オブジェクト ID" languageCode="ja" name="オブジェクトの内部 ID"/>
+                            <nls description="개체 ID" languageCode="ko" name="개체 내부 ID"/>
+                            <nls description="Object-id" languageCode="nl" name="Interne id object"/>
+                            <nls description="Objekt-ID" languageCode="no" name="Objekt-ID"/>
+                            <nls description="Identyfikator obiektu" languageCode="pl" name="Identyfikator obiektu"/>
+                            <nls description="ID de objeto" languageCode="pt" name="ID interna do objeto"/>
+                            <nls description="Идентификатор объекта" languageCode="ru" name="Идентификатор объекта"/>
+                            <nls description="Objekt-Id" languageCode="sv" name="Internt ID för objekt"/>
+                            <nls description="Nesne Kimliği" languageCode="tr" name="Nesne Kimliği"/>
+                            <nls description="对象 ID" languageCode="zh" name="对象内部 ID"/>
+                            <nls description="物件 ID" languageCode="zh_TW" name="物件內部 ID"/>
+                        </parameter>
+                        <pageViewMapping objectCode="baseline" pageCode="projmgr.baselineRevisionList" viewCode="projmgr.baselineRevisionList" viewType="grid"/>
+                    </subtab>
+                </tab>
+                <tab active="true" code="projmgr.roster" customizable="false" hidden="false" isObjectInstance="true" isSystem="true" layout="properties" linkable="false" objectType="SRM_PROJECTS" personalizable="false" shared="false" source="niku.com" space="mainnav.work" update="true">
+                    <nls description="Equip" languageCode="ca" name="Equip"/>
+                    <nls description="Tým" languageCode="cs" name="Tým"/>
+                    <nls description="Team" languageCode="da" name="Team"/>
+                    <nls description="Team" languageCode="de" name="Team"/>
+                    <nls description="Team" languageCode="en" name="Team"/>
+                    <nls description="Equipo" languageCode="es" name="Equipo"/>
+                    <nls description="Työryhmä" languageCode="fi" name="Työryhmä"/>
+                    <nls description="Equipe" languageCode="fr" name="Equipe"/>
+                    <nls description="Csapat" languageCode="hu" name="Csapat"/>
+                    <nls description="Team" languageCode="it" name="Team"/>
+                    <nls description="チーム" languageCode="ja" name="チーム"/>
+                    <nls description="[ko: Team]" languageCode="ko" name="[ko: Team]"/>
+                    <nls description="Team" languageCode="nl" name="Team"/>
+                    <nls description="Team" languageCode="no" name="Team"/>
+                    <nls description="Zespół" languageCode="pl" name="Zespół"/>
+                    <nls description="Equipe" languageCode="pt" name="Equipe"/>
+                    <nls description="Команда" languageCode="ru" name="Команда"/>
+                    <nls description="Team" languageCode="sv" name="Team"/>
+                    <nls description="Ekip" languageCode="tr" name="Ekip"/>
+                    <nls description="团队" languageCode="zh" name="团队"/>
+                    <nls description="小組" languageCode="zh_TW" name="小組"/>
+                    <subtab active="true" code="projmgr.roster" customizable="true" layout="properties" linkable="false" objectType="SRM_PROJECTS" personalizable="false" source="niku.com" space="mainnav.work">
+                        <nls description="Personal" languageCode="ca" name="Personal"/>
+                        <nls description="Členové týmu" languageCode="cs" name="Členové týmu"/>
+                        <nls description="Personale" languageCode="da" name="Personale"/>
+                        <nls description="Mitarbeiter" languageCode="de" name="Mitarbeiter"/>
+                        <nls description="Staff" languageCode="en" name="Staff"/>
+                        <nls description="Personal" languageCode="es" name="Personal"/>
+                        <nls description="Henkilöstö" languageCode="fi" name="Henkilöstö"/>
+                        <nls description="Personnel" languageCode="fr" name="Personnel"/>
+                        <nls description="Állomány" languageCode="hu" name="Állomány"/>
+                        <nls description="Personale" languageCode="it" name="Personale"/>
+                        <nls description="スタッフ" languageCode="ja" name="スタッフ"/>
+                        <nls description="[ko: Staff]" languageCode="ko" name="[ko: Staff]"/>
+                        <nls description="Personeel" languageCode="nl" name="Personeel"/>
+                        <nls description="Deltakere" languageCode="no" name="Deltakere"/>
+                        <nls description="Personel" languageCode="pl" name="Personel"/>
+                        <nls description="Equipe alocada" languageCode="pt" name="Equipe alocada"/>
+                        <nls description="Персонал" languageCode="ru" name="Персонал"/>
+                        <nls description="Personal" languageCode="sv" name="Personal"/>
+                        <nls description="Personel" languageCode="tr" name="Personel"/>
+                        <nls description="人员" languageCode="zh" name="人员"/>
+                        <nls description="人員" languageCode="zh_TW" name="人員"/>
+                        <pageViewMapping objectCode="team" pageCode="projmgr.roster" viewCode="projmgr.projectTeamStaff" viewType="grid"/>
+                    </subtab>
+                    <subtab active="true" code="projmgr.invRoleCapacity" customizable="true" layout="properties" linkable="true" objectType="SRM_PROJECTS" personalizable="false" source="niku.com" space="mainnav.work">
+                        <nls description="Capacitat del rol" languageCode="ca" name="Capacitat del rol"/>
+                        <nls description="Kapacita role" languageCode="cs" name="Kapacita role"/>
+                        <nls description="Rollekapacitet" languageCode="da" name="Rollekapacitet"/>
+                        <nls description="Rollenkapazität" languageCode="de" name="Rollenkapazität"/>
+                        <nls description="Role Capacity" languageCode="en" name="Role Capacity"/>
+                        <nls description="Capacidad del rol" languageCode="es" name="Capacidad del rol"/>
+                        <nls description="Roolin kapasiteetti" languageCode="fi" name="Roolin kapasiteetti"/>
+                        <nls description="Capacité du rôle" languageCode="fr" name="Capacité du rôle"/>
+                        <nls description="Szerep kapacitása" languageCode="hu" name="Szerep kapacitása"/>
+                        <nls description="Capacità ruolo" languageCode="it" name="Capacità ruolo"/>
+                        <nls description="ロール キャパシティ" languageCode="ja" name="ロール キャパシティ"/>
+                        <nls description="[ko: Role Capacity]" languageCode="ko" name="[ko: Role Capacity]"/>
+                        <nls description="Rolcapaciteit" languageCode="nl" name="Rolcapaciteit"/>
+                        <nls description="Rollekapasitet" languageCode="no" name="Rollekapasitet"/>
+                        <nls description="Zdolności produkcyjne roli" languageCode="pl" name="Zdolności produkcyjne roli"/>
+                        <nls description="Capacidade da função" languageCode="pt" name="Capacidade da função"/>
+                        <nls description="Доступность роли" languageCode="ru" name="Доступность роли"/>
+                        <nls description="Rollkapacitet" languageCode="sv" name="Rollkapacitet"/>
+                        <nls description="Rol Kapasitesi" languageCode="tr" name="Rol Kapasitesi"/>
+                        <nls description="角色产能" languageCode="zh" name="角色产能"/>
+                        <nls description="角色產能" languageCode="zh_TW" name="角色產能"/>
+                        <parameter dataRef="odf_pk" dataSource="data" paramCode="id">
+                            <nls description="ID de l&apos;objecte" languageCode="ca" name="ID de l&apos;objecte"/>
+                            <nls description="ID objektu" languageCode="cs" name="Interní ID objektu"/>
+                            <nls description="Objekt-id" languageCode="da" name="Internt id for objekt"/>
+                            <nls description="Objekt-ID" languageCode="de" name="Interne Objekt-ID"/>
+                            <nls description="Object ID" languageCode="en" name="Object Internal ID"/>
+                            <nls description="ID del objeto" languageCode="es" name="ID interno del objeto"/>
+                            <nls description="Objektin tunnus" languageCode="fi" name="Objektin sisäinen tunnus"/>
+                            <nls description="ID de l&apos;objet" languageCode="fr" name="ID interne de l&apos;objet"/>
+                            <nls description="Objektumazonosító" languageCode="hu" name="Objektumazonosító"/>
+                            <nls description="ID oggetto" languageCode="it" name="ID interno oggetto"/>
+                            <nls description="オブジェクト ID" languageCode="ja" name="オブジェクトの内部 ID"/>
+                            <nls description="개체 ID" languageCode="ko" name="개체 내부 ID"/>
+                            <nls description="Object-id" languageCode="nl" name="Interne id object"/>
+                            <nls description="Objekt-ID" languageCode="no" name="Objekt-ID"/>
+                            <nls description="Identyfikator obiektu" languageCode="pl" name="Identyfikator obiektu"/>
+                            <nls description="ID de objeto" languageCode="pt" name="ID interna do objeto"/>
+                            <nls description="Идентификатор объекта" languageCode="ru" name="Идентификатор объекта"/>
+                            <nls description="Objekt-Id" languageCode="sv" name="Internt ID för objekt"/>
+                            <nls description="Nesne Kimliği" languageCode="tr" name="Nesne Kimliği"/>
+                            <nls description="对象 ID" languageCode="zh" name="对象内部 ID"/>
+                            <nls description="物件 ID" languageCode="zh_TW" name="物件內部 ID"/>
+                        </parameter>
+                        <pageViewMapping objectCode="team" pageCode="projmgr.invRoleCapacity" viewCode="projmgr.invRoleCapacity" viewType="grid"/>
+                    </subtab>
+                </tab>
+                <tab active="true" code="projmgr.keyTaskList" customizable="false" hidden="false" isObjectInstance="true" isSystem="true" layout="properties" linkable="false" objectType="SRM_PROJECTS" personalizable="false" shared="false" source="niku.com" space="mainnav.work" update="true">
+                    <nls description="Tasques del projecte" languageCode="ca" name="Tasques"/>
+                    <nls description="Úkoly" languageCode="cs" name="Úkoly"/>
+                    <nls description="Opgaver" languageCode="da" name="Opgaver"/>
+                    <nls description="Aufgaben" languageCode="de" name="Aufgaben"/>
+                    <nls description="Tasks" languageCode="en" name="Tasks"/>
+                    <nls description="Tareas" languageCode="es" name="Tareas"/>
+                    <nls description="Tehtävät" languageCode="fi" name="Tehtävät"/>
+                    <nls description="Tâches" languageCode="fr" name="Tâches"/>
+                    <nls description="Feladatok" languageCode="hu" name="Feladatok"/>
+                    <nls description="Attività" languageCode="it" name="Attività"/>
+                    <nls description="タスク" languageCode="ja" name="タスク"/>
+                    <nls description="[ko: Tasks]" languageCode="ko" name="[ko: Tasks]"/>
+                    <nls description="Taken" languageCode="nl" name="Taken"/>
+                    <nls description="Aktiviteter" languageCode="no" name="Aktiviteter"/>
+                    <nls description="Zadania" languageCode="pl" name="Zadania"/>
+                    <nls description="Tarefas" languageCode="pt" name="Tarefas"/>
+                    <nls description="Задачи" languageCode="ru" name="Задачи"/>
+                    <nls description="Uppgifter" languageCode="sv" name="Uppgifter"/>
+                    <nls description="Görevler" languageCode="tr" name="Görevler"/>
+                    <nls description="任务" languageCode="zh" name="任务"/>
+                    <nls description="任務" languageCode="zh_TW" name="任務"/>
+                    <subtab active="true" code="projmgr.keyTaskList" customizable="true" layout="properties" linkable="false" objectType="SRM_PROJECTS" personalizable="false" source="niku.com" space="mainnav.work">
+                        <nls description="Llista de tasques" languageCode="ca" name="Llista de tasques"/>
+                        <nls description="Seznam úkolů" languageCode="cs" name="Seznam úkolů"/>
+                        <nls description="Opgaveliste" languageCode="da" name="Opgaveliste"/>
+                        <nls description="Aufgabenliste" languageCode="de" name="Aufgabenliste"/>
+                        <nls description="Task List" languageCode="en" name="Task List"/>
+                        <nls description="Lista de tareas" languageCode="es" name="Lista de tareas"/>
+                        <nls description="Tehtäväluettelo" languageCode="fi" name="Tehtäväluettelo"/>
+                        <nls description="Liste des tâches" languageCode="fr" name="Liste des tâches"/>
+                        <nls description="Feladatlista" languageCode="hu" name="Feladatlista"/>
+                        <nls description="Elenco attività" languageCode="it" name="Elenco attività"/>
+                        <nls description="タスク リスト" languageCode="ja" name="タスク リスト"/>
+                        <nls description="[ko: Task List]" languageCode="ko" name="[ko: Task List]"/>
+                        <nls description="Takenlijst" languageCode="nl" name="Takenlijst"/>
+                        <nls description="Aktivitetsliste" languageCode="no" name="Aktivitetsliste"/>
+                        <nls description="Lista zadań" languageCode="pl" name="Lista zadań"/>
+                        <nls description="Lista de tarefas" languageCode="pt" name="Lista de tarefas"/>
+                        <nls description="Список задач" languageCode="ru" name="Список задач"/>
+                        <nls description="Uppgiftslista" languageCode="sv" name="Uppgiftslista"/>
+                        <nls description="Görev Listesi" languageCode="tr" name="Görev Listesi"/>
+                        <nls description="任务列表" languageCode="zh" name="任务列表"/>
+                        <nls description="任務清單" languageCode="zh_TW" name="任務清單"/>
+                        <pageViewMapping objectCode="task" pageCode="projmgr.keyTaskList" viewCode="projmgr.keyTaskList" viewType="grid"/>
+                    </subtab>
+                    <subtab active="true" code="projmgr.wbsTaskList" customizable="true" layout="properties" linkable="true" objectType="SRM_PROJECTS" personalizable="false" source="niku.com" space="mainnav.work">
+                        <nls description="Gantt" languageCode="ca" name="Gantt"/>
+                        <nls description="Ganttův diagram" languageCode="cs" name="Ganttův diagram"/>
+                        <nls description="Gantt" languageCode="da" name="Gantt"/>
+                        <nls description="Gantt" languageCode="de" name="Gantt"/>
+                        <nls description="Gantt" languageCode="en" name="Gantt"/>
+                        <nls description="Gantt" languageCode="es" name="Gantt"/>
+                        <nls description="Gantt" languageCode="fi" name="Gantt"/>
+                        <nls description="Gantt" languageCode="fr" name="Gantt"/>
+                        <nls description="Gantt" languageCode="hu" name="Gantt"/>
+                        <nls description="Gantt" languageCode="it" name="Gantt"/>
+                        <nls description="ガント" languageCode="ja" name="ガント"/>
+                        <nls description="[ko: Gantt]" languageCode="ko" name="[ko: Gantt]"/>
+                        <nls description="Gantt" languageCode="nl" name="Gantt"/>
+                        <nls description="Gantt" languageCode="no" name="Gantt"/>
+                        <nls description="Wykres Gantta" languageCode="pl" name="Wykres Gantta"/>
+                        <nls description="Gantt" languageCode="pt" name="Gantt"/>
+                        <nls description="График Ганта" languageCode="ru" name="График Ганта"/>
+                        <nls description="Gantt" languageCode="sv" name="Gantt"/>
+                        <nls description="Gantt" languageCode="tr" name="Gantt"/>
+                        <nls description="甘特图" languageCode="zh" name="甘特图"/>
+                        <nls description="甘特圖" languageCode="zh_TW" name="甘特圖"/>
+                        <parameter dataRef="odf_pk" dataSource="data" paramCode="drillpos">
+                            <nls description="ID de l&apos;objecte" languageCode="ca" name="ID de l&apos;objecte"/>
+                            <nls description="ID objektu" languageCode="cs" name="Interní ID objektu"/>
+                            <nls description="Objekt-id" languageCode="da" name="Internt id for objekt"/>
+                            <nls description="Objekt-ID" languageCode="de" name="Interne Objekt-ID"/>
+                            <nls description="Object ID" languageCode="en" name="Object Internal ID"/>
+                            <nls description="ID del objeto" languageCode="es" name="ID interno del objeto"/>
+                            <nls description="Objektin tunnus" languageCode="fi" name="Objektin sisäinen tunnus"/>
+                            <nls description="ID de l&apos;objet" languageCode="fr" name="ID interne de l&apos;objet"/>
+                            <nls description="Objektumazonosító" languageCode="hu" name="Objektumazonosító"/>
+                            <nls description="ID oggetto" languageCode="it" name="ID interno oggetto"/>
+                            <nls description="オブジェクト ID" languageCode="ja" name="オブジェクトの内部 ID"/>
+                            <nls description="개체 ID" languageCode="ko" name="개체 내부 ID"/>
+                            <nls description="Object-id" languageCode="nl" name="Interne id object"/>
+                            <nls description="Objekt-ID" languageCode="no" name="Objekt-ID"/>
+                            <nls description="Identyfikator obiektu" languageCode="pl" name="Identyfikator obiektu"/>
+                            <nls description="ID de objeto" languageCode="pt" name="ID interna do objeto"/>
+                            <nls description="Идентификатор объекта" languageCode="ru" name="Идентификатор объекта"/>
+                            <nls description="Objekt-Id" languageCode="sv" name="Internt ID för objekt"/>
+                            <nls description="Nesne Kimliği" languageCode="tr" name="Nesne Kimliği"/>
+                            <nls description="对象 ID" languageCode="zh" name="对象内部 ID"/>
+                            <nls description="物件 ID" languageCode="zh_TW" name="物件內部 ID"/>
+                        </parameter>
+                        <parameter dataRef="prprojectid" dataSource="data" paramCode="id">
+                            <nls description="ID del projecte" languageCode="ca" name="ID del projecte"/>
+                            <nls description="ID projektu" languageCode="cs" name="ID projektu"/>
+                            <nls description="Projekt-id" languageCode="da" name="Projekt-id"/>
+                            <nls description="Projekt-ID" languageCode="de" name="Projekt-ID"/>
+                            <nls description="Project ID" languageCode="en" name="Project ID"/>
+                            <nls description="ID del proyecto" languageCode="es" name="ID del proyecto"/>
+                            <nls description="Projektin tunnus" languageCode="fi" name="Projektin tunnus"/>
+                            <nls description="ID du projet" languageCode="fr" name="ID du projet"/>
+                            <nls description="Projekt azonosítója" languageCode="hu" name="Projekt azonosítója"/>
+                            <nls description="ID progetto" languageCode="it" name="ID progetto"/>
+                            <nls description="プロジェクト ID" languageCode="ja" name="プロジェクト ID"/>
+                            <nls description="프로젝트 ID" languageCode="ko" name="프로젝트 ID"/>
+                            <nls description="Id project" languageCode="nl" name="Id project"/>
+                            <nls description="Prosjekt-ID" languageCode="no" name="Prosjekt-ID"/>
+                            <nls description="Identyfikator projektu" languageCode="pl" name="Identyfikator projektu"/>
+                            <nls description="ID do projeto" languageCode="pt" name="ID do projeto"/>
+                            <nls description="Код проекта" languageCode="ru" name="Код проекта"/>
+                            <nls description="Projekt-ID" languageCode="sv" name="Projekt-ID"/>
+                            <nls description="Proje Kimliği" languageCode="tr" name="Proje Kimliği"/>
+                            <nls description="项目 ID" languageCode="zh" name="项目 ID"/>
+                            <nls description="專案 ID" languageCode="zh_TW" name="專案 ID"/>
+                        </parameter>
+                        <parameter dataRef="projmgr.organizerTaskListReturn" dataSource="static" paramCode="return_to"/>
+                        <pageViewMapping objectCode="task" pageCode="projmgr.wbsTaskList" viewCode="projmgr.wbsTaskList" viewType="grid"/>
+                    </subtab>
+                    <subtab active="true" code="projmgr.taskResUtilList" customizable="true" layout="properties" linkable="true" objectType="SRM_PROJECTS" personalizable="false" source="niku.com" space="mainnav.work">
+                        <nls description="Utilització dels recursos" languageCode="ca" name="Utilització dels recursos"/>
+                        <nls description="Užití zdrojů" languageCode="cs" name="Užití zdrojů"/>
+                        <nls description="Ressourceudnyttelse" languageCode="da" name="Ressourceudnyttelse"/>
+                        <nls description="Ressourcenauslastung" languageCode="de" name="Ressourcenauslastung"/>
+                        <nls description="Resource Utilization" languageCode="en" name="Resource Utilization"/>
+                        <nls description="Utilización de los recursos" languageCode="es" name="Utilización de los recursos"/>
+                        <nls description="Resurssien käyttö" languageCode="fi" name="Resurssien käyttö"/>
+                        <nls description="Utilisation des ressources" languageCode="fr" name="Utilisation des ressources"/>
+                        <nls description="Erőforrás kihasználtsága" languageCode="hu" name="Erőforrás kihasználtsága"/>
+                        <nls description="Utilizzo della risorsa" languageCode="it" name="Utilizzo della risorsa"/>
+                        <nls description="リソース稼働ステータス" languageCode="ja" name="リソース稼働ステータス"/>
+                        <nls description="[ko: Resource Utilization]" languageCode="ko" name="[ko: Resource Utilization]"/>
+                        <nls description="Resourcegebruik" languageCode="nl" name="Resourcegebruik"/>
+                        <nls description="Ressursutnyttelse" languageCode="no" name="Ressursutnyttelse"/>
+                        <nls description="Wykorzystanie zasobów" languageCode="pl" name="Wykorzystanie zasobów"/>
+                        <nls description="Utilização de recurso" languageCode="pt" name="Utilização de recurso"/>
+                        <nls description="Загрузка ресурса" languageCode="ru" name="Загрузка ресурса"/>
+                        <nls description="Resursanvändning" languageCode="sv" name="Resursanvändning"/>
+                        <nls description="Kaynak Kullanımı" languageCode="tr" name="Kaynak Kullanımı"/>
+                        <nls description="资源使用" languageCode="zh" name="资源使用"/>
+                        <nls description="資源使用" languageCode="zh_TW" name="資源使用"/>
+                        <parameter dataRef="odf_pk" dataSource="data" paramCode="id">
+                            <nls description="ID de l&apos;objecte" languageCode="ca" name="ID de l&apos;objecte"/>
+                            <nls description="ID objektu" languageCode="cs" name="Interní ID objektu"/>
+                            <nls description="Objekt-id" languageCode="da" name="Internt id for objekt"/>
+                            <nls description="Objekt-ID" languageCode="de" name="Interne Objekt-ID"/>
+                            <nls description="Object ID" languageCode="en" name="Object Internal ID"/>
+                            <nls description="ID del objeto" languageCode="es" name="ID interno del objeto"/>
+                            <nls description="Objektin tunnus" languageCode="fi" name="Objektin sisäinen tunnus"/>
+                            <nls description="ID de l&apos;objet" languageCode="fr" name="ID interne de l&apos;objet"/>
+                            <nls description="Objektumazonosító" languageCode="hu" name="Objektumazonosító"/>
+                            <nls description="ID oggetto" languageCode="it" name="ID interno oggetto"/>
+                            <nls description="オブジェクト ID" languageCode="ja" name="オブジェクトの内部 ID"/>
+                            <nls description="개체 ID" languageCode="ko" name="개체 내부 ID"/>
+                            <nls description="Object-id" languageCode="nl" name="Interne id object"/>
+                            <nls description="Objekt-ID" languageCode="no" name="Objekt-ID"/>
+                            <nls description="Identyfikator obiektu" languageCode="pl" name="Identyfikator obiektu"/>
+                            <nls description="ID de objeto" languageCode="pt" name="ID interna do objeto"/>
+                            <nls description="Идентификатор объекта" languageCode="ru" name="Идентификатор объекта"/>
+                            <nls description="Objekt-Id" languageCode="sv" name="Internt ID för objekt"/>
+                            <nls description="Nesne Kimliği" languageCode="tr" name="Nesne Kimliği"/>
+                            <nls description="对象 ID" languageCode="zh" name="对象内部 ID"/>
+                            <nls description="物件 ID" languageCode="zh_TW" name="物件內部 ID"/>
+                        </parameter>
+                        <pageViewMapping objectCode="task" pageCode="projmgr.taskResUtilList" viewCode="projmgr.taskResUtilList" viewType="grid"/>
+                    </subtab>
+                </tab>
+                <tab active="true" code="revmgr.costplanList.project" customizable="false" hidden="false" isSystem="true" layout="two-column-layout-66-34" linkable="false" objectType="SRM_PROJECTS" personalizable="false" shared="false" source="niku.com" space="mainnav.work" update="true">
+                    <nls description="Plans financers" languageCode="ca" name="Plans financers"/>
+                    <nls description="Finanční plány" languageCode="cs" name="Finanční plány"/>
+                    <nls description="Økonomiplaner" languageCode="da" name="Økonomiplaner"/>
+                    <nls description="Finanzpläne" languageCode="de" name="Finanzpläne"/>
+                    <nls description="Financial Plans" languageCode="en" name="Financial Plans"/>
+                    <nls description="Planes financieros" languageCode="es" name="Planes financieros"/>
+                    <nls description="Taloussuunnitelmat" languageCode="fi" name="Taloussuunnitelmat"/>
+                    <nls description="Plans financiers" languageCode="fr" name="Plans financiers"/>
+                    <nls description="Pénzügyi tervek" languageCode="hu" name="Pénzügyi tervek"/>
+                    <nls description="Piani finanziari" languageCode="it" name="Piani finanziari"/>
+                    <nls description="会計計画" languageCode="ja" name="会計計画"/>
+                    <nls description="[ko: Financial Plans]" languageCode="ko" name="[ko: Financial Plans]"/>
+                    <nls description="Financiële plannen" languageCode="nl" name="Financiële plannen"/>
+                    <nls description="Økonomiplaner" languageCode="no" name="Økonomiplaner"/>
+                    <nls description="Plany finansowe" languageCode="pl" name="Plany finansowe"/>
+                    <nls description="Planos financeiros" languageCode="pt" name="Planos financeiros"/>
+                    <nls description="Финансовые планы" languageCode="ru" name="Финансовые планы"/>
+                    <nls description="Ekonomiplaner" languageCode="sv" name="Ekonomiplaner"/>
+                    <nls description="Finansal Planlar" languageCode="tr" name="Finansal Planlar"/>
+                    <nls description="财务计划" languageCode="zh" name="财务计划"/>
+                    <nls description="財務計劃" languageCode="zh_TW" name="財務計劃"/>
+                    <parameter dataRef="odf_pk/@value" dataSource="input" paramCode="id"/>
+                    <pageViewMapping objectCode="costplan" pageCode="revmgr.costplanList.project" viewCode="revmgr.costplanList" viewType="grid"/>
+                </tab>
+                <tab active="true" code="itl.riskList" customizable="false" hidden="false" isObjectInstance="true" isSystem="true" layout="properties" linkable="false" objectType="SRM_PROJECTS" personalizable="false" shared="false" source="niku.com" space="mainnav.work" update="true">
+                    <nls description="Incidències i riscos del projecte" languageCode="ca" name="Riscos/incidències/canvis"/>
+                    <nls description="Rizika, problémy a požadavky na změnu" languageCode="cs" name="Rizika, problémy a změny"/>
+                    <nls description="Risici/Problemer/Anmodninger om ændringer" languageCode="da" name="Risiko/Problemer/Ændringer"/>
+                    <nls description="Risiken/Probleme/Änderungsanträge" languageCode="de" name="Risiken/Probleme/Änderungen"/>
+                    <nls description="Risks/Issues/Change Requests" languageCode="en" name="Risks/Issues/Changes"/>
+                    <nls description="Riesgos/incidencias/solicitudes de cambio" languageCode="es" name="Riesgos/incidencias/cambios"/>
+                    <nls description="Riskit / huomioitavat asiat / muutospyynnöt" languageCode="fi" name="Riskit / huomioitavat asiat / muutokset"/>
+                    <nls description="Risques/problèmes/demandes de changement" languageCode="fr" name="Risques/problèmes/changements"/>
+                    <nls description="Kockázatok/problémák/módosítási kérelmek" languageCode="hu" name="Kockázatok/problémák/változtatások"/>
+                    <nls description="Rischi/Problemi/Richieste di modifica" languageCode="it" name="Rischi/Problemi/Modifiche"/>
+                    <nls description="リスク/問題/変更依頼" languageCode="ja" name="リスク/問題/変更"/>
+                    <nls description="[ko: Risks/Issues/Change Requests]" languageCode="ko" name="[ko: Risks/Issues/Changes]"/>
+                    <nls description="Risico&apos;s/problemen/wijzigingsverzoeken" languageCode="nl" name="Risico&apos;s/Problemen/Wijzigingen"/>
+                    <nls description="Usikkerheter, problemer og endringsforespørsler" languageCode="no" name="Usikkerhet/problemer/endringer"/>
+                    <nls description="Czynniki ryzyka / Zagadnienia / Żądania zmian" languageCode="pl" name="Czynniki ryzyka / zagadnienia / zmiany"/>
+                    <nls description="Solicitações de riscos/ocorrências/mudanças" languageCode="pt" name="Riscos/Ocorrências/Mudanças"/>
+                    <nls description="Риски/Проблемы/Запросы на изменение" languageCode="ru" name="Риски/открытые вопросы/изменения"/>
+                    <nls description="Risker/problem/ändringsbegäran" languageCode="sv" name="Risker/problem/ändringar"/>
+                    <nls description="Riskler/Sorunlar/Değişiklik İstekleri" languageCode="tr" name="Riskler/Sorunlar/Değişiklikler"/>
+                    <nls description="风险/投诉/变更请求" languageCode="zh" name="风险/投诉/变更"/>
+                    <nls description="風險/問題/變更要求" languageCode="zh_TW" name="風險/問題/變更"/>
+                    <subtab active="true" code="itl.riskList" customizable="true" layout="properties" linkable="false" objectType="SRM_PROJECTS" personalizable="false" source="niku.com" space="mainnav.work">
+                        <nls description="Riscos" languageCode="ca" name="Riscos"/>
+                        <nls description="Rizika" languageCode="cs" name="Rizika"/>
+                        <nls description="Risici" languageCode="da" name="Risici"/>
+                        <nls description="Risiken" languageCode="de" name="Risiken"/>
+                        <nls description="Risks" languageCode="en" name="Risks"/>
+                        <nls description="Riesgos" languageCode="es" name="Riesgos"/>
+                        <nls description="Riskit" languageCode="fi" name="Riskit"/>
+                        <nls description="Risques" languageCode="fr" name="Risques"/>
+                        <nls description="Kockázatok" languageCode="hu" name="Kockázatok"/>
+                        <nls description="Rischi" languageCode="it" name="Rischi"/>
+                        <nls description="リスク" languageCode="ja" name="リスク"/>
+                        <nls description="[ko: Risks]" languageCode="ko" name="[ko: Risks]"/>
+                        <nls description="Risico&apos;s" languageCode="nl" name="Risico&apos;s"/>
+                        <nls description="Usikkerheter" languageCode="no" name="Usikkerheter"/>
+                        <nls description="Czynniki ryzyka" languageCode="pl" name="Czynniki ryzyka"/>
+                        <nls description="Riscos" languageCode="pt" name="Riscos"/>
+                        <nls description="Риски" languageCode="ru" name="Риски"/>
+                        <nls description="Risker" languageCode="sv" name="Risker"/>
+                        <nls description="Riskler" languageCode="tr" name="Riskler"/>
+                        <nls description="风险" languageCode="zh" name="风险"/>
+                        <nls description="風險" languageCode="zh_TW" name="風險"/>
+                        <pageViewMapping objectCode="risk" pageCode="itl.riskList" viewCode="itl.riskList" viewType="grid"/>
+                    </subtab>
+                    <subtab active="true" code="itl.changeList" customizable="true" layout="properties" linkable="true" objectType="SRM_PROJECTS" personalizable="false" source="niku.com" space="mainnav.work">
+                        <nls description="Sol·licituds de canvi" languageCode="ca" name="Sol·licituds de canvi"/>
+                        <nls description="Požadavky na změnu" languageCode="cs" name="Požadavky na změnu"/>
+                        <nls description="Ændringsanmodninger" languageCode="da" name="Ændringsanmodninger"/>
+                        <nls description="Änderungsanträge" languageCode="de" name="Änderungsanträge"/>
+                        <nls description="Change Requests" languageCode="en" name="Change Requests"/>
+                        <nls description="Solicitudes de cambio" languageCode="es" name="Solicitudes de cambio"/>
+                        <nls description="Muutospyynnöt" languageCode="fi" name="Muutospyynnöt"/>
+                        <nls description="Demandes de changement" languageCode="fr" name="Demandes de changement"/>
+                        <nls description="Módosítási kérelem" languageCode="hu" name="Módosítási kérelem"/>
+                        <nls description="Richieste di modifica" languageCode="it" name="Richieste di modifica"/>
+                        <nls description="変更依頼" languageCode="ja" name="変更依頼"/>
+                        <nls description="[ko: Change Requests]" languageCode="ko" name="[ko: Change Requests]"/>
+                        <nls description="Wijzigingsverzoeken" languageCode="nl" name="Wijzigingsverzoeken"/>
+                        <nls description="Endringsforespørsler" languageCode="no" name="Endringsforespørsler"/>
+                        <nls description="Żądania zmiany" languageCode="pl" name="Żądania zmiany"/>
+                        <nls description="Solicitações de mudança" languageCode="pt" name="Solicitações de mudança"/>
+                        <nls description="Запросы на изменение" languageCode="ru" name="Запросы на изменение"/>
+                        <nls description="Ändringsbegäran" languageCode="sv" name="Ändringsbegäran"/>
+                        <nls description="Değişiklik İstekleri" languageCode="tr" name="Değişiklik İstekleri"/>
+                        <nls description="变更请求" languageCode="zh" name="变更请求"/>
+                        <nls description="變更要求" languageCode="zh_TW" name="變更要求"/>
+                        <parameter dataRef="odf_pk" dataSource="data" paramCode="id">
+                            <nls description="ID de l&apos;objecte" languageCode="ca" name="ID de l&apos;objecte"/>
+                            <nls description="ID objektu" languageCode="cs" name="Interní ID objektu"/>
+                            <nls description="Objekt-id" languageCode="da" name="Internt id for objekt"/>
+                            <nls description="Objekt-ID" languageCode="de" name="Interne Objekt-ID"/>
+                            <nls description="Object ID" languageCode="en" name="Object Internal ID"/>
+                            <nls description="ID del objeto" languageCode="es" name="ID interno del objeto"/>
+                            <nls description="Objektin tunnus" languageCode="fi" name="Objektin sisäinen tunnus"/>
+                            <nls description="ID de l&apos;objet" languageCode="fr" name="ID interne de l&apos;objet"/>
+                            <nls description="Objektumazonosító" languageCode="hu" name="Objektumazonosító"/>
+                            <nls description="ID oggetto" languageCode="it" name="ID interno oggetto"/>
+                            <nls description="オブジェクト ID" languageCode="ja" name="オブジェクトの内部 ID"/>
+                            <nls description="개체 ID" languageCode="ko" name="개체 내부 ID"/>
+                            <nls description="Object-id" languageCode="nl" name="Interne id object"/>
+                            <nls description="Objekt-ID" languageCode="no" name="Objekt-ID"/>
+                            <nls description="Identyfikator obiektu" languageCode="pl" name="Identyfikator obiektu"/>
+                            <nls description="ID de objeto" languageCode="pt" name="ID interna do objeto"/>
+                            <nls description="Идентификатор объекта" languageCode="ru" name="Идентификатор объекта"/>
+                            <nls description="Objekt-Id" languageCode="sv" name="Internt ID för objekt"/>
+                            <nls description="Nesne Kimliği" languageCode="tr" name="Nesne Kimliği"/>
+                            <nls description="对象 ID" languageCode="zh" name="对象内部 ID"/>
+                            <nls description="物件 ID" languageCode="zh_TW" name="物件內部 ID"/>
+                        </parameter>
+                        <pageViewMapping objectCode="change" pageCode="itl.changeList" viewCode="itl.changeList" viewType="grid"/>
+                    </subtab>
+                    <subtab active="true" code="calendar.project.actionItemList" customizable="true" layout="properties" linkable="false" objectType="SRM_PROJECTS" personalizable="false" source="niku.com" space="mainnav.work">
+                        <nls description="Accions" languageCode="ca" name="Accions"/>
+                        <nls description="Akce" languageCode="cs" name="Akce"/>
+                        <nls description="Handlingspunkter" languageCode="da" name="Handlingspunkter"/>
+                        <nls description="Aktionen" languageCode="de" name="Aktionen"/>
+                        <nls description="Action Items" languageCode="en" name="Action Items"/>
+                        <nls description="Acciones" languageCode="es" name="Acciones"/>
+                        <nls description="Toimenpiteet" languageCode="fi" name="Toimenpiteet"/>
+                        <nls description="Actions" languageCode="fr" name="Actions"/>
+                        <nls description="Elvégzendő feladatok" languageCode="hu" name="Elvégzendő feladatok"/>
+                        <nls description="Azioni" languageCode="it" name="Azioni"/>
+                        <nls description="アクション アイテム" languageCode="ja" name="アクション アイテム"/>
+                        <nls description="[ko: Action Items]" languageCode="ko" name="[ko: Action Items]"/>
+                        <nls description="Actiepunten" languageCode="nl" name="Actiepunten"/>
+                        <nls description="Aksjonspunkter" languageCode="no" name="Aksjonspunkter"/>
+                        <nls description="Czynności do wykonania" languageCode="pl" name="Czynności do wykonania"/>
+                        <nls description="Itens de ação" languageCode="pt" name="Itens de ação"/>
+                        <nls description="Элементы действия" languageCode="ru" name="Элементы действия"/>
+                        <nls description="Åtgärdsalternativ" languageCode="sv" name="Åtgärdsalternativ"/>
+                        <nls description="Eylem Öğeleri" languageCode="tr" name="Eylem Öğeleri"/>
+                        <nls description="操作项" languageCode="zh" name="操作项"/>
+                        <nls description="動作項目" languageCode="zh_TW" name="動作項目"/>
+                    </subtab>
+                </tab>
+                <tab active="true" code="revmgr.invAllocationList.project" customizable="false" hidden="false" isSystem="true" layout="two-column-layout-66-34" linkable="false" objectType="SRM_PROJECTS" personalizable="false" shared="false" source="niku.com" space="mainnav.work" update="true">
+                    <nls description="Recàrrecs" languageCode="ca" name="Recàrrecs"/>
+                    <nls description="Zpětná vyúčtování" languageCode="cs" name="Zpětná vyúčtování"/>
+                    <nls description="Tilbageførsler" languageCode="da" name="Tilbageførsler"/>
+                    <nls description="Rückbelastungen" languageCode="de" name="Rückbelastungen"/>
+                    <nls description="Chargebacks" languageCode="en" name="Chargebacks"/>
+                    <nls description="Recargos" languageCode="es" name="Recargos"/>
+                    <nls description="Kohdistukset" languageCode="fi" name="Kohdistukset"/>
+                    <nls description="Contre-passations" languageCode="fr" name="Contre-passations"/>
+                    <nls description="Visszaterhelések" languageCode="hu" name="Visszaterhelések"/>
+                    <nls description="Riaddebiti" languageCode="it" name="Riaddebiti"/>
+                    <nls description="チャージバック" languageCode="ja" name="チャージバック"/>
+                    <nls description="[ko: Chargebacks]" languageCode="ko" name="[ko: Chargebacks]"/>
+                    <nls description="Terugboekingen" languageCode="nl" name="Terugboekingen"/>
+                    <nls description="Tilbakeføringer" languageCode="no" name="Tilbakeføringer"/>
+                    <nls description="Obciążenia zwrotne" languageCode="pl" name="Obciążenia zwrotne"/>
+                    <nls description="Cobranças reversas" languageCode="pt" name="Cobranças reversas"/>
+                    <nls description="Расчеты между подразделениями" languageCode="ru" name="Расчеты между подразделениями"/>
+                    <nls description="Återbetalningar" languageCode="sv" name="Återbetalningar"/>
+                    <nls description="Ters İbrazlar" languageCode="tr" name="Ters İbrazlar"/>
+                    <nls description="费用冲销" languageCode="zh" name="费用冲销"/>
+                    <nls description="扣款" languageCode="zh_TW" name="扣款"/>
+                    <parameter dataRef="odf_pk/@value" dataSource="input" paramCode="id"/>
+                </tab>
+                <tab active="true" code="service.billOfInvestments.project" customizable="false" hidden="false" isSystem="true" layout="two-column-layout-66-34" linkable="false" objectType="SRM_PROJECTS" personalizable="false" shared="false" source="niku.com" space="mainnav.work" update="true">
+                    <nls description="Jerarquia" languageCode="ca" name="Jerarquia"/>
+                    <nls description="Hierarchie" languageCode="cs" name="Hierarchie"/>
+                    <nls description="Hierarki" languageCode="da" name="Hierarki"/>
+                    <nls description="Hierarchie" languageCode="de" name="Hierarchie"/>
+                    <nls description="Hierarchy" languageCode="en" name="Hierarchy"/>
+                    <nls description="Jerarquía" languageCode="es" name="Jerarquía"/>
+                    <nls description="Hierarkia" languageCode="fi" name="Hierarkia"/>
+                    <nls description="Hiérarchie" languageCode="fr" name="Hiérarchie"/>
+                    <nls description="Hierarchia" languageCode="hu" name="Hierarchia"/>
+                    <nls description="Gerarchia" languageCode="it" name="Gerarchia"/>
+                    <nls description="階層" languageCode="ja" name="階層"/>
+                    <nls description="[ko: Hierarchy]" languageCode="ko" name="[ko: Hierarchy]"/>
+                    <nls description="Hiërarchie" languageCode="nl" name="Hiërarchie"/>
+                    <nls description="Hierarki" languageCode="no" name="Hierarki"/>
+                    <nls description="Hierarchia" languageCode="pl" name="Hierarchia"/>
+                    <nls description="Hierarquia" languageCode="pt" name="Hierarquia"/>
+                    <nls description="Иерархия" languageCode="ru" name="Иерархия"/>
+                    <nls description="Hierarki" languageCode="sv" name="Hierarki"/>
+                    <nls description="Hiyerarşi" languageCode="tr" name="Hiyerarşi"/>
+                    <nls description="层次结构" languageCode="zh" name="层次结构"/>
+                    <nls description="階層" languageCode="zh_TW" name="階層"/>
+                    <parameter dataRef="odf_pk/@value" dataSource="input" paramCode="id"/>
+                </tab>
+                <tab active="true" code="dms.ProjectsFileManager" customizable="false" hidden="false" isObjectInstance="true" isSystem="true" layout="two-column-layout-66-34" linkable="true" objectType="SRM_PROJECTS" personalizable="true" shared="false" source="customer" space="mainnav.work" update="true">
+                    <nls description="Col·laboració" languageCode="ca" name="Col·laboració"/>
+                    <nls description="Spolupráce" languageCode="cs" name="Spolupráce"/>
+                    <nls description="Samarbejde" languageCode="da" name="Samarbejde"/>
+                    <nls description="Zusammenarbeit" languageCode="de" name="Zusammenarbeit"/>
+                    <nls description="Collaboration" languageCode="en" name="Collaboration"/>
+                    <nls description="Colaboración" languageCode="es" name="Colaboración"/>
+                    <nls description="Yhteistyö" languageCode="fi" name="Yhteistyö"/>
+                    <nls description="Collaboration" languageCode="fr" name="Collaboration"/>
+                    <nls description="Együttműködés" languageCode="hu" name="Együttműködés"/>
+                    <nls description="Collaborazione" languageCode="it" name="Collaborazione"/>
+                    <nls description="コラボレーション" languageCode="ja" name="コラボレーション"/>
+                    <nls description="공동 작업" languageCode="ko" name="공동 작업"/>
+                    <nls description="Samenwerking" languageCode="nl" name="Samenwerking"/>
+                    <nls description="Samarbeid" languageCode="no" name="Samarbeid"/>
+                    <nls description="Współpraca" languageCode="pl" name="Współpraca"/>
+                    <nls description="Colaboração" languageCode="pt" name="Colaboração"/>
+                    <nls description="Совместная работа" languageCode="ru" name="Совместная работа"/>
+                    <nls description="Samarbete" languageCode="sv" name="Samarbete"/>
+                    <nls description="İşbirliği" languageCode="tr" name="İşbirliği"/>
+                    <nls description="协作" languageCode="zh" name="协作"/>
+                    <nls description="共同作業" languageCode="zh_TW" name="共同作業"/>
+                    <parameter dataRef="odf_pk" dataSource="data" paramCode="id">
+                        <nls description="ID de l&apos;objecte" languageCode="ca" name="ID de l&apos;objecte"/>
+                        <nls description="ID objektu" languageCode="cs" name="Interní ID objektu"/>
+                        <nls description="Objekt-id" languageCode="da" name="Internt id for objekt"/>
+                        <nls description="Objekt-ID" languageCode="de" name="Interne Objekt-ID"/>
+                        <nls description="Object ID" languageCode="en" name="Object Internal ID"/>
+                        <nls description="ID del objeto" languageCode="es" name="ID interno del objeto"/>
+                        <nls description="Objektin tunnus" languageCode="fi" name="Objektin sisäinen tunnus"/>
+                        <nls description="ID de l&apos;objet" languageCode="fr" name="ID interne de l&apos;objet"/>
+                        <nls description="Objektumazonosító" languageCode="hu" name="Objektumazonosító"/>
+                        <nls description="ID oggetto" languageCode="it" name="ID interno oggetto"/>
+                        <nls description="オブジェクト ID" languageCode="ja" name="オブジェクトの内部 ID"/>
+                        <nls description="개체 ID" languageCode="ko" name="개체 내부 ID"/>
+                        <nls description="Object-id" languageCode="nl" name="Interne id object"/>
+                        <nls description="Objekt-ID" languageCode="no" name="Objekt-ID"/>
+                        <nls description="Identyfikator obiektu" languageCode="pl" name="Identyfikator obiektu"/>
+                        <nls description="ID de objeto" languageCode="pt" name="ID interna do objeto"/>
+                        <nls description="Идентификатор объекта" languageCode="ru" name="Идентификатор объекта"/>
+                        <nls description="Objekt-Id" languageCode="sv" name="Internt ID för objekt"/>
+                        <nls description="Nesne Kimliği" languageCode="tr" name="Nesne Kimliği"/>
+                        <nls description="对象 ID" languageCode="zh" name="对象内部 ID"/>
+                        <nls description="物件 ID" languageCode="zh_TW" name="物件內部 ID"/>
+                    </parameter>
+                    <parameter dataRef="Projects" dataSource="static" paramCode="type"/>
+                </tab>
+                <tab active="true" code="projmgr.projectProcessInstances" customizable="false" hidden="false" isSystem="true" layout="two-column-layout-66-34" linkable="false" objectType="SRM_PROJECTS" personalizable="false" shared="false" source="niku.com" space="mainnav.work" update="true">
+                    <nls description="Processos" languageCode="ca" name="Processos"/>
+                    <nls description="Procesy" languageCode="cs" name="Procesy"/>
+                    <nls description="Processer" languageCode="da" name="Processer"/>
+                    <nls description="Prozesse" languageCode="de" name="Prozesse"/>
+                    <nls description="Processes" languageCode="en" name="Processes"/>
+                    <nls description="Procesos" languageCode="es" name="Procesos"/>
+                    <nls description="Prosessit" languageCode="fi" name="Prosessit"/>
+                    <nls description="Processus" languageCode="fr" name="Processus"/>
+                    <nls description="Folyamatok" languageCode="hu" name="Folyamatok"/>
+                    <nls description="Processi" languageCode="it" name="Processi"/>
+                    <nls description="プロセス" languageCode="ja" name="プロセス"/>
+                    <nls description="[ko: Processes]" languageCode="ko" name="[ko: Processes]"/>
+                    <nls description="Processen" languageCode="nl" name="Processen"/>
+                    <nls description="Prosesser" languageCode="no" name="Prosesser"/>
+                    <nls description="Procesy" languageCode="pl" name="Procesy"/>
+                    <nls description="Processos" languageCode="pt" name="Processos"/>
+                    <nls description="Процессы" languageCode="ru" name="Процессы"/>
+                    <nls description="Processer" languageCode="sv" name="Processer"/>
+                    <nls description="Süreçler" languageCode="tr" name="Süreçler"/>
+                    <nls description="过程" languageCode="zh" name="过程"/>
+                    <nls description="流程" languageCode="zh_TW" name="流程"/>
+                </tab>
+                <tab active="true" code="odf.projectAuditTrailReturn" customizable="false" hidden="true" isSystem="true" layout="two-column-layout-66-34" linkable="false" objectType="INV_PROJECT" personalizable="false" shared="false" source="niku.com" space="mainnav.work" update="true">
+                    <nls description="Pista d&apos;auditoria" languageCode="ca" name="Pista d&apos;auditoria"/>
+                    <nls description="Auditní záznamy" languageCode="cs" name="Auditní záznamy"/>
+                    <nls description="Revisionsspor" languageCode="da" name="Revisionsspor"/>
+                    <nls description="Rückverfolgungspfad" languageCode="de" name="Rückverfolgungspfad"/>
+                    <nls description="Audit Trail" languageCode="en" name="Audit Trail"/>
+                    <nls description="Pista de auditoría" languageCode="es" name="Pista de auditoría"/>
+                    <nls description="Auditointiketju" languageCode="fi" name="Auditointiketju"/>
+                    <nls description="Piste d&apos;audit" languageCode="fr" name="Piste d&apos;audit"/>
+                    <nls description="Auditnyomvonal" languageCode="hu" name="Auditnyomvonal"/>
+                    <nls description="Audit Trail" languageCode="it" name="Audit Trail"/>
+                    <nls description="監査記録" languageCode="ja" name="監査記録"/>
+                    <nls description="[ko: Audit Trail]" languageCode="ko" name="[ko: Audit Trail]"/>
+                    <nls description="Controlepad" languageCode="nl" name="Controlepad"/>
+                    <nls description="Revisjonsspor" languageCode="no" name="Revisjonsspor"/>
+                    <nls description="Dziennik inspekcji" languageCode="pl" name="Dziennik inspekcji"/>
+                    <nls description="Trilha de auditoria" languageCode="pt" name="Trilha de auditoria"/>
+                    <nls description="Журнал аудита" languageCode="ru" name="Журнал аудита"/>
+                    <nls description="Granskningsspår" languageCode="sv" name="Granskningsspår"/>
+                    <nls description="Denetim Kılavuzu" languageCode="tr" name="Denetim Kılavuzu"/>
+                    <nls description="审核跟踪" languageCode="zh" name="审核跟踪"/>
+                    <nls description="稽核記錄" languageCode="zh_TW" name="稽核記錄"/>
+                </tab>
+            </tabbedPage>
+        </pages>
+    </contentPack>
+</NikuDataBus>

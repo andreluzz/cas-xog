@@ -1,0 +1,79 @@
+<NikuDataBus>
+    <Header action="write" externalSource="NIKU" objectType="contentPack" version="8.0"/>
+    <contentPack update="true">
+        <objects>
+            <object code="obj_sistema" entityCodeAttribute="odf_entity_code" fiscalPeriodTypeAttribute="odf_period_type" pageInstanceType="obj_sistema" pageLayoutAttribute="page_layout" partitionModelCode="partitionModel1" periodEndAttribute="odf_period_end" periodStartAttribute="odf_period_start" raiseEvents="false" source="customer" update="true">
+                <nls languageCode="ca" name="Sistema"/>
+                <nls languageCode="cs" name="Sistema"/>
+                <nls languageCode="da" name="Sistema"/>
+                <nls languageCode="de" name="Sistema"/>
+                <nls languageCode="en" name="Sistema"/>
+                <nls languageCode="es" name="Sistema"/>
+                <nls languageCode="fi" name="Sistema"/>
+                <nls languageCode="fr" name="Sistema"/>
+                <nls languageCode="hu" name="Sistema"/>
+                <nls languageCode="it" name="Sistema"/>
+                <nls languageCode="ja" name="Sistema"/>
+                <nls languageCode="ko" name="Sistema"/>
+                <nls languageCode="nl" name="Sistema"/>
+                <nls languageCode="no" name="Sistema"/>
+                <nls languageCode="pl" name="Sistema"/>
+                <nls languageCode="pt" name="Sistema"/>
+                <nls languageCode="ru" name="Sistema"/>
+                <nls languageCode="sv" name="Sistema"/>
+                <nls languageCode="tr" name="Sistema"/>
+                <nls languageCode="zh" name="Sistema"/>
+                <nls languageCode="zh_TW" name="Sistema"/>
+                <customAttribute active="true" code="status" column="status" constant="false" currencyConnected="false" custom="true" dataSize="30" dataType="string" editable="true" extendedType="lookup" lookupType="CAL_ACTIONITEM_STATUS" multiValued="false" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" presenceRequired="false" private="false" required="false" unique="false" virtual="false">
+                    <nls languageCode="ca" name="Status"/>
+                    <nls languageCode="cs" name="Status"/>
+                    <nls languageCode="da" name="Status"/>
+                    <nls languageCode="de" name="Status"/>
+                    <nls languageCode="en" name="Status"/>
+                    <nls languageCode="es" name="Status"/>
+                    <nls languageCode="fi" name="Status"/>
+                    <nls languageCode="fr" name="Status"/>
+                    <nls languageCode="hu" name="Status"/>
+                    <nls languageCode="it" name="Status"/>
+                    <nls languageCode="ja" name="Status"/>
+                    <nls languageCode="ko" name="Status"/>
+                    <nls languageCode="nl" name="Status"/>
+                    <nls languageCode="no" name="Status"/>
+                    <nls languageCode="pl" name="Status"/>
+                    <nls languageCode="pt" name="Status"/>
+                    <nls languageCode="ru" name="Status"/>
+                    <nls languageCode="sv" name="Status"/>
+                    <nls languageCode="tr" name="Status"/>
+                    <nls languageCode="zh" name="Status"/>
+                    <nls languageCode="zh_TW" name="Status"/>
+                </customAttribute>
+                <customAttribute active="true" code="status_novo" column="status_novo" constant="false" currencyConnected="false" custom="true" dataSize="20" dataType="string" editable="true" multiValued="false" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" presenceRequired="false" private="false" required="false" unique="false" virtual="false">
+                    <nls languageCode="ca" name="Status novo 2"/>
+                    <nls languageCode="cs" name="Status novo 2"/>
+                    <nls languageCode="da" name="Status novo 2"/>
+                    <nls languageCode="de" name="Status novo 2"/>
+                    <nls languageCode="en" name="Status novo 2"/>
+                    <nls languageCode="es" name="Status novo 2"/>
+                    <nls languageCode="fi" name="Status novo 2"/>
+                    <nls languageCode="fr" name="Status novo 2"/>
+                    <nls languageCode="hu" name="Status novo 2"/>
+                    <nls languageCode="it" name="Status novo 2"/>
+                    <nls languageCode="ja" name="Status novo 2"/>
+                    <nls languageCode="ko" name="Status novo 2"/>
+                    <nls languageCode="nl" name="Status novo 2"/>
+                    <nls languageCode="no" name="Status novo 2"/>
+                    <nls languageCode="pl" name="Status novo 2"/>
+                    <nls languageCode="pt" name="Status novo 2"/>
+                    <nls languageCode="ru" name="Status novo 2"/>
+                    <nls languageCode="sv" name="Status novo 2"/>
+                    <nls languageCode="tr" name="Status novo 2"/>
+                    <nls languageCode="zh" name="Status novo 2"/>
+                    <nls languageCode="zh_TW" name="Status novo 2"/>
+                </customAttribute>
+                <displayMappings/>
+                <scoreContributions/>
+                <autonumbering/>
+            </object>
+        </objects>
+    </contentPack>
+</NikuDataBus>

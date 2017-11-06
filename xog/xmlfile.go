@@ -2,9 +2,9 @@ package xog
 
 import (
 	"errors"
-	"github.com/andreluzz/cas-xog/common"
-	"github.com/beevik/etree"
 	"strings"
+	"github.com/beevik/etree"
+	"github.com/andreluzz/cas-xog/common"
 )
 
 var docXogReadXML, soapEnvelope *etree.Document
@@ -57,7 +57,7 @@ func read(file *common.DriverFile, env *EnvType) (string, error) {
 	switch file.Type {
 	case common.LOOKUP:
 		req.FindElement("//Filter[@name='code']").SetText(strings.ToUpper(file.Code))
-	case common.PORTLET, common.QUERY, common.PROCESS, common.PAGE, common.MENU, common.OBS:
+	case common.PORTLET, common.QUERY, common.PROCESS, common.PAGE, common.GROUP, common.MENU, common.OBS:
 		req.FindElement("//Filter[@name='code']").SetText(file.Code)
 	case common.OBJECT:
 		req.FindElement("//Filter[@name='object_code']").SetText(file.Code)

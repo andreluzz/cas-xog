@@ -1,0 +1,105 @@
+<NikuDataBus>
+    <Header action="write" externalSource="NIKU" objectType="contentPack" version="8.0"/>
+    <contentPack update="true">
+        <lookups update="true">
+            <staticLookup autoSuggestEnabled="true" autoSuggestMaxSuggestions="10" code="LOOKUP_CAS_XOG" hiddenAttributeName="lookup_code" sortStyle="alphanumeric" source="niku.com" status="active" update="true">
+                <nls description="" languageCode="ca" name="Lookup cas-xog"/>
+                <nls description="" languageCode="cs" name="Lookup cas-xog"/>
+                <nls description="" languageCode="da" name="Lookup cas-xog"/>
+                <nls description="" languageCode="de" name="Lookup cas-xog"/>
+                <nls description="" languageCode="en" name="Lookup cas-xog"/>
+                <nls description="" languageCode="es" name="Lookup cas-xog"/>
+                <nls description="" languageCode="fi" name="Lookup cas-xog"/>
+                <nls description="" languageCode="fr" name="Lookup cas-xog"/>
+                <nls description="" languageCode="hu" name="Lookup cas-xog"/>
+                <nls description="" languageCode="it" name="Lookup cas-xog"/>
+                <nls description="" languageCode="ja" name="Lookup cas-xog"/>
+                <nls description="" languageCode="ko" name="Lookup cas-xog"/>
+                <nls description="" languageCode="nl" name="Lookup cas-xog"/>
+                <nls description="" languageCode="no" name="Lookup cas-xog"/>
+                <nls description="" languageCode="pl" name="Lookup cas-xog"/>
+                <nls description="" languageCode="pt" name="Lookup cas-xog"/>
+                <nls description="" languageCode="ru" name="Lookup cas-xog"/>
+                <nls description="" languageCode="sv" name="Lookup cas-xog"/>
+                <nls description="" languageCode="tr" name="Lookup cas-xog"/>
+                <nls description="" languageCode="zh" name="Lookup cas-xog"/>
+                <nls description="" languageCode="zh_TW" name="Lookup cas-xog"/>
+                <lookupValue code="valor_it" enum="0" partitionCode="partition10" partitionModeCode="PARTITION_AND_ANSTRS_DESDNTS" sortOrder="0" status="active">
+                    <nls description="" languageCode="ca" name="Teste Valor IT"/>
+                    <nls description="" languageCode="cs" name="Teste Valor IT"/>
+                    <nls description="" languageCode="da" name="Teste Valor IT"/>
+                    <nls description="" languageCode="de" name="Teste Valor IT"/>
+                    <nls description="" languageCode="en" name="Teste Valor IT"/>
+                    <nls description="" languageCode="es" name="Teste Valor IT"/>
+                    <nls description="" languageCode="fi" name="Teste Valor IT"/>
+                    <nls description="" languageCode="fr" name="Teste Valor IT"/>
+                    <nls description="" languageCode="hu" name="Teste Valor IT"/>
+                    <nls description="" languageCode="it" name="Teste Valor IT"/>
+                    <nls description="" languageCode="ja" name="Teste Valor IT"/>
+                    <nls description="" languageCode="ko" name="Teste Valor IT"/>
+                    <nls description="" languageCode="nl" name="Teste Valor IT"/>
+                    <nls description="" languageCode="no" name="Teste Valor IT"/>
+                    <nls description="" languageCode="pl" name="Teste Valor IT"/>
+                    <nls description="" languageCode="pt" name="Teste Valor IT"/>
+                    <nls description="" languageCode="ru" name="Teste Valor IT"/>
+                    <nls description="" languageCode="sv" name="Teste Valor IT"/>
+                    <nls description="" languageCode="tr" name="Teste Valor IT"/>
+                    <nls description="" languageCode="zh" name="Teste Valor IT"/>
+                    <nls description="" languageCode="zh_TW" name="Teste Valor IT"/>
+                </lookupValue>
+                <lookupValue code="valor_npd" enum="0" partitionCode="partition20" partitionModeCode="PARTITION_AND_ANSTRS_DESDNTS" sortOrder="0" status="active">
+                    <nls description="" languageCode="ca" name="Teste valor NPD"/>
+                    <nls description="" languageCode="cs" name="Teste valor NPD"/>
+                    <nls description="" languageCode="da" name="Teste valor NPD"/>
+                    <nls description="" languageCode="de" name="Teste valor NPD"/>
+                    <nls description="" languageCode="en" name="Teste valor NPD"/>
+                    <nls description="" languageCode="es" name="Teste valor NPD"/>
+                    <nls description="" languageCode="fi" name="Teste valor NPD"/>
+                    <nls description="" languageCode="fr" name="Teste valor NPD"/>
+                    <nls description="" languageCode="hu" name="Teste valor NPD"/>
+                    <nls description="" languageCode="it" name="Teste valor NPD"/>
+                    <nls description="" languageCode="ja" name="Teste valor NPD"/>
+                    <nls description="" languageCode="ko" name="Teste valor NPD"/>
+                    <nls description="" languageCode="nl" name="Teste valor NPD"/>
+                    <nls description="" languageCode="no" name="Teste valor NPD"/>
+                    <nls description="" languageCode="pl" name="Teste valor NPD"/>
+                    <nls description="" languageCode="pt" name="Teste valor NPD"/>
+                    <nls description="" languageCode="ru" name="Teste valor NPD"/>
+                    <nls description="" languageCode="sv" name="Teste valor NPD"/>
+                    <nls description="" languageCode="tr" name="Teste valor NPD"/>
+                    <nls description="" languageCode="zh" name="Teste valor NPD"/>
+                    <nls description="" languageCode="zh_TW" name="Teste valor NPD"/>
+                </lookupValue>
+                <lookupValue code="valor_niku_root" enum="0" sortOrder="0" status="active" partitionCode="partition10" partitionModeCode="PARTITION_AND_ANSTRS_DESDNTS">
+                    <nls description="" languageCode="ca" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="cs" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="da" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="de" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="en" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="es" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="fi" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="fr" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="hu" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="it" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="ja" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="ko" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="nl" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="no" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="pl" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="pt" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="ru" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="sv" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="tr" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="zh" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="zh_TW" name="Teste valor Sistema"/>
+                </lookupValue>
+                <displayedSuggestionAttributes>
+                    <displayedSuggestionAttribute value="name"/>
+                </displayedSuggestionAttributes>
+                <searchedSuggestionAttributes>
+                    <searchedSuggestionAttribute value="name"/>
+                </searchedSuggestionAttributes>
+            </staticLookup>
+        </lookups>
+    </contentPack>
+</NikuDataBus>

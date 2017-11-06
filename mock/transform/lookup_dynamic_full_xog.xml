@@ -1,0 +1,243 @@
+<NikuDataBus>
+    <Header action="write" externalSource="NIKU" objectType="contentPack" version="15.2.0.213"/>
+    <contentPack update="true">
+        <lookups update="true">
+            <dynamicLookup autoSuggestEnabled="true" autoSuggestMaxSuggestions="10" code="CSK_RESOURCE_BROWSE" displayAttributeName="full_name" hiddenAttributeName="id" objectCode="resource" sortAttributeName="full_name" sortDirection="asc" source="niku.com" status="active" update="true">
+                <nls description="Exploració de recursos per als atributs del recurs de l'accelerador de l'oficina de gestió de projectes" languageCode="ca" name="Exploració de recursos de l'oficina de gestió de projectes"/>
+                <nls description="Procházení zdrojů za účelem vyhledání atributů zdrojů pro doplněk PMO Accelerator" languageCode="cs" name="Procházení zdrojů PMO"/>
+                <nls description="Gennemgå ressource for ressourceattributter til PMO Accelerator" languageCode="da" name="PMO - gennemse ressource"/>
+                <nls description="Ressource nach Ressourcenattributen für PMO Accelerator durchsuchen" languageCode="de" name="PMO - Ressourcensuche"/>
+                <nls description="Resource browse for resource attributes for PMO Accelerator" languageCode="en" name="PMO Resource Browse"/>
+                <nls description="Exploración de recursos para los atributos del recurso del acelerador de la oficina de gestión de proyectos" languageCode="es" name="Exploración de recursos de la oficina de gestión de proyectos"/>
+                <nls description="PMO Accelerator -sovelluksen resurssiselaus resurssiattribuuteille" languageCode="fi" name="PMO-resurssien selaus"/>
+                <nls description="Rechercher les attributs de ressources pour l'accélérateur PMO" languageCode="fr" name="Parcourir la ressource PMO"/>
+                <nls description="Erőforrások tallózása a PMO Accelerator erőforrás-attribútumaihoz" languageCode="hu" name="PMO erőforrások tallózása"/>
+                <nls description="Esplorazione risorse per la ricerca degli attributi delle risorse per PMO Accelerator" languageCode="it" name="Esplorazione risorse PMO"/>
+                <nls description="リソースの PMO アクセラレータ属性を参照" languageCode="ja" name="PMO リソース参照"/>
+                <nls description="[ko: Resource browse for resource attributes for PMO Accelerator]" languageCode="ko" name="[ko: PMO Resource Browse]"/>
+                <nls description="Bladeren in resources naar resourcekenmerken voor PMO Accelerator" languageCode="nl" name="Bladeren in PMO-resources"/>
+                <nls description="Ressursliste for ressursattributter for PMO-akselerator" languageCode="no" name="Bla gjennom PMO-ressurs"/>
+                <nls description="Przeglądanie zasobów pod kątem atrybutów zasobów dla akceleratora PMO" languageCode="pl" name="Przeglądanie zasobów PMO"/>
+                <nls description="Procura de recurso nos atributos de recurso para o acelerador de PMO" languageCode="pt" name="Busca de recursos de PMO"/>
+                <nls description="Обзор ресурсов для атрибутов ресурсов акселератора PMO" languageCode="ru" name="Обзор ресурсов PMO"/>
+                <nls description="Bläddra i resurs efter resursattribut för PMO Accelerator" languageCode="sv" name="PMO - Resurssök"/>
+                <nls description="PMO Hızlandırıcı için kaynak öznitelikleri kaynağına göz atma" languageCode="tr" name="PMO Kaynaklara Göz Atma"/>
+                <nls description="PMO 加速器资源特性的资源浏览" languageCode="zh" name="PMO 资源浏览"/>
+                <nls description="PMO Accelerator 資源屬性的資源瀏覽。" languageCode="zh_TW" name="PMO 資源瀏覽"/>
+                <nsql databaseId="Niku" dbVendor="all"><![CDATA[SELECT @SELECT:RESOURCES.ID:ID@,
+            @SELECT:RESOURCES.LAST_NAME:LAST_NAME@,
+            @SELECT:RESOURCES.FIRST_NAME:FIRST_NAME@,
+            @SELECT:RESOURCES.FULL_NAME:FULL_NAME@,
+            @SELECT:RESOURCES.UNIQUE_NAME:UNIQUE_NAME@,
+            @SELECT:RESOURCES.UNIQUE_NAME:UNIQUE_CODE@
+            FROM SRM_RESOURCES RESOURCES
+            WHERE (1=1)
+            AND @WHERE:SECURITY:RESOURCE:RESOURCES.ID@
+            AND @FILTER@
+            AND RESOURCES.PERSON_TYPE != 0
+            AND RESOURCES.RESOURCE_TYPE = 0
+            AND CASE WHEN RESOURCES.USER_ID IS NULL THEN 0 ELSE RESOURCES.USER_ID END != -99
+            @BROWSE-ONLY:    	AND     RESOURCES.IS_ACTIVE = 1
+           :BROWSE-ONLY@]]></nsql>
+                <displayedSuggestionAttributes>
+                    <displayedSuggestionAttribute value="full_name"/>
+                </displayedSuggestionAttributes>
+                <searchedSuggestionAttributes>
+                    <searchedSuggestionAttribute value="full_name"/>
+                </searchedSuggestionAttributes>
+                <browsePage>
+                    <singleSelectPageTitles>
+                        <nls description="No existeix cap descripció" languageCode="ca" name="Recurs"/>
+                        <nls description="Bez popisu" languageCode="cs" name="Zdroj"/>
+                        <nls description="Ingen beskrivelse" languageCode="da" name="Ressource"/>
+                        <nls description="Keine Beschreibung" languageCode="de" name="Ressource"/>
+                        <nls description="No description" languageCode="en" name="Resource"/>
+                        <nls description="No existe ninguna descripción" languageCode="es" name="Recurso"/>
+                        <nls description="Ei kuvausta" languageCode="fi" name="Resurssi"/>
+                        <nls description="Aucune description" languageCode="fr" name="Ressource"/>
+                        <nls description="Nincs leírás" languageCode="hu" name="Erőforrás"/>
+                        <nls description="Nessuna descrizione" languageCode="it" name="Risorsa"/>
+                        <nls description="説明がありません" languageCode="ja" name="リソース"/>
+                        <nls description="[ko: No description]" languageCode="ko" name="[ko: Resource]"/>
+                        <nls description="Geen omschrijving" languageCode="nl" name="Resource"/>
+                        <nls description="Ingen beskrivelse" languageCode="no" name="Ressurs"/>
+                        <nls description="Brak opisu" languageCode="pl" name="Zasób"/>
+                        <nls description="Nenhuma descrição" languageCode="pt" name="Recurso"/>
+                        <nls description="Нет описания" languageCode="ru" name="Ресурс"/>
+                        <nls description="Ingen beskrivning" languageCode="sv" name="Resurs"/>
+                        <nls description="Açıklama yok" languageCode="tr" name="Kaynak"/>
+                        <nls description="无说明" languageCode="zh" name="资源"/>
+                        <nls description="沒有說明" languageCode="zh_TW" name="資源"/>
+                    </singleSelectPageTitles>
+                    <multiSelectPageTitles>
+                        <nls description="No existeix cap descripció" languageCode="ca" name="Recursos"/>
+                        <nls description="Bez popisu" languageCode="cs" name="Zdroje"/>
+                        <nls description="Ingen beskrivelse" languageCode="da" name="Ressourcer"/>
+                        <nls description="Keine Beschreibung" languageCode="de" name="Ressourcen"/>
+                        <nls description="No description" languageCode="en" name="Resources"/>
+                        <nls description="No existe ninguna descripción" languageCode="es" name="Recursos"/>
+                        <nls description="Ei kuvausta" languageCode="fi" name="Resurssit"/>
+                        <nls description="Aucune description" languageCode="fr" name="Ressources"/>
+                        <nls description="Nincs leírás" languageCode="hu" name="Erőforrások"/>
+                        <nls description="Nessuna descrizione" languageCode="it" name="Risorse"/>
+                        <nls description="説明がありません" languageCode="ja" name="リソース"/>
+                        <nls description="[ko: No description]" languageCode="ko" name="[ko: Resources]"/>
+                        <nls description="Geen omschrijving" languageCode="nl" name="Resources"/>
+                        <nls description="Ingen beskrivelse" languageCode="no" name="Ressurser"/>
+                        <nls description="Brak opisu" languageCode="pl" name="Zasoby"/>
+                        <nls description="Nenhuma descrição" languageCode="pt" name="Recursos"/>
+                        <nls description="Нет описания" languageCode="ru" name="Ресурсы"/>
+                        <nls description="Ingen beskrivning" languageCode="sv" name="Resurser"/>
+                        <nls description="Açıklama yok" languageCode="tr" name="Kaynaklar"/>
+                        <nls description="无说明" languageCode="zh" name="资源"/>
+                        <nls description="沒有說明" languageCode="zh_TW" name="資源"/>
+                    </multiSelectPageTitles>
+                    <filter code="last_name" defaultValue="" order="1" widgetType="text">
+                        <nls description="No existeix cap descripció" languageCode="ca" name="Cognoms"/>
+                        <nls description="Bez popisu" languageCode="cs" name="Příjmení"/>
+                        <nls description="Ingen beskrivelse" languageCode="da" name="Efternavn"/>
+                        <nls description="Keine Beschreibung" languageCode="de" name="Nachname"/>
+                        <nls description="No description" languageCode="en" name="Last Name"/>
+                        <nls description="No existe ninguna descripción" languageCode="es" name="Apellidos"/>
+                        <nls description="Ei kuvausta" languageCode="fi" name="Sukunimi"/>
+                        <nls description="Aucune description" languageCode="fr" name="Nom"/>
+                        <nls description="Nincs leírás" languageCode="hu" name="Vezetéknév"/>
+                        <nls description="Nessuna descrizione" languageCode="it" name="Cognome"/>
+                        <nls description="説明がありません" languageCode="ja" name="姓"/>
+                        <nls description="[ko: No description]" languageCode="ko" name="[ko: Last Name]"/>
+                        <nls description="Geen omschrijving" languageCode="nl" name="Achternaam"/>
+                        <nls description="Ingen beskrivelse" languageCode="no" name="Etternavn"/>
+                        <nls description="Brak opisu" languageCode="pl" name="Nazwisko"/>
+                        <nls description="Nenhuma descrição" languageCode="pt" name="Sobrenome"/>
+                        <nls description="Нет описания" languageCode="ru" name="Фамилия"/>
+                        <nls description="Ingen beskrivning" languageCode="sv" name="Efternamn"/>
+                        <nls description="Açıklama yok" languageCode="tr" name="Soyadı"/>
+                        <nls description="无说明" languageCode="zh" name="姓氏"/>
+                        <nls description="沒有說明" languageCode="zh_TW" name="姓氏"/>
+                    </filter>
+                    <filter code="first_name" defaultValue="" order="2" widgetType="text">
+                        <nls description="No existeix cap descripció" languageCode="ca" name="Nom"/>
+                        <nls description="Bez popisu" languageCode="cs" name="Jméno"/>
+                        <nls description="Ingen beskrivelse" languageCode="da" name="Fornavn"/>
+                        <nls description="Keine Beschreibung" languageCode="de" name="Vorname"/>
+                        <nls description="No description" languageCode="en" name="First Name"/>
+                        <nls description="No existe ninguna descripción" languageCode="es" name="Nombre"/>
+                        <nls description="Ei kuvausta" languageCode="fi" name="Etunimi"/>
+                        <nls description="Aucune description" languageCode="fr" name="Prénom"/>
+                        <nls description="Nincs leírás" languageCode="hu" name="Utónév"/>
+                        <nls description="Nessuna descrizione" languageCode="it" name="Nome"/>
+                        <nls description="説明がありません" languageCode="ja" name="名"/>
+                        <nls description="[ko: No description]" languageCode="ko" name="[ko: First Name]"/>
+                        <nls description="Geen omschrijving" languageCode="nl" name="Voornaam"/>
+                        <nls description="Ingen beskrivelse" languageCode="no" name="Fornavn"/>
+                        <nls description="Brak opisu" languageCode="pl" name="Imię"/>
+                        <nls description="Nenhuma descrição" languageCode="pt" name="Nome"/>
+                        <nls description="Нет описания" languageCode="ru" name="Имя"/>
+                        <nls description="Ingen beskrivning" languageCode="sv" name="Förnamn"/>
+                        <nls description="Açıklama yok" languageCode="tr" name="Adı"/>
+                        <nls description="无说明" languageCode="zh" name="名字"/>
+                        <nls description="沒有說明" languageCode="zh_TW" name="名字"/>
+                    </filter>
+                    <filter code="unique_name" defaultValue="" order="3" widgetType="text">
+                        <nls description="No existeix cap descripció" languageCode="ca" name="ID"/>
+                        <nls description="Bez popisu" languageCode="cs" name="ID"/>
+                        <nls description="Ingen beskrivelse" languageCode="da" name="Id"/>
+                        <nls description="Keine Beschreibung" languageCode="de" name="ID"/>
+                        <nls description="No description" languageCode="en" name="ID"/>
+                        <nls description="No existe ninguna descripción" languageCode="es" name="ID"/>
+                        <nls description="Ei kuvausta" languageCode="fi" name="Tunnus"/>
+                        <nls description="Aucune description" languageCode="fr" name="ID"/>
+                        <nls description="Nincs leírás" languageCode="hu" name="Azonosító"/>
+                        <nls description="Nessuna descrizione" languageCode="it" name="ID"/>
+                        <nls description="説明がありません" languageCode="ja" name="ID"/>
+                        <nls description="[ko: No description]" languageCode="ko" name="[ko: ID]"/>
+                        <nls description="Geen omschrijving" languageCode="nl" name="ID"/>
+                        <nls description="Ingen beskrivelse" languageCode="no" name="ID"/>
+                        <nls description="Brak opisu" languageCode="pl" name="Identyfikator"/>
+                        <nls description="Nenhuma descrição" languageCode="pt" name="ID"/>
+                        <nls description="Нет описания" languageCode="ru" name="Код"/>
+                        <nls description="Ingen beskrivning" languageCode="sv" name="ID"/>
+                        <nls description="Açıklama yok" languageCode="tr" name="Kimlik"/>
+                        <nls description="无说明" languageCode="zh" name="ID"/>
+                        <nls description="沒有說明" languageCode="zh_TW" name="ID"/>
+                    </filter>
+                    <listColumn code="id" order="1" widgetType="hidden">
+                        <nls description="No existeix cap descripció" languageCode="ca" name="ID intern"/>
+                        <nls description="Bez popisu" languageCode="cs" name="Interní ID"/>
+                        <nls description="Ingen beskrivelse" languageCode="da" name="Internt id"/>
+                        <nls description="Keine Beschreibung" languageCode="de" name="Interne ID"/>
+                        <nls description="No description" languageCode="en" name="Internal ID"/>
+                        <nls description="No existe ninguna descripción" languageCode="es" name="ID interno"/>
+                        <nls description="Ei kuvausta" languageCode="fi" name="Sisäinen tunnus"/>
+                        <nls description="Aucune description" languageCode="fr" name="ID interne"/>
+                        <nls description="Nincs leírás" languageCode="hu" name="Belső azonosító"/>
+                        <nls description="Nessuna descrizione" languageCode="it" name="ID interno"/>
+                        <nls description="説明がありません" languageCode="ja" name="内部 ID"/>
+                        <nls description="[ko: No description]" languageCode="ko" name="[ko: Internal ID]"/>
+                        <nls description="Geen omschrijving" languageCode="nl" name="Interne id"/>
+                        <nls description="Ingen beskrivelse" languageCode="no" name="Intern ID"/>
+                        <nls description="Brak opisu" languageCode="pl" name="Identyfikator wewnętrzny"/>
+                        <nls description="Nenhuma descrição" languageCode="pt" name="ID interna"/>
+                        <nls description="Нет описания" languageCode="ru" name="Внутренний код"/>
+                        <nls description="Ingen beskrivning" languageCode="sv" name="Internt ID"/>
+                        <nls description="Açıklama yok" languageCode="tr" name="Dahili Kimlik"/>
+                        <nls description="无说明" languageCode="zh" name="内部 ID"/>
+                        <nls description="沒有說明" languageCode="zh_TW" name="內部 ID"/>
+                    </listColumn>
+                    <listColumn code="full_name" order="1" widgetType="text">
+                        <nls description="No existeix cap descripció" languageCode="ca" name="Nom"/>
+                        <nls description="Bez popisu" languageCode="cs" name="Název"/>
+                        <nls description="Ingen beskrivelse" languageCode="da" name="Navn"/>
+                        <nls description="Keine Beschreibung" languageCode="de" name="Name"/>
+                        <nls description="No description" languageCode="en" name="Name"/>
+                        <nls description="No existe ninguna descripción" languageCode="es" name="Nombre"/>
+                        <nls description="Ei kuvausta" languageCode="fi" name="Nimi"/>
+                        <nls description="Aucune description" languageCode="fr" name="Nom"/>
+                        <nls description="Nincs leírás" languageCode="hu" name="Név"/>
+                        <nls description="Nessuna descrizione" languageCode="it" name="Nome"/>
+                        <nls description="説明がありません" languageCode="ja" name="名前"/>
+                        <nls description="[ko: No description]" languageCode="ko" name="[ko: Name]"/>
+                        <nls description="Geen omschrijving" languageCode="nl" name="Naam"/>
+                        <nls description="Ingen beskrivelse" languageCode="no" name="Navn"/>
+                        <nls description="Brak opisu" languageCode="pl" name="Nazwa"/>
+                        <nls description="Nenhuma descrição" languageCode="pt" name="Nome"/>
+                        <nls description="Нет описания" languageCode="ru" name="Имя"/>
+                        <nls description="Ingen beskrivning" languageCode="sv" name="Namn"/>
+                        <nls description="Açıklama yok" languageCode="tr" name="Adı"/>
+                        <nls description="无说明" languageCode="zh" name="名称"/>
+                        <nls description="沒有說明" languageCode="zh_TW" name="名稱"/>
+                    </listColumn>
+                    <listColumn code="unique_name" order="2" widgetType="text">
+                        <nls description="No existeix cap descripció" languageCode="ca" name="ID"/>
+                        <nls description="Bez popisu" languageCode="cs" name="ID"/>
+                        <nls description="Ingen beskrivelse" languageCode="da" name="Id"/>
+                        <nls description="Keine Beschreibung" languageCode="de" name="ID"/>
+                        <nls description="No description" languageCode="en" name="ID"/>
+                        <nls description="No existe ninguna descripción" languageCode="es" name="ID"/>
+                        <nls description="Ei kuvausta" languageCode="fi" name="Tunnus"/>
+                        <nls description="Aucune description" languageCode="fr" name="ID"/>
+                        <nls description="Nincs leírás" languageCode="hu" name="Azonosító"/>
+                        <nls description="Nessuna descrizione" languageCode="it" name="ID"/>
+                        <nls description="説明がありません" languageCode="ja" name="ID"/>
+                        <nls description="[ko: No description]" languageCode="ko" name="[ko: ID]"/>
+                        <nls description="Geen omschrijving" languageCode="nl" name="ID"/>
+                        <nls description="Ingen beskrivelse" languageCode="no" name="ID"/>
+                        <nls description="Brak opisu" languageCode="pl" name="Identyfikator"/>
+                        <nls description="Nenhuma descrição" languageCode="pt" name="ID"/>
+                        <nls description="Нет описания" languageCode="ru" name="Код"/>
+                        <nls description="Ingen beskrivning" languageCode="sv" name="ID"/>
+                        <nls description="Açıklama yok" languageCode="tr" name="Kimlik"/>
+                        <nls description="无说明" languageCode="zh" name="ID"/>
+                        <nls description="沒有說明" languageCode="zh_TW" name="ID"/>
+                    </listColumn>
+                </browsePage>
+            </dynamicLookup>
+        </lookups>
+    </contentPack>
+    <XOGOutput>
+        <Object type="contentPack"/>
+        <Status state="SUCCESS"/>
+        <Statistics failureRecords="0" insertedRecords="0" totalNumberOfRecords="1" updatedRecords="0"/>
+        <Records/>
+    </XOGOutput>
+</NikuDataBus>

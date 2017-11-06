@@ -1,11 +1,11 @@
 package transform
 
 import (
-	"github.com/andreluzz/cas-xog/common"
 	"github.com/beevik/etree"
+	"github.com/andreluzz/cas-xog/common"
 )
 
-func specificObjectTransformations(xog *etree.Document, file common.DriverFile) error {
+func specificObjectTransformations(xog *etree.Document, file common.DriverFile) {
 
 	object := xog.FindElement("//objects/object")
 	for _, e := range object.FindElements("//object") {
@@ -26,10 +26,9 @@ func specificObjectTransformations(xog *etree.Document, file common.DriverFile) 
 	}
 
 	if file.PartitionModel != "" {
-		xog.FindElement("//object[@code='" + file.Code + "']").CreateAttr("partitionModelCode", file.PartitionModel)
+		element := xog.FindElement("//object[@code='" + file.Code + "']")
+		element.CreateAttr("partitionModelCode", file.PartitionModel)
 	}
-
-	return nil
 }
 
 func removeOtherPartitionsAttributes(xog *etree.Document, file common.DriverFile) {
@@ -81,7 +80,7 @@ func removeUndefinedIncludes(xog *etree.Document, includes []common.Element) {
 		removeElementFromParent(xog, "//links")
 	}
 	if removeActions {
-		removeElementFromParent(xog, "actions")
+		removeElementFromParent(xog, "//actions")
 	}
 }
 

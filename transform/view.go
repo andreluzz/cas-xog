@@ -2,9 +2,9 @@ package transform
 
 import (
 	"errors"
+	"strconv"
 	"github.com/beevik/etree"
 	"github.com/andreluzz/cas-xog/common"
-	"strconv"
 )
 
 func specificViewTransformations(xog, aux *etree.Document, file common.DriverFile) error {
@@ -16,7 +16,9 @@ func specificViewTransformations(xog, aux *etree.Document, file common.DriverFil
 	removeElementFromParent(xog, "//lookups")
 	removeElementFromParent(xog, "//objects")
 
-	if file.TargetPartition != "" {
+	if file.TargetPartition != "" && file.SourcePartition == "" {
+		return errors.New("can't change partition without attribute sourcePartition defined")
+	} else if file.TargetPartition != "" && file.SourcePartition != "" {
 		changePartition(xog, file.SourcePartition, file.TargetPartition)
 	}
 
@@ -24,6 +26,7 @@ func specificViewTransformations(xog, aux *etree.Document, file common.DriverFil
 		validateCodeAndRemoveElementsFromParent(xog, "//views/property", file.Code)
 		validateCodeAndRemoveElementsFromParent(xog, "//views/filter", file.Code)
 		validateCodeAndRemoveElementsFromParent(xog, "//views/list", file.Code)
+
 		//auxiliary xog file
 		removeElementFromParent(aux, "//lookups")
 		removeElementFromParent(aux, "//objects")
@@ -51,14 +54,14 @@ func updateSections(xog, aux *etree.Document, file common.DriverFile) error {
 	aux.SetRoot(nikuDataBus)
 	aux.IndentTabs()
 
-	targetView := aux.FindElement("//property[@code='" + file.Code + "']")
+	targetView := aux.FindElement("//views/*[@code='" + file.Code + "']")
 	if targetView == nil {
-		return errors.New("can't process section because the view does not exist in target environment")
+		return errors.New("can't process section because the view (" + file.Code + ") does not exist in target environment")
 	}
 
-	sourceView := xog.FindElement("//property[@code='" + file.Code + "']")
+	sourceView := xog.FindElement("//views/*[@code='" + file.Code + "']")
 	if sourceView == nil {
-		return errors.New("can't process section because the view does not exist in source environment")
+		return errors.New("can't process section because the view (" + file.Code + ") does not exist in source environment")
 	}
 
 	for _, section := range file.Sections {
@@ -97,6 +100,12 @@ func updateSections(xog, aux *etree.Document, file common.DriverFile) error {
 		}
 	}
 
+	for _, section := range file.Sections {
+		if section.Action != common.ACTION_REMOVE && section.Action != common.ACTION_REPLACE && section.Action != common.ACTION_INSERT && section.Action != common.ACTION_UPDATE {
+			return errors.New("invalid action attribute (" + section.Action + ") on tag <section>")
+		}
+	}
+
 	xog.SetRoot(aux.Root())
 
 	for i, s := range xog.FindElements("//section") {
@@ -106,7 +115,7 @@ func updateSections(xog, aux *etree.Document, file common.DriverFile) error {
 	return nil
 }
 
-func processSectionByType(section common.ViewSection, sourceView, targetView *etree.Element) error {
+func processSectionByType(section common.Section, sourceView, targetView *etree.Element) error {
 	var sourceSection *etree.Element
 	if section.Action != common.ACTION_REMOVE {
 		if section.SourcePosition == "" {
@@ -123,7 +132,7 @@ func processSectionByType(section common.ViewSection, sourceView, targetView *et
 	if section.TargetPosition != "" {
 		targetSection = targetView.FindElement("//section["+ section.TargetPosition +"]")
 		if targetSection == nil {
-			return errors.New("target position " + section.SourcePosition + " out of bounds")
+			return errors.New("target position " + section.TargetPosition + " does not exist")
 		}
 	}
 
@@ -143,7 +152,7 @@ func processSectionByType(section common.ViewSection, sourceView, targetView *et
 		targetView.InsertChild(targetSection, sourceSection)
 	case common.ACTION_UPDATE:
 		if len(section.Fields) == 0 {
-			return errors.New("cannot update section because there is no tag <filed> defined")
+			return errors.New("cannot update section because there is no tag <field> defined")
 		}
 		columnRight := targetSection.FindElement("//column[@sequence='2']")
 		if columnRight == nil {
@@ -183,13 +192,13 @@ func processSectionByType(section common.ViewSection, sourceView, targetView *et
 				}
 			}
 			switch f.Column {
-			case "left":
+			case common.COLUMN_LEFT:
 				if f.InsertBefore == "" {
 					columnLeft.AddChild(attributeElement)
 				} else {
 					columnLeft.InsertChild(targetAttribute, attributeElement)
 				}
-			case "right":
+			case common.COLUMN_RIGHT:
 				if f.InsertBefore == "" {
 					columnRight.AddChild(attributeElement)
 				} else {
@@ -198,13 +207,19 @@ func processSectionByType(section common.ViewSection, sourceView, targetView *et
 			default:
 				return errors.New("cannot update section, column value invalid, only 'right' or 'left' are available")
 			}
-
 		}
-	default:
-		return errors.New("invalid action attribute (" + section.Action + ") on tag <section>")
 	}
 
 	return nil
+}
+
+func validateCodeAndRemoveElementsFromParent(xog *etree.Document, path, code string) {
+	for _, e := range xog.FindElements(path) {
+		elementCode := e.SelectAttrValue("code", "")
+		if elementCode != code {
+			e.Parent().RemoveChild(e)
+		}
+	}
 }
 
 func updatePropertySet(xog, aux *etree.Document, file common.DriverFile) {

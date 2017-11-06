@@ -18,33 +18,27 @@ func Execute(xog, aux *etree.Document, file common.DriverFile) error {
 	headerElement.CreateAttr("version", "8.0")
 
 	switch file.Type {
+	case common.LOOKUP:
+		specificLookupTransformations(xog, file)
 	case common.PROCESS:
 		err = specificProcessTransformations(xog, aux, file)
 		if err != nil {
 			return errors.New("[transform error] " + err.Error())
 		}
 	case common.OBJECT:
-		err = specificObjectTransformations(xog, file)
-		if err != nil {
-			return errors.New("[transform error] " + err.Error())
-		}
+		specificObjectTransformations(xog, file)
 	case common.VIEW:
 		err = specificViewTransformations(xog, aux, file)
 		if err != nil {
 			return errors.New("[transform error] " + err.Error())
 		}
-	case common.PORTLET:
+	case common.PORTLET, common.QUERY:
 		removeElementFromParent(xog, "//lookups")
-	case common.MENU:
 		removeElementFromParent(xog, "//objects")
-		removeElementFromParent(xog, "//pages")
-	case common.OBS:
-		if file.RemoveObjAssoc {
-			removeElementsFromParent(xog, "//associatedObject")
-		}
-		if file.RemoveSecurity {
-			removeElementsFromParent(xog, "//Security")
-			removeElementsFromParent(xog, "//rights")
+	case common.MENU:
+		err = specificMenuTransformations(xog, aux, file)
+		if err != nil {
+			return errors.New("[transform error] " + err.Error())
 		}
 	case common.RESOURCE_CLASS_INSTANCE, common.WIP_CLASS_INSTANCE, common.TRANSACTION_CLASS_INSTANCE:
 		headerElement.CreateAttr("version", "12.0")
@@ -55,7 +49,10 @@ func Execute(xog, aux *etree.Document, file common.DriverFile) error {
 	if len(file.Elements) > 0 {
 		for _,e := range file.Elements {
 			if e.Action == common.ACTION_REMOVE && e.XPath != "" && e.Type == "" && e.Code == "" {
-				removeElementFromParent(xog, e.XPath)
+				if strings.HasPrefix(e.XPath, "/") {
+					e.XPath = "." + e.XPath
+				}
+				removeElementsFromParent(xog, e.XPath)
 			}
 		}
 	}
@@ -83,15 +80,6 @@ func removeElementsFromParent(xog *etree.Document, path string) {
 	}
 }
 
-func validateCodeAndRemoveElementsFromParent(xog *etree.Document, path, code string) {
-	for _, e := range xog.FindElements(path) {
-		elementCode := e.SelectAttrValue("code", "")
-		if elementCode != code {
-			e.Parent().RemoveChild(e)
-		}
-	}
-}
-
 func findAndReplace(xog *etree.Document, replace []common.FileReplace) {
 	xogString, _ := xog.WriteToString()
 	for _, r := range replace {
@@ -113,13 +101,8 @@ func changePartition(xog *etree.Document, sourcePartition, targetPartition strin
 	for _, e := range elems {
 		e.CreateAttr("partitionCode", targetPartition)
 	}
-	if sourcePartition == "" {
-		for _, e := range xog.FindElements("//*[@dataProviderPartitionId]") {
-			e.CreateAttr("dataProviderPartitionId", targetPartition)
-		}
-	} else {
-		for _, e := range xog.FindElements("//*[@dataProviderPartitionId='" + sourcePartition + "']") {
-			e.CreateAttr("dataProviderPartitionId", targetPartition)
-		}
+
+	for _, e := range xog.FindElements("//*[@dataProviderPartitionId='" + sourcePartition + "']") {
+		e.CreateAttr("dataProviderPartitionId", targetPartition)
 	}
 }

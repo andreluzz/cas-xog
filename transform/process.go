@@ -26,11 +26,11 @@ func specificProcessTransformations(xog, aux *etree.Document, file common.Driver
 }
 
 func copyProcessPermissions(xog *etree.Document) (*etree.Element, error) {
-	element := xog.FindElement("//Security").Copy()
+	element := xog.FindElement("//Security")
 
 	if element == nil {
 		return nil, errors.New("auxiliary xog to copy security from has no security element")
 	}
 
-	return element, nil
+	return element.Copy(), nil
 }

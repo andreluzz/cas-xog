@@ -1,0 +1,177 @@
+<NikuDataBus>
+    <Header action="write" externalSource="NIKU" objectType="contentPack" version="8.0"/>
+    <contentPack update="true">
+        <Processes>
+            <Process allowOneRunningInstance="true" code="PRC_0002" createdBy="admin" endStep="Finish" source="customer" startOption="ON_DEMAND" startStep="Start">
+                <nls languageCode="ca" name="Test cas-xog 002"/>
+                <nls languageCode="cs" name="Test cas-xog 002"/>
+                <nls languageCode="da" name="Test cas-xog 002"/>
+                <nls languageCode="de" name="Test cas-xog 002"/>
+                <nls languageCode="en" name="Test cas-xog 002"/>
+                <nls languageCode="es" name="Test cas-xog 002"/>
+                <nls languageCode="fi" name="Test cas-xog 002"/>
+                <nls languageCode="fr" name="Test cas-xog 002"/>
+                <nls languageCode="hu" name="Test cas-xog 002"/>
+                <nls languageCode="it" name="Test cas-xog 002"/>
+                <nls languageCode="ja" name="Test cas-xog 002"/>
+                <nls languageCode="ko" name="Test cas-xog 002"/>
+                <nls languageCode="nl" name="Test cas-xog 002"/>
+                <nls languageCode="no" name="Test cas-xog 002"/>
+                <nls languageCode="pl" name="Test cas-xog 002"/>
+                <nls languageCode="pt" name="Test cas-xog 002"/>
+                <nls languageCode="ru" name="Test cas-xog 002"/>
+                <nls languageCode="sv" name="Test cas-xog 002"/>
+                <nls languageCode="tr" name="Test cas-xog 002"/>
+                <nls languageCode="zh" name="Test cas-xog 002"/>
+                <nls languageCode="zh_TW" name="Test cas-xog 002"/>
+                <Objects>
+                    <Object manualStart="true" name="ida" objectType="idea" partitionCode="NIKU.ROOT" partitionModeCode="PARTITION_AND_ANSTRS_DESDNTS" type="BPM_POT_PRIMARY"/>
+                </Objects>
+                <Steps>
+                    <Step id="Start" isMileStone="false" sequenceNo="1">
+                        <nls languageCode="ca" name="Start"/>
+                        <nls languageCode="cs" name="Start"/>
+                        <nls languageCode="da" name="Start"/>
+                        <nls languageCode="de" name="Start"/>
+                        <nls languageCode="en" name="Start"/>
+                        <nls languageCode="es" name="Start"/>
+                        <nls languageCode="fi" name="Start"/>
+                        <nls languageCode="fr" name="Start"/>
+                        <nls languageCode="hu" name="Start"/>
+                        <nls languageCode="it" name="Start"/>
+                        <nls languageCode="ja" name="Start"/>
+                        <nls languageCode="ko" name="Start"/>
+                        <nls languageCode="nl" name="Start"/>
+                        <nls languageCode="no" name="Start"/>
+                        <nls languageCode="pl" name="Start"/>
+                        <nls languageCode="pt" name="Start"/>
+                        <nls languageCode="ru" name="Start"/>
+                        <nls languageCode="sv" name="Start"/>
+                        <nls languageCode="tr" name="Start"/>
+                        <nls languageCode="zh" name="Start"/>
+                        <nls languageCode="zh_TW" name="Start"/>
+                        <Notifications notifyOwner="false">
+                            <NotifyWhen stepCompleted="false" stepInError="false" stepStarted="false"/>
+                            <Assignees/>
+                        </Notifications>
+                        <Operations/>
+                        <TransitionRestrictions>
+                            <TransitionRestriction>
+                                <Join type="BPM_JT_NONE">
+                                    <Condition sequencNo="1" type="BPM_SCT_PRECONDITION"/>
+                                </Join>
+                            </TransitionRestriction>
+                            <TransitionRestriction>
+                                <Split type="BPM_ST_SEQUENCE">
+                                    <Condition sequencNo="1" type="BPM_SCT_POSTCONDITION">
+                                        <Transitions>
+                                            <Transition to="e_004"/>
+                                        </Transitions>
+                                    </Condition>
+                                </Split>
+                            </TransitionRestriction>
+                        </TransitionRestrictions>
+                    </Step>
+                    <Step id="Finish" isMileStone="false" sequenceNo="2">
+                        <nls languageCode="ca" name="Finish"/>
+                        <nls languageCode="cs" name="Finish"/>
+                        <nls languageCode="da" name="Finish"/>
+                        <nls languageCode="de" name="Finish"/>
+                        <nls languageCode="en" name="Finish"/>
+                        <nls languageCode="es" name="Finish"/>
+                        <nls languageCode="fi" name="Finish"/>
+                        <nls languageCode="fr" name="Finish"/>
+                        <nls languageCode="hu" name="Finish"/>
+                        <nls languageCode="it" name="Finish"/>
+                        <nls languageCode="ja" name="Finish"/>
+                        <nls languageCode="ko" name="Finish"/>
+                        <nls languageCode="nl" name="Finish"/>
+                        <nls languageCode="no" name="Finish"/>
+                        <nls languageCode="pl" name="Finish"/>
+                        <nls languageCode="pt" name="Finish"/>
+                        <nls languageCode="ru" name="Finish"/>
+                        <nls languageCode="sv" name="Finish"/>
+                        <nls languageCode="tr" name="Finish"/>
+                        <nls languageCode="zh" name="Finish"/>
+                        <nls languageCode="zh_TW" name="Finish"/>
+                        <Notifications notifyOwner="false">
+                            <NotifyWhen stepCompleted="false" stepInError="false" stepStarted="false"/>
+                            <Assignees/>
+                        </Notifications>
+                        <Operations/>
+                        <TransitionRestrictions>
+                            <TransitionRestriction>
+                                <Join type="BPM_JT_NONE">
+                                    <Condition sequencNo="1" type="BPM_SCT_PRECONDITION"/>
+                                </Join>
+                            </TransitionRestriction>
+                            <TransitionRestriction>
+                                <Split type="BPM_ST_SEQUENCE">
+                                    <Condition sequencNo="1" type="BPM_SCT_POSTCONDITION">
+                                        <Transitions/>
+                                    </Condition>
+                                </Split>
+                            </TransitionRestriction>
+                        </TransitionRestrictions>
+                    </Step>
+                    <Step id="e_004" isMileStone="false" sequenceNo="3">
+                        <nls languageCode="ca" name="Processamento"/>
+                        <nls languageCode="cs" name="Processamento"/>
+                        <nls languageCode="da" name="Processamento"/>
+                        <nls languageCode="de" name="Processamento"/>
+                        <nls languageCode="en" name="Processamento"/>
+                        <nls languageCode="es" name="Processamento"/>
+                        <nls languageCode="fi" name="Processamento"/>
+                        <nls languageCode="fr" name="Processamento"/>
+                        <nls languageCode="hu" name="Processamento"/>
+                        <nls languageCode="it" name="Processamento"/>
+                        <nls languageCode="ja" name="Processamento"/>
+                        <nls languageCode="ko" name="Processamento"/>
+                        <nls languageCode="nl" name="Processamento"/>
+                        <nls languageCode="no" name="Processamento"/>
+                        <nls languageCode="pl" name="Processamento"/>
+                        <nls languageCode="pt" name="Processamento"/>
+                        <nls languageCode="ru" name="Processamento"/>
+                        <nls languageCode="sv" name="Processamento"/>
+                        <nls languageCode="tr" name="Processamento"/>
+                        <nls languageCode="zh" name="Processamento"/>
+                        <nls languageCode="zh_TW" name="Processamento"/>
+                        <Notifications notifyOwner="false">
+                            <NotifyWhen stepCompleted="false" stepInError="false" stepStarted="false"/>
+                            <Assignees/>
+                        </Notifications>
+                        <Operations/>
+                        <TransitionRestrictions>
+                            <TransitionRestriction>
+                                <Join type="BPM_JT_NONE">
+                                    <Condition sequencNo="1" type="BPM_SCT_PRECONDITION"/>
+                                </Join>
+                            </TransitionRestriction>
+                            <TransitionRestriction>
+                                <Split type="BPM_ST_SEQUENCE">
+                                    <Condition sequencNo="1" type="BPM_SCT_POSTCONDITION">
+                                        <Transitions>
+                                            <Transition to="Finish"/>
+                                        </Transitions>
+                                    </Condition>
+                                </Split>
+                            </TransitionRestriction>
+                        </TransitionRestrictions>
+                    </Step>
+                </Steps>
+                <Groups/>
+                <OBSAssocs complete="false"/>
+                <Security>
+                    <OBSSecurity name="Corporate Department OBS" rightCode="PROCESS-DEF-INST-READ" rightMode="OBS_UNIT_AND_CHILDREN" typeCode="corpDepartmentOBS" unitPath="/IT"/>
+                    <OBSSecurity name="Corporate Department OBS" rightCode="PROCESS-DEF-INST-START" rightMode="OBS_UNIT_AND_CHILDREN" typeCode="corpDepartmentOBS" unitPath="/IT"/>
+                    <OBSSecurity name="Corporate Department OBS" rightCode="PROCESS-INST-AUTO-START" rightMode="OBS_UNIT_AND_CHILDREN" typeCode="corpDepartmentOBS" unitPath="/IT"/>
+                    <GroupSecurity groupCode="cop.ideaCreator" rightCode="PROCESS-DEF-INST-READ"/>
+                    <GroupSecurity groupCode="cop.ideaCreator" rightCode="PROCESS-DEF-INST-START"/>
+                    <GroupSecurity groupCode="cop.ideaCreator" rightCode="PROCESS-INST-AUTO-START"/>
+                    <UserSecurity rightCode="PROCESS-DEF-INST-INITIATE" userName="admin"/>
+                    <UserSecurity rightCode="PROCESS-DEF-INST-WRITE" userName="admin"/>
+                </Security>
+            </Process>
+        </Processes>
+    </contentPack>
+</NikuDataBus>
