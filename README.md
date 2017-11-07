@@ -28,7 +28,7 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 
 # Type `objects`
 
-| Atribute | Description | Required |
+| Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Object code | yes | 
 | `path` | Path to the file to be saved on the file system | yes | 
@@ -49,7 +49,7 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 ### Sub tag `element`
 Used to read only the selected elements from the object
 
-| Atribute | Description | Required |
+| Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `type` | Defines what element to read. Available: `attribute`, `action` and `link` | yes | 
 | `code` | Code of the attribute that you want to include | yes | 
@@ -68,7 +68,7 @@ Used to read only the selected elements from the object
 
 # Type `views`
 
-| Atribute | Description | Required |
+| Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | View code, use `*` if you want to get all views from one object or the view code if you want a single view. | yes |
 | `objectCode` | Object code | yes |
@@ -90,7 +90,7 @@ Used to read only the selected elements from the object
 ### Sub tag `section`
 Used to read and transform only the selected section from the view. Only single views can use the sub tag `section`, cant be used with `code='*'`.
 
-| Atribute | Description | Required |
+| Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `action` | Defines what to do in the section. Available: `remove`, `replace`, `insert` and `update`. To use action `update` is required to include the sub tag `field`. | yes | 
 | `sourcePosition` | Position of the view in the source. Required for actions: `replace`, `insert` and `update`. | no | 
@@ -110,7 +110,7 @@ Used to read and transform only the selected section from the view. Only single 
 ### Sub tag `field`
 Used to read and transform only the selected fields from the section. Only sections with action `update` can use sub tag `field`.
 
-| Atribute | Description | Required |
+| Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Code of the field to transform. | yes | 
 | `column` | Section column where to insert the field in the target view. | yes |
@@ -133,7 +133,7 @@ Used to read and transform only the selected fields from the section. Only secti
 
 # Type `processes`
 
-| Atribute | Description | Required |
+| Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Process code | yes | 
 | `path` | Path to the file to be saved on the file system | yes |
@@ -149,7 +149,7 @@ Used to read and transform only the selected fields from the section. Only secti
 
 # Type `lookups`
 
-| Atribute | Description | Required |
+| Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Lookup code | yes | 
 | `path` | Path to the file to be saved on the file system | yes | 
@@ -169,7 +169,7 @@ Used to read and transform only the selected fields from the section. Only secti
 
 # Type `portlets`
 
-| Atribute | Description | Required |
+| Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Portlet code | yes | 
 | `path` | Path to the file to be saved on the file system | yes | 
@@ -183,7 +183,7 @@ Used to read and transform only the selected fields from the section. Only secti
 
 # Type `queries`
 
-| Atribute | Description | Required |
+| Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Query code | yes | 
 | `path` | Path to the file to be saved on the file system | yes | 
@@ -197,7 +197,7 @@ Used to read and transform only the selected fields from the section. Only secti
 
 # Type `pages`
 
-| Atribute | Description | Required |
+| Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Page code | yes | 
 | `path` | Path to the file to be saved on the file system | yes | 
@@ -211,7 +211,7 @@ Used to read and transform only the selected fields from the section. Only secti
 
 # Type `menus`
 
-| Atribute | Description | Required |
+| Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Page code | yes | 
 | `path` | Path to the file to be saved on the file system | yes | 
@@ -226,7 +226,7 @@ Used to read and transform only the selected fields from the section. Only secti
 ### Sub tag `section`
 Used to read only the selected section from the menu
 
-| Atribute | Description | Required |
+| Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Code of the attribute that you want to include. | yes | 
 | `action` | Defines what to do in the target menu. Available: `insert` and `update`. To use action update is required to include the sub tag `link`. | yes | 
@@ -244,7 +244,7 @@ Used to read only the selected section from the menu
 ### Sub tag `link`
 Used to read only the selected links inside a section tag from the menu
 
-| Atribute | Description | Required |
+| Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Code of the link that you want to include. | yes |
 
@@ -264,7 +264,7 @@ Used to read only the selected links inside a section tag from the menu
 
 # Type `obs`
 
-| Atribute | Description | Required |
+| Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | OBS code | yes | 
 | `path` | Path to the file to be saved on the file system | yes | 
@@ -278,7 +278,7 @@ Used to read only the selected links inside a section tag from the menu
 
 # Type `groups`
 
-| Atribute | Description | Required |
+| Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Group code | yes | 
 | `path` | Path to the file to be saved on the file system | yes | 
@@ -296,7 +296,7 @@ Sub tags that can be used in any type of `file` tag.
 ### Sub Tag `replace`
 Used to do a replace from one string to another in the xog result.
 
-| Tag | Description | Required |
+| Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `from` | Defines which string should be searched for to be changed | yes | 
 | `to` | String that will replace what was defined in the `from` tag | yes | 
@@ -320,7 +320,7 @@ Used to do a replace from one string to another in the xog result.
 ### Sub Tag `element`
 Used to do a remove elements in the xog result using xpath.
 
-| Tag | Description | Required |
+| Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `action` | Action remove in the element tag. Only action `remove` is available. | yes | 
 | `xpath` | String that defines the path in the XML to the element you want to remove. | yes | 
