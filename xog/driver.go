@@ -1,17 +1,17 @@
 package xog
 
 import (
-	"encoding/xml"
+	"os"
+	"fmt"
+	"time"
 	"errors"
+	"strconv"
+	"io/ioutil"
+	"encoding/xml"
+	"github.com/beevik/etree"
 	"github.com/andreluzz/cas-xog/common"
 	"github.com/andreluzz/cas-xog/migration"
 	"github.com/andreluzz/cas-xog/transform"
-	"github.com/beevik/etree"
-	"io/ioutil"
-	"os"
-	"time"
-	"fmt"
-	"strconv"
 )
 
 var driverXOG *common.Driver
@@ -25,6 +25,10 @@ func LoadDriver(path string) error {
 	driverPath = path
 	driverXOG = new(common.Driver)
 	xml.Unmarshal(xmlFile, driverXOG)
+	v, err := strconv.ParseFloat(driverXOG.Version, 64)
+	if err != nil || v < common.VERSION {
+		return errors.New(fmt.Sprintf("invalid driver(%s) version, expected version %.1f or greater", driverPath, common.VERSION))
+	}
 	return nil
 }
 

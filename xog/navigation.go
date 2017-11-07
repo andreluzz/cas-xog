@@ -15,7 +15,7 @@ func RenderHome() {
 
 	common.Info("\n")
 	common.Info("--------------------------------------------\n")
-	common.Info("##### CAS XOG Automation - Version 2.0 #####\n")
+	common.Info("##### CAS XOG Automation - Version %.1f #####\n", common.VERSION)
 	common.Info("--------------------------------------------\n")
 
 	startInstallingPackage = 0

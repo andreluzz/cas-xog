@@ -52,22 +52,19 @@ func ReadDataFromExcel(file common.DriverFile) (*etree.Document, error) {
 			element := instanceCopy.Copy()
 			for _, match := range file.MatchExcel {
 				var e *etree.Element
-				if match.AttributeValue == "" {
-					e = element.FindElement("//" + match.Tag + "[@" + match.AttributeName + "']")
-				} else {
-					e = element.FindElement("//" + match.Tag + "[@" + match.AttributeName + "='" + match.AttributeValue + "']")
-				}
-				if element.Tag == match.Tag {
+				if match.XPath == "" {
 					e = element
+				} else {
+					e = element.FindElement(match.XPath)
 				}
 
 				if e == nil {
-					return nil, errors.New("migration - invalid attribute name(" + match.AttributeName + ") or tag(" + match.Tag + ")")
+					return nil, errors.New("migration - invalid xpath element not found in template file")
 				}
 
 				value := row.Cells[match.Col-1].String()
 
-				if match.IsAttribute {
+				if match.AttributeName != "" {
 					e.CreateAttr(match.AttributeName, value)
 				} else {
 					if match.MultiValued && value != "" {

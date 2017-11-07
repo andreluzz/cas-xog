@@ -36,11 +36,8 @@ type FileReplace struct {
 
 type MatchExcel	struct {
 	Col 			int		`xml:"col,attr"`
-	Tag 			string	`xml:"tag,attr"`
 	XPath 			string	`xml:"xpath,attr"`
 	AttributeName  	string	`xml:"attribute,attr"`
-	AttributeValue 	string	`xml:"attributeValue,attr"`
-	IsAttribute    	bool  	`xml:"isAttribute,attr"`
 	MultiValued    	bool  	`xml:"multiValued,attr"`
 	Separator      	string 	`xml:"separator,attr"`
 }
@@ -72,6 +69,7 @@ type DriverFile struct {
 }
 
 type Driver struct {
+	Version			string `xml:"version,attr"`
 	Files 			[]DriverFile `xml:"file"`
 	Info  			os.FileInfo
 	PackageDriver 	bool
@@ -107,51 +105,53 @@ type Package struct {
 	Versions 		[]Version `xml:"version"`
 }
 
-const LOOKUP 	= "lookups"
-const PORTLET 	= "portlets"
-const QUERY 	= "queries"
-const PROCESS 	= "processes"
-const PAGE 		= "pages"
-const GROUP 	= "groups"
-const MENU 		= "menus"
-const OBS 		= "obs"
-const OBJECT 	= "objects"
-const VIEW 		= "views"
-const MIGRATION	= "migrations"
-
-const ACTION_REPLACE = "replace"
-const ACTION_UPDATE  = "update"
-const ACTION_REMOVE  = "remove"
-const ACTION_INSERT  = "insert"
-
-const CUSTOM_OBJECT_INSTANCE     = "customObjectInstances"
-const RESOURCE_CLASS_INSTANCE    = "resourceClassInstances"
-const WIP_CLASS_INSTANCE         = "wipClassInstances"
-const INVESTMENT_CLASS_INSTANCE  = "investmentClassInstances"
-const TRANSACTION_CLASS_INSTANCE = "transactionClassInstances"
-const RESOURCE_INSTANCE          = "resourceInstances"
-const USER_INSTANCE              = "userInstances"
-const PROJECT_INSTANCE           = "projectInstances"
-const IDEA_INSTANCE              = "ideaInstances"
-const APPLICATION_INSTANCE       = "applicationInstances"
-const ASSET_INSTANCE             = "assetInstances"
-const OTHER_INVESTMENT_INSTANCE  = "otherInvestmentInstances"
-const PRODUCT_INSTANCE           = "productInstances"
-const SERVICE_INSTANCE           = "serviceInstances"
-
-const FOLDER_READ 		= "_read/"
-const FOLDER_WRITE 		= "_write/"
-const FOLDER_MIGRATION 	= "_migration/"
-const FOLDER_DEBUG 		= "_debug/"
-const FOLDER_PACKAGE 	= "_packages/"
-const FOLDER_MOCK 		= "mock/"
-
-const UNDEFINED 		= ""
-const OUTPUT_ERROR 		= "error"
-const OUTPUT_WARNING 	= "warning"
-const OUTPUT_SUCCESS 	= "success"
-
 const (
-	COLUMN_LEFT = "left"
-	COLUMN_RIGHT = "right"
+	VERSION = 2.0
+
+	LOOKUP 		= "lookups"
+	PORTLET 	= "portlets"
+	QUERY 		= "queries"
+	PROCESS 	= "processes"
+	PAGE 		= "pages"
+	GROUP 		= "groups"
+	MENU 		= "menus"
+	OBS 		= "obs"
+	OBJECT 		= "objects"
+	VIEW 		= "views"
+	MIGRATION	= "migrations"
+
+	ACTION_REPLACE = "replace"
+	ACTION_UPDATE  = "update"
+	ACTION_REMOVE  = "remove"
+	ACTION_INSERT  = "insert"
+
+	CUSTOM_OBJECT_INSTANCE     = "customObjectInstances"
+	RESOURCE_CLASS_INSTANCE    = "resourceClassInstances"
+	WIP_CLASS_INSTANCE         = "wipClassInstances"
+	INVESTMENT_CLASS_INSTANCE  = "investmentClassInstances"
+	TRANSACTION_CLASS_INSTANCE = "transactionClassInstances"
+	RESOURCE_INSTANCE          = "resourceInstances"
+	USER_INSTANCE              = "userInstances"
+	PROJECT_INSTANCE           = "projectInstances"
+	IDEA_INSTANCE              = "ideaInstances"
+	APPLICATION_INSTANCE       = "applicationInstances"
+	ASSET_INSTANCE             = "assetInstances"
+	OTHER_INVESTMENT_INSTANCE  = "otherInvestmentInstances"
+	PRODUCT_INSTANCE           = "productInstances"
+	SERVICE_INSTANCE           = "serviceInstances"
+
+	FOLDER_READ 		= "_read/"
+	FOLDER_WRITE 		= "_write/"
+	FOLDER_MIGRATION 	= "_migration/"
+	FOLDER_DEBUG 		= "_debug/"
+	FOLDER_PACKAGE 		= "_packages/"
+	FOLDER_MOCK 		= "mock/"
+
+	UNDEFINED 		= ""
+	OUTPUT_ERROR 	= "error"
+	OUTPUT_WARNING 	= "warning"
+	OUTPUT_SUCCESS 	= "success"
+
+	COLUMN_LEFT 	= "left"
+	COLUMN_RIGHT 	= "right"
 )

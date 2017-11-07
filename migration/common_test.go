@@ -61,9 +61,8 @@ func TestReadDataFromExcelToReturnErrorMatchElementExists(t *testing.T) {
 		MatchExcel: []common.MatchExcel{
 			{
 				Col: 1,
-				Tag: "WrongTagName",
+				XPath: "invalid_xpath",
 				AttributeName: "name",
-				AttributeValue: "code",
 			},
 		},
 	}
@@ -82,41 +81,29 @@ func TestReadDataFromExcelToReturnXMLResult(t *testing.T) {
 		MatchExcel: []common.MatchExcel{
 			{
 				Col: 1,
-				Tag: "instance",
 				AttributeName: "instanceCode",
-				IsAttribute: true,
 			},
 			{
 				Col: 1,
-				Tag: "ColumnValue",
-				AttributeName: "name",
-				AttributeValue: "code",
+				XPath: "//ColumnValue[@name='code']",
 			},
 			{
 				Col: 2,
-				Tag: "ColumnValue",
-				AttributeName: "name",
-				AttributeValue: "name",
+				XPath: "//ColumnValue[@name='name']",
 			},
 			{
 				Col: 3,
-				Tag: "ColumnValue",
-				AttributeName: "name",
-				AttributeValue: "status_novo",
+				XPath: "//ColumnValue[@name='status_novo']",
 			},
 			{
 				Col: 4,
-				Tag: "ColumnValue",
-				AttributeName: "name",
-				AttributeValue: "multivalue_status",
+				XPath: "//ColumnValue[@name='multivalue_status']",
 				MultiValued: true,
 				Separator: ";",
 			},
 			{
 				Col: 5,
-				Tag: "ColumnValue",
-				AttributeName: "name",
-				AttributeValue: "analista",
+				XPath: "//ColumnValue[@name='analista']",
 			},
 		},
 	}
@@ -155,7 +142,7 @@ func TestExportInstancesToExcelToReturnErrorExcelPath(t *testing.T) {
 				XPath: "//ColumnValue[@name='status_novo']",
 			},
 			{
-				XPath:       "//ColumnValue[@name='multivalue_status']",
+				XPath: "//ColumnValue[@name='multivalue_status']",
 				MultiValued: true,
 			},
 			{
