@@ -88,8 +88,8 @@ type Definition struct {
 	Description 	string	`xml:"description,attr"`
 	Default 		string	`xml:"default,attr"`
 	TransformTypes	string	`xml:"transformTypes"`
-	From 			string	`xml:"match"`
-	To				string	`xml:"replace"`
+	From 			string	`xml:"from"`
+	To				string	`xml:"to"`
 	Value	 		string
 }
 
