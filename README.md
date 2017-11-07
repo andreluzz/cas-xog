@@ -8,7 +8,7 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 
 1. Download the [lastest stable release](https://github.com/andreluzz/cas-xog/releases/latest) (cas-xog.exe and xogRead.xml);
 2. Create a file called [xogEnv.xml](#xog-environment-example), in the same folder of the cas-xog.exe, to define the environments connections configuration;
-3. Create a folder called "drivers" with all [xog Driver xml](#xog-driver-example) files defining the objects you want to read and write;
+3. Create a folder called "drivers" with all driver files (.driver) you need to defining the objects you want to read and write;
 4. Execute the cas-xog.exe and follow the instructions in the screen.
 
 ### Description of Driver types
@@ -83,7 +83,7 @@ Used to read only the selected elements from the object
     <file type="views" code="*" objectCode="obj_system" path="view_1.xml" sourcePartition="IT" />
     <file type="views" code="*" objectCode="obj_system" path="view_2.xml" sourcePartition="IT" targetPartition="HR" />
     <file type="views" code="obj_system.audit" objectCode="obj_system" path="view_3.xml" sourcePartition="HR" />
-    <file type="views" code="obj_system.audit" objectCode="obj_system" path="view_3.xml" sourcePartition="HR" sourcePartition="IT" />
+    <file type="views" code="obj_system.audit" objectCode="obj_system" path="view_3.xml" sourcePartition="HR" targetPartition="IT" />
 </xogdriver>
 ```
 
@@ -99,7 +99,7 @@ Used to read and transform only the selected section from the view. Only single 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="1.0">
-    <file type="views" code="obj_system.audit" objectCode="obj_system" path="view_3.xml" sourcePartition="HR" />
+    <file type="views" code="obj_system.audit" objectCode="obj_system" path="view_3.xml" sourcePartition="HR">
         <section action="insert" sourcePosition="1" targetPosition="1" />
         <section action="replace" sourcePosition="1" targetPosition="3" />
         <section action="remove" targetPosition="3" />
@@ -120,7 +120,7 @@ Used to read and transform only the selected fields from the section. Only secti
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="1.0">
-    <file type="views" code="obj_system.audit" objectCode="obj_system" path="view_3.xml" sourcePartition="HR" />
+    <file type="views" code="obj_system.audit" objectCode="obj_system" path="view_3.xml" sourcePartition="HR">
         <section action="update" sourcePosition="1" targetPosition="1" >
             <field code="analist" insertBefore="created_by" column="left" />
             <field code="status" insertBefore="created_by" column="left" />
