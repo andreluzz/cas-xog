@@ -371,7 +371,7 @@ This tag is not required, should be used to define questions to the user to answ
 | `action` | Defines the action to the replace. Available: `changePartitionModel`, `changePartition` and `replaceString`.  | yes | 
 | `description` | The texto to display the question to the user whrn installing the package. | yes |
 | `default` | The default value for this definition.  | no |
-| `transformTypes` | Define in what types of files this transformation should be performed. If not defined the replace will be used in all XOG xml files. Use the same types as in [`driver types`](###description-of-driver-types)  | no |
+| `transformTypes` | Define in what types of files this transformation should be performed. If not defined the replace will be used in all XOG xml files. Use the same types as in [`driver types`](#description-of-driver-types)  | no |
 | `from` | The string that should be found in the XOG xml files. Required when action is `replaceString`.  | no |
 | `to` | The default value for this definition. Required when action is `replaceString`.  | no |
 
