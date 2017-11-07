@@ -373,27 +373,27 @@ This tag is not required, should be used to define questions to the user to answ
 | `default` | The default value for this definition.  | no |
 | `transformTypes` | Define in what types of files this transformation should be performed. If not defined the replace will be used in all XOG xml files. Use the same types as in [`driver types`](#description-of-driver-types)  | no |
 | `from` | The string that should be found in the XOG xml files. Required when action is `replaceString`.  | no |
-| `to` | The default value for this definition. Required when action is `replaceString`.  | no |
+| `to` | The string that should replace the current value. Use the special string `"##DEFINITION_VALUE##` to set the position for the value defined by the user. Required when action is `replaceString`.  | no |
 
 ### Package file example
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <package name="CAS-FIN" folder="cas-fin/" driver="cas_fin.driver">
     <version name="Version Oracle" folder="oracle/">
-        <definition action="changePartitionModel" description="Target partition model" default="partitionModel1" />
+        <definition action="changePartitionModel" description="Target partition model" default="corporate" />
         <definition action="changePartition" description="Target partition" default="NIKU.ROOT" />
-        <definition action="replaceString" description="Define processes GEL Script XOG user" default="xogadmin">
+        <definition action="replaceString" description="Set processes scripts XOG user" default="xogadmin">
             <transformTypes>processes</transformTypes>
             <from>set value="xogadmin" var="user_param"</from>
             <to>set value="##DEFINITION_VALUE##" var="user_param"</to>
         </definition>
     </version>
     <version name="Version MS SQL Server" folder="sqlserver/" driver="cas_fin-sql.driver">
-        <definition action="changePartitionModel" description="Target partition model" default="partitionModel1" />
+        <definition action="changePartitionModel" description="Target partition model" default="corporate" />
         <definition action="changePartition" description="Target partition" default="NIKU.ROOT" />
-        <definition action="replaceString" description="Define processes GEL Script XOG user" default="xogadmin">
+        <definition action="replaceString" description="Set processes scripts XOG user" default="xogadmin">
             <transformTypes>processes</transformTypes>
-            <from>set value="xogadmin" var="user_param"</from>
+            <from>set value="xog_admin" var="user_param"</from>
             <to>set value="##DEFINITION_VALUE##" var="user_param"</to>
         </definition>
     </version>
