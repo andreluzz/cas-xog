@@ -11,7 +11,7 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 3. Create a folder called "drivers" with all driver files (.driver) you need to defining the objects you want to read and write;
 4. Execute the cas-xog.exe and follow the instructions in the screen.
 
-### Description of Driver types
+### Description of structure Driver types
 
 | Type | Description |
 | ------ | ------ |
@@ -26,6 +26,25 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 | [`obs`](#type-obs) | Used to read and write obs |
 | [`groups`](#type-groups) | Used to read and write groups |
 
+### Description of instance Driver types
+
+| Type | Description |
+| ------ | ------ |
+| [`customObjectInstances`](#type-customObjectInstances) | Used to read and write customObject instances |
+| [`resourceClassInstances`](#type-resourceClassInstances) | Used to read and write resourceClass instances |
+| [`wipClassInstances`](#type-wipClassInstances) | Used to read and write wipClass instances |
+| [`investmentClassInstances`](#type-investmentClassInstances) | Used to read and write investmentClass instances |
+| [`transactionClassInstances`](#type-transactionClassInstances) | Used to read and write transactionClass instances |
+| [`resourceInstances`](#type-resourceInstances) | Used to read and write resource instances |
+| [`userInstances`](#type-userInstances) | Used to read and write user instances |
+| [`projectInstances`](#type-projectInstances) | Used to read and write project instances |
+| [`ideaInstances`](#type-ideaInstances) | Used to read and write idea instances |
+| [`applicationInstances`](#type-applicationInstances) | Used to read and write application instances |
+| [`assetInstances`](#type-assetInstances) | Used to read and write asset instances |
+| [`otherInvestmentInstances`](#type-otherInvestmentInstances) | Used to read and write otherInvestment instances |
+| [`productInstances`](#type-productInstances) | Used to read and write product instances |
+| [`serviceInstances`](#type-serviceInstances) | Used to read and write service instances |
+
 # Type `objects`
 
 | Attribute | Description | Required |
@@ -38,10 +57,10 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<xogdriver version="1.0">
+<xogdriver version="2.0">
     <file code="idea" path="idea.xml" type="objects" />
     <file code="application" path="application.xml" type="objects" partitionModel="new-corp" />
-    <file code="systems" path="systems.xml" type="objects" sourcePartition="partition10" targetPartition="NIKU.ROOT" />
+    <file code="systems" path="systems.xml" type="objects" sourcePartition="IT" targetPartition="NIKU.ROOT" />
     <file code="inv" path="inv.xml" type="objects" targetPartition="NIKU.ROOT" />
 </xogdriver>
 ```
@@ -56,7 +75,7 @@ Used to read only the selected elements from the object
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<xogdriver version="1.0">
+<xogdriver version="2.0">
     <file code="test_subobj" path="test_subobj.xml" type="objects">
         <element type="attribute" code="attr_auto_number" />
         <element type="attribute" code="novo_atr" />
@@ -78,12 +97,12 @@ Used to read only the selected elements from the object
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<xogdriver version="1.0">
+<xogdriver version="2.0">
     <file type="views" code="*" objectCode="obj_system" path="view_0.xml" />
     <file type="views" code="*" objectCode="obj_system" path="view_1.xml" sourcePartition="IT" />
     <file type="views" code="*" objectCode="obj_system" path="view_2.xml" sourcePartition="IT" targetPartition="HR" />
     <file type="views" code="obj_system.audit" objectCode="obj_system" path="view_3.xml" sourcePartition="HR" />
-    <file type="views" code="obj_system.audit" objectCode="obj_system" path="view_3.xml" sourcePartition="HR" targetPartition="IT" />
+    <file type="views" code="obj_system.audit" objectCode="obj_system" path="view_4.xml" sourcePartition="HR" targetPartition="IT" />
 </xogdriver>
 ```
 
@@ -98,7 +117,7 @@ Used to read and transform only the selected section from the view. Only single 
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<xogdriver version="1.0">
+<xogdriver version="2.0">
     <file type="views" code="obj_system.audit" objectCode="obj_system" path="view_3.xml" sourcePartition="HR">
         <section action="insert" sourcePosition="1" targetPosition="1" />
         <section action="replace" sourcePosition="1" targetPosition="3" />
@@ -119,7 +138,7 @@ Used to read and transform only the selected fields from the section. Only secti
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<xogdriver version="1.0">
+<xogdriver version="2.0">
     <file type="views" code="obj_system.audit" objectCode="obj_system" path="view_3.xml" sourcePartition="HR">
         <section action="update" sourcePosition="1" targetPosition="1" >
             <field code="analist" insertBefore="created_by" column="left" />
@@ -141,7 +160,7 @@ Used to read and transform only the selected fields from the section. Only secti
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<xogdriver version="1.0">
+<xogdriver version="2.0">
     <file type="processes" code="PRC_0001" path="PRC_0001.xml" />
     <file type="processes" code="PRC_0002" path="PRC_0002.xml" copyPermissions="PRC_0001" />
 </xogdriver>
@@ -159,7 +178,7 @@ Used to read and transform only the selected fields from the section. Only secti
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<xogdriver version="1.0">
+<xogdriver version="2.0">
     <file code="INV_APPLICATION_CATEGORY_TYPE" path="INV_APPLICATION_CATEGORY_TYPE.xml" type="lookups" />
     <file code="LOOKUP_FIN_CHARGECODES" path="LOOKUP_FIN_CHARGECODES.xml" onlyStructure="true" type="lookups" />
     <file code="LOOKUP_CAS_XOG_1" path="LOOKUP_CAS_XOG_1.xml" type="lookups" targetPartition="NIKU.ROOT" />
@@ -176,7 +195,7 @@ Used to read and transform only the selected fields from the section. Only secti
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<xogdriver version="1.0">
+<xogdriver version="2.0">
     <file code="cop.teamCapacityLinkable" path="cop.teamCapacityLinkable.xml" type="portlets"/>
 </xogdriver>
 ```
@@ -190,7 +209,7 @@ Used to read and transform only the selected fields from the section. Only secti
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<xogdriver version="1.0">
+<xogdriver version="2.0">
     <file code="cop.projectCostsPhaseLinkable" path="cop.projectCostsPhaseLinkable.xml" type="queries"/>
 </xogdriver>
 ```
@@ -204,7 +223,7 @@ Used to read and transform only the selected fields from the section. Only secti
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<xogdriver version="1.0">
+<xogdriver version="2.0">
     <file code="pma.ideaFrame" path="pma.ideaFrame.xml" type="pages"/>
 </xogdriver>
 ```
@@ -218,7 +237,7 @@ Used to read and transform only the selected fields from the section. Only secti
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<xogdriver version="1.0">
+<xogdriver version="2.0">
     <file code="application" path="menu_result.xml" type="menus" />
 </xogdriver>
 ```
@@ -234,7 +253,7 @@ Used to read only the selected section from the menu
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<xogdriver version="1.0">
+<xogdriver version="2.0">
     <file code="application" path="menu_result_section_link.xml" type="menus">
         <section action="insert" code="menu_sec_cas_xog" targetPosition="2" />
     </file>
@@ -250,7 +269,7 @@ Used to read only the selected links inside a section tag from the menu
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<xogdriver version="1.0">
+<xogdriver version="2.0">
     <file code="application" path="menu_result_section_link.xml" type="menus">
         <section action="update" code="npt.personal">
             <link code="odf.obj_testeList" />
@@ -271,7 +290,7 @@ Used to read only the selected links inside a section tag from the menu
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<xogdriver version="1.0">
+<xogdriver version="2.0">
     <file code="department" path="obs_department.xml" type="obs" />
 </xogdriver>
 ```
@@ -285,7 +304,7 @@ Used to read only the selected links inside a section tag from the menu
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<xogdriver version="1.0">
+<xogdriver version="2.0">
     <file code="cop.systemAdministrator" path="systemAdministrator.xml" type="groups" />
 </xogdriver>
 ```
@@ -303,7 +322,7 @@ Used to do a replace from one string to another in the xog result.
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<xogdriver version="1.0">
+<xogdriver version="2.0">
     <file code="PRC_0001" path="PRC_0001.xml" type="processes">
         <replace>
             <from>endpoint="http://development.server.com"</from>
@@ -327,7 +346,7 @@ Used to do a remove elements in the xog result using xpath.
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<xogdriver version="1.0">
+<xogdriver version="2.0">
     <file type="pages" code="projmgr.projectPageFrame" path="page_project.xml">
         <element action="remove" xpath="//OBSAssocs" />
         <element action="remove" xpath="//Security" />
@@ -438,11 +457,103 @@ This tag is not required, should be used to define questions to the user to answ
 
 To install the package the user should save the zip file inside a folder named `package` in the same directory of the `cas-xog.exe` file.
 
+# Data migration 
+This feature should be used to export instances to an excel file and read data from excel file to a XOG template creating an xml to import data to the environment.
+
+### Export data to excel
+Should be used with a [driver instance type](#description-of-instance-driver-types) to read data from the environment and save the match attributes to an excel file.
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | Defines the name that will be displayed to the user. | yes | 
+| `path` | Path to the file to be saved on the file system. | yes |
+| `exportToExcel` | If set to true creates an excel file with the matched data. | yes |
+| `excel` | The name of the file to export the data.  | yes |
+| `instance` | The name of the main tag that represents the instance object that is being read.  | yes |
+
+### Sub tag `match`
+This tag is required for export to excel data.
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `attribute` | Defines the attribute from the element you want to get the data. If no xpath is defined then we get the value from the main instance element defined.  | no | 
+| `xpath` | A string representing the path to the element you want to get the data. If no attribute value is defined then we get the value from the tag text. | no |
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <file type="resourceInstances" code="*" path="res.xml" exportToExcel="true" excel="res.xlsx" instance="Resource">
+        <match attribute="resourceId" />
+        <match xpath="//PersonalInformation" attribute="displayName" />
+        <match xpath="//PersonalInformation" attribute="emailAddress" />
+        <match xpath="//PersonalInformation" attribute="firstName" />
+        <match xpath="//PersonalInformation" attribute="lastName" />
+        <match xpath="//OBSAssoc[@id='corpLocationOBS']" attribute="unitPath" />
+        <match xpath="//OBSAssoc[@id='resourcePool']" attribute="unitPath" />
+        <match xpath="//ColumnValue[@name='partition_code']" />
+    </file>
+</xogdriver>
+```
+
+### Read data from excel to create XOG instances xml 
+Should be used with to create an XOG xml file with many instances as lines in the excel file.
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `path` | Path to the file to be saved on the file system. | yes |
+| `template` | Path to the template that should be used to create the XOG xml file. | yes |
+| `instance` | The name of the main tag that represents the instance object that should be created. | yes |
+| `excel` | The path to the excel file with the data. | yes |
+| `startRow` | The line number in the excel file that we will start reading to create the instances. Default value is 1. | no |
+
+### Sub tag `match`
+This tag is required for export to excel data.
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `col` | Define which column of excel we'll get the data to include in the XOG xml file. | yes |
+| `attribute` | Defines the attribute in the element you want to set the data. If no xpath is defined then we set this attribute in the main element instance.  | no |
+| `xpath` | A string representing the path to the element you want to set the data. If no attribute value is defined then we set the value as a tag text. | no |
+| `multiValued` | If set to true defines that this element should be treated as multi value. | no |
+| `separator` | Defines what character were used to separate the options in the multi value on the excel data. Default value is ';'. | no |
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <file type="migrations" path="subs.xml" template="template.xml" instance="instance" excel="dados.xlsx" startRow="2" >
+        <match col="1" attribute="instanceCode" />
+        <match col="1" xpath="//ColumnValue[@name='code']" />
+        <match col="2" xpath="//ColumnValue[@name='name']" />
+        <match col="3" xpath="//ColumnValue[@name='status']" />
+        <match col="4" xpath="//ColumnValue[@name='multivalue_status']" multiValued="true" separator=";" />
+        <match col="5" xpath="//ColumnValue[@name='analista']" />
+    </file>
+</xogdriver>
+```
+
+### Template file example
+```xml
+<NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_customObjectInstance.xsd">
+	<Header action="write" externalSource="NIKU" objectType="customObjectInstance" version="8.0" />
+	<customObjectInstances objectCode="obj_sistema">
+		<instance instanceCode="" objectCode="obj_sistema">
+			<CustomInformation>
+				<ColumnValue name="code"></ColumnValue>
+				<ColumnValue name="name"></ColumnValue>
+				<ColumnValue name="status_novo"></ColumnValue>
+				<ColumnValue name="analista"></ColumnValue>
+				<ColumnValue name="multivalue_status"></ColumnValue>
+			</CustomInformation>
+		</instance>
+	</customObjectInstances>
+</NikuDataBus>
+```
+
 # XOG Environment example:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<xogenvs version="1.0">
+<xogenvs version="2.0">
     <env name="Development">
         <username>username</username>
         <password>12345</password>
