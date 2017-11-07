@@ -58,10 +58,10 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file code="idea" path="idea.xml" type="objects" />
-    <file code="application" path="application.xml" type="objects" partitionModel="new-corp" />
-    <file code="systems" path="systems.xml" type="objects" sourcePartition="IT" targetPartition="NIKU.ROOT" />
-    <file code="inv" path="inv.xml" type="objects" targetPartition="NIKU.ROOT" />
+    <file type="objects" code="idea" path="idea.xml" />
+    <file type="objects" code="application" path="application.xml" partitionModel="new-corp" />
+    <file type="objects" code="systems" path="systems.xml" sourcePartition="IT" targetPartition="NIKU.ROOT" />
+    <file type="objects" code="inv" path="inv.xml" targetPartition="NIKU.ROOT" />
 </xogdriver>
 ```
 
@@ -76,7 +76,7 @@ Used to read only the selected elements from the object
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file code="test_subobj" path="test_subobj.xml" type="objects">
+    <file type="objects" code="test_subobj" path="test_subobj.xml">
         <element type="attribute" code="attr_auto_number" />
         <element type="attribute" code="novo_atr" />
         <element type="action" code="tst_run_proc_lnk" />
@@ -179,10 +179,10 @@ Used to read and transform only the selected fields from the section. Only secti
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file code="INV_APPLICATION_CATEGORY_TYPE" path="INV_APPLICATION_CATEGORY_TYPE.xml" type="lookups" />
-    <file code="LOOKUP_FIN_CHARGECODES" path="LOOKUP_FIN_CHARGECODES.xml" onlyStructure="true" type="lookups" />
-    <file code="LOOKUP_CAS_XOG_1" path="LOOKUP_CAS_XOG_1.xml" type="lookups" targetPartition="NIKU.ROOT" />
-    <file code="LOOKUP_CAS_XOG_2" path="LOOKUP_CAS_XOG_2.xml" type="lookups" sourcePartition="IT" targetPartition="NIKU.ROOT" />
+    <file type="lookups" code="INV_APPLICATION_CATEGORY_TYPE" path="INV_APPLICATION_CATEGORY_TYPE.xml" />
+    <file type="lookups" code="LOOKUP_FIN_CHARGECODES" path="LOOKUP_FIN_CHARGECODES.xml" onlyStructure="true" />
+    <file type="lookups" code="LOOKUP_CAS_XOG_1" path="LOOKUP_CAS_XOG_1.xml" targetPartition="NIKU.ROOT" />
+    <file type="lookups" code="LOOKUP_CAS_XOG_2" path="LOOKUP_CAS_XOG_2.xml" sourcePartition="IT" targetPartition="NIKU.ROOT" />
 </xogdriver>
 ```
 
@@ -196,7 +196,7 @@ Used to read and transform only the selected fields from the section. Only secti
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file code="cop.teamCapacityLinkable" path="cop.teamCapacityLinkable.xml" type="portlets"/>
+    <file type="portlets" code="cop.teamCapacityLinkable" path="cop.teamCapacityLinkable.xml" />
 </xogdriver>
 ```
 
@@ -210,7 +210,7 @@ Used to read and transform only the selected fields from the section. Only secti
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file code="cop.projectCostsPhaseLinkable" path="cop.projectCostsPhaseLinkable.xml" type="queries"/>
+    <file type="queries" code="cop.projectCostsPhaseLinkable" path="cop.projectCostsPhaseLinkable.xml" />
 </xogdriver>
 ```
 
@@ -224,7 +224,7 @@ Used to read and transform only the selected fields from the section. Only secti
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file code="pma.ideaFrame" path="pma.ideaFrame.xml" type="pages"/>
+    <file type="pages" code="pma.ideaFrame" path="pma.ideaFrame.xml" />
 </xogdriver>
 ```
 
@@ -238,7 +238,7 @@ Used to read and transform only the selected fields from the section. Only secti
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file code="application" path="menu_result.xml" type="menus" />
+    <file type="menus" code="application" path="menu_result.xml" />
 </xogdriver>
 ```
 
@@ -254,7 +254,7 @@ Used to read only the selected section from the menu
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file code="application" path="menu_result_section_link.xml" type="menus">
+    <file type="menus" code="application" path="menu_result_section_link.xml">
         <section action="insert" code="menu_sec_cas_xog" targetPosition="2" />
     </file>
 </xogdriver>
@@ -270,7 +270,7 @@ Used to read only the selected links inside a section tag from the menu
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file code="application" path="menu_result_section_link.xml" type="menus">
+    <file type="menus" code="application" path="menu_result_section_link.xml">
         <section action="update" code="npt.personal">
             <link code="odf.obj_testeList" />
         </section>
@@ -291,7 +291,7 @@ Used to read only the selected links inside a section tag from the menu
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file code="department" path="obs_department.xml" type="obs" />
+    <file type="obs" code="department" path="obs_department.xml" />
 </xogdriver>
 ```
 
@@ -305,7 +305,7 @@ Used to read only the selected links inside a section tag from the menu
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file code="cop.systemAdministrator" path="systemAdministrator.xml" type="groups" />
+    <file type="groups" code="cop.systemAdministrator" path="systemAdministrator.xml" />
 </xogdriver>
 ```
 
@@ -314,12 +314,13 @@ Used to read only the selected links inside a section tag from the menu
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
+| `objectCode` | Defines the code of the custom object you want to read the instances. | yes |
 | `path` | Path to the file to be saved on the file system | yes |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="customObjectInstances" code="*" path="instances.xml" />
+    <file type="customObjectInstances" code="*" objectCode="obj_system" path="instances.xml" />
 </xogdriver>
 ```
 
@@ -519,7 +520,7 @@ Used to do a replace from one string to another in the xog result.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file code="PRC_0001" path="PRC_0001.xml" type="processes">
+    <file type="processes" code="PRC_0001" path="PRC_0001.xml">
         <replace>
             <from>endpoint="http://development.server.com"</from>
             <to>endpoint="http://production.server.com"</to>
