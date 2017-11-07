@@ -344,7 +344,7 @@ Used to do a remove elements in the xog result using xpath.
 ```
 
 # Package creation and deploy
-The feature package should be used to deploy structures and instances in a more consolidated way. To use should be created a zip file with containing: a package file (.package), one or more driver files (.driver) and folders for the xml files.
+This feature should be used to deploy structures and instances in a more consolidated way. Should be created a zip containing: a package file (.package), one or more driver files (.driver) and folders for versions and the XOG xml files.
 
 ### Tag `package`
 
