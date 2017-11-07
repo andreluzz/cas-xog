@@ -309,6 +309,202 @@ Used to read only the selected links inside a section tag from the menu
 </xogdriver>
 ```
 
+# Type `customObjectInstances`
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | Instance codes. Use code equals * to get all instances. | yes |
+| `path` | Path to the file to be saved on the file system | yes |
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <file type="customObjectInstances" code="*" path="instances.xml" />
+</xogdriver>
+```
+
+# Type `resourceClassInstances`
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | Instance codes. Use code equals * to get all instances. | yes |
+| `path` | Path to the file to be saved on the file system | yes |
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <file type="resourceClassInstances" code="*" path="instances.xml" />
+</xogdriver>
+```
+
+# Type `wipClassInstances`
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | Instance codes. Use code equals * to get all instances. | yes |
+| `path` | Path to the file to be saved on the file system | yes |
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <file type="wipClassInstances" code="*" path="instances.xml" />
+</xogdriver>
+```
+
+# Type `investmentClassInstances`
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | Instance codes. Use code equals * to get all instances. | yes |
+| `path` | Path to the file to be saved on the file system | yes |
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <file type="investmentClassInstances" code="*" path="instances.xml" />
+</xogdriver>
+```
+
+# Type `transactionClassInstances`
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | Instance codes. Use code equals * to get all instances. | yes |
+| `path` | Path to the file to be saved on the file system | yes |
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <file type="transactionClassInstances" code="*" path="instances.xml" />
+</xogdriver>
+```
+
+# Type `resourceInstances`
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | Instance codes. Use code equals * to get all instances. | yes |
+| `path` | Path to the file to be saved on the file system | yes |
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <file type="resourceInstances" code="*" path="instances.xml" />
+</xogdriver>
+```
+
+# Type `userInstances`
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | Instance codes. Use code equals * to get all instances. | yes |
+| `path` | Path to the file to be saved on the file system | yes |
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <file type="userInstances" code="*" path="instances.xml" />
+</xogdriver>
+```
+
+# Type `projectInstances`
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | Instance codes. Use code equals * to get all instances. | yes |
+| `path` | Path to the file to be saved on the file system | yes |
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <file type="projectInstances" code="*" path="instances.xml" />
+</xogdriver>
+```
+
+# Type `ideaInstances`
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | Instance codes. Use code equals * to get all instances. | yes |
+| `path` | Path to the file to be saved on the file system | yes |
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <file type="ideaInstances" code="*" path="instances.xml" />
+</xogdriver>
+```
+
+# Type `applicationInstances`
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | Instance codes. Use code equals * to get all instances. | yes |
+| `path` | Path to the file to be saved on the file system | yes |
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <file type="applicationInstances" code="*" path="instances.xml" />
+</xogdriver>
+```
+
+# Type `assetInstances`
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | Instance codes. Use code equals * to get all instances. | yes |
+| `path` | Path to the file to be saved on the file system | yes |
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <file type="assetInstances" code="*" path="instances.xml" />
+</xogdriver>
+```
+
+# Type `otherInvestmentInstances`
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | Instance codes. Use code equals * to get all instances. | yes |
+| `path` | Path to the file to be saved on the file system | yes |
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <file type="otherInvestmentInstances" code="*" path="instances.xml" />
+</xogdriver>
+```
+
+# Type `productInstances`
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | Instance codes. Use code equals * to get all instances. | yes |
+| `path` | Path to the file to be saved on the file system | yes |
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <file type="productInstances" code="*" path="instances.xml" />
+</xogdriver>
+```
+
+# Type `serviceInstances`
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | Instance codes. Use code equals * to get all instances. | yes |
+| `path` | Path to the file to be saved on the file system | yes |
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <file type="serviceInstances" code="*" path="instances.xml" />
+</xogdriver>
+```
+
 # Global Sub Tags
 Sub tags that can be used in any type of `file` tag.
 
