@@ -45,7 +45,7 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 | [`productInstances`](#type-productinstances) | Used to read and write product instances |
 | [`serviceInstances`](#type-serviceinstances) | Used to read and write service instances |
 
-# Type `objects`
+## Type `objects`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -85,7 +85,7 @@ Used to read only the selected elements from the object
 </xogdriver>
 ```
 
-# Type `views`
+## Type `views`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -150,7 +150,7 @@ Used to read and transform only the selected fields from the section. Only secti
 </xogdriver>
 ```
 
-# Type `processes`
+## Type `processes`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -166,7 +166,7 @@ Used to read and transform only the selected fields from the section. Only secti
 </xogdriver>
 ```
 
-# Type `lookups`
+## Type `lookups`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -186,7 +186,7 @@ Used to read and transform only the selected fields from the section. Only secti
 </xogdriver>
 ```
 
-# Type `portlets`
+## Type `portlets`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -200,7 +200,7 @@ Used to read and transform only the selected fields from the section. Only secti
 </xogdriver>
 ```
 
-# Type `queries`
+## Type `queries`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -214,7 +214,7 @@ Used to read and transform only the selected fields from the section. Only secti
 </xogdriver>
 ```
 
-# Type `pages`
+## Type `pages`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -228,7 +228,7 @@ Used to read and transform only the selected fields from the section. Only secti
 </xogdriver>
 ```
 
-# Type `menus`
+## Type `menus`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -281,7 +281,7 @@ Used to read only the selected links inside a section tag from the menu
 </xogdriver>
 ```
 
-# Type `obs`
+## Type `obs`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -295,7 +295,7 @@ Used to read only the selected links inside a section tag from the menu
 </xogdriver>
 ```
 
-# Type `groups`
+## Type `groups`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -309,7 +309,7 @@ Used to read only the selected links inside a section tag from the menu
 </xogdriver>
 ```
 
-# Type `customObjectInstances`
+## Type `customObjectInstances`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -324,7 +324,7 @@ Used to read only the selected links inside a section tag from the menu
 </xogdriver>
 ```
 
-# Type `resourceClassInstances`
+## Type `resourceClassInstances`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -338,7 +338,7 @@ Used to read only the selected links inside a section tag from the menu
 </xogdriver>
 ```
 
-# Type `wipClassInstances`
+## Type `wipClassInstances`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -352,7 +352,7 @@ Used to read only the selected links inside a section tag from the menu
 </xogdriver>
 ```
 
-# Type `investmentClassInstances`
+## Type `investmentClassInstances`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -366,7 +366,7 @@ Used to read only the selected links inside a section tag from the menu
 </xogdriver>
 ```
 
-# Type `transactionClassInstances`
+## Type `transactionClassInstances`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -380,7 +380,7 @@ Used to read only the selected links inside a section tag from the menu
 </xogdriver>
 ```
 
-# Type `resourceInstances`
+## Type `resourceInstances`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -394,7 +394,7 @@ Used to read only the selected links inside a section tag from the menu
 </xogdriver>
 ```
 
-# Type `userInstances`
+## Type `userInstances`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -408,7 +408,7 @@ Used to read only the selected links inside a section tag from the menu
 </xogdriver>
 ```
 
-# Type `projectInstances`
+## Type `projectInstances`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -422,7 +422,7 @@ Used to read only the selected links inside a section tag from the menu
 </xogdriver>
 ```
 
-# Type `ideaInstances`
+## Type `ideaInstances`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -436,7 +436,7 @@ Used to read only the selected links inside a section tag from the menu
 </xogdriver>
 ```
 
-# Type `applicationInstances`
+## Type `applicationInstances`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -450,7 +450,7 @@ Used to read only the selected links inside a section tag from the menu
 </xogdriver>
 ```
 
-# Type `assetInstances`
+## Type `assetInstances`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -464,7 +464,7 @@ Used to read only the selected links inside a section tag from the menu
 </xogdriver>
 ```
 
-# Type `otherInvestmentInstances`
+## Type `otherInvestmentInstances`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -478,7 +478,7 @@ Used to read only the selected links inside a section tag from the menu
 </xogdriver>
 ```
 
-# Type `productInstances`
+## Type `productInstances`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -492,7 +492,7 @@ Used to read only the selected links inside a section tag from the menu
 </xogdriver>
 ```
 
-# Type `serviceInstances`
+## Type `serviceInstances`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -657,7 +657,7 @@ To install the package the user should save the zip file inside a folder named `
 # Data migration 
 This feature should be used to export instances to an excel file and read data from excel file to a XOG template creating an xml to import data to the environment.
 
-### Export data to excel
+## Export data to excel
 Should be used with a [driver instance type](#description-of-instance-driver-types) to read data from the environment and save the match attributes to an excel file.
 
 | Attribute | Description | Required |
@@ -692,7 +692,7 @@ This tag is required for export to excel data.
 </xogdriver>
 ```
 
-### Read data from excel to create XOG instances xml 
+## Read data from excel to create XOG instances xml 
 Should be used with to create an XOG xml file with many instances as lines in the excel file.
 
 | Attribute | Description | Required |
@@ -731,18 +731,18 @@ This tag is required for export to excel data.
 ### Template file example
 ```xml
 <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_customObjectInstance.xsd">
-	<Header action="write" externalSource="NIKU" objectType="customObjectInstance" version="8.0" />
-	<customObjectInstances objectCode="obj_sistema">
-		<instance instanceCode="" objectCode="obj_sistema">
-			<CustomInformation>
-				<ColumnValue name="code"></ColumnValue>
-				<ColumnValue name="name"></ColumnValue>
-				<ColumnValue name="status_novo"></ColumnValue>
-				<ColumnValue name="analista"></ColumnValue>
-				<ColumnValue name="multivalue_status"></ColumnValue>
-			</CustomInformation>
-		</instance>
-	</customObjectInstances>
+    <Header action="write" externalSource="NIKU" objectType="customObjectInstance" version="8.0" />
+    <customObjectInstances objectCode="obj_sistema">
+        <instance instanceCode="" objectCode="obj_sistema">
+            <CustomInformation>
+                <ColumnValue name="code"></ColumnValue>
+                <ColumnValue name="name"></ColumnValue>
+                <ColumnValue name="status_novo"></ColumnValue>
+                <ColumnValue name="analista"></ColumnValue>
+                <ColumnValue name="multivalue_status"></ColumnValue>
+            </CustomInformation>
+        </instance>
+    </customObjectInstances>
 </NikuDataBus>
 ```
 
