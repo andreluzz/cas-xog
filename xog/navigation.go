@@ -43,6 +43,10 @@ func RenderInterface() bool {
 
 	switch strings.ToLower(inputAction) {
 	case "w", "r", "m":
+		if driverXOG == nil {
+			common.Info("\n[CAS-XOG][red[ERROR]] - XOG driver not loaded. Try action 'l' to load a valid driver.\n")
+			return false
+		}
 		if !RenderEnvironments(strings.ToLower(inputAction)) {
 			return false
 		}

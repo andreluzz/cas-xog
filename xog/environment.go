@@ -121,7 +121,7 @@ func RenderEnvironments(action string) bool {
 		envIndex, err := strconv.Atoi(sourceInput)
 
 		if err != nil || envIndex <= 0 || envIndex > len(availableEnvironments) {
-			common.Info("\n[CAS-XOG][red[ERROR]] - Invalid reading environment index!\n\n")
+			common.Info("\n[CAS-XOG][red[ERROR]] - Invalid reading environment index!\n")
 			return false
 		}
 
@@ -158,7 +158,7 @@ func RenderEnvironments(action string) bool {
 	}
 
 	if err != nil || envIndex <= 0 || envIndex > len(availableEnvironments) {
-		common.Info("\n[CAS-XOG][red[ERROR]] - Invalid writing environment index!\n\n")
+		common.Info("\n[CAS-XOG][red[ERROR]] - Invalid writing environment index!\n")
 		return false
 	}
 

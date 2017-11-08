@@ -27,6 +27,7 @@ func LoadDriver(path string) error {
 	xml.Unmarshal(xmlFile, driverXOG)
 	v, err := strconv.ParseFloat(driverXOG.Version, 64)
 	if err != nil || v < common.VERSION {
+		driverXOG = nil
 		return errors.New(fmt.Sprintf("invalid driver(%s) version, expected version %.1f or greater", driverPath, common.VERSION))
 	}
 	return nil
@@ -252,11 +253,8 @@ func RenderDrivers() {
 
 	err = LoadDriver( driversList[driverIndex-1].FilePath)
 	if err != nil {
-		common.Info("\n[CAS-XOG][red[ERROR]] - %s", err.Error())
-		common.Info("\n[CAS-XOG][red[FATAL]] - Check your driver file. Press enter key to exit...")
-		scanExit := ""
-		fmt.Scanln(&scanExit)
-		os.Exit(0)
+		common.Info("\n[CAS-XOG][red[ERROR]] - %s\n", err.Error())
+		return
 	}
 
 	common.Info("\n[CAS-XOG][blue[Loaded XOG Driver file]]: %s | Total files: [green[%d]]\n",  driversList[driverIndex-1].FilePath, len(driverXOG.Files))
