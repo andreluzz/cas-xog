@@ -15,44 +15,44 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 
 | Type | Description |
 | ------ | ------ |
-| [`objects`](#type-objects) | Used to read and write objects attributes, actions and links |
-| [`views`](#type-views) | Used to read and write views |
-| [`processes`](#type-processes) | Used to read and write processes |
-| [`lookups`](#type-lookups) | Used to read and write lookups |
-| [`portlets`](#type-portlets) | Used to read and write portlets |
-| [`queries`](#type-queries) | Used to read and write queries |
-| [`pages`](#type-pages) | Used to read and write pages |
-| [`menus`](#type-menus) | Used to read and write menus |
-| [`obs`](#type-obs) | Used to read and write obs |
-| [`groups`](#type-groups) | Used to read and write groups |
+| [`objects`](#type-objects) | Used to read and write objects attributes, actions and links. |
+| [`views`](#type-views) | Used to read and write views. |
+| [`processes`](#type-processes) | Used to read and write processes. |
+| [`lookups`](#type-lookups) | Used to read and write lookups. |
+| [`portlets`](#type-portlets) | Used to read and write portlets. |
+| [`queries`](#type-queries) | Used to read and write queries. |
+| [`pages`](#type-pages) | Used to read and write pages. |
+| [`menus`](#type-menus) | Used to read and write menus. |
+| [`obs`](#type-obs) | Used to read and write OBS. |
+| [`groups`](#type-groups) | Used to read and write groups. |
 
 ### Description of instance Driver types
 
 | Type | Description |
 | ------ | ------ |
-| [`customObjectInstances`](#type-customobjectinstances) | Used to read and write customObject instances |
-| [`resourceClassInstances`](#type-resourceclassinstances) | Used to read and write resourceClass instances |
-| [`wipClassInstances`](#type-wipclassinstances) | Used to read and write wipClass instances |
-| [`investmentClassInstances`](#type-investmentclassinstances) | Used to read and write investmentClass instances |
-| [`transactionClassInstances`](#type-transactionclassinstances) | Used to read and write transactionClass instances |
-| [`resourceInstances`](#type-resourceinstances) | Used to read and write resource instances |
-| [`userInstances`](#type-userinstances) | Used to read and write user instances |
-| [`projectInstances`](#type-projectinstances) | Used to read and write project instances |
-| [`ideaInstances`](#type-ideainstances) | Used to read and write idea instances |
-| [`applicationInstances`](#type-applicationinstances) | Used to read and write application instances |
-| [`assetInstances`](#type-assetinstances) | Used to read and write asset instances |
-| [`otherInvestmentInstances`](#type-otherinvestmentinstances) | Used to read and write otherInvestment instances |
-| [`productInstances`](#type-productinstances) | Used to read and write product instances |
-| [`serviceInstances`](#type-serviceinstances) | Used to read and write service instances |
+| [`customObjectInstances`](#type-customobjectinstances) | Used to read and write customObject instances. |
+| [`resourceClassInstances`](#type-resourceclassinstances) | Used to read and write resourceClass instances. |
+| [`wipClassInstances`](#type-wipclassinstances) | Used to read and write wipClass instances. |
+| [`investmentClassInstances`](#type-investmentclassinstances) | Used to read and write investmentClass instances. |
+| [`transactionClassInstances`](#type-transactionclassinstances) | Used to read and write transactionClass instances. |
+| [`resourceInstances`](#type-resourceinstances) | Used to read and write resource instances. |
+| [`userInstances`](#type-userinstances) | Used to read and write user instances. |
+| [`projectInstances`](#type-projectinstances) | Used to read and write project instances. |
+| [`ideaInstances`](#type-ideainstances) | Used to read and write idea instances. |
+| [`applicationInstances`](#type-applicationinstances) | Used to read and write application instances. |
+| [`assetInstances`](#type-assetinstances) | Used to read and write asset instances. |
+| [`otherInvestmentInstances`](#type-otherinvestmentinstances) | Used to read and write otherInvestment instances. |
+| [`productInstances`](#type-productinstances) | Used to read and write product instances. |
+| [`serviceInstances`](#type-serviceinstances) | Used to read and write service instances. |
 
 ## Type `objects`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
-| `code` | Object code | yes | 
-| `path` | Path to the file to be saved on the file system | yes | 
-| `partitionModel` | Defines a new partitionModel if you want to set or change | no |
-| `sourcePartition` | When defined reads only elements from this partition code | no |
+| `code` | Object code. | yes | 
+| `path` | Path where the file will be saved on the file system. | yes | 
+| `partitionModel` | Used when you need to set a new partitionModel or change the current one. | no |
+| `sourcePartition` | When defined reads only elements from this partition code. | no |
 | `targetPartition` | Used to change the current partition code. Used alone without sourcePartition replaces the tag partitionCode of all xog elements with the defined value. | no |
 
 ```xml
@@ -66,12 +66,12 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 ```
 
 ### Sub tag `element`
-Used to read only the selected elements from the object
+Used to read only the selected elements from the object.
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
-| `type` | Defines what element to read. Available: `attribute`, `action` and `link` | yes | 
-| `code` | Code of the attribute that you want to include | yes | 
+| `type` | Defines what element to read. Availables types: `attribute`, `action` and `link`. | yes | 
+| `code` | Code of the element that you want to include. | yes | 
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -89,11 +89,11 @@ Used to read only the selected elements from the object
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
-| `code` | View code, use `*` if you want to get all views from one object or the view code if you want a single view. | yes |
-| `objectCode` | Object code | yes |
-| `path` | Path to the file to be saved on the file system | yes | 
-| `sourcePartition` | When defined reads only views from this partition code | no |
-| `targetPartition` | Used to replaces the source value tag partitionCode of elements with the defined value. Required sourcePartition tag to use these feature. | no |
+| `code` | View code. Use `*` if you want to get all views from one object or the view code if you want a single view. | yes |
+| `objectCode` | Object code. | yes |
+| `path` | Path where the file will be saved on the file system. | yes | 
+| `sourcePartition` | When defined reads only views from this partition code. | no |
+| `targetPartition` | Used to replaces the source value tag partitionCode of elements with the defined value. If you want to use this feature, the `sourcePartition` tag is required. | no |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -132,17 +132,17 @@ Used to read and transform only the selected fields from the section. Only secti
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Code of the field to transform. | yes | 
-| `column` | Section column where to insert the field in the target view. | yes |
-| `insertBefore` | Code of the field in the target view where you want to position the new field. | no | 
-| `remove` | Defines if the field should be removed from the target view. Use `true` or `false`. | no |
+| `remove` | Use `true` if the field should be removed from the target view. Default value is considered `false`. | no |
+| `column` | The section's column where the field will be inserted in the target view. Required if `remove` tag is not defined as `true`. | no |
+| `insertBefore` | If an attribute code is defined in this tag, the new field will be positioned before this attributte in the target view. If not, will insert the field as in the last position of the column. | no | 
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
     <file type="views" code="obj_system.audit" objectCode="obj_system" path="view_3.xml" sourcePartition="HR">
         <section action="update" sourcePosition="1" targetPosition="1" >
-            <field code="analist" insertBefore="created_by" column="left" />
-            <field code="status" insertBefore="created_by" column="left" />
+            <field code="analist" column="left" insertBefore="created_by" />
+            <field code="status" column="left" insertBefore="created_by" />
             <field code="new_status" column="right" />
             <field code="created_date" remove="true" />
         </section>
@@ -154,9 +154,9 @@ Used to read and transform only the selected fields from the section. Only secti
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
-| `code` | Process code | yes | 
-| `path` | Path to the file to be saved on the file system | yes |
-| `copyPermissions` | Defnies the code of the process you want to copy the permissions from. | yes |
+| `code` | Process code. | yes | 
+| `path` | Path where the file will be saved on the file system. | yes |
+| `copyPermissions` | The code of the process you want to copy the permissions from. | yes |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -170,10 +170,10 @@ Used to read and transform only the selected fields from the section. Only secti
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
-| `code` | Lookup code | yes | 
-| `path` | Path to the file to be saved on the file system | yes | 
+| `code` | Lookup code. | yes | 
+| `path` | Path where the file will be saved on the file system. | yes | 
 | `onlyStructure` | Used to create a lookup with a fake query to prevent error of attributes that have not yet been imported. Only available for dynamic lookups. | no | 
-| `sourcePartition` | When defined changes only elements from this partition code. should be used together with targetPartition tag. Only available for static lookups. | no |
+| `sourcePartition` | When defined changes only elements from this partition code. Should be used together with targetPartition tag. Only available for static lookups. | no |
 | `targetPartition` | Used to change the partition code. Used alone without sourcePartition replaces the tag partitionCode of all lookup values with the defined value. Only available for static lookups. | no |
 
 ```xml
@@ -190,8 +190,8 @@ Used to read and transform only the selected fields from the section. Only secti
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
-| `code` | Portlet code | yes | 
-| `path` | Path to the file to be saved on the file system | yes | 
+| `code` | Portlet code. | yes | 
+| `path` | Path where the file will be saved on the file system. | yes | 
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -204,8 +204,8 @@ Used to read and transform only the selected fields from the section. Only secti
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
-| `code` | Query code | yes | 
-| `path` | Path to the file to be saved on the file system | yes | 
+| `code` | Query code. | yes | 
+| `path` | Path where the file will be saved on the file system. | yes | 
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -218,8 +218,8 @@ Used to read and transform only the selected fields from the section. Only secti
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
-| `code` | Page code | yes | 
-| `path` | Path to the file to be saved on the file system | yes | 
+| `code` | Page code. | yes | 
+| `path` | Path where the file will be saved on the file system. | yes | 
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -232,8 +232,8 @@ Used to read and transform only the selected fields from the section. Only secti
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
-| `code` | Page code | yes | 
-| `path` | Path to the file to be saved on the file system | yes | 
+| `code` | Menu code. | yes | 
+| `path` | Path where the file will be saved on the file system. | yes | 
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -243,12 +243,12 @@ Used to read and transform only the selected fields from the section. Only secti
 ```
 
 ### Sub tag `section`
-Used to read only the selected section from the menu
+Used to read only the selected section from the menu.
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Code of the attribute that you want to include. | yes | 
-| `action` | Defines what to do in the target menu. Available: `insert` and `update`. To use action update is required to include the sub tag `link`. | yes | 
+| `action` | Defines what to do in the target menu. Available actions: `insert` and `update`. To use the update action, you need to include the sub tag [`link`](#sub-tag-link). | yes | 
 | `targetPosition` | Position where you want to insert the section in the target menu. | no | 
 
 ```xml
@@ -261,7 +261,7 @@ Used to read only the selected section from the menu
 ```
 
 ### Sub tag `link`
-Used to read only the selected links inside a section tag from the menu
+Used to read only the selected links inside a section tag from the menu.
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -285,8 +285,8 @@ Used to read only the selected links inside a section tag from the menu
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
-| `code` | OBS code | yes | 
-| `path` | Path to the file to be saved on the file system | yes | 
+| `code` | OBS code. | yes | 
+| `path` | Path where the file will be saved on the file system. | yes | 
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -299,8 +299,8 @@ Used to read only the selected links inside a section tag from the menu
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
-| `code` | Group code | yes | 
-| `path` | Path to the file to be saved on the file system | yes | 
+| `code` | Group code. | yes | 
+| `path` | Path where the file will be saved on the file system. | yes | 
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -315,7 +315,7 @@ Used to read only the selected links inside a section tag from the menu
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
 | `objectCode` | Defines the code of the custom object you want to read the instances. | yes |
-| `path` | Path to the file to be saved on the file system | yes |
+| `path` | Path where the file will be saved on the file system. | yes |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -329,7 +329,7 @@ Used to read only the selected links inside a section tag from the menu
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path to the file to be saved on the file system | yes |
+| `path` | Path where the file will be saved on the file system. | yes |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -343,7 +343,7 @@ Used to read only the selected links inside a section tag from the menu
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path to the file to be saved on the file system | yes |
+| `path` | Path where the file will be saved on the file system. | yes |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -357,7 +357,7 @@ Used to read only the selected links inside a section tag from the menu
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path to the file to be saved on the file system | yes |
+| `path` | Path where the file will be saved on the file system. | yes |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -371,7 +371,7 @@ Used to read only the selected links inside a section tag from the menu
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path to the file to be saved on the file system | yes |
+| `path` | Path where the file will be saved on the file system. | yes |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -385,7 +385,7 @@ Used to read only the selected links inside a section tag from the menu
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path to the file to be saved on the file system | yes |
+| `path` | Path where the file will be saved on the file system. | yes |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -399,7 +399,7 @@ Used to read only the selected links inside a section tag from the menu
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path to the file to be saved on the file system | yes |
+| `path` | Path where the file will be saved on the file system. | yes |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -413,7 +413,7 @@ Used to read only the selected links inside a section tag from the menu
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path to the file to be saved on the file system | yes |
+| `path` | Path where the file will be saved on the file system. | yes |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -427,7 +427,7 @@ Used to read only the selected links inside a section tag from the menu
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path to the file to be saved on the file system | yes |
+| `path` | Path where the file will be saved on the file system. | yes |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -441,7 +441,7 @@ Used to read only the selected links inside a section tag from the menu
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path to the file to be saved on the file system | yes |
+| `path` | Path where the file will be saved on the file system. | yes |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -455,7 +455,7 @@ Used to read only the selected links inside a section tag from the menu
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path to the file to be saved on the file system | yes |
+| `path` | Path where the file will be saved on the file system. | yes |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -469,7 +469,7 @@ Used to read only the selected links inside a section tag from the menu
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path to the file to be saved on the file system | yes |
+| `path` | Path where the file will be saved on the file system. | yes |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -483,7 +483,7 @@ Used to read only the selected links inside a section tag from the menu
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path to the file to be saved on the file system | yes |
+| `path` | Path where the file will be saved on the file system. | yes |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -497,7 +497,7 @@ Used to read only the selected links inside a section tag from the menu
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path to the file to be saved on the file system | yes |
+| `path` | Path where the file will be saved on the file system. | yes |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -510,12 +510,12 @@ Used to read only the selected links inside a section tag from the menu
 Sub tags that can be used in any type of `file` tag.
 
 ### Sub Tag `replace`
-Used to do a replace from one string to another in the xog result.
+Used to do a replace one string with another one in the xog result.
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
-| `from` | Defines which string should be searched for to be changed | yes | 
-| `to` | String that will replace what was defined in the `from` tag | yes | 
+| `from` | Defines which string should be replaced. | yes | 
+| `to` | String that will replace the one defined in the `from` tag. | yes | 
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -538,7 +538,7 @@ Used to do a remove elements in the xog result using xpath.
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
-| `action` | Action remove in the element tag. Only action `remove` is available. | yes | 
+| `action` | Used to remove entire path in the element tag. Only action `remove` is available. | yes | 
 | `xpath` | String that defines the path in the XML to the element you want to remove. | yes | 
 
 ```xml
@@ -560,36 +560,36 @@ Used to do a remove elements in the xog result using xpath.
 ```
 
 # Package creation and deploy
-This feature should be used to deploy structures and instances in a more consolidated way. Should be created a zip containing: a package file (.package), one or more driver files (.driver) and folders for versions and the XOG xml files.
+This feature should be used to deploy structures and instances in a more consolidated and organized way. You need to create a zip containing: a package file (.package), one or more driver files (.driver) and folders for versions and the XOG xml files.
 
 ### Tag `package`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
-| `name` | Defines the name that will be displayed to the user. | yes | 
+| `name` | Defines what will be displayed to the user as the package name. | yes | 
 | `folder` | The first level folder inside the zip file that represents the package. | yes |
-| `driver` | The default driver for all package versions. If the version has no driver this will be used.  | yes |
+| `driver` | The default driver for all package versions. If the version has no driver this one will be used.  | yes |
 
 ### Sub tag `version`
-This tag is required every package should have at least one version
+This tag is required, as every package should have at least one version. If there is only one version, it will be chosen automatically.
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
-| `name` | Defines the name that will be displayed to the user to select the version. If there is only one will be chosen automatically. | yes | 
+| `name` | Defines what will be displayed to the user as the version name. | yes |
 | `folder` | The folder that represents the files for this version. | yes |
-| `driver` | Defines the driver for this version. Can be used to define a version with demo data and other with only structure for example.  | no |
+| `driver` | Defines the driver for this version. Can be used to define a version with demo data and other with only structure for example. | no |
 
 ### Sub tag `definition`
-This tag is not required, should be used to define questions to the user to answer and use the result to replace values in the XOG xml files.
+This tag is not required and should be used to define questions to the user to answer. The answers will be used to change specific definitions withih XOG xml files of the package.
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
-| `action` | Defines the action to the replace. Available: `changePartitionModel`, `changePartition` and `replaceString`.  | yes | 
-| `description` | The texto to display the question to the user whrn installing the package. | yes |
+| `action` | Defines the desired action. Available actions: `changePartitionModel`, `changePartition` and `replaceString`.  | yes | 
+| `description` | The question text that is asked to the user when installing the package. | yes |
 | `default` | The default value for this definition.  | no |
-| `transformTypes` | Define in what types of files this transformation should be performed. If not defined the replace will be used in all XOG xml files. Use the same types as in [`driver types`](#description-of-driver-types)  | no |
-| `from` | The string that should be found in the XOG xml files. Required when action is `replaceString`.  | no |
-| `to` | The string that should replace the current value. Use the special string `"##DEFINITION_VALUE##` to set the position for the value defined by the user. Required when action is `replaceString`.  | no |
+| `transformTypes` | Define in what types of files this action should be performed, separated by single commas. If not defined the action will be performed in all XOG xml files. Use the same types defined in [`driver types`](#description-of-driver-types)  | no |
+| `from` | Defines which string should be replaced in the XOG xml files. Required when action is `replaceString`.  | no |
+| `to` | String that will replace the one defined in the `from` tag. Use the special string `"##DEFINITION_VALUE##` to set the position for the value defined by the user. Required when action is `replaceString`.  | no |
 
 ### Package file example
 ```xml
@@ -652,10 +652,10 @@ This tag is not required, should be used to define questions to the user to answ
     └── cas-fin.package
 ```
 
-To install the package the user should save the zip file inside a folder named `package` in the same directory of the `cas-xog.exe` file.
+To install the package the user should save the zip file inside a folder named `packages` in the same directory of the `cas-xog.exe` file.
 
 # Data migration 
-This feature should be used to export instances to an excel file and read data from excel file to a XOG template creating an xml to import data to the environment.
+This feature is used to export instances to an excel file and read data from excel file to a XOG template creating an xml to import data to the environment.
 
 ## Export data to excel
 Should be used with a [driver instance type](#description-of-instance-driver-types) to read data from the environment and save the match attributes to an excel file.
@@ -663,7 +663,7 @@ Should be used with a [driver instance type](#description-of-instance-driver-typ
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `code` | Defines the name that will be displayed to the user. | yes | 
-| `path` | Path to the file to be saved on the file system. | yes |
+| `path` | Path where the file will be saved on the file system. | yes |
 | `exportToExcel` | If set to true creates an excel file with the matched data. | yes |
 | `excel` | The name of the file to export the data.  | yes |
 | `instance` | The name of the main tag that represents the instance object that is being read.  | yes |
@@ -673,8 +673,8 @@ This tag is required for export to excel data.
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
-| `attribute` | Defines the attribute from the element you want to get the data. If no xpath is defined then we get the value from the main instance element defined.  | no | 
-| `xpath` | A string representing the path to the element you want to get the data. If no attribute value is defined then we get the value from the tag text. | no |
+| `attribute` | Defines the attribute in the element where you want to get the data from. If no xpath is defined then we get the value from the main instance element defined. | no | 
+| `xpath` | A string representing the path to the element you want to get the data from. If no attribute value is defined then we get the value from the tag text. | no |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -693,14 +693,14 @@ This tag is required for export to excel data.
 ```
 
 ## Read data from excel to create XOG instances xml 
-Should be used with to create an XOG xml file with many instances as lines in the excel file.
+Should be used with to create an XOG xml file with an instance for each line in the excel file.
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
-| `path` | Path to the file to be saved on the file system. | yes |
+| `path` | Path where the file will be saved on the file system. | yes |
 | `template` | Path to the template that should be used to create the XOG xml file. | yes |
 | `instance` | The name of the main tag that represents the instance object that should be created. | yes |
-| `excel` | The path to the excel file with the data. | yes |
+| `excel` | Path to the excel file with the data. | yes |
 | `startRow` | The line number in the excel file that we will start reading to create the instances. Default value is 1. | no |
 
 ### Sub tag `match`
@@ -708,11 +708,11 @@ This tag is required for export to excel data.
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
-| `col` | Define which column of excel we'll get the data to include in the XOG xml file. | yes |
-| `attribute` | Defines the attribute in the element you want to set the data. If no xpath is defined then we set this attribute in the main element instance.  | no |
+| `col` | Defines from which column of excel we'll get the data to include in the XOG xml file. | yes |
+| `attribute` | Defines which attribute in the element will receive the data. If no xpath is defined then we set this attribute in the main element instance. | no |
 | `xpath` | A string representing the path to the element you want to set the data. If no attribute value is defined then we set the value as a tag text. | no |
-| `multiValued` | If set to true defines that this element should be treated as multi value. | no |
-| `separator` | Defines what character were used to separate the options in the multi value on the excel data. Default value is ';'. | no |
+| `multiValued` | If set to true this element will be treated as multi-valued. | no |
+| `separator` | Defines what character is being used to separate the options in the multi-valued data. Default value is ';'. | no |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
