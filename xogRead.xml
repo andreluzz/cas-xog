@@ -31,7 +31,7 @@
             <soapenv:Body />
         </soapenv:Envelope>
     </xogtype>
-    <xogtype type="lookups">
+    <xogtype type="Lookups">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
             <Header action="read" externalSource="NIKU" objectType="contentPack" version="8.0">
                 <args name="no_dependencies" value="true"/>
@@ -41,7 +41,7 @@
             </LookupQuery>
         </NikuDataBus>
     </xogtype>
-    <xogtype type="objects">
+    <xogtype type="Objects">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
             <Header action="read" externalSource="NIKU" objectType="contentPack" version="8.0">
                 <args name="no_dependencies" value="true"/>
@@ -53,7 +53,7 @@
             </ObjectQuery>
         </NikuDataBus>
     </xogtype>
-    <xogtype type="views">
+    <xogtype type="Views">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
             <Header action="read" externalSource="NIKU" objectType="contentPack" version="8.0">
                 <args name="no_dependencies" value="true"/>
@@ -65,7 +65,7 @@
             </ViewQuery>
         </NikuDataBus>
     </xogtype>
-    <xogtype type="portlets">
+    <xogtype type="Portlets">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
             <Header action="read" externalSource="NIKU" objectType="contentPack" version="8.0">
                 <args name="no_dependencies" value="true"/>
@@ -75,7 +75,7 @@
             </PortletQuery>
         </NikuDataBus>
     </xogtype>
-    <xogtype type="queries">
+    <xogtype type="Queries">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
             <Header action="read" externalSource="NIKU" objectType="contentPack" version="8.0">
                 <args name="no_dependencies" value="true"/>
@@ -85,7 +85,7 @@
             </QueryQuery>
         </NikuDataBus>
     </xogtype>
-    <xogtype type="processes">
+    <xogtype type="Processes">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
             <Header action="read" externalSource="NIKU" objectType="contentPack" version="8.0">
                 <args name="no_dependencies" value="true"/>
@@ -95,7 +95,7 @@
             </ProcessQuery>
         </NikuDataBus>
     </xogtype>
-    <xogtype type="pages">
+    <xogtype type="Pages">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
             <Header action="read" externalSource="NIKU" objectType="contentPack" version="8.0">
                 <args name="no_dependencies" value="true"/>
@@ -105,7 +105,7 @@
             </PageQuery>
         </NikuDataBus>
     </xogtype>
-    <xogtype type="groups">
+    <xogtype type="Groups">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
             <Header action="read" externalSource="NIKU" objectType="group" version="7.5">
                 <args name="no_dependencies" value="true"/>
@@ -115,7 +115,7 @@
             </Query>
         </NikuDataBus>
     </xogtype>
-    <xogtype type="menus">
+    <xogtype type="Menus">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
             <Header action="read" externalSource="NIKU" objectType="contentPack" version="8.0">
                 <args name="no_dependencies" value="true"/>
@@ -125,7 +125,7 @@
             </MenuQuery>
         </NikuDataBus>
     </xogtype>
-    <xogtype type="obs">
+    <xogtype type="Obs">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
             <Header action="read" externalSource="NIKU" objectType="obs" version="8.0"/>
             <Query>
@@ -133,7 +133,7 @@
             </Query>
         </NikuDataBus>
     </xogtype>
-    <xogtype type="customObjectInstances">
+    <xogtype type="CustomObjectInstances">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
             <Header action="read" externalSource="NIKU" objectType="customObjectInstance" version="8.0">
                 <args name="documentLocation" />
@@ -144,7 +144,7 @@
             </CustomObjectInstanceQuery>
         </NikuDataBus>
     </xogtype>
-    <xogtype type="resourceClassInstances">
+    <xogtype type="ResourceClassInstances">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_notification.xsd">
             <Header action="read" externalSource="NIKU" objectType="resourceclass" version="12.0"/>
             <Query>
@@ -152,7 +152,7 @@
             </Query>
         </NikuDataBus>
     </xogtype>
-    <xogtype type="wipClassInstances">
+    <xogtype type="WipClassInstances">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_notification.xsd">
             <Header action="read" externalSource="NIKU" objectType="wipclass" version="12.0"/>
             <Query>
@@ -160,7 +160,7 @@
             </Query>
         </NikuDataBus>
     </xogtype>
-    <xogtype type="investmentClassInstances">
+    <xogtype type="InvestmentClassInstances">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_notification.xsd">
             <Header action="read" externalSource="NIKU" objectType="investmentclass" version="14.1"/>
             <Query>
@@ -168,7 +168,7 @@
             </Query>
         </NikuDataBus>
     </xogtype>
-    <xogtype type="transactionClassInstances">
+    <xogtype type="TransactionClassInstances">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_notification.xsd">
             <Header action="read" externalSource="NIKU" objectType="transactionclass" version="12.0"/>
             <Query>
@@ -176,7 +176,7 @@
             </Query>
         </NikuDataBus>
     </xogtype>
-    <xogtype type="resourceInstances">
+    <xogtype type="ResourceInstances">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
             <Header action="read" externalSource="NIKU" objectType="resource" version="8.0">
                 <args name="include_contact" value="true"/>
@@ -189,7 +189,7 @@
             </Query>
         </NikuDataBus>
     </xogtype>
-    <xogtype type="userInstances">
+    <xogtype type="UserInstances">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
             <Header action="read" externalSource="NIKU" objectType="user" version="8.0"/>
             <Query>
@@ -197,7 +197,7 @@
             </Query>
         </NikuDataBus>
     </xogtype>
-    <xogtype type="projectInstances">
+    <xogtype type="ProjectInstances">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
             <Header action="read" externalSource="NIKU" objectType="project" version="8.0">
                 <args name="include_tasks" value="true"/>
@@ -218,7 +218,7 @@
             </Query>
         </NikuDataBus>
     </xogtype>
-    <xogtype type="ideaInstances">
+    <xogtype type="IdeaInstances">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
             <Header action="read" externalSource="NIKU" objectType="idea" version="8.0">
                 <args name="include_resources" value="true"/>
@@ -232,7 +232,7 @@
             </Query>
         </NikuDataBus>
     </xogtype>
-    <xogtype type="applicationInstances">
+    <xogtype type="ApplicationInstances">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
             <Header action="read" externalSource="NIKU" objectType="application" version="8.0">
                 <args name="include_resources" value="true"/>
@@ -246,7 +246,7 @@
             </Query>
         </NikuDataBus>
     </xogtype>
-    <xogtype type="assetInstances">
+    <xogtype type="AssetInstances">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
             <Header action="read" externalSource="NIKU" objectType="asset" version="8.0">
                 <args name="include_resources" value="true"/>
@@ -260,7 +260,7 @@
             </Query>
         </NikuDataBus>
     </xogtype>
-    <xogtype type="otherInvestmentInstances">
+    <xogtype type="OtherInvestmentInstances">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
             <Header action="read" externalSource="NIKU" objectType="otherInvestment" version="8.0">
                 <args name="include_resources" value="true"/>
@@ -274,7 +274,7 @@
             </Query>
         </NikuDataBus>
     </xogtype>
-    <xogtype type="productInstances">
+    <xogtype type="ProductInstances">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
             <Header action="read" externalSource="NIKU" objectType="product" version="8.0">
                 <args name="include_resources" value="true"/>
@@ -288,7 +288,7 @@
             </Query>
         </NikuDataBus>
     </xogtype>
-    <xogtype type="serviceInstances">
+    <xogtype type="ServiceInstances">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
             <Header action="read" externalSource="NIKU" objectType="service" version="8.0">
                 <args name="include_resources" value="true"/>

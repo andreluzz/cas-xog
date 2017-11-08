@@ -43,11 +43,11 @@ func read(file *common.DriverFile, env *EnvType) (string, error) {
 	}
 
 	if file.Code == "" {
-		return "", errors.New("no attribute code defined on tag <file>")
+		return "", errors.New("no attribute code defined")
 	}
 
 	if file.Path == "" {
-		return "", errors.New("no attribute path defined on tag <file>")
+		return "", errors.New("no attribute path defined")
 	}
 
 	req := etree.NewDocument()
@@ -63,7 +63,7 @@ func read(file *common.DriverFile, env *EnvType) (string, error) {
 		req.FindElement("//Filter[@name='object_code']").SetText(file.Code)
 	case common.VIEW:
 		if file.ObjCode == "" {
-			return "", errors.New("no attribute objectCode defined on tag <file>")
+			return "", errors.New("no attribute objectCode defined on tag <view>")
 		}
 		req.FindElement("//Filter[@name='code']").SetText(file.Code)
 		req.FindElement("//Filter[@name='object_code']").SetText(file.ObjCode)
@@ -75,7 +75,7 @@ func read(file *common.DriverFile, env *EnvType) (string, error) {
 		}
 	case common.CUSTOM_OBJECT_INSTANCE:
 		if file.ObjCode == "" {
-			return "", errors.New("no attribute objectCode defined on tag <file>")
+			return "", errors.New("no attribute objectCode defined on tag <customObjectInstance>")
 		}
 		req.FindElement("//Filter[@name='instanceCode']").SetText(file.Code)
 		req.FindElement("//Filter[@name='objectCode']").SetText(file.ObjCode)

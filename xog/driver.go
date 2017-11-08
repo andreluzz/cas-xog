@@ -12,6 +12,7 @@ import (
 	"github.com/andreluzz/cas-xog/common"
 	"github.com/andreluzz/cas-xog/migration"
 	"github.com/andreluzz/cas-xog/transform"
+	"reflect"
 )
 
 var driverXOG *common.Driver
@@ -23,13 +24,34 @@ func LoadDriver(path string) error {
 		return errors.New("Error loading driver file: " + err.Error())
 	}
 	driverPath = path
-	driverXOG = new(common.Driver)
-	xml.Unmarshal(xmlFile, driverXOG)
-	v, err := strconv.ParseFloat(driverXOG.Version, 64)
+	driverXOGTypePattern := common.DriverTypesPattern{}
+	xml.Unmarshal(xmlFile, &driverXOGTypePattern)
+
+	v, err := strconv.ParseFloat(driverXOGTypePattern.Version, 64)
 	if err != nil || v < common.VERSION {
 		driverXOG = nil
 		return errors.New(fmt.Sprintf("invalid driver(%s) version, expected version %.1f or greater", driverPath, common.VERSION))
 	}
+
+	if len(driverXOGTypePattern.Files) > 0  {
+		driverXOG = nil
+		return errors.New(fmt.Sprintf("invalid driver(%s) tag <file> is no longer supported", driverPath))
+	}
+
+	types := reflect.ValueOf(&driverXOGTypePattern).Elem()
+	typeOfT := types.Type()
+	for i := 0; i < types.NumField(); i++ {
+		t := types.Field(i)
+		if t.Kind() == reflect.Slice {
+			fmt.Println(typeOfT.Field(i).Name)
+			for _, f := range t.Interface().([]common.DriverFile) {
+				f.Type = typeOfT.Field(i).Name
+				driverXOG.Files = append(driverXOG.Files, f)
+			}
+		}
+	}
+	driverXOG.Version = driverXOGTypePattern.Version
+
 	return nil
 }
 
