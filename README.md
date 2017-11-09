@@ -11,41 +11,41 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 3. Create a folder called "drivers" with all driver files (.driver) you need to defining the objects you want to read and write;
 4. Execute the cas-xog.exe and follow the instructions in the screen.
 
-### Description of structure Driver types
+### Description of structure Driver tags
 
-| Type | Description |
+| Tag | Description |
 | ------ | ------ |
-| [`objects`](#type-objects) | Used to read and write objects attributes, actions and links. |
-| [`views`](#type-views) | Used to read and write views. |
-| [`processes`](#type-processes) | Used to read and write processes. |
-| [`lookups`](#type-lookups) | Used to read and write lookups. |
-| [`portlets`](#type-portlets) | Used to read and write portlets. |
-| [`queries`](#type-queries) | Used to read and write queries. |
-| [`pages`](#type-pages) | Used to read and write pages. |
-| [`menus`](#type-menus) | Used to read and write menus. |
-| [`obs`](#type-obs) | Used to read and write OBS. |
-| [`groups`](#type-groups) | Used to read and write groups. |
+| [`object`](#tag-object) | Used to read and write objects attributes, actions and links. |
+| [`view`](#tag-view) | Used to read and write views. |
+| [`process`](#tag-process) | Used to read and write processes. |
+| [`lookup`](#tag-lookup) | Used to read and write lookups. |
+| [`portlet`](#tag-portlet) | Used to read and write portlets. |
+| [`query`](#tag-query) | Used to read and write queries. |
+| [`page`](#tag-page) | Used to read and write pages. |
+| [`menu`](#tag-menu) | Used to read and write menus. |
+| [`obs`](#tag-obs) | Used to read and write OBS. |
+| [`group`](#tag-group) | Used to read and write groups. |
 
-### Description of instance Driver types
+### Description of instance Driver tags
 
-| Type | Description |
+| Tag | Description |
 | ------ | ------ |
-| [`customObjectInstances`](#type-customobjectinstances) | Used to read and write customObject instances. |
-| [`resourceClassInstances`](#type-resourceclassinstances) | Used to read and write resourceClass instances. |
-| [`wipClassInstances`](#type-wipclassinstances) | Used to read and write wipClass instances. |
-| [`investmentClassInstances`](#type-investmentclassinstances) | Used to read and write investmentClass instances. |
-| [`transactionClassInstances`](#type-transactionclassinstances) | Used to read and write transactionClass instances. |
-| [`resourceInstances`](#type-resourceinstances) | Used to read and write resource instances. |
-| [`userInstances`](#type-userinstances) | Used to read and write user instances. |
-| [`projectInstances`](#type-projectinstances) | Used to read and write project instances. |
-| [`ideaInstances`](#type-ideainstances) | Used to read and write idea instances. |
-| [`applicationInstances`](#type-applicationinstances) | Used to read and write application instances. |
-| [`assetInstances`](#type-assetinstances) | Used to read and write asset instances. |
-| [`otherInvestmentInstances`](#type-otherinvestmentinstances) | Used to read and write otherInvestment instances. |
-| [`productInstances`](#type-productinstances) | Used to read and write product instances. |
-| [`serviceInstances`](#type-serviceinstances) | Used to read and write service instances. |
+| [`customObjectInstance`](#tag-customobjectinstance) | Used to read and write customObject instances. |
+| [`resourceClassInstance`](#tag-resourceclassinstance) | Used to read and write resourceClass instances. |
+| [`wipClassInstance`](#tag-wipclassinstance) | Used to read and write wipClass instances. |
+| [`investmentClassInstance`](#tag-investmentclassinstance) | Used to read and write investmentClass instances. |
+| [`transactionClassInstance`](#tag-transactionclassinstance) | Used to read and write transactionClass instances. |
+| [`resourceInstance`](#tag-resourceinstance) | Used to read and write resource instances. |
+| [`userInstance`](#tag-userinstance) | Used to read and write user instances. |
+| [`projectInstance`](#tag-projectinstance) | Used to read and write project instances. |
+| [`ideaInstance`](#tag-ideainstance) | Used to read and write idea instances. |
+| [`applicationInstance`](#tag-applicationinstance) | Used to read and write application instances. |
+| [`assetInstance`](#tag-assetinstance) | Used to read and write asset instances. |
+| [`otherInvestmentInstance`](#tag-otherinvestmentinstance) | Used to read and write otherInvestment instances. |
+| [`productInstance`](#tag-productinstance) | Used to read and write product instances. |
+| [`serviceInstance`](#tag-serviceinstance) | Used to read and write service instances. |
 
-## Type `objects`
+## Tag `object`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -58,10 +58,10 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="objects" code="idea" path="idea.xml" />
-    <file type="objects" code="application" path="application.xml" partitionModel="new-corp" />
-    <file type="objects" code="systems" path="systems.xml" sourcePartition="IT" targetPartition="NIKU.ROOT" />
-    <file type="objects" code="inv" path="inv.xml" targetPartition="NIKU.ROOT" />
+    <object code="idea" path="idea.xml" />
+    <object code="application" path="application.xml" partitionModel="new-corp" />
+    <object code="systems" path="systems.xml" sourcePartition="IT" targetPartition="NIKU.ROOT" />
+    <object code="inv" path="inv.xml" targetPartition="NIKU.ROOT" />
 </xogdriver>
 ```
 
@@ -76,16 +76,16 @@ Used to read only the selected elements from the object.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="objects" code="test_subobj" path="test_subobj.xml">
+    <object code="test_subobj" path="test_subobj.xml">
         <element type="attribute" code="attr_auto_number" />
         <element type="attribute" code="novo_atr" />
         <element type="action" code="tst_run_proc_lnk" />
         <element type="link" code="test_subobj.link_test" />
-    </file>
+    </object>
 </xogdriver>
 ```
 
-## Type `views`
+## Tag `view`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -98,11 +98,11 @@ Used to read only the selected elements from the object.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="views" code="*" objectCode="obj_system" path="view_0.xml" />
-    <file type="views" code="*" objectCode="obj_system" path="view_1.xml" sourcePartition="IT" />
-    <file type="views" code="*" objectCode="obj_system" path="view_2.xml" sourcePartition="IT" targetPartition="HR" />
-    <file type="views" code="obj_system.audit" objectCode="obj_system" path="view_3.xml" sourcePartition="HR" />
-    <file type="views" code="obj_system.audit" objectCode="obj_system" path="view_4.xml" sourcePartition="HR" targetPartition="IT" />
+    <view code="*" objectCode="obj_system" path="view_0.xml" />
+    <view code="*" objectCode="obj_system" path="view_1.xml" sourcePartition="IT" />
+    <view code="*" objectCode="obj_system" path="view_2.xml" sourcePartition="IT" targetPartition="HR" />
+    <view code="obj_system.audit" objectCode="obj_system" path="view_3.xml" sourcePartition="HR" />
+    <view code="obj_system.audit" objectCode="obj_system" path="view_4.xml" sourcePartition="HR" targetPartition="IT" />
 </xogdriver>
 ```
 
@@ -118,11 +118,11 @@ Used to read and transform only the selected section from the view. Only single 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="views" code="obj_system.audit" objectCode="obj_system" path="view_3.xml" sourcePartition="HR">
+    <view code="obj_system.audit" objectCode="obj_system" path="view_3.xml" sourcePartition="HR">
         <section action="insert" sourcePosition="1" targetPosition="1" />
         <section action="replace" sourcePosition="1" targetPosition="3" />
         <section action="remove" targetPosition="3" />
-    </file>
+    </view>
 </xogdriver>
 ```
 
@@ -139,18 +139,18 @@ Used to read and transform only the selected fields from the section. Only secti
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="views" code="obj_system.audit" objectCode="obj_system" path="view_3.xml" sourcePartition="HR">
+    <view code="obj_system.audit" objectCode="obj_system" path="view_3.xml" sourcePartition="HR">
         <section action="update" sourcePosition="1" targetPosition="1" >
             <field code="analist" column="left" insertBefore="created_by" />
             <field code="status" column="left" insertBefore="created_by" />
             <field code="new_status" column="right" />
             <field code="created_date" remove="true" />
         </section>
-    </file>
+    </view>
 </xogdriver>
 ```
 
-## Type `processes`
+## Tag `process`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -161,12 +161,12 @@ Used to read and transform only the selected fields from the section. Only secti
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="processes" code="PRC_0001" path="PRC_0001.xml" />
-    <file type="processes" code="PRC_0002" path="PRC_0002.xml" copyPermissions="PRC_0001" />
+    <process code="PRC_0001" path="PRC_0001.xml" />
+    <process code="PRC_0002" path="PRC_0002.xml" copyPermissions="PRC_0001" />
 </xogdriver>
 ```
 
-## Type `lookups`
+## Tag `lookup`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -179,14 +179,14 @@ Used to read and transform only the selected fields from the section. Only secti
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="lookups" code="INV_APPLICATION_CATEGORY_TYPE" path="INV_APPLICATION_CATEGORY_TYPE.xml" />
-    <file type="lookups" code="LOOKUP_FIN_CHARGECODES" path="LOOKUP_FIN_CHARGECODES.xml" onlyStructure="true" />
-    <file type="lookups" code="LOOKUP_CAS_XOG_1" path="LOOKUP_CAS_XOG_1.xml" targetPartition="NIKU.ROOT" />
-    <file type="lookups" code="LOOKUP_CAS_XOG_2" path="LOOKUP_CAS_XOG_2.xml" sourcePartition="IT" targetPartition="NIKU.ROOT" />
+    <lookup code="INV_APPLICATION_CATEGORY_TYPE" path="INV_APPLICATION_CATEGORY_TYPE.xml" />
+    <lookup code="LOOKUP_FIN_CHARGECODES" path="LOOKUP_FIN_CHARGECODES.xml" onlyStructure="true" />
+    <lookup code="LOOKUP_CAS_XOG_1" path="LOOKUP_CAS_XOG_1.xml" targetPartition="NIKU.ROOT" />
+    <lookup code="LOOKUP_CAS_XOG_2" path="LOOKUP_CAS_XOG_2.xml" sourcePartition="IT" targetPartition="NIKU.ROOT" />
 </xogdriver>
 ```
 
-## Type `portlets`
+## Tag `portlet`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -196,11 +196,11 @@ Used to read and transform only the selected fields from the section. Only secti
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="portlets" code="cop.teamCapacityLinkable" path="cop.teamCapacityLinkable.xml" />
+    <portlet code="cop.teamCapacityLinkable" path="cop.teamCapacityLinkable.xml" />
 </xogdriver>
 ```
 
-## Type `queries`
+## Tag `query`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -210,11 +210,11 @@ Used to read and transform only the selected fields from the section. Only secti
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="queries" code="cop.projectCostsPhaseLinkable" path="cop.projectCostsPhaseLinkable.xml" />
+    <query code="cop.projectCostsPhaseLinkable" path="cop.projectCostsPhaseLinkable.xml" />
 </xogdriver>
 ```
 
-## Type `pages`
+## Tag `page`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -224,11 +224,11 @@ Used to read and transform only the selected fields from the section. Only secti
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="pages" code="pma.ideaFrame" path="pma.ideaFrame.xml" />
+    <page code="pma.ideaFrame" path="pma.ideaFrame.xml" />
 </xogdriver>
 ```
 
-## Type `menus`
+## Tag `menu`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -238,7 +238,7 @@ Used to read and transform only the selected fields from the section. Only secti
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="menus" code="application" path="menu_result.xml" />
+    <menu code="application" path="menu_result.xml" />
 </xogdriver>
 ```
 
@@ -254,9 +254,9 @@ Used to read only the selected section from the menu.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="menus" code="application" path="menu_result_section_link.xml">
+    <menu code="application" path="menu_result_section_link.xml">
         <section action="insert" code="menu_sec_cas_xog" targetPosition="2" />
-    </file>
+    </menu>
 </xogdriver>
 ```
 
@@ -270,18 +270,18 @@ Used to read only the selected links inside a section tag from the menu.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="menus" code="application" path="menu_result_section_link.xml">
+    <menu code="application" path="menu_result_section_link.xml">
         <section action="update" code="npt.personal">
             <link code="odf.obj_testeList" />
         </section>
         <section action="insert" code="menu_sec_cas_xog" targetPosition="2">
             <link code="cas_proc_running_tab" />
         </section>
-    </file>
+    </menu>
 </xogdriver>
 ```
 
-## Type `obs`
+## Tag `obs`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -291,11 +291,11 @@ Used to read only the selected links inside a section tag from the menu.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="obs" code="department" path="obs_department.xml" />
+    <obs code="department" path="obs_department.xml" />
 </xogdriver>
 ```
 
-## Type `groups`
+## Tag `group`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -305,11 +305,11 @@ Used to read only the selected links inside a section tag from the menu.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="groups" code="cop.systemAdministrator" path="systemAdministrator.xml" />
+    <group code="cop.systemAdministrator" path="systemAdministrator.xml" />
 </xogdriver>
 ```
 
-## Type `customObjectInstances`
+## Tag`customObjectInstance`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -320,11 +320,11 @@ Used to read only the selected links inside a section tag from the menu.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="customObjectInstances" code="*" objectCode="obj_system" path="instances.xml" />
+    <customObjectInstance code="*" objectCode="obj_system" path="instances.xml" />
 </xogdriver>
 ```
 
-## Type `resourceClassInstances`
+## Tag `resourceClassInstance`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -334,11 +334,11 @@ Used to read only the selected links inside a section tag from the menu.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="resourceClassInstances" code="*" path="instances.xml" />
+    <resourceClassInstance code="*" path="instances.xml" />
 </xogdriver>
 ```
 
-## Type `wipClassInstances`
+## Tag `wipClassInstance`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -348,11 +348,11 @@ Used to read only the selected links inside a section tag from the menu.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="wipClassInstances" code="*" path="instances.xml" />
+    <wipClassInstance code="*" path="instances.xml" />
 </xogdriver>
 ```
 
-## Type `investmentClassInstances`
+## Tag `investmentClassInstance`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -362,11 +362,11 @@ Used to read only the selected links inside a section tag from the menu.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="investmentClassInstances" code="*" path="instances.xml" />
+    <investmentClassInstance code="*" path="instances.xml" />
 </xogdriver>
 ```
 
-## Type `transactionClassInstances`
+## Tag `transactionClassInstance`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -376,11 +376,11 @@ Used to read only the selected links inside a section tag from the menu.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="transactionClassInstances" code="*" path="instances.xml" />
+    <transactionClassInstance code="*" path="instances.xml" />
 </xogdriver>
 ```
 
-## Type `resourceInstances`
+## Tag `resourceInstance`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -390,11 +390,11 @@ Used to read only the selected links inside a section tag from the menu.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="resourceInstances" code="*" path="instances.xml" />
+    <resourceInstance code="*" path="instances.xml" />
 </xogdriver>
 ```
 
-## Type `userInstances`
+## Tag `userInstance`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -404,11 +404,11 @@ Used to read only the selected links inside a section tag from the menu.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="userInstances" code="*" path="instances.xml" />
+    <userInstance code="*" path="instances.xml" />
 </xogdriver>
 ```
 
-## Type `projectInstances`
+## Tag `projectInstance`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -418,11 +418,11 @@ Used to read only the selected links inside a section tag from the menu.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="projectInstances" code="*" path="instances.xml" />
+    <projectInstance code="*" path="instances.xml" />
 </xogdriver>
 ```
 
-## Type `ideaInstances`
+## Tag `ideaInstance`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -432,11 +432,11 @@ Used to read only the selected links inside a section tag from the menu.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="ideaInstances" code="*" path="instances.xml" />
+    <ideaInstance code="*" path="instances.xml" />
 </xogdriver>
 ```
 
-## Type `applicationInstances`
+## Tag `applicationInstance`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -446,11 +446,11 @@ Used to read only the selected links inside a section tag from the menu.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="applicationInstances" code="*" path="instances.xml" />
+    <applicationInstance code="*" path="instances.xml" />
 </xogdriver>
 ```
 
-## Type `assetInstances`
+## Tag `assetInstance`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -460,11 +460,11 @@ Used to read only the selected links inside a section tag from the menu.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="assetInstances" code="*" path="instances.xml" />
+    <assetInstance code="*" path="instances.xml" />
 </xogdriver>
 ```
 
-## Type `otherInvestmentInstances`
+## Tag`otherInvestmentInstance`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -474,11 +474,11 @@ Used to read only the selected links inside a section tag from the menu.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="otherInvestmentInstances" code="*" path="instances.xml" />
+    <otherInvestmentInstance code="*" path="instances.xml" />
 </xogdriver>
 ```
 
-## Type `productInstances`
+## Tag`productInstance`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -488,11 +488,11 @@ Used to read only the selected links inside a section tag from the menu.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="productInstances" code="*" path="instances.xml" />
+    <productInstance code="*" path="instances.xml" />
 </xogdriver>
 ```
 
-## Type `serviceInstances`
+## Tag`serviceInstance`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
@@ -502,12 +502,12 @@ Used to read only the selected links inside a section tag from the menu.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="serviceInstances" code="*" path="instances.xml" />
+    <serviceInstance code="*" path="instances.xml" />
 </xogdriver>
 ```
 
 # Global Sub Tags
-Sub tags that can be used in any type of `file` tag.
+Sub tags that can be used in any [structure](#description-of-structure-driver-tags) and [instance](#description-of-instance-driver-tags) tags.
 
 ### Sub Tag `replace`
 Used to do a replace one string with another one in the xog result.
@@ -520,7 +520,7 @@ Used to do a replace one string with another one in the xog result.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="processes" code="PRC_0001" path="PRC_0001.xml">
+    <process code="PRC_0001" path="PRC_0001.xml">
         <replace>
             <from>endpoint="http://development.server.com"</from>
             <to>endpoint="http://production.server.com"</to>
@@ -529,7 +529,7 @@ Used to do a replace one string with another one in the xog result.
             <from>set var="xogUser" value="adminXogUser"</from>
             <to>set var="xogUser" value="anotherAdminXogUser"</to>
         </replace>
-    </file>
+    </process>
 </xogdriver>
 ```
 
@@ -544,18 +544,18 @@ Used to do a remove elements in the xog result using xpath.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="pages" code="projmgr.projectPageFrame" path="page_project.xml">
+    <page code="projmgr.projectPageFrame" path="page_project.xml">
         <element action="remove" xpath="//OBSAssocs" />
         <element action="remove" xpath="//Security" />
-    </file>
-    <file type="obs" code="department" path="obs_department.xml">
+    </page>
+    <obs code="department" path="obs_department.xml">
         <element action="remove" xpath="//associatedObject" />
         <element action="remove" xpath="//Security" />
         <element action="remove" xpath="//rights" />
-    </file>
-    <file type="groups" code="ObjectAdmin" path="ObjectAdmin.xml">
+    </obs>
+    <group code="ObjectAdmin" path="ObjectAdmin.xml">
         <element action="remove" xpath="/NikuDataBus/groups/group/members" />
-    </file>
+    </group>
 </xogdriver>
 ```
 
@@ -679,7 +679,7 @@ This tag is required for export to excel data.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="resourceInstances" code="*" path="res.xml" exportToExcel="true" excel="res.xlsx" instance="Resource">
+    <resourceInstance code="*" path="res.xml" exportToExcel="true" excel="res.xlsx" instance="Resource">
         <match attribute="resourceId" />
         <match xpath="//PersonalInformation" attribute="displayName" />
         <match xpath="//PersonalInformation" attribute="emailAddress" />
@@ -688,7 +688,7 @@ This tag is required for export to excel data.
         <match xpath="//OBSAssoc[@id='corpLocationOBS']" attribute="unitPath" />
         <match xpath="//OBSAssoc[@id='resourcePool']" attribute="unitPath" />
         <match xpath="//ColumnValue[@name='partition_code']" />
-    </file>
+    </resourceInstance>
 </xogdriver>
 ```
 
@@ -717,14 +717,14 @@ This tag is required for export to excel data.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <file type="migrations" path="subs.xml" template="template.xml" instance="instance" excel="dados.xlsx" startRow="2" >
+    <migration path="subs.xml" template="template.xml" instance="instance" excel="dados.xlsx" startRow="2" >
         <match col="1" attribute="instanceCode" />
         <match col="1" xpath="//ColumnValue[@name='code']" />
         <match col="2" xpath="//ColumnValue[@name='name']" />
         <match col="3" xpath="//ColumnValue[@name='status']" />
         <match col="4" xpath="//ColumnValue[@name='multivalue_status']" multiValued="true" separator=";" />
         <match col="5" xpath="//ColumnValue[@name='analista']" />
-    </file>
+    </migration>
 </xogdriver>
 ```
 

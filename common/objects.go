@@ -69,11 +69,41 @@ type DriverFile struct {
 }
 
 type Driver struct {
-	Version			string `xml:"version,attr"`
-	Files 			[]DriverFile `xml:"file"`
+	Version			string
+	Files 			[]DriverFile
 	Info  			os.FileInfo
 	PackageDriver 	bool
 	FilePath 		string
+}
+
+type DriverTypesPattern struct {
+	Version                		string       `xml:"version,attr"`
+	Files                		[]DriverFile `xml:"file"`
+	Objects                		[]DriverFile `xml:"object"`
+	Views                  		[]DriverFile `xml:"view"`
+	Processes              		[]DriverFile `xml:"process"`
+	Lookups                		[]DriverFile `xml:"lookup"`
+	Portlets               		[]DriverFile `xml:"portlet"`
+	Queries                 	[]DriverFile `xml:"query"`
+	Pages                  		[]DriverFile `xml:"page"`
+	Menus                  		[]DriverFile `xml:"menu"`
+	Obs                    		[]DriverFile `xml:"obs"`
+	Groups                 		[]DriverFile `xml:"group"`
+	CustomObjectInstances  		[]DriverFile `xml:"customObjectInstance"`
+	ResourceClassInstances 		[]DriverFile `xml:"resourceClassInstance"`
+	WipClassInstances      		[]DriverFile `xml:"wipClassInstance"`
+	InvestmentClassInstances	[]DriverFile `xml:"investmentClassInstance"`
+	TransactionClassInstances	[]DriverFile `xml:"transactionClassInstance"`
+	ResourceInstances			[]DriverFile `xml:"resourceInstance"`
+	UserInstances				[]DriverFile `xml:"userInstance"`
+	ProjectInstances			[]DriverFile `xml:"projectInstance"`
+	IdeaInstances				[]DriverFile `xml:"ideaInstance"`
+	ApplicationInstances		[]DriverFile `xml:"applicationInstance"`
+	AssetInstances				[]DriverFile `xml:"assetInstance"`
+	OtherInvestmentInstances	[]DriverFile `xml:"otherInvestmentInstance"`
+	ProductInstances			[]DriverFile `xml:"productInstance"`
+	ServiceInstances			[]DriverFile `xml:"serviceInstance"`
+	Migrations					[]DriverFile `xml:"migrate"`
 }
 
 type XOGOutput struct {
@@ -108,37 +138,37 @@ type Package struct {
 const (
 	VERSION = 2.0
 
-	LOOKUP 		= "lookups"
-	PORTLET 	= "portlets"
-	QUERY 		= "queries"
-	PROCESS 	= "processes"
-	PAGE 		= "pages"
-	GROUP 		= "groups"
-	MENU 		= "menus"
-	OBS 		= "obs"
-	OBJECT 		= "objects"
-	VIEW 		= "views"
-	MIGRATION	= "migrations"
+	LOOKUP 		= "Lookups"
+	PORTLET 	= "Portlets"
+	QUERY 		= "Queries"
+	PROCESS 	= "Processes"
+	PAGE 		= "Pages"
+	GROUP 		= "Groups"
+	MENU 		= "Menus"
+	OBS 		= "Obs"
+	OBJECT 		= "Objects"
+	VIEW 		= "Views"
+	MIGRATION	= "Migrations"
+
+	CUSTOM_OBJECT_INSTANCE     = "CustomObjectInstances"
+	RESOURCE_CLASS_INSTANCE    = "ResourceClassInstances"
+	WIP_CLASS_INSTANCE         = "WipClassInstances"
+	INVESTMENT_CLASS_INSTANCE  = "InvestmentClassInstances"
+	TRANSACTION_CLASS_INSTANCE = "TransactionClassInstances"
+	RESOURCE_INSTANCE          = "ResourceInstances"
+	USER_INSTANCE              = "UserInstances"
+	PROJECT_INSTANCE           = "ProjectInstances"
+	IDEA_INSTANCE              = "IdeaInstances"
+	APPLICATION_INSTANCE       = "ApplicationInstances"
+	ASSET_INSTANCE             = "AssetInstances"
+	OTHER_INVESTMENT_INSTANCE  = "OtherInvestmentInstances"
+	PRODUCT_INSTANCE           = "ProductInstances"
+	SERVICE_INSTANCE           = "ServiceInstances"
 
 	ACTION_REPLACE = "replace"
 	ACTION_UPDATE  = "update"
 	ACTION_REMOVE  = "remove"
 	ACTION_INSERT  = "insert"
-
-	CUSTOM_OBJECT_INSTANCE     = "customObjectInstances"
-	RESOURCE_CLASS_INSTANCE    = "resourceClassInstances"
-	WIP_CLASS_INSTANCE         = "wipClassInstances"
-	INVESTMENT_CLASS_INSTANCE  = "investmentClassInstances"
-	TRANSACTION_CLASS_INSTANCE = "transactionClassInstances"
-	RESOURCE_INSTANCE          = "resourceInstances"
-	USER_INSTANCE              = "userInstances"
-	PROJECT_INSTANCE           = "projectInstances"
-	IDEA_INSTANCE              = "ideaInstances"
-	APPLICATION_INSTANCE       = "applicationInstances"
-	ASSET_INSTANCE             = "assetInstances"
-	OTHER_INVESTMENT_INSTANCE  = "otherInvestmentInstances"
-	PRODUCT_INSTANCE           = "productInstances"
-	SERVICE_INSTANCE           = "serviceInstances"
 
 	FOLDER_READ 		= "_read/"
 	FOLDER_WRITE 		= "_write/"
