@@ -26,6 +26,7 @@ func RenderHome() {
 
 	LoadPackages()
 
+	driverXOG = &common.Driver{}
 	RenderDrivers()
 }
 
@@ -43,7 +44,7 @@ func RenderInterface() bool {
 
 	switch strings.ToLower(inputAction) {
 	case "w", "r", "m":
-		if driverXOG == nil {
+		if driverXOG == nil || len(driverXOG.Files) <= 0 {
 			common.Info("\n[CAS-XOG][red[ERROR]] - XOG driver not loaded. Try action 'l' to load a valid driver.\n")
 			return false
 		}

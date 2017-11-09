@@ -19,6 +19,7 @@ var driverXOG *common.Driver
 var driverPath string
 
 func LoadDriver(path string) error {
+	driverXOG.Clear()
 	xmlFile, err := ioutil.ReadFile(path)
 	if err != nil {
 		return errors.New("Error loading driver file: " + err.Error())
@@ -29,12 +30,10 @@ func LoadDriver(path string) error {
 
 	v, err := strconv.ParseFloat(driverXOGTypePattern.Version, 64)
 	if err != nil || v < common.VERSION {
-		driverXOG = nil
 		return errors.New(fmt.Sprintf("invalid driver(%s) version, expected version %.1f or greater", driverPath, common.VERSION))
 	}
 
 	if len(driverXOGTypePattern.Files) > 0  {
-		driverXOG = nil
 		return errors.New(fmt.Sprintf("invalid driver(%s) tag <file> is no longer supported", driverPath))
 	}
 
@@ -43,7 +42,6 @@ func LoadDriver(path string) error {
 	for i := 0; i < types.NumField(); i++ {
 		t := types.Field(i)
 		if t.Kind() == reflect.Slice {
-			fmt.Println(typeOfT.Field(i).Name)
 			for _, f := range t.Interface().([]common.DriverFile) {
 				f.Type = typeOfT.Field(i).Name
 				driverXOG.Files = append(driverXOG.Files, f)

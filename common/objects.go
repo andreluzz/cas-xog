@@ -76,6 +76,14 @@ type Driver struct {
 	FilePath 		string
 }
 
+func (d *Driver) Clear() {
+	d.Version = ""
+	d.Files = []DriverFile{}
+	d.PackageDriver = false
+	d.FilePath = ""
+	d.Info = nil
+}
+
 type DriverTypesPattern struct {
 	Version                		string       `xml:"version,attr"`
 	Files                		[]DriverFile `xml:"file"`
