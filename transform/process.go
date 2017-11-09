@@ -3,9 +3,9 @@ package transform
 import (
 	"errors"
 	"regexp"
+	"strings"
 	"github.com/beevik/etree"
 	"github.com/andreluzz/cas-xog/common"
-	"strings"
 )
 
 func specificProcessTransformations(xog, aux *etree.Document, file common.DriverFile) error {
