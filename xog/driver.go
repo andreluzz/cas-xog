@@ -193,7 +193,16 @@ func ProcessDriverFiles(action string) {
 		}
 
 		resp.IndentTabs()
-		resp.WriteToFile(folder + f.Type + "/" + f.Path)
+		if action == "r" && f.Type == common.PROCESS {
+			respBytes, err := transform.IncludeCDATA(resp)
+			if err != nil {
+				debug(i+1, len(driverXOG.Files), action, common.OUTPUT_ERROR, f.Path, err.Error())
+				continue
+			}
+			ioutil.WriteFile(folder + f.Type + "/" + f.Path, respBytes, os.ModePerm)
+		} else {
+			resp.WriteToFile(folder + f.Type + "/" + f.Path)
+		}
 
 		actionLabel = "Read"
 		if action == "w" {
