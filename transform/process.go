@@ -39,21 +39,23 @@ func copyProcessPermissions(xog *etree.Document) (*etree.Element, error) {
 
 func IncludeCDATA(xog *etree.Document) ([]byte, error) {
 	xogQueryTagString, _ := xog.WriteToString()
-	sqlQueryTagRegexp, _ := regexp.Compile(`(<[^/].*):query`)
-	sqlQueryTag := sqlQueryTagRegexp.FindString(xogQueryTagString)
+	sqlQueryTagRegexp, _ := regexp.Compile(`(<[^/].*):(query|update)`)
+	sqlTags := sqlQueryTagRegexp.FindAllString(xogQueryTagString, -1)
 
-	if sqlQueryTag == "" {
+	if len(sqlTags) <= 0 {
 		return []byte(xogQueryTagString), nil
 	}
 
-	for _, e := range xog.FindElements("//" + sqlQueryTag[1:]) {
-		e.CreateAttr("escapeText", "false")
+	for _, tag := range sqlTags {
+		for _, e := range xog.FindElements("//" + tag[1:]) {
+			e.CreateAttr("escapeText", "false")
+		}
 	}
 
 	xogString, _ := xog.WriteToString()
 
-	iniTagRegexp, _ := regexp.Compile(`<([^/].*):query(.*)>`)
-	endTagRegexp, _ := regexp.Compile(`</(.*):query>`)
+	iniTagRegexp, _ := regexp.Compile(`<([^/].*):(query|update)(.*)>`)
+	endTagRegexp, _ := regexp.Compile(`</(.*):(query|update)>`)
 
 	iniIndex := iniTagRegexp.FindAllStringIndex(xogString, -1)
 	endIndex := endTagRegexp.FindAllStringIndex(xogString, -1)

@@ -402,19 +402,10 @@
                                                         where
                                                         inv.id &gt; 1
                                                     </sql:query>
-                                                    <sql:query dataSource="${nikuDS}" var="rs_idea">
-                                                        select
-                                                        inv.code code,
-                                                        inv.code name
-                                                        from
-                                                        inv_investments inv
-                                                        join odf_ca_idea ida on ida.id = inv.id
-                                                        where
-                                                        inv.id &gt; 1
+                                                    <sql:update dataSource="${nikuDS}" var="rs_idea">
+                                                        update odf_ca_projects set status = 1
                                                         <sql:param value="${gel_objectInstanceId}"/>
-                                                        <sql:param value="${gel_objectInstanceId}"/>
-                                                        <sql:param value="${gel_objectInstanceId}"/>
-                                                    </sql:query>
+                                                    </sql:update>
                                                     <sql:query dataSource="${nikuDS}" var="rs_idea">
                                                         select
                                                         inv.code code,

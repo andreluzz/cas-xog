@@ -402,19 +402,10 @@
                                                         where
                                                         inv.id > 1
                                                     ]]></sql:query>
-                                                    <sql:query dataSource="${nikuDS}" var="rs_idea" escapeText="false"><![CDATA[
-                                                        select
-                                                        inv.code code,
-                                                        inv.code name
-                                                        from
-                                                        inv_investments inv
-                                                        join odf_ca_idea ida on ida.id = inv.id
-                                                        where
-                                                        inv.id > 1
+                                                    <sql:update dataSource="${nikuDS}" var="rs_idea" escapeText="false"><![CDATA[
+                                                        update odf_ca_projects set status = 1
                                                         ]]><sql:param value="${gel_objectInstanceId}"/>
-                                                        <sql:param value="${gel_objectInstanceId}"/>
-                                                        <sql:param value="${gel_objectInstanceId}"/>
-                                                    </sql:query>
+                                                    </sql:update>
                                                     <sql:query dataSource="${nikuDS}" var="rs_idea" escapeText="false"><![CDATA[
                                                         select
                                                         inv.code code,
