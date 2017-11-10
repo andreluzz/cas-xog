@@ -1,0 +1,458 @@
+<NikuDataBus>
+    <Header action="write" externalSource="NIKU" objectType="contentPack" version="8.0"/>
+    <contentPack update="true">
+        <Processes>
+            <Process allowOneRunningInstance="true" code="PRC_0001" createdBy="admin" endStep="Finish" source="customer" startOption="ON_DEMAND" startStep="Start">
+                <nls languageCode="ca" name="Test cas-xog 001"/>
+                <nls languageCode="cs" name="Test cas-xog 001"/>
+                <nls languageCode="da" name="Test cas-xog 001"/>
+                <nls languageCode="de" name="Test cas-xog 001"/>
+                <nls languageCode="en" name="Test cas-xog 001"/>
+                <nls languageCode="es" name="Test cas-xog 001"/>
+                <nls languageCode="fi" name="Test cas-xog 001"/>
+                <nls languageCode="fr" name="Test cas-xog 001"/>
+                <nls languageCode="hu" name="Test cas-xog 001"/>
+                <nls languageCode="it" name="Test cas-xog 001"/>
+                <nls languageCode="ja" name="Test cas-xog 001"/>
+                <nls languageCode="ko" name="Test cas-xog 001"/>
+                <nls languageCode="nl" name="Test cas-xog 001"/>
+                <nls languageCode="no" name="Test cas-xog 001"/>
+                <nls languageCode="pl" name="Test cas-xog 001"/>
+                <nls languageCode="pt" name="Test cas-xog 001"/>
+                <nls languageCode="ru" name="Test cas-xog 001"/>
+                <nls languageCode="sv" name="Test cas-xog 001"/>
+                <nls languageCode="tr" name="Test cas-xog 001"/>
+                <nls languageCode="zh" name="Test cas-xog 001"/>
+                <nls languageCode="zh_TW" name="Test cas-xog 001"/>
+                <Security>
+                    <OBSSecurity name="Corporate Department OBS" rightCode="PROCESS-DEF-INST-READ" rightMode="OBS_UNIT_AND_CHILDREN" typeCode="corpDepartmentOBS" unitPath="/IT"/>
+                    <OBSSecurity name="Corporate Department OBS" rightCode="PROCESS-DEF-INST-START" rightMode="OBS_UNIT_AND_CHILDREN" typeCode="corpDepartmentOBS" unitPath="/IT"/>
+                    <OBSSecurity name="Corporate Department OBS" rightCode="PROCESS-INST-AUTO-START" rightMode="OBS_UNIT_AND_CHILDREN" typeCode="corpDepartmentOBS" unitPath="/IT"/>
+                    <GroupSecurity groupCode="cop.ideaCreator" rightCode="PROCESS-DEF-INST-READ"/>
+                    <GroupSecurity groupCode="cop.ideaCreator" rightCode="PROCESS-DEF-INST-START"/>
+                    <GroupSecurity groupCode="cop.ideaCreator" rightCode="PROCESS-INST-AUTO-START"/>
+                    <UserSecurity rightCode="PROCESS-DEF-INST-INITIATE" userName="admin"/>
+                    <UserSecurity rightCode="PROCESS-DEF-INST-WRITE" userName="admin"/>
+                </Security>
+                <Objects>
+                    <Object manualStart="true" name="ida" objectType="idea" partitionCode="NIKU.ROOT" partitionModeCode="PARTITION_AND_ANSTRS_DESDNTS" type="BPM_POT_PRIMARY"/>
+                </Objects>
+                <Steps>
+                    <Step id="Start" isMileStone="false" sequenceNo="1">
+                        <nls languageCode="ca" name="Start"/>
+                        <nls languageCode="cs" name="Start"/>
+                        <nls languageCode="da" name="Start"/>
+                        <nls languageCode="de" name="Start"/>
+                        <nls languageCode="en" name="Start"/>
+                        <nls languageCode="es" name="Start"/>
+                        <nls languageCode="fi" name="Start"/>
+                        <nls languageCode="fr" name="Start"/>
+                        <nls languageCode="hu" name="Start"/>
+                        <nls languageCode="it" name="Start"/>
+                        <nls languageCode="ja" name="Start"/>
+                        <nls languageCode="ko" name="Start"/>
+                        <nls languageCode="nl" name="Start"/>
+                        <nls languageCode="no" name="Start"/>
+                        <nls languageCode="pl" name="Start"/>
+                        <nls languageCode="pt" name="Start"/>
+                        <nls languageCode="ru" name="Start"/>
+                        <nls languageCode="sv" name="Start"/>
+                        <nls languageCode="tr" name="Start"/>
+                        <nls languageCode="zh" name="Start"/>
+                        <nls languageCode="zh_TW" name="Start"/>
+                        <Notifications notifyOwner="false">
+                            <NotifyWhen stepCompleted="false" stepInError="false" stepStarted="false"/>
+                            <Assignees/>
+                        </Notifications>
+                        <Operations/>
+                        <TransitionRestrictions>
+                            <TransitionRestriction>
+                                <Join type="BPM_JT_NONE">
+                                    <Condition sequencNo="1" type="BPM_SCT_PRECONDITION"/>
+                                </Join>
+                            </TransitionRestriction>
+                            <TransitionRestriction>
+                                <Split type="BPM_ST_SEQUENCE">
+                                    <Condition sequencNo="1" type="BPM_SCT_POSTCONDITION">
+                                        <Transitions>
+                                            <Transition to="e_001"/>
+                                        </Transitions>
+                                    </Condition>
+                                </Split>
+                            </TransitionRestriction>
+                        </TransitionRestrictions>
+                    </Step>
+                    <Step id="Finish" isMileStone="false" sequenceNo="2">
+                        <nls languageCode="ca" name="Finish"/>
+                        <nls languageCode="cs" name="Finish"/>
+                        <nls languageCode="da" name="Finish"/>
+                        <nls languageCode="de" name="Finish"/>
+                        <nls languageCode="en" name="Finish"/>
+                        <nls languageCode="es" name="Finish"/>
+                        <nls languageCode="fi" name="Finish"/>
+                        <nls languageCode="fr" name="Finish"/>
+                        <nls languageCode="hu" name="Finish"/>
+                        <nls languageCode="it" name="Finish"/>
+                        <nls languageCode="ja" name="Finish"/>
+                        <nls languageCode="ko" name="Finish"/>
+                        <nls languageCode="nl" name="Finish"/>
+                        <nls languageCode="no" name="Finish"/>
+                        <nls languageCode="pl" name="Finish"/>
+                        <nls languageCode="pt" name="Finish"/>
+                        <nls languageCode="ru" name="Finish"/>
+                        <nls languageCode="sv" name="Finish"/>
+                        <nls languageCode="tr" name="Finish"/>
+                        <nls languageCode="zh" name="Finish"/>
+                        <nls languageCode="zh_TW" name="Finish"/>
+                        <Notifications notifyOwner="false">
+                            <NotifyWhen stepCompleted="false" stepInError="false" stepStarted="false"/>
+                            <Assignees/>
+                        </Notifications>
+                        <Operations/>
+                        <TransitionRestrictions>
+                            <TransitionRestriction>
+                                <Join type="BPM_JT_SIMPLE_MERGE">
+                                    <Condition sequencNo="1" type="BPM_SCT_PRECONDITION"/>
+                                </Join>
+                            </TransitionRestriction>
+                            <TransitionRestriction>
+                                <Split type="BPM_ST_SEQUENCE">
+                                    <Condition sequencNo="1" type="BPM_SCT_POSTCONDITION">
+                                        <Transitions/>
+                                    </Condition>
+                                </Split>
+                            </TransitionRestriction>
+                        </TransitionRestrictions>
+                    </Step>
+                    <Step id="e_001" isMileStone="false" sequenceNo="3">
+                        <nls languageCode="ca" name="Validação"/>
+                        <nls languageCode="cs" name="Validação"/>
+                        <nls languageCode="da" name="Validação"/>
+                        <nls languageCode="de" name="Validação"/>
+                        <nls languageCode="en" name="Validação"/>
+                        <nls languageCode="es" name="Validação"/>
+                        <nls languageCode="fi" name="Validação"/>
+                        <nls languageCode="fr" name="Validação"/>
+                        <nls languageCode="hu" name="Validação"/>
+                        <nls languageCode="it" name="Validação"/>
+                        <nls languageCode="ja" name="Validação"/>
+                        <nls languageCode="ko" name="Validação"/>
+                        <nls languageCode="nl" name="Validação"/>
+                        <nls languageCode="no" name="Validação"/>
+                        <nls languageCode="pl" name="Validação"/>
+                        <nls languageCode="pt" name="Validação"/>
+                        <nls languageCode="ru" name="Validação"/>
+                        <nls languageCode="sv" name="Validação"/>
+                        <nls languageCode="tr" name="Validação"/>
+                        <nls languageCode="zh" name="Validação"/>
+                        <nls languageCode="zh_TW" name="Validação"/>
+                        <Notifications notifyOwner="false">
+                            <NotifyWhen stepCompleted="false" stepInError="false" stepStarted="false"/>
+                            <Assignees/>
+                        </Notifications>
+                        <Operations/>
+                        <TransitionRestrictions>
+                            <TransitionRestriction>
+                                <Join type="BPM_JT_NONE">
+                                    <Condition sequencNo="1" type="BPM_SCT_PRECONDITION"/>
+                                </Join>
+                            </TransitionRestriction>
+                            <TransitionRestriction>
+                                <Split type="BPM_ST_EXCLUSIVE_CHOICE">
+                                    <Condition sequencNo="1" type="BPM_SCT_POSTCONDITION">
+                                        <ExpressionText>1 == 0</ExpressionText>
+                                        <Transitions>
+                                            <Transition to="e_002"/>
+                                        </Transitions>
+                                    </Condition>
+                                    <Condition sequencNo="1" type="BPM_SCT_POSTCONDITION">
+                                        <ExpressionText>1 == 1</ExpressionText>
+                                        <Transitions>
+                                            <Transition to="e_003"/>
+                                        </Transitions>
+                                    </Condition>
+                                </Split>
+                            </TransitionRestriction>
+                        </TransitionRestrictions>
+                    </Step>
+                    <Step id="e_002" isMileStone="false" sequenceNo="4">
+                        <nls languageCode="ca" name="Erro"/>
+                        <nls languageCode="cs" name="Erro"/>
+                        <nls languageCode="da" name="Erro"/>
+                        <nls languageCode="de" name="Erro"/>
+                        <nls languageCode="en" name="Erro"/>
+                        <nls languageCode="es" name="Erro"/>
+                        <nls languageCode="fi" name="Erro"/>
+                        <nls languageCode="fr" name="Erro"/>
+                        <nls languageCode="hu" name="Erro"/>
+                        <nls languageCode="it" name="Erro"/>
+                        <nls languageCode="ja" name="Erro"/>
+                        <nls languageCode="ko" name="Erro"/>
+                        <nls languageCode="nl" name="Erro"/>
+                        <nls languageCode="no" name="Erro"/>
+                        <nls languageCode="pl" name="Erro"/>
+                        <nls languageCode="pt" name="Erro"/>
+                        <nls languageCode="ru" name="Erro"/>
+                        <nls languageCode="sv" name="Erro"/>
+                        <nls languageCode="tr" name="Erro"/>
+                        <nls languageCode="zh" name="Erro"/>
+                        <nls languageCode="zh_TW" name="Erro"/>
+                        <Notifications notifyOwner="false">
+                            <NotifyWhen stepCompleted="false" stepInError="false" stepStarted="false"/>
+                            <Assignees/>
+                        </Notifications>
+                        <Operations/>
+                        <TransitionRestrictions>
+                            <TransitionRestriction>
+                                <Join type="BPM_JT_NONE">
+                                    <Condition sequencNo="1" type="BPM_SCT_PRECONDITION"/>
+                                </Join>
+                            </TransitionRestriction>
+                            <TransitionRestriction>
+                                <Split type="BPM_ST_SEQUENCE">
+                                    <Condition sequencNo="1" type="BPM_SCT_POSTCONDITION">
+                                        <Transitions>
+                                            <Transition to="Finish"/>
+                                        </Transitions>
+                                    </Condition>
+                                </Split>
+                            </TransitionRestriction>
+                        </TransitionRestrictions>
+                    </Step>
+                    <Step id="e_003" isMileStone="false" sequenceNo="5">
+                        <nls languageCode="ca" name="Sucesso"/>
+                        <nls languageCode="cs" name="Sucesso"/>
+                        <nls languageCode="da" name="Sucesso"/>
+                        <nls languageCode="de" name="Sucesso"/>
+                        <nls languageCode="en" name="Sucesso"/>
+                        <nls languageCode="es" name="Sucesso"/>
+                        <nls languageCode="fi" name="Sucesso"/>
+                        <nls languageCode="fr" name="Sucesso"/>
+                        <nls languageCode="hu" name="Sucesso"/>
+                        <nls languageCode="it" name="Sucesso"/>
+                        <nls languageCode="ja" name="Sucesso"/>
+                        <nls languageCode="ko" name="Sucesso"/>
+                        <nls languageCode="nl" name="Sucesso"/>
+                        <nls languageCode="no" name="Sucesso"/>
+                        <nls languageCode="pl" name="Sucesso"/>
+                        <nls languageCode="pt" name="Sucesso"/>
+                        <nls languageCode="ru" name="Sucesso"/>
+                        <nls languageCode="sv" name="Sucesso"/>
+                        <nls languageCode="tr" name="Sucesso"/>
+                        <nls languageCode="zh" name="Sucesso"/>
+                        <nls languageCode="zh_TW" name="Sucesso"/>
+                        <Notifications notifyOwner="false">
+                            <NotifyWhen stepCompleted="false" stepInError="false" stepStarted="false"/>
+                            <Assignees/>
+                        </Notifications>
+                        <Operations/>
+                        <TransitionRestrictions>
+                            <TransitionRestriction>
+                                <Join type="BPM_JT_NONE">
+                                    <Condition sequencNo="1" type="BPM_SCT_PRECONDITION"/>
+                                </Join>
+                            </TransitionRestriction>
+                            <TransitionRestriction>
+                                <Split type="BPM_ST_SEQUENCE">
+                                    <Condition sequencNo="1" type="BPM_SCT_POSTCONDITION">
+                                        <Transitions>
+                                            <Transition to="e_004"/>
+                                        </Transitions>
+                                    </Condition>
+                                </Split>
+                            </TransitionRestriction>
+                        </TransitionRestrictions>
+                    </Step>
+                    <Step id="e_004" isMileStone="false" sequenceNo="6">
+                        <nls languageCode="ca" name="Processamento"/>
+                        <nls languageCode="cs" name="Processamento"/>
+                        <nls languageCode="da" name="Processamento"/>
+                        <nls languageCode="de" name="Processamento"/>
+                        <nls languageCode="en" name="Processamento"/>
+                        <nls languageCode="es" name="Processamento"/>
+                        <nls languageCode="fi" name="Processamento"/>
+                        <nls languageCode="fr" name="Processamento"/>
+                        <nls languageCode="hu" name="Processamento"/>
+                        <nls languageCode="it" name="Processamento"/>
+                        <nls languageCode="ja" name="Processamento"/>
+                        <nls languageCode="ko" name="Processamento"/>
+                        <nls languageCode="nl" name="Processamento"/>
+                        <nls languageCode="no" name="Processamento"/>
+                        <nls languageCode="pl" name="Processamento"/>
+                        <nls languageCode="pt" name="Processamento"/>
+                        <nls languageCode="ru" name="Processamento"/>
+                        <nls languageCode="sv" name="Processamento"/>
+                        <nls languageCode="tr" name="Processamento"/>
+                        <nls languageCode="zh" name="Processamento"/>
+                        <nls languageCode="zh_TW" name="Processamento"/>
+                        <Notifications notifyOwner="false">
+                            <NotifyWhen stepCompleted="false" stepInError="false" stepStarted="false"/>
+                            <Assignees/>
+                        </Notifications>
+                        <Operations>
+                            <Action code="a_01" synchronized="true" type="BPM_SAT_CUSTOM">
+                                <nls languageCode="ca" name="Teste"/>
+                                <nls languageCode="cs" name="Teste"/>
+                                <nls languageCode="da" name="Teste"/>
+                                <nls languageCode="de" name="Teste"/>
+                                <nls languageCode="en" name="Teste"/>
+                                <nls languageCode="es" name="Teste"/>
+                                <nls languageCode="fi" name="Teste"/>
+                                <nls languageCode="fr" name="Teste"/>
+                                <nls languageCode="hu" name="Teste"/>
+                                <nls languageCode="it" name="Teste"/>
+                                <nls languageCode="ja" name="Teste"/>
+                                <nls languageCode="ko" name="Teste"/>
+                                <nls languageCode="nl" name="Teste"/>
+                                <nls languageCode="no" name="Teste"/>
+                                <nls languageCode="pl" name="Teste"/>
+                                <nls languageCode="pt" name="Teste"/>
+                                <nls languageCode="ru" name="Teste"/>
+                                <nls languageCode="sv" name="Teste"/>
+                                <nls languageCode="tr" name="Teste"/>
+                                <nls languageCode="zh" name="Teste"/>
+                                <nls languageCode="zh_TW" name="Teste"/>
+                                <customScript languageCode="gel">
+                                    <scriptText>
+                                        <gel:script xmlns:core="jelly:core" xmlns:gel="jelly:com.niku.union.gel.GELTagLibrary" xmlns:soap="jelly:com.niku.union.gel.SOAPTagLibrary" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sql="jelly:sql" xmlns:xog="http://www.niku.com/xog" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                                            <gel:setDataSource dbId="niku" var="nikuDS"/>
+                                            <gel:parameter default="" var="xog_user"/>
+                                            <core:catch>
+                                                <sql:query dataSource="${nikuDS}" var="rs_idea" escapeText="false"><![CDATA[
+                                                    select
+                                                    inv.code code,
+                                                    inv.code name,
+                                                    ida.cas_xog_status + 1 status
+                                                    from
+                                                    inv_investments inv
+                                                    join odf_ca_idea ida on ida.id = inv.id
+                                                    where
+                                                    inv.id = ?
+                                                    and ida.cas_xog_status > 0
+                                                    and ida.cas_xog_status < 10
+                                                ]]></sql:query>
+                                                <core:if test="${rs_cotizaciones.getRowCount() > 0}">
+                                                    <gel:parse var="xog">
+                                                        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_idea.xsd">
+                                                            <Header action="write" externalSource="NIKU" objectType="idea" version="8.0"/>
+                                                            <Ideas>
+                                                                <Idea name="${rs_idea.rows[0].name}" objectID="${rs_idea.rows[0].code}">
+                                                                    <CustomInformation>
+                                                                        <ColumnValue name="cas_xog_status">${rs_idea.rows[0].status}</ColumnValue>
+                                                                    </CustomInformation>
+                                                                </Idea>
+                                                            </Ideas>
+                                                        </NikuDataBus>
+                                                    </gel:parse>
+                                                    <core:new className="com.niku.union.security.DefaultSecurityIdentifier" var="secId1"/>
+                                                    <core:invokeStatic className="com.niku.union.security.UserSessionControllerFactory" method="getInstance" var="UserSessionCtrl"/>
+                                                    <core:invoke method="init" on="${UserSessionCtrl}" var="secId3">
+                                                        <core:arg type="java.lang.String" value="${xog_user}"/>
+                                                        <core:arg type="com.niku.union.security.DefaultSecurityIdentifier" value="${secId1}"/>
+                                                    </core:invoke>
+                                                    <core:set value="${secId3.getSessionId()}" var="sessionID"/>
+                                                    <soap:invoke endpoint="internal" var="result">
+                                                        <soap:message>
+                                                            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xog="http://www.niku.com/xog">
+                                                                <soapenv:Header>
+                                                                    <xog:Auth>
+                                                                        <xog:SessionID>${sessionID}</xog:SessionID>
+                                                                    </xog:Auth>
+                                                                </soapenv:Header>
+                                                                <soapenv:Body>
+                                                                    <gel:include select="$xog"/>
+                                                                </soapenv:Body>
+                                                            </soapenv:Envelope>
+                                                        </soap:message>
+                                                    </soap:invoke>
+                                                    <gel:set asString="true" select="$result/soapenv:Envelope/soapenv:Body/XOGOutput/Status/@state" var="xog_status_state"/>
+                                                    <gel:set asString="true" select="$result/soapenv:Envelope/soapenv:Body/XOGOutput/Statistics/@failureRecords" var="xog_failure_records"/>
+                                                    <core:if test="${(xog_status_state == 'FAILURE') || (xog_failure_records > 0)}">
+                                                        <gel:log level="debug">[CAS] XOG que se ejecutó.</gel:log>
+                                                        <gel:log level="debug">
+                                                            <gel:expr select="$xog"/>
+                                                        </gel:log>
+                                                        <gel:log level="debug">[CAS] Resultado del XOG que se ejecutó.</gel:log>
+                                                        <gel:log level="debug">
+                                                            <gel:expr select="$result"/>
+                                                        </gel:log>
+                                                        <gel:log level="error">[CAS] Error en la ejecución de XOG.</gel:log>
+                                                    </core:if>
+                                                    <soap:invoke endpoint="internal" var="logout_session">
+                                                        <soap:message>
+                                                            <soapenv:Envelope>
+                                                                <soapenv:Header>
+                                                                    <xog:Auth>
+                                                                        <xog:SessionID>${sessionID}</xog:SessionID>
+                                                                    </xog:Auth>
+                                                                </soapenv:Header>
+                                                                <soapenv:Body>
+                                                                    <xog:Logout/>
+                                                                </soapenv:Body>
+                                                            </soapenv:Envelope>
+                                                        </soap:message>
+                                                    </soap:invoke>
+                                                    <sql:query dataSource="${nikuDS}" var="rs_idea" escapeText="false"><![CDATA[
+                                                        select
+                                                        inv.code code,
+                                                        inv.code name
+                                                        from
+                                                        inv_investments inv
+                                                        join odf_ca_idea ida on ida.id = inv.id
+                                                        where
+                                                        inv.id > 1
+                                                    ]]></sql:query>
+                                                    <sql:update dataSource="${nikuDS}" var="rs_idea" escapeText="false"><![CDATA[
+                                                        update odf_ca_projects set status = 1
+                                                        ]]><sql:param value="${gel_objectInstanceId}"/>
+                                                    </sql:update>
+                                                    <sql:query dataSource="${nikuDS}" var="rs_idea" escapeText="false"><![CDATA[
+                                                        select
+                                                        inv.code code,
+                                                        inv.code name
+                                                        from
+                                                        inv_investments inv
+                                                        join odf_ca_idea ida on ida.id = inv.id
+                                                        where
+                                                        inv.id > 1
+                                                        ]]><sql:param value="${gel_objectInstanceId}"/>
+                                                    </sql:query>
+                                                </core:if>
+                                            </core:catch>
+                                            <core:if test="${erro != null}">
+                                                <gel:log level="error">[CAS] Erro durante execução do script: ${erro}</gel:log>
+                                            </core:if>
+                                        </gel:script>
+                                    </scriptText>
+                                    <scriptParameter isSecure="false" name="xog_user" value="admin"/>
+                                </customScript>
+                                <Notifications notifyOwner="false">
+                                    <NotifyWhen stepActionInError="false" stepActionPerformed="false" value="0"/>
+                                    <Assignees/>
+                                </Notifications>
+                            </Action>
+                        </Operations>
+                        <TransitionRestrictions>
+                            <TransitionRestriction>
+                                <Join type="BPM_JT_NONE">
+                                    <Condition sequencNo="1" type="BPM_SCT_PRECONDITION"/>
+                                </Join>
+                            </TransitionRestriction>
+                            <TransitionRestriction>
+                                <Split type="BPM_ST_SEQUENCE">
+                                    <Condition sequencNo="1" type="BPM_SCT_POSTCONDITION">
+                                        <Transitions>
+                                            <Transition to="Finish"/>
+                                        </Transitions>
+                                    </Condition>
+                                </Split>
+                            </TransitionRestriction>
+                        </TransitionRestrictions>
+                    </Step>
+                </Steps>
+                <Groups/>
+                <OBSAssocs complete="false"/>
+            </Process>
+        </Processes>
+    </contentPack>
+</NikuDataBus>

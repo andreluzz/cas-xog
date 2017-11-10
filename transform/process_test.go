@@ -1,10 +1,10 @@
 package transform
 
 import (
+	"strings"
 	"testing"
 	"github.com/beevik/etree"
 	"github.com/andreluzz/cas-xog/common"
-	"strings"
 )
 
 func TestExecuteToReturnProcess(t *testing.T) {
@@ -115,5 +115,41 @@ func TestExecuteToReturnErrorProcessElementNotFound(t *testing.T) {
 
 	if err == nil {
 		t.Errorf("Error transforming process XOG file. Debug: not validating if element process exist")
+	}
+}
+
+func TestIncludeCDATAToReturnXML(t *testing.T) {
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "process_full_xog_cdata.xml")
+
+	XOGBytes, err := IncludeCDATA(xog)
+
+	if err != nil {
+		t.Errorf("Error including CDATA tag to process XOG file. Debug: %s", err.Error())
+	}
+
+	result := etree.NewDocument()
+	result.ReadFromBytes(XOGBytes)
+
+	if readMockResultAndCompare(result, "process_result_cdata.xml") == false {
+		t.Errorf("Error including CDATA tag to process XOG file. Invalid result XML.")
+	}
+}
+
+func TestIncludeCDATAWithoutQueryToReturnXML(t *testing.T) {
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "process_full_xog.xml")
+
+	XOGBytes, err := IncludeCDATA(xog)
+
+	if err != nil {
+		t.Errorf("Error including CDATA tag to process XOG file. Debug: %s", err.Error())
+	}
+
+	result := etree.NewDocument()
+	result.ReadFromBytes(XOGBytes)
+
+	if readMockResultAndCompare(result, "process_full_xog.xml") == false {
+		t.Errorf("Error including CDATA tag to process XOG file. Invalid result XML.")
 	}
 }

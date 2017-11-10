@@ -5,6 +5,7 @@ import (
 	"strings"
 	"github.com/beevik/etree"
 	"github.com/andreluzz/cas-xog/common"
+	"github.com/andreluzz/cas-xog/transform"
 )
 
 var docXogReadXML, soapEnvelope *etree.Document
@@ -127,8 +128,12 @@ func write(file *common.DriverFile, env *EnvType, folder string) (string, error)
 
 	req.FindElement("//soapenv:Body").AddChild(nikuDataBusXML.Root())
 	req.FindElement("//xog:SessionID").SetText(env.Session)
-
-	return req.WriteToString()
+	if file.Type == common.PROCESS {
+		respBytes, err := transform.IncludeCDATA(req)
+		return string(respBytes), err
+	} else {
+		return req.WriteToString()
+	}
 }
 
 func GetXMLFile(action string, file *common.DriverFile, env *EnvType) (string, error) {
