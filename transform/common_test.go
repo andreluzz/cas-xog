@@ -3,8 +3,9 @@ package transform
 import (
 	"strings"
 	"testing"
-	"github.com/beevik/etree"
+
 	"github.com/andreluzz/cas-xog/common"
+	"github.com/beevik/etree"
 )
 
 var packageMockFolder string
@@ -45,11 +46,11 @@ func TestExecuteToReturnPageWithoutElementOBSandSecurity(t *testing.T) {
 		Elements: []common.Element{
 			{
 				Action: "remove",
-				XPath: "//OBSAssocs",
+				XPath:  "//OBSAssocs",
 			},
 			{
 				Action: "remove",
-				XPath: "//Security",
+				XPath:  "//Security",
 			},
 		},
 	}
@@ -93,7 +94,7 @@ func TestExecuteToReturnGroupWithoutMembers(t *testing.T) {
 		Elements: []common.Element{
 			{
 				Action: "remove",
-				XPath: "//members",
+				XPath:  "//members",
 			},
 		},
 	}
@@ -209,18 +210,18 @@ func TestExecuteToReturnOBSWithoutSecurityAndObject(t *testing.T) {
 	file := common.DriverFile{
 		Code: "strat_plan",
 		Type: common.OBS,
-		Elements: []common.Element {
+		Elements: []common.Element{
 			{
 				Action: "remove",
-				XPath: "//associatedObject",
+				XPath:  "//associatedObject",
 			},
 			{
 				Action: "remove",
-				XPath: "//Security",
+				XPath:  "//Security",
 			},
 			{
 				Action: "remove",
-				XPath: "//rights",
+				XPath:  "//rights",
 			},
 		},
 	}
@@ -297,5 +298,49 @@ func TestExecuteToReturnInstanceCorrectHeader(t *testing.T) {
 	headerElement = xog.FindElement("//Header[@version='14.1']")
 	if headerElement == nil {
 		t.Errorf("Error transforming instance(INVESTMENT_CLASS_INSTANCE) XOG file. Header wrong version number")
+	}
+}
+
+func TestIncludeCDATAToReturnString(t *testing.T) {
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "process_full_xog_cdata.xml")
+
+	xogString, _ := xog.WriteToString()
+	iniTagRegexp := `<([^/].*):(query|update)(.*)>`
+	endTagRegexp := `</(.*):(query|update)>`
+
+	XOGString, err := IncludeCDATA(xogString, iniTagRegexp, endTagRegexp)
+
+	if err != nil {
+		t.Errorf("Error including CDATA tag to process XOG file. Debug: %s", err.Error())
+	}
+
+	result := etree.NewDocument()
+	result.ReadFromString(XOGString)
+
+	if readMockResultAndCompare(result, "process_result_cdata.xml") == false {
+		t.Errorf("Error including CDATA tag to process XOG file. Invalid result XML.")
+	}
+}
+
+func TestIncludeCDATAWithoutQueryToReturnXML(t *testing.T) {
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "process_full_xog.xml")
+
+	xogString, _ := xog.WriteToString()
+	iniTagRegexp := `<([^/].*):(query|update)(.*)>`
+	endTagRegexp := `</(.*):(query|update)>`
+
+	XOGString, err := IncludeCDATA(xogString, iniTagRegexp, endTagRegexp)
+
+	if err != nil {
+		t.Errorf("Error including escapeText attribute to process XOG file. Debug: %s", err.Error())
+	}
+
+	result := etree.NewDocument()
+	result.ReadFromString(XOGString)
+
+	if readMockResultAndCompare(result, "process_full_xog.xml") == false {
+		t.Errorf("Error including escapeText attribute to process XOG file. Invalid result XML.")
 	}
 }

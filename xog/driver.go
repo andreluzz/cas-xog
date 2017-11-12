@@ -1,18 +1,19 @@
 package xog
 
 import (
-	"os"
-	"fmt"
-	"time"
-	"errors"
-	"strconv"
-	"io/ioutil"
 	"encoding/xml"
-	"github.com/beevik/etree"
+	"errors"
+	"fmt"
+	"io/ioutil"
+	"os"
+	"reflect"
+	"strconv"
+	"time"
+
 	"github.com/andreluzz/cas-xog/common"
 	"github.com/andreluzz/cas-xog/migration"
 	"github.com/andreluzz/cas-xog/transform"
-	"reflect"
+	"github.com/beevik/etree"
 )
 
 var driverXOG *common.Driver
@@ -33,7 +34,7 @@ func LoadDriver(path string) error {
 		return errors.New(fmt.Sprintf("invalid driver(%s) version, expected version %.1f or greater", driverPath, common.VERSION))
 	}
 
-	if len(driverXOGTypePattern.Files) > 0  {
+	if len(driverXOGTypePattern.Files) > 0 {
 		return errors.New(fmt.Sprintf("invalid driver(%s) tag <file> is no longer supported", driverPath))
 	}
 
@@ -184,7 +185,7 @@ func ProcessDriverFiles(action string) {
 				debug(i+1, len(driverXOG.Files), action, common.OUTPUT_ERROR, f.Path, err.Error())
 				continue
 			}
-			validateOutput =  common.XOGOutput{Code: common.OUTPUT_SUCCESS, Debug: ""}
+			validateOutput = common.XOGOutput{Code: common.OUTPUT_SUCCESS, Debug: ""}
 		}
 
 		nikuDataBusElement := resp.FindElement("//NikuDataBus")
@@ -193,13 +194,32 @@ func ProcessDriverFiles(action string) {
 		}
 
 		resp.IndentTabs()
-		if action == "r" && f.Type == common.PROCESS {
-			respBytes, err := transform.IncludeCDATA(resp)
+		if action == "r" && f.Type == common.PROCESS || f.Type == common.LOOKUP {
+			var xogString, iniTagRegexpStr, endTagRegexpStr string
+			var err error
+
+			if f.Type == common.PROCESS {
+				iniTagRegexpStr = `<([^/].*):(query|update)(.*)>`
+				endTagRegexpStr = `</(.*):(query|update)>`
+				xogString, err = transform.IncludeEscapeText(resp)
+				if err != nil {
+					debug(i+1, len(driverXOG.Files), action, common.OUTPUT_ERROR, f.Path, err.Error())
+					continue
+				}
+			} else {
+				iniTagRegexpStr = `<nsql(.*)>`
+				endTagRegexpStr = `</nsql>`
+				xogString, _ = resp.WriteToString()
+			}
+
+			xogString, err = transform.IncludeCDATA(xogString, iniTagRegexpStr, endTagRegexpStr)
+
 			if err != nil {
 				debug(i+1, len(driverXOG.Files), action, common.OUTPUT_ERROR, f.Path, err.Error())
 				continue
 			}
-			ioutil.WriteFile(folder + f.Type + "/" + f.Path, respBytes, os.ModePerm)
+
+			ioutil.WriteFile(folder+f.Type+"/"+f.Path, []byte(xogString), os.ModePerm)
 		} else {
 			resp.WriteToFile(folder + f.Type + "/" + f.Path)
 		}
@@ -259,7 +279,7 @@ func RenderDrivers() {
 	}
 	if startInstallingPackage == 0 {
 		fmt.Print("Choose driver [1] or p = Install Package: ")
-	}else {
+	} else {
 		fmt.Print("Choose driver [1]: ")
 	}
 
@@ -280,12 +300,11 @@ func RenderDrivers() {
 		return
 	}
 
-	err = LoadDriver( driversList[driverIndex-1].FilePath)
+	err = LoadDriver(driversList[driverIndex-1].FilePath)
 	if err != nil {
 		common.Info("\n[CAS-XOG][red[ERROR]] - %s\n", err.Error())
 		return
 	}
 
-	common.Info("\n[CAS-XOG][blue[Loaded XOG Driver file]]: %s | Total files: [green[%d]]\n",  driversList[driverIndex-1].FilePath, len(driverXOG.Files))
+	common.Info("\n[CAS-XOG][blue[Loaded XOG Driver file]]: %s | Total files: [green[%d]]\n", driversList[driverIndex-1].FilePath, len(driverXOG.Files))
 }
-

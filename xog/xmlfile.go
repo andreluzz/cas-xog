@@ -3,9 +3,10 @@ package xog
 import (
 	"errors"
 	"strings"
-	"github.com/beevik/etree"
+
 	"github.com/andreluzz/cas-xog/common"
 	"github.com/andreluzz/cas-xog/transform"
+	"github.com/beevik/etree"
 )
 
 var docXogReadXML, soapEnvelope *etree.Document
@@ -80,7 +81,7 @@ func read(file *common.DriverFile, env *EnvType) (string, error) {
 		}
 		req.FindElement("//Filter[@name='instanceCode']").SetText(file.Code)
 		req.FindElement("//Filter[@name='objectCode']").SetText(file.ObjCode)
-		req.FindElement("//args[@name='documentLocation']").CreateAttr("value", "./" + common.FOLDER_WRITE + "_" + file.Type + "/_document")
+		req.FindElement("//args[@name='documentLocation']").CreateAttr("value", "./"+common.FOLDER_WRITE+"_"+file.Type+"/_document")
 	case common.RESOURCE_CLASS_INSTANCE:
 		req.FindElement("//Filter[@name='resource_class']").SetText(file.Code)
 	case common.WIP_CLASS_INSTANCE:
@@ -95,10 +96,10 @@ func read(file *common.DriverFile, env *EnvType) (string, error) {
 		req.FindElement("//Filter[@name='userName']").SetText(file.Code)
 	case common.PROJECT_INSTANCE:
 		req.FindElement("//Filter[@name='projectID']").SetText(file.Code)
-		req.FindElement("//args[@name='documentLocation']").CreateAttr("value", "./" + common.FOLDER_WRITE + "_" + file.Type + "/_document")
+		req.FindElement("//args[@name='documentLocation']").CreateAttr("value", "./"+common.FOLDER_WRITE+"_"+file.Type+"/_document")
 	case common.IDEA_INSTANCE, common.APPLICATION_INSTANCE, common.ASSET_INSTANCE, common.OTHER_INVESTMENT_INSTANCE, common.PRODUCT_INSTANCE, common.SERVICE_INSTANCE:
 		req.FindElement("//Filter[@name='objectID']").SetText(file.Code)
-		req.FindElement("//args[@name='documentLocation']").CreateAttr("value", "./" + common.FOLDER_WRITE + "_" + file.Type + "/_document")
+		req.FindElement("//args[@name='documentLocation']").CreateAttr("value", "./"+common.FOLDER_WRITE+"_"+file.Type+"/_document")
 	}
 
 	nikuDataBusElement := req.FindElement("//NikuDataBus").Copy()
@@ -128,9 +129,23 @@ func write(file *common.DriverFile, env *EnvType, folder string) (string, error)
 
 	req.FindElement("//soapenv:Body").AddChild(nikuDataBusXML.Root())
 	req.FindElement("//xog:SessionID").SetText(env.Session)
-	if file.Type == common.PROCESS {
-		respBytes, err := transform.IncludeCDATA(req)
-		return string(respBytes), err
+	if file.Type == common.PROCESS || file.Type == common.LOOKUP {
+		var xogString, iniTagRegexpStr, endTagRegexpStr string
+		var err error
+
+		if file.Type == common.PROCESS {
+			iniTagRegexpStr = `<([^/].*):(query|update)(.*)>`
+			endTagRegexpStr = `</(.*):(query|update)>`
+			xogString, err = transform.IncludeEscapeText(req)
+		} else {
+			iniTagRegexpStr = `<nsql(.*)>`
+			endTagRegexpStr = `</nsql>`
+			xogString, _ = req.WriteToString()
+		}
+
+		xogString, err = transform.IncludeCDATA(xogString, iniTagRegexpStr, endTagRegexpStr)
+
+		return xogString, err
 	} else {
 		return req.WriteToString()
 	}

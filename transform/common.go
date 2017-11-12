@@ -2,9 +2,11 @@ package transform
 
 import (
 	"errors"
+	"regexp"
+	"strings"
+
 	"github.com/andreluzz/cas-xog/common"
 	"github.com/beevik/etree"
-	"strings"
 )
 
 func Execute(xog, aux *etree.Document, file common.DriverFile) error {
@@ -47,7 +49,7 @@ func Execute(xog, aux *etree.Document, file common.DriverFile) error {
 	}
 
 	if len(file.Elements) > 0 {
-		for _,e := range file.Elements {
+		for _, e := range file.Elements {
 			if e.Action == common.ACTION_REMOVE && e.XPath != "" && e.Type == "" && e.Code == "" {
 				if strings.HasPrefix(e.XPath, "/") {
 					e.XPath = "." + e.XPath
@@ -105,4 +107,40 @@ func changePartition(xog *etree.Document, sourcePartition, targetPartition strin
 	for _, e := range xog.FindElements("//*[@dataProviderPartitionId='" + sourcePartition + "']") {
 		e.CreateAttr("dataProviderPartitionId", targetPartition)
 	}
+}
+
+func IncludeCDATA(xogString string, iniTagRegexpStr string, endTagRegexpStr string) (string, error) {
+	iniTagRegexp, _ := regexp.Compile(iniTagRegexpStr)
+	endTagRegexp, _ := regexp.Compile(endTagRegexpStr)
+
+	iniIndex := iniTagRegexp.FindAllStringIndex(xogString, -1)
+	endIndex := endTagRegexp.FindAllStringIndex(xogString, -1)
+
+	shiftIndex := 0
+
+	for i := 0; i < len(iniIndex); i++ {
+		index := iniIndex[i][1] + shiftIndex
+		xogString = xogString[:index] + "<![CDATA[" + xogString[index:]
+
+		sqlString := xogString[index:endIndex[i][1]]
+
+		paramRegexp, _ := regexp.Compile(`<(.*):param(.*)/>`)
+		paramIndex := paramRegexp.FindStringIndex(sqlString)
+
+		shiftIndex += 9
+
+		eIndex := endIndex[i][0] + shiftIndex
+		if len(paramIndex) > 0 {
+			eIndex = endIndex[i][0] + 12 - (len(sqlString) - paramIndex[0])
+		}
+
+		xogString = xogString[:eIndex] + "]]>" + xogString[eIndex:]
+
+		shiftIndex += 3
+	}
+
+	replacer := strings.NewReplacer("&gt;", ">", "&lt;", "<", "&apos;", "'", "&quot;", "\"")
+	xogString = replacer.Replace(xogString)
+
+	return xogString, nil
 }

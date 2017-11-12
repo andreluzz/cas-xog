@@ -318,7 +318,7 @@
                                             <gel:setDataSource dbId="niku" var="nikuDS"/>
                                             <gel:parameter default="" var="xog_user"/>
                                             <core:catch>
-                                                <sql:query dataSource="${nikuDS}" var="rs_idea"><![CDATA[
+                                                <sql:query dataSource="${nikuDS}" var="rs_idea">
                                                     select
                                                     inv.code code,
                                                     inv.code name,
@@ -328,9 +328,9 @@
                                                     join odf_ca_idea ida on ida.id = inv.id
                                                     where
                                                     inv.id = ?
-                                                    and ida.cas_xog_status > 0
-                                                    and ida.cas_xog_status < 10
-                                                ]]></sql:query>
+                                                    and ida.cas_xog_status &gt; 0
+                                                    and ida.cas_xog_status &lt; 10
+                                                </sql:query>
                                                 <core:if test="${rs_cotizaciones.getRowCount() > 0}">
                                                     <gel:parse var="xog">
                                                         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_idea.xsd">
@@ -392,7 +392,7 @@
                                                             </soapenv:Envelope>
                                                         </soap:message>
                                                     </soap:invoke>
-                                                    <sql:query dataSource="${nikuDS}" var="rs_idea"><![CDATA[
+                                                    <sql:query dataSource="${nikuDS}" var="rs_idea">
                                                         select
                                                         inv.code code,
                                                         inv.code name
@@ -400,13 +400,13 @@
                                                         inv_investments inv
                                                         join odf_ca_idea ida on ida.id = inv.id
                                                         where
-                                                        inv.id > 1
-                                                    ]]></sql:query>
-                                                    <sql:update dataSource="${nikuDS}" var="rs_idea"><![CDATA[
+                                                        inv.id &gt; 1
+                                                    </sql:query>
+                                                    <sql:update dataSource="${nikuDS}" var="rs_idea">
                                                         update odf_ca_projects set status = 1
-                                                        ]]><sql:param value="${gel_objectInstanceId}"/>
+                                                        <sql:param value="${gel_objectInstanceId}"/>
                                                     </sql:update>
-                                                    <sql:query dataSource="${nikuDS}" var="rs_idea"><![CDATA[
+                                                    <sql:query dataSource="${nikuDS}" var="rs_idea">
                                                         select
                                                         inv.code code,
                                                         inv.code name
@@ -414,8 +414,8 @@
                                                         inv_investments inv
                                                         join odf_ca_idea ida on ida.id = inv.id
                                                         where
-                                                        inv.id > 1
-                                                        ]]><sql:param value="${gel_objectInstanceId}"/>
+                                                        inv.id &gt; 1
+                                                        <sql:param value="${gel_objectInstanceId}"/>
                                                     </sql:query>
                                                 </core:if>
                                             </core:catch>
