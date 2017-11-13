@@ -6,7 +6,7 @@ branches:
 
 skip_tags: true
 
-clone_folder: c:\gopath\src\github.com\andreluzz\go-travisci-example
+clone_folder: c:\gopath\src\github.com\andreluzz\cas-xog
 
 environment:
   GOPATH: c:\gopath
@@ -14,10 +14,15 @@ environment:
 install:
 - cmd: >-
     echo %PATH%
+
     echo %GOPATH%
+
     set PATH=%GOPATH%\bin;c:\go\bin;%PATH%
+
     go version
+
     go env
+
     go get -v -t -d ./...
 
 build_script:
@@ -26,8 +31,11 @@ build_script:
 test_script:
 - ps: >-
     bash testCoverage.sh
+
     $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
+
     Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
+
     bash codecov.sh -f "coverage.txt" -t 6c33dd73-92a1-4527-a4e7-994c3c1a8e1f
 
 artifacts:
