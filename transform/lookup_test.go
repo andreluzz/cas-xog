@@ -1,9 +1,9 @@
 package transform
 
 import (
-	"testing"
-	"github.com/beevik/etree"
 	"github.com/andreluzz/cas-xog/common"
+	"github.com/beevik/etree"
+	"testing"
 )
 
 func TestExecuteToReturnStaticLookupTransformed(t *testing.T) {
@@ -27,10 +27,10 @@ func TestExecuteToReturnStaticLookupTransformed(t *testing.T) {
 
 func TestExecuteToReturnStaticLookupTargetPartition(t *testing.T) {
 	file := common.DriverFile{
-		Code: "LOOKUP_CAS_XOG",
-		Type: common.LOOKUP,
+		Code:            "LOOKUP_CAS_XOG",
+		Type:            common.LOOKUP,
 		TargetPartition: "NIKU.ROOT",
-		Path: "testTarget.xml",
+		Path:            "testTarget.xml",
 	}
 
 	xog := etree.NewDocument()
@@ -48,11 +48,11 @@ func TestExecuteToReturnStaticLookupTargetPartition(t *testing.T) {
 
 func TestExecuteToReturnStaticLookupSourceAndTargetPartition(t *testing.T) {
 	file := common.DriverFile{
-		Code: "LOOKUP_CAS_XOG",
-		Type: common.LOOKUP,
+		Code:            "LOOKUP_CAS_XOG",
+		Type:            common.LOOKUP,
 		SourcePartition: "NIKU.ROOT",
 		TargetPartition: "partition10",
-		Path: "testSourceAndTarget.xml",
+		Path:            "testSourceAndTarget.xml",
 	}
 
 	xog := etree.NewDocument()
@@ -86,4 +86,3 @@ func TestExecuteToReturnDynamicLookupPartitionsTransformed(t *testing.T) {
 		t.Errorf("Error transforming static lookup XOG file. Invalid result XML.")
 	}
 }
-

@@ -1,8 +1,8 @@
 package transform
 
 import (
-	"github.com/beevik/etree"
 	"github.com/andreluzz/cas-xog/common"
+	"github.com/beevik/etree"
 )
 
 func specificLookupTransformations(xog *etree.Document, file common.DriverFile) {

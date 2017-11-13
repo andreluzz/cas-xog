@@ -1,9 +1,9 @@
 package transform
 
 import (
-	"testing"
-	"github.com/beevik/etree"
 	"github.com/andreluzz/cas-xog/common"
+	"github.com/beevik/etree"
+	"testing"
 )
 
 func TestExecuteToReturnObjectNoPartitionNoElement(t *testing.T) {
@@ -45,12 +45,12 @@ func TestExecuteToReturnObjectWithOneAttribute(t *testing.T) {
 		t.Fatalf("Error transforming object XOG file. Debug: %s", err.Error())
 	}
 
-	if xog.FindElement("//customAttribute[@code='" + file.Elements[0].Code + "']") == nil {
+	if xog.FindElement("//customAttribute[@code='"+file.Elements[0].Code+"']") == nil {
 		t.Errorf("Error transforming object XOG file. Attribute: %s not found.", file.Elements[0].Code)
 	}
 
 	count := len(xog.FindElements("//customAttribute"))
-	if count > 1{
+	if count > 1 {
 		t.Errorf("Error transforming object XOG file. Expected 1 got %d attributes", count)
 	}
 
@@ -79,7 +79,7 @@ func TestExecuteToReturnObjectWithOneAction(t *testing.T) {
 		t.Fatalf("Error transforming object XOG file. Debug: %s", err.Error())
 	}
 
-	if xog.FindElement("//action[@code='" + file.Elements[0].Code + "']") == nil {
+	if xog.FindElement("//action[@code='"+file.Elements[0].Code+"']") == nil {
 		t.Errorf("Error transforming object XOG file. Action: %s not found.", file.Elements[0].Code)
 	}
 
@@ -118,7 +118,7 @@ func TestExecuteToReturnObjectWithOneLink(t *testing.T) {
 		t.Fatalf("Error transforming object XOG file. Debug: %s", err.Error())
 	}
 
-	if xog.FindElement("//link[@code='" + file.Elements[0].Code + "']") == nil {
+	if xog.FindElement("//link[@code='"+file.Elements[0].Code+"']") == nil {
 		t.Errorf("Error transforming object XOG file. Link: %s not found.", file.Elements[0].Code)
 	}
 
@@ -139,8 +139,8 @@ func TestExecuteToReturnObjectWithOneLink(t *testing.T) {
 
 func TestExecuteToReturnObjectSourcePartition(t *testing.T) {
 	file := common.DriverFile{
-		Code: "obj_sistema",
-		Type: common.OBJECT,
+		Code:            "obj_sistema",
+		Type:            common.OBJECT,
 		SourcePartition: "NIKU.ROOT",
 	}
 
@@ -153,9 +153,9 @@ func TestExecuteToReturnObjectSourcePartition(t *testing.T) {
 	}
 
 	count := 0
-	for _,e := range xog.FindElements("//*[@partitionCode]") {
+	for _, e := range xog.FindElements("//*[@partitionCode]") {
 		if e.SelectAttrValue("partitionCode", common.UNDEFINED) != file.SourcePartition {
-			count ++
+			count++
 		}
 	}
 
@@ -170,8 +170,8 @@ func TestExecuteToReturnObjectSourcePartition(t *testing.T) {
 
 func TestExecuteToReturnObjectTargetPartition(t *testing.T) {
 	file := common.DriverFile{
-		Code: "obj_sistema",
-		Type: common.OBJECT,
+		Code:            "obj_sistema",
+		Type:            common.OBJECT,
 		TargetPartition: "NIKU.ROOT",
 	}
 
@@ -184,9 +184,9 @@ func TestExecuteToReturnObjectTargetPartition(t *testing.T) {
 	}
 
 	count := 0
-	for _,e := range xog.FindElements("//*[@partitionCode]") {
+	for _, e := range xog.FindElements("//*[@partitionCode]") {
 		if e.SelectAttrValue("partitionCode", common.UNDEFINED) != file.TargetPartition {
-			count ++
+			count++
 		}
 	}
 
@@ -201,8 +201,8 @@ func TestExecuteToReturnObjectTargetPartition(t *testing.T) {
 
 func TestExecuteToReturnObjectChangeSourcePartitionToTarget(t *testing.T) {
 	file := common.DriverFile{
-		Code: "obj_sistema",
-		Type: common.OBJECT,
+		Code:            "obj_sistema",
+		Type:            common.OBJECT,
 		SourcePartition: "partition10",
 		TargetPartition: "NIKU.ROOT",
 	}
@@ -232,8 +232,8 @@ func TestExecuteToReturnObjectChangeSourcePartitionToTarget(t *testing.T) {
 
 func TestExecuteToReturnObjectChangePartitionModel(t *testing.T) {
 	file := common.DriverFile{
-		Code: "obj_sistema",
-		Type: common.OBJECT,
+		Code:           "obj_sistema",
+		Type:           common.OBJECT,
 		PartitionModel: "NEW_PARTITION_MODEL",
 	}
 
@@ -245,7 +245,7 @@ func TestExecuteToReturnObjectChangePartitionModel(t *testing.T) {
 		t.Fatalf("Error transforming object XOG file. Debug: %s", err.Error())
 	}
 
-	for _,e := range xog.FindElements("*[@partitionModelCode]"){
+	for _, e := range xog.FindElements("*[@partitionModelCode]") {
 		value := e.SelectAttrValue("partitionModelCode", common.UNDEFINED)
 		if value != file.PartitionModel {
 			t.Fatalf("Error transforming object XOG file. Expected %s got %s partition model", file.PartitionModel, value)

@@ -1,12 +1,12 @@
 package xog
 
 import (
-	"os"
-	"fmt"
 	"errors"
-	"strconv"
-	"github.com/beevik/etree"
+	"fmt"
 	"github.com/andreluzz/cas-xog/common"
+	"github.com/beevik/etree"
+	"os"
+	"strconv"
 )
 
 var envXml *etree.Document
@@ -20,16 +20,16 @@ func LoadEnvironmentsList() {
 }
 
 type EnvType struct {
-	Name 		string
-	URL 		string
-	Username 	string
-	Password 	string
-	Session 	string
-	Copy		bool
+	Name     string
+	URL      string
+	Username string
+	Password string
+	Session  string
+	Copy     bool
 }
 
 func (e *EnvType) init(envIndex string) error {
-	envElement := envXml.FindElement("//env["+envIndex+"]").Copy()
+	envElement := envXml.FindElement("//env[" + envIndex + "]").Copy()
 	if envElement == nil {
 		return errors.New("trying to initiate an invalid environment")
 	}
@@ -77,12 +77,12 @@ func (e *EnvType) clear() error {
 
 func (e *EnvType) copyEnv() *EnvType {
 	ne := &EnvType{
-		Name:  		e.Name,
-		Username:   e.Username,
-		Password: 	e.Password,
-		URL: 		e.URL,
-		Session: 	e.Session,
-		Copy:		true,
+		Name:     e.Name,
+		Username: e.Username,
+		Password: e.Password,
+		URL:      e.URL,
+		Session:  e.Session,
+		Copy:     true,
 	}
 	return ne
 }

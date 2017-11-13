@@ -1,10 +1,10 @@
 package transform
 
 import (
-	"testing"
 	"github.com/andreluzz/cas-xog/common"
 	"github.com/beevik/etree"
 	"strings"
+	"testing"
 )
 
 func init() {
@@ -126,31 +126,31 @@ func TestProcessPackageToProcessDefinitionReplaceString(t *testing.T) {
 
 	def := []common.Definition{
 		{
-			Action: "replaceString",
-			From: "Test cas-xog 002",
-			To: "Test cas-xog ##DEFINITION_VALUE##",
-			Value: "V0005",
+			Action:  "replaceString",
+			From:    "Test cas-xog 002",
+			To:      "Test cas-xog ##DEFINITION_VALUE##",
+			Value:   "V0005",
 			Default: "V0005",
 		},
 		{
-			Action: "replaceString",
-			From: "Test cas-xog 002",
-			To: "Test cas-xog ##DEFINITION_VALUE##",
-			Value: "002",
+			Action:  "replaceString",
+			From:    "Test cas-xog 002",
+			To:      "Test cas-xog ##DEFINITION_VALUE##",
+			Value:   "002",
 			Default: "V0005",
 		},
 		{
-			Action: "replaceString",
-			From: "Test cas-xog 002",
-			To: "Test cas-xog ##DEFINITION_VALUE##",
-			Value: "",
+			Action:  "replaceString",
+			From:    "Test cas-xog 002",
+			To:      "Test cas-xog ##DEFINITION_VALUE##",
+			Value:   "",
 			Default: "002",
 		},
 		{
 			Action: "replaceString",
-			From: "Test cas-xog 002",
-			To: "Test cas-xog ##DEFINITION_VALUE##",
-			Value: "V0005",
+			From:   "Test cas-xog 002",
+			To:     "Test cas-xog ##DEFINITION_VALUE##",
+			Value:  "V0005",
 		},
 	}
 

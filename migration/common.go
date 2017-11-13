@@ -2,11 +2,11 @@ package migration
 
 import (
 	"errors"
+	"github.com/andreluzz/cas-xog/common"
+	"github.com/beevik/etree"
+	"github.com/tealeg/xlsx"
 	"strconv"
 	"strings"
-	"github.com/tealeg/xlsx"
-	"github.com/beevik/etree"
-	"github.com/andreluzz/cas-xog/common"
 )
 
 func ReadDataFromExcel(file common.DriverFile) (*etree.Document, error) {

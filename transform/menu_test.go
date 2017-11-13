@@ -1,16 +1,16 @@
 package transform
 
 import (
-	"testing"
 	"github.com/andreluzz/cas-xog/common"
 	"github.com/beevik/etree"
+	"testing"
 )
 
 func TestExecuteToReturnErrorMenuInvalidSourceSection(t *testing.T) {
 	file := common.DriverFile{
 		Code: "application",
 		Type: common.MENU,
-		Sections: []common.Section {
+		Sections: []common.Section{
 			{
 				Code: "invalid_code",
 			},
@@ -33,10 +33,10 @@ func TestExecuteToReturnErrorMenuInvalidTargetSection(t *testing.T) {
 	file := common.DriverFile{
 		Code: "application",
 		Type: common.MENU,
-		Sections: []common.Section {
+		Sections: []common.Section{
 			{
 				Action: common.ACTION_UPDATE,
-				Code: "npt.personal",
+				Code:   "npt.personal",
 			},
 		},
 	}
@@ -57,10 +57,10 @@ func TestExecuteToReturnErrorMenuUpdateWithoutLinks(t *testing.T) {
 	file := common.DriverFile{
 		Code: "application",
 		Type: common.MENU,
-		Sections: []common.Section {
+		Sections: []common.Section{
 			{
 				Action: common.ACTION_UPDATE,
-				Code: "npt.personal",
+				Code:   "npt.personal",
 			},
 		},
 	}
@@ -81,10 +81,10 @@ func TestExecuteToReturnErrorMenuLinkInvalidCode(t *testing.T) {
 	file := common.DriverFile{
 		Code: "application",
 		Type: common.MENU,
-		Sections: []common.Section {
+		Sections: []common.Section{
 			{
 				Action: common.ACTION_UPDATE,
-				Code: "npt.personal",
+				Code:   "npt.personal",
 				Links: []common.SectionLink{
 					{
 						Code: "invalid_link_code",
@@ -110,10 +110,10 @@ func TestExecuteToReturnErrorMenuInsertExistentSection(t *testing.T) {
 	file := common.DriverFile{
 		Code: "application",
 		Type: common.MENU,
-		Sections: []common.Section {
+		Sections: []common.Section{
 			{
 				Action: common.ACTION_INSERT,
-				Code: "npt.personal",
+				Code:   "npt.personal",
 			},
 		},
 	}
@@ -134,10 +134,10 @@ func TestExecuteToReturnErrorMenuTargetInvalidSectionPosition(t *testing.T) {
 	file := common.DriverFile{
 		Code: "application",
 		Type: common.MENU,
-		Sections: []common.Section {
+		Sections: []common.Section{
 			{
-				Action: common.ACTION_INSERT,
-				Code: "menu_sec_cas_xog",
+				Action:         common.ACTION_INSERT,
+				Code:           "menu_sec_cas_xog",
 				TargetPosition: "129",
 			},
 		},
@@ -179,15 +179,15 @@ func TestExecuteToReturnMenuSectionAndLinks(t *testing.T) {
 	file := common.DriverFile{
 		Code: "application",
 		Type: common.MENU,
-		Sections: []common.Section {
+		Sections: []common.Section{
 			{
-				Action: common.ACTION_INSERT,
-				Code: "menu_sec_cas_xog",
+				Action:         common.ACTION_INSERT,
+				Code:           "menu_sec_cas_xog",
 				TargetPosition: "2",
 			},
 			{
 				Action: common.ACTION_UPDATE,
-				Code: "npt.personal",
+				Code:   "npt.personal",
 				Links: []common.SectionLink{
 					{
 						Code: "odf.obj_testeList",
@@ -217,10 +217,10 @@ func TestExecuteToReturnMenuInsertSectionWithLinks(t *testing.T) {
 	file := common.DriverFile{
 		Code: "application",
 		Type: common.MENU,
-		Sections: []common.Section {
+		Sections: []common.Section{
 			{
-				Action: common.ACTION_INSERT,
-				Code: "menu_sec_cas_xog",
+				Action:         common.ACTION_INSERT,
+				Code:           "menu_sec_cas_xog",
 				TargetPosition: "2",
 				Links: []common.SectionLink{
 					{

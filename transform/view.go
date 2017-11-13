@@ -2,9 +2,9 @@ package transform
 
 import (
 	"errors"
-	"strconv"
-	"github.com/beevik/etree"
 	"github.com/andreluzz/cas-xog/common"
+	"github.com/beevik/etree"
+	"strconv"
 )
 
 func specificViewTransformations(xog, aux *etree.Document, file common.DriverFile) error {
@@ -122,7 +122,7 @@ func processSectionByType(section common.Section, sourceView, targetView *etree.
 			return errors.New("attribute sourcePosition from tag <section> is not defined")
 		}
 
-		sourceSection = sourceView.FindElement("//section["+ section.SourcePosition +"]")
+		sourceSection = sourceView.FindElement("//section[" + section.SourcePosition + "]")
 		if sourceSection == nil {
 			return errors.New("source section for position " + section.SourcePosition + " does not exist")
 		}
@@ -130,7 +130,7 @@ func processSectionByType(section common.Section, sourceView, targetView *etree.
 
 	targetSection := targetView.FindElement("//nls[1]")
 	if section.TargetPosition != "" {
-		targetSection = targetView.FindElement("//section["+ section.TargetPosition +"]")
+		targetSection = targetView.FindElement("//section[" + section.TargetPosition + "]")
 		if targetSection == nil {
 			return errors.New("target position " + section.TargetPosition + " does not exist")
 		}

@@ -1,10 +1,10 @@
 package migration
 
 import (
-	"testing"
-	"github.com/tealeg/xlsx"
-	"github.com/beevik/etree"
 	"github.com/andreluzz/cas-xog/common"
+	"github.com/beevik/etree"
+	"github.com/tealeg/xlsx"
+	"testing"
 )
 
 var packageMockFolder string
@@ -33,7 +33,7 @@ func TestReadDataFromExcelToReturnErrorTemplateExists(t *testing.T) {
 
 func TestReadDataFromExcelToReturnErrorInstanceElementExists(t *testing.T) {
 	file := common.DriverFile{
-		Template: packageMockFolder + "template.xml",
+		Template:    packageMockFolder + "template.xml",
 		InstanceTag: "WrongInstance",
 	}
 	_, err := ReadDataFromExcel(file)
@@ -54,14 +54,14 @@ func TestReadDataFromExcelToReturnErrorExcelFileExists(t *testing.T) {
 
 func TestReadDataFromExcelToReturnErrorMatchElementExists(t *testing.T) {
 	file := common.DriverFile{
-		Template: packageMockFolder + "template.xml",
-		ExcelFile:  packageMockFolder + "data.xlsx",
-		InstanceTag: "instance",
+		Template:      packageMockFolder + "template.xml",
+		ExcelFile:     packageMockFolder + "data.xlsx",
+		InstanceTag:   "instance",
 		ExcelStartRow: "1",
 		MatchExcel: []common.MatchExcel{
 			{
-				Col: 1,
-				XPath: "invalid_xpath",
+				Col:           1,
+				XPath:         "invalid_xpath",
 				AttributeName: "name",
 			},
 		},
@@ -74,35 +74,35 @@ func TestReadDataFromExcelToReturnErrorMatchElementExists(t *testing.T) {
 
 func TestReadDataFromExcelToReturnXMLResult(t *testing.T) {
 	file := common.DriverFile{
-		Template:  packageMockFolder + "template.xml",
-		ExcelFile:  packageMockFolder + "data.xlsx",
-		InstanceTag: "instance",
+		Template:      packageMockFolder + "template.xml",
+		ExcelFile:     packageMockFolder + "data.xlsx",
+		InstanceTag:   "instance",
 		ExcelStartRow: "1",
 		MatchExcel: []common.MatchExcel{
 			{
-				Col: 1,
+				Col:           1,
 				AttributeName: "instanceCode",
 			},
 			{
-				Col: 1,
+				Col:   1,
 				XPath: "//ColumnValue[@name='code']",
 			},
 			{
-				Col: 2,
+				Col:   2,
 				XPath: "//ColumnValue[@name='name']",
 			},
 			{
-				Col: 3,
+				Col:   3,
 				XPath: "//ColumnValue[@name='status_novo']",
 			},
 			{
-				Col: 4,
-				XPath: "//ColumnValue[@name='multivalue_status']",
+				Col:         4,
+				XPath:       "//ColumnValue[@name='multivalue_status']",
 				MultiValued: true,
-				Separator: ";",
+				Separator:   ";",
 			},
 			{
-				Col: 5,
+				Col:   5,
 				XPath: "//ColumnValue[@name='analista']",
 			},
 		},
@@ -115,7 +115,7 @@ func TestReadDataFromExcelToReturnXMLResult(t *testing.T) {
 	}
 
 	expectedResult := etree.NewDocument()
-	expectedResult.ReadFromFile( packageMockFolder + "result.xml")
+	expectedResult.ReadFromFile(packageMockFolder + "result.xml")
 	expectedResult.IndentTabs()
 	expectedResultString, _ := expectedResult.WriteToString()
 
@@ -142,7 +142,7 @@ func TestExportInstancesToExcelToReturnErrorExcelPath(t *testing.T) {
 				XPath: "//ColumnValue[@name='status_novo']",
 			},
 			{
-				XPath: "//ColumnValue[@name='multivalue_status']",
+				XPath:       "//ColumnValue[@name='multivalue_status']",
 				MultiValued: true,
 			},
 			{
@@ -152,7 +152,7 @@ func TestExportInstancesToExcelToReturnErrorExcelPath(t *testing.T) {
 	}
 
 	result := etree.NewDocument()
-	result.ReadFromFile( packageMockFolder + "result.xml")
+	result.ReadFromFile(packageMockFolder + "result.xml")
 	folder := ""
 	err := ExportInstancesToExcel(result, file, folder)
 	if err == nil {
@@ -173,7 +173,7 @@ func TestExportInstancesToExcelToReturnErrorXPath(t *testing.T) {
 	}
 
 	result := etree.NewDocument()
-	result.ReadFromFile( packageMockFolder + "result.xml")
+	result.ReadFromFile(packageMockFolder + "result.xml")
 	folder := ""
 	err := ExportInstancesToExcel(result, file, folder)
 	if err == nil {
@@ -183,10 +183,10 @@ func TestExportInstancesToExcelToReturnErrorXPath(t *testing.T) {
 
 func TestExportInstancesToExcelToReturnExcelFile(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.CUSTOM_OBJECT_INSTANCE,
+		Type:          common.CUSTOM_OBJECT_INSTANCE,
 		ExportToExcel: true,
-		ExcelFile: "instances.xlsx",
-		InstanceTag: "instance",
+		ExcelFile:     "instances.xlsx",
+		InstanceTag:   "instance",
 		MatchExcel: []common.MatchExcel{
 			{
 				AttributeName: "instanceCode",
@@ -198,9 +198,9 @@ func TestExportInstancesToExcelToReturnExcelFile(t *testing.T) {
 				XPath: "//ColumnValue[@name='status_novo']",
 			},
 			{
-				XPath: "//ColumnValue[@name='multivalue_status']",
+				XPath:       "//ColumnValue[@name='multivalue_status']",
 				MultiValued: true,
-				Separator: ";",
+				Separator:   ";",
 			},
 			{
 				XPath: "//ColumnValue[@name='analista']",
@@ -209,15 +209,15 @@ func TestExportInstancesToExcelToReturnExcelFile(t *testing.T) {
 	}
 
 	result := etree.NewDocument()
-	result.ReadFromFile( packageMockFolder + "result.xml")
+	result.ReadFromFile(packageMockFolder + "result.xml")
 	folder := "../" + common.FOLDER_READ + file.Type + "/"
 	err := ExportInstancesToExcel(result, file, folder)
 	if err != nil {
 		t.Fatalf("Error exporting instances to excel file. Debug: %s", err.Error())
 	}
 
-	f1, _:= xlsx.OpenFile( packageMockFolder + "data.xlsx")
-	f2, _:= xlsx.OpenFile(folder + file.ExcelFile)
+	f1, _ := xlsx.OpenFile(packageMockFolder + "data.xlsx")
+	f2, _ := xlsx.OpenFile(folder + file.ExcelFile)
 
 	f1Array, _ := f1.ToSlice()
 	f2Array, _ := f2.ToSlice()

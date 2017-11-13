@@ -3,8 +3,9 @@ package transform
 import (
 	"strings"
 	"testing"
-	"github.com/beevik/etree"
+
 	"github.com/andreluzz/cas-xog/common"
+	"github.com/beevik/etree"
 )
 
 func TestExecuteToReturnProcess(t *testing.T) {
@@ -30,10 +31,10 @@ func TestExecuteToReturnProcessReplace(t *testing.T) {
 	file := common.DriverFile{
 		Code: "PRC_0002",
 		Type: common.PROCESS,
-		Replace: []common.FileReplace {
+		Replace: []common.FileReplace{
 			{
 				From: "Test cas-xog 002",
-				To: "Test CAS XOG after replace",
+				To:   "Test CAS XOG after replace",
 			},
 		},
 	}
@@ -59,8 +60,8 @@ func TestExecuteToReturnProcessReplace(t *testing.T) {
 
 func TestExecuteToReturnProcessCopyingPermissions(t *testing.T) {
 	file := common.DriverFile{
-		Code: "PRC_0002",
-		Type: common.PROCESS,
+		Code:            "PRC_0002",
+		Type:            common.PROCESS,
 		CopyPermissions: "PRC_0001",
 	}
 
@@ -82,8 +83,8 @@ func TestExecuteToReturnProcessCopyingPermissions(t *testing.T) {
 
 func TestExecuteToReturnErrorProcessCopyingPermissions(t *testing.T) {
 	file := common.DriverFile{
-		Code: "PRC_0002",
-		Type: common.PROCESS,
+		Code:            "PRC_0002",
+		Type:            common.PROCESS,
 		CopyPermissions: "PRC_0001",
 	}
 
@@ -101,8 +102,8 @@ func TestExecuteToReturnErrorProcessCopyingPermissions(t *testing.T) {
 
 func TestExecuteToReturnErrorProcessElementNotFound(t *testing.T) {
 	file := common.DriverFile{
-		Code: "PRC_0002",
-		Type: common.PROCESS,
+		Code:            "PRC_0002",
+		Type:            common.PROCESS,
 		CopyPermissions: "PRC_0001",
 	}
 
@@ -118,38 +119,38 @@ func TestExecuteToReturnErrorProcessElementNotFound(t *testing.T) {
 	}
 }
 
-func TestIncludeCDATAToReturnXML(t *testing.T) {
+func TestIncludeEscapeTextToReturnString(t *testing.T) {
 	xog := etree.NewDocument()
-	xog.ReadFromFile(packageMockFolder + "process_full_xog_cdata.xml")
+	xog.ReadFromFile(packageMockFolder + "process_full_xog_escapetext.xml")
 
-	XOGBytes, err := IncludeCDATA(xog)
+	XOGString, err := IncludeEscapeText(xog)
 
 	if err != nil {
-		t.Errorf("Error including CDATA tag to process XOG file. Debug: %s", err.Error())
+		t.Errorf("Error including escapeText attribute to process XOG file. Debug: %s", err.Error())
 	}
 
 	result := etree.NewDocument()
-	result.ReadFromBytes(XOGBytes)
+	result.ReadFromString(XOGString)
 
-	if readMockResultAndCompare(result, "process_result_cdata.xml") == false {
-		t.Errorf("Error including CDATA tag to process XOG file. Invalid result XML.")
+	if readMockResultAndCompare(result, "process_result_escapetext.xml") == false {
+		t.Errorf("Error including escapeText attribute to process XOG file. Invalid result XML.")
 	}
 }
 
-func TestIncludeCDATAWithoutQueryToReturnXML(t *testing.T) {
+func TestIncludeEscapeTextWithoutQueryToReturnXML(t *testing.T) {
 	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "process_full_xog.xml")
 
-	XOGBytes, err := IncludeCDATA(xog)
+	XOGString, err := IncludeEscapeText(xog)
 
 	if err != nil {
-		t.Errorf("Error including CDATA tag to process XOG file. Debug: %s", err.Error())
+		t.Errorf("Error including escapeText attribute to process XOG file. Debug: %s", err.Error())
 	}
 
 	result := etree.NewDocument()
-	result.ReadFromBytes(XOGBytes)
+	result.ReadFromString(XOGString)
 
 	if readMockResultAndCompare(result, "process_full_xog.xml") == false {
-		t.Errorf("Error including CDATA tag to process XOG file. Invalid result XML.")
+		t.Errorf("Error including escapeText attribute to process XOG file. Invalid result XML.")
 	}
 }
