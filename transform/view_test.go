@@ -9,9 +9,9 @@ import (
 
 func TestExecuteToReturnView(t *testing.T) {
 	file := common.DriverFile{
-		Code: "*",
+		Code:    "*",
 		ObjCode: "obj_sistema",
-		Type: common.VIEW,
+		Type:    common.VIEW,
 	}
 
 	xog := etree.NewDocument()
@@ -29,9 +29,9 @@ func TestExecuteToReturnView(t *testing.T) {
 
 func TestExecuteToReturnViewSourcePartition(t *testing.T) {
 	file := common.DriverFile{
-		Code: "*",
-		ObjCode: "obj_sistema",
-		Type: common.VIEW,
+		Code:            "*",
+		ObjCode:         "obj_sistema",
+		Type:            common.VIEW,
 		SourcePartition: "partition10",
 	}
 
@@ -50,9 +50,9 @@ func TestExecuteToReturnViewSourcePartition(t *testing.T) {
 
 func TestExecuteToReturnViewSourceTargetPartition(t *testing.T) {
 	file := common.DriverFile{
-		Code: "*",
-		ObjCode: "obj_sistema",
-		Type: common.VIEW,
+		Code:            "*",
+		ObjCode:         "obj_sistema",
+		Type:            common.VIEW,
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
 	}
@@ -72,9 +72,9 @@ func TestExecuteToReturnViewSourceTargetPartition(t *testing.T) {
 
 func TestExecuteToReturnViewSingle(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.VIEW,
-		Code: "obj_sistema.auditoria",
-		ObjCode: "obj_sistema",
+		Type:            common.VIEW,
+		Code:            "obj_sistema.auditoria",
+		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 	}
 
@@ -95,9 +95,9 @@ func TestExecuteToReturnViewSingle(t *testing.T) {
 
 func TestExecuteToReturnViewSingleNotInTarget(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.VIEW,
-		Code: "obj_sistema.auditoria",
-		ObjCode: "obj_sistema",
+		Type:            common.VIEW,
+		Code:            "obj_sistema.auditoria",
+		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 	}
 
@@ -118,9 +118,9 @@ func TestExecuteToReturnViewSingleNotInTarget(t *testing.T) {
 
 func TestExecuteToReturnViewSingleSection(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.VIEW,
-		Code: "obj_sistema.auditoria",
-		ObjCode: "obj_sistema",
+		Type:            common.VIEW,
+		Code:            "obj_sistema.auditoria",
+		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 	}
 
@@ -141,13 +141,13 @@ func TestExecuteToReturnViewSingleSection(t *testing.T) {
 
 func TestExecuteToReturnViewReplaceSection(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.VIEW,
-		Code: "obj_sistema.auditoria",
-		ObjCode: "obj_sistema",
+		Type:            common.VIEW,
+		Code:            "obj_sistema.auditoria",
+		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		Sections: []common.Section{
 			{
-				Action: common.ACTION_REPLACE,
+				Action:         common.ACTION_REPLACE,
 				SourcePosition: "1",
 				TargetPosition: "1",
 			},
@@ -171,13 +171,13 @@ func TestExecuteToReturnViewReplaceSection(t *testing.T) {
 
 func TestExecuteToReturnViewRemoveSection(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.VIEW,
-		Code: "obj_sistema.auditoria",
-		ObjCode: "obj_sistema",
+		Type:            common.VIEW,
+		Code:            "obj_sistema.auditoria",
+		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		Sections: []common.Section{
 			{
-				Action: common.ACTION_REMOVE,
+				Action:         common.ACTION_REMOVE,
 				TargetPosition: "3",
 			},
 		},
@@ -200,33 +200,33 @@ func TestExecuteToReturnViewRemoveSection(t *testing.T) {
 
 func TestExecuteToReturnViewUpdateSection(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.VIEW,
-		Code: "obj_sistema.auditoria",
-		ObjCode: "obj_sistema",
+		Type:            common.VIEW,
+		Code:            "obj_sistema.auditoria",
+		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
 		Sections: []common.Section{
 			{
-				Action: common.ACTION_UPDATE,
+				Action:         common.ACTION_UPDATE,
 				SourcePosition: "1",
 				TargetPosition: "1",
 				Fields: []common.SectionField{
 					{
-						Code: "analista",
-						Column: common.COLUMN_LEFT,
+						Code:         "analista",
+						Column:       common.COLUMN_LEFT,
 						InsertBefore: "created_by",
 					},
 					{
-						Code: "status",
-						Column: common.COLUMN_LEFT,
+						Code:         "status",
+						Column:       common.COLUMN_LEFT,
 						InsertBefore: "created_by",
 					},
 					{
-						Code: "status_novo",
+						Code:   "status_novo",
 						Column: common.COLUMN_RIGHT,
 					},
 					{
-						Code: "created_date",
+						Code:   "created_date",
 						Remove: true,
 					},
 				},
@@ -251,33 +251,33 @@ func TestExecuteToReturnViewUpdateSection(t *testing.T) {
 
 func TestExecuteToReturnViewUpdateSectionColumns(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.VIEW,
-		Code: "obj_sistema.auditoria",
-		ObjCode: "obj_sistema",
+		Type:            common.VIEW,
+		Code:            "obj_sistema.auditoria",
+		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
 		Sections: []common.Section{
 			{
-				Action: common.ACTION_UPDATE,
+				Action:         common.ACTION_UPDATE,
 				SourcePosition: "1",
 				TargetPosition: "1",
 				Fields: []common.SectionField{
 					{
-						Code: "analista",
+						Code:   "analista",
 						Column: common.COLUMN_LEFT,
 					},
 					{
-						Code: "status",
-						Column: common.COLUMN_LEFT,
+						Code:         "status",
+						Column:       common.COLUMN_LEFT,
 						InsertBefore: "created_by",
 					},
 					{
-						Code: "status_novo",
-						Column: common.COLUMN_RIGHT,
+						Code:         "status_novo",
+						Column:       common.COLUMN_RIGHT,
 						InsertBefore: "created_date",
 					},
 					{
-						Code: "created_date",
+						Code:   "created_date",
 						Remove: true,
 					},
 				},
@@ -302,28 +302,28 @@ func TestExecuteToReturnViewUpdateSectionColumns(t *testing.T) {
 
 func TestExecuteToReturnViewUpdateSectionTargetNoRightColumn(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.VIEW,
-		Code: "obj_sistema.auditoria",
-		ObjCode: "obj_sistema",
+		Type:            common.VIEW,
+		Code:            "obj_sistema.auditoria",
+		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
 		Sections: []common.Section{
 			{
-				Action: common.ACTION_UPDATE,
+				Action:         common.ACTION_UPDATE,
 				SourcePosition: "1",
 				TargetPosition: "1",
 				Fields: []common.SectionField{
 					{
-						Code: "analista",
+						Code:   "analista",
 						Column: common.COLUMN_LEFT,
 					},
 					{
-						Code: "status",
-						Column: common.COLUMN_LEFT,
+						Code:         "status",
+						Column:       common.COLUMN_LEFT,
 						InsertBefore: "created_by",
 					},
 					{
-						Code: "status_novo",
+						Code:   "status_novo",
 						Column: common.COLUMN_RIGHT,
 					},
 				},
@@ -348,36 +348,36 @@ func TestExecuteToReturnViewUpdateSectionTargetNoRightColumn(t *testing.T) {
 
 func TestExecuteToReturnViewUpdateSectionTargetNoLeftColumn(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.VIEW,
-		Code: "obj_sistema.auditoria",
-		ObjCode: "obj_sistema",
+		Type:            common.VIEW,
+		Code:            "obj_sistema.auditoria",
+		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
 		Sections: []common.Section{
 			{
-				Action: common.ACTION_UPDATE,
+				Action:         common.ACTION_UPDATE,
 				SourcePosition: "1",
 				TargetPosition: "1",
 				Fields: []common.SectionField{
 					{
-						Code: "analista",
+						Code:   "analista",
 						Column: common.COLUMN_LEFT,
 					},
 					{
-						Code: "status",
+						Code:   "status",
 						Column: common.COLUMN_LEFT,
 					},
 					{
-						Code: "created_by",
+						Code:   "created_by",
 						Column: common.COLUMN_LEFT,
 					},
 					{
-						Code: "status_novo",
-						Column: common.COLUMN_RIGHT,
+						Code:         "status_novo",
+						Column:       common.COLUMN_RIGHT,
 						InsertBefore: "created_date",
 					},
 					{
-						Code: "created_date",
+						Code:   "created_date",
 						Remove: true,
 					},
 				},
@@ -402,13 +402,13 @@ func TestExecuteToReturnViewUpdateSectionTargetNoLeftColumn(t *testing.T) {
 
 func TestExecuteToReturnViewInsertSection(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.VIEW,
-		Code: "obj_sistema.auditoria",
-		ObjCode: "obj_sistema",
+		Type:            common.VIEW,
+		Code:            "obj_sistema.auditoria",
+		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		Sections: []common.Section{
 			{
-				Action: common.ACTION_INSERT,
+				Action:         common.ACTION_INSERT,
 				SourcePosition: "1",
 				TargetPosition: "1",
 			},
@@ -432,13 +432,13 @@ func TestExecuteToReturnViewInsertSection(t *testing.T) {
 
 func TestExecuteToReturnErrorSectionsWithoutSingleView(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.VIEW,
-		Code: "*",
-		ObjCode: "obj_sistema",
+		Type:            common.VIEW,
+		Code:            "*",
+		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		Sections: []common.Section{
 			{
-				Action: common.ACTION_INSERT,
+				Action:         common.ACTION_INSERT,
 				SourcePosition: "1",
 				TargetPosition: "1",
 			},
@@ -458,9 +458,9 @@ func TestExecuteToReturnErrorSectionsWithoutSingleView(t *testing.T) {
 
 func TestExecuteToReturnErrorTargetWithoutSourcePartition(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.VIEW,
-		Code: "*",
-		ObjCode: "obj_sistema",
+		Type:            common.VIEW,
+		Code:            "*",
+		ObjCode:         "obj_sistema",
 		TargetPartition: "partition10",
 	}
 
@@ -477,14 +477,14 @@ func TestExecuteToReturnErrorTargetWithoutSourcePartition(t *testing.T) {
 
 func TestExecuteToReturnErrorSingleViewNotInTarget(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.VIEW,
-		Code: "INVALID_VIEW_CODE",
-		ObjCode: "obj_sistema",
+		Type:            common.VIEW,
+		Code:            "INVALID_VIEW_CODE",
+		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition10",
 		Sections: []common.Section{
 			{
-				Action: common.ACTION_INSERT,
+				Action:         common.ACTION_INSERT,
 				TargetPosition: "1",
 				SourcePosition: "1",
 			},
@@ -504,13 +504,13 @@ func TestExecuteToReturnErrorSingleViewNotInTarget(t *testing.T) {
 
 func TestExecuteToReturnErrorSectionSourcePositionNotDefined(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.VIEW,
-		Code: "obj_sistema.auditoria",
-		ObjCode: "obj_sistema",
+		Type:            common.VIEW,
+		Code:            "obj_sistema.auditoria",
+		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		Sections: []common.Section{
 			{
-				Action: common.ACTION_INSERT,
+				Action:         common.ACTION_INSERT,
 				TargetPosition: "1",
 			},
 		},
@@ -529,13 +529,13 @@ func TestExecuteToReturnErrorSectionSourcePositionNotDefined(t *testing.T) {
 
 func TestExecuteToReturnErrorSectionSourcePositionIndexOutOfBounds(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.VIEW,
-		Code: "obj_sistema.auditoria",
-		ObjCode: "obj_sistema",
+		Type:            common.VIEW,
+		Code:            "obj_sistema.auditoria",
+		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		Sections: []common.Section{
 			{
-				Action: common.ACTION_INSERT,
+				Action:         common.ACTION_INSERT,
 				SourcePosition: "11",
 				TargetPosition: "1",
 			},
@@ -555,13 +555,13 @@ func TestExecuteToReturnErrorSectionSourcePositionIndexOutOfBounds(t *testing.T)
 
 func TestExecuteToReturnErrorSectionTargetPositionIndexOutOfBounds(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.VIEW,
-		Code: "obj_sistema.auditoria",
-		ObjCode: "obj_sistema",
+		Type:            common.VIEW,
+		Code:            "obj_sistema.auditoria",
+		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		Sections: []common.Section{
 			{
-				Action: common.ACTION_INSERT,
+				Action:         common.ACTION_INSERT,
 				SourcePosition: "1",
 				TargetPosition: "11",
 			},
@@ -581,13 +581,13 @@ func TestExecuteToReturnErrorSectionTargetPositionIndexOutOfBounds(t *testing.T)
 
 func TestExecuteToReturnErrorSectionReplaceWithoutTargetPosition(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.VIEW,
-		Code: "obj_sistema.auditoria",
-		ObjCode: "obj_sistema",
+		Type:            common.VIEW,
+		Code:            "obj_sistema.auditoria",
+		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		Sections: []common.Section{
 			{
-				Action: common.ACTION_REPLACE,
+				Action:         common.ACTION_REPLACE,
 				SourcePosition: "1",
 			},
 		},
@@ -606,13 +606,13 @@ func TestExecuteToReturnErrorSectionReplaceWithoutTargetPosition(t *testing.T) {
 
 func TestExecuteToReturnErrorSectionRemoveWithoutTargetPosition(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.VIEW,
-		Code: "obj_sistema.auditoria",
-		ObjCode: "obj_sistema",
+		Type:            common.VIEW,
+		Code:            "obj_sistema.auditoria",
+		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		Sections: []common.Section{
 			{
-				Action: common.ACTION_REMOVE,
+				Action:         common.ACTION_REMOVE,
 				SourcePosition: "1",
 			},
 		},
@@ -631,13 +631,13 @@ func TestExecuteToReturnErrorSectionRemoveWithoutTargetPosition(t *testing.T) {
 
 func TestExecuteToReturnErrorSectionUpdateWithoutField(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.VIEW,
-		Code: "obj_sistema.auditoria",
-		ObjCode: "obj_sistema",
+		Type:            common.VIEW,
+		Code:            "obj_sistema.auditoria",
+		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		Sections: []common.Section{
 			{
-				Action: common.ACTION_UPDATE,
+				Action:         common.ACTION_UPDATE,
 				SourcePosition: "1",
 				TargetPosition: "1",
 			},
@@ -657,19 +657,19 @@ func TestExecuteToReturnErrorSectionUpdateWithoutField(t *testing.T) {
 
 func TestExecuteToReturnErrorUpdateSectionRemoveInvalidFieldCode(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.VIEW,
-		Code: "obj_sistema.auditoria",
-		ObjCode: "obj_sistema",
+		Type:            common.VIEW,
+		Code:            "obj_sistema.auditoria",
+		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
 		Sections: []common.Section{
 			{
-				Action: common.ACTION_UPDATE,
+				Action:         common.ACTION_UPDATE,
 				SourcePosition: "1",
 				TargetPosition: "1",
 				Fields: []common.SectionField{
 					{
-						Code: "INVALID_FIELD_CODE",
+						Code:   "INVALID_FIELD_CODE",
 						Remove: true,
 					},
 				},
@@ -690,19 +690,19 @@ func TestExecuteToReturnErrorUpdateSectionRemoveInvalidFieldCode(t *testing.T) {
 
 func TestExecuteToReturnErrorUpdateSectionInsertInvalidFieldCode(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.VIEW,
-		Code: "obj_sistema.auditoria",
-		ObjCode: "obj_sistema",
+		Type:            common.VIEW,
+		Code:            "obj_sistema.auditoria",
+		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
 		Sections: []common.Section{
 			{
-				Action: common.ACTION_UPDATE,
+				Action:         common.ACTION_UPDATE,
 				SourcePosition: "1",
 				TargetPosition: "1",
 				Fields: []common.SectionField{
 					{
-						Code: "INVALID_FIELD_CODE",
+						Code:   "INVALID_FIELD_CODE",
 						Column: common.COLUMN_LEFT,
 					},
 				},
@@ -723,20 +723,20 @@ func TestExecuteToReturnErrorUpdateSectionInsertInvalidFieldCode(t *testing.T) {
 
 func TestExecuteToReturnErrorUpdateSectionInsertInvalidTargetInsertBeforeCode(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.VIEW,
-		Code: "obj_sistema.auditoria",
-		ObjCode: "obj_sistema",
+		Type:            common.VIEW,
+		Code:            "obj_sistema.auditoria",
+		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
 		Sections: []common.Section{
 			{
-				Action: common.ACTION_UPDATE,
+				Action:         common.ACTION_UPDATE,
 				SourcePosition: "1",
 				TargetPosition: "1",
 				Fields: []common.SectionField{
 					{
-						Code: "analista",
-						Column: common.COLUMN_LEFT,
+						Code:         "analista",
+						Column:       common.COLUMN_LEFT,
 						InsertBefore: "INVALID_FIELD_CODE",
 					},
 				},
@@ -757,14 +757,14 @@ func TestExecuteToReturnErrorUpdateSectionInsertInvalidTargetInsertBeforeCode(t 
 
 func TestExecuteToReturnErrorUpdateSectionInvalidSectionAction(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.VIEW,
-		Code: "obj_sistema.auditoria",
-		ObjCode: "obj_sistema",
+		Type:            common.VIEW,
+		Code:            "obj_sistema.auditoria",
+		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
 		Sections: []common.Section{
 			{
-				Action: "INVALID_SECTION_ACTION",
+				Action:         "INVALID_SECTION_ACTION",
 				SourcePosition: "1",
 				TargetPosition: "1",
 			},
@@ -784,19 +784,19 @@ func TestExecuteToReturnErrorUpdateSectionInvalidSectionAction(t *testing.T) {
 
 func TestExecuteToReturnErrorUpdateSectionInvalidFieldColumn(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.VIEW,
-		Code: "obj_sistema.auditoria",
-		ObjCode: "obj_sistema",
+		Type:            common.VIEW,
+		Code:            "obj_sistema.auditoria",
+		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
 		Sections: []common.Section{
 			{
-				Action: common.ACTION_UPDATE,
+				Action:         common.ACTION_UPDATE,
 				SourcePosition: "1",
 				TargetPosition: "1",
 				Fields: []common.SectionField{
 					{
-						Code: "analista",
+						Code:   "analista",
 						Column: "INVALID_COLUMN",
 					},
 				},
@@ -817,14 +817,14 @@ func TestExecuteToReturnErrorUpdateSectionInvalidFieldColumn(t *testing.T) {
 
 func TestExecuteToReturnErrorSingleViewNotInSource(t *testing.T) {
 	file := common.DriverFile{
-		Type: common.VIEW,
-		Code: "obj_sistemaList",
-		ObjCode: "obj_sistema",
+		Type:            common.VIEW,
+		Code:            "obj_sistemaList",
+		ObjCode:         "obj_sistema",
 		SourcePartition: "partition20",
 		TargetPartition: "partition10",
 		Sections: []common.Section{
 			{
-				Action: common.ACTION_INSERT,
+				Action:         common.ACTION_INSERT,
 				TargetPosition: "1",
 				SourcePosition: "1",
 			},

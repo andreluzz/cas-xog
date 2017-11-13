@@ -1,10 +1,10 @@
 package xog
 
 import (
-	"os"
 	"fmt"
-	"strings"
 	"github.com/andreluzz/cas-xog/common"
+	"os"
+	"strings"
 )
 
 var startInstallingPackage int

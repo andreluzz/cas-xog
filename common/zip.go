@@ -1,11 +1,11 @@
 package common
 
 import (
+	"archive/zip"
 	"io"
 	"os"
-	"strings"
-	"archive/zip"
 	"path/filepath"
+	"strings"
 )
 
 func Unzip(src, destinationFolder string) ([]string, error) {

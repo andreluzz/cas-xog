@@ -1,8 +1,8 @@
 package transform
 
 import (
-	"github.com/beevik/etree"
 	"github.com/andreluzz/cas-xog/common"
+	"github.com/beevik/etree"
 )
 
 func specificObjectTransformations(xog *etree.Document, file common.DriverFile) {
@@ -36,7 +36,7 @@ func removeOtherPartitionsAttributes(xog *etree.Document, file common.DriverFile
 	var includes []common.Element
 	for _, e := range partitionElements {
 		var include common.Element
-		switch e.Tag{
+		switch e.Tag {
 		case "customAttribute":
 			include.Type = "attribute"
 		case "link":

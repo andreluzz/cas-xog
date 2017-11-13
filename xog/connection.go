@@ -2,8 +2,8 @@ package xog
 
 import (
 	"errors"
-	"github.com/beevik/etree"
 	"github.com/andreluzz/cas-xog/common"
+	"github.com/beevik/etree"
 )
 
 func Login(env *EnvType) (string, error) {

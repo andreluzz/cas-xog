@@ -1,12 +1,12 @@
 package common
 
 import (
-	"os"
 	"fmt"
-	"log"
-	"strings"
 	"github.com/beevik/etree"
 	"github.com/mattn/go-colorable"
+	"log"
+	"os"
+	"strings"
 )
 
 var Log *log.Logger
@@ -28,10 +28,10 @@ func clearLog(mode, msg string) {
 	Log.Println(mode + ": " + r.Replace(msg))
 }
 
-func InitLog(){
+func InitLog() {
 	folder := "log/"
 	ValidateFolder(folder)
-	file, err := os.OpenFile(folder + "cas-xog.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	file, err := os.OpenFile(folder+"cas-xog.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		fmt.Printf("\n[cas-xog][red[Error]] Failed to open log file\n")
 	}

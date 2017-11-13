@@ -1,10 +1,10 @@
 package validate
 
 import (
-	"testing"
 	"github.com/andreluzz/cas-xog/common"
 	"github.com/beevik/etree"
 	"strings"
+	"testing"
 )
 
 var packageMockFolder string
@@ -14,10 +14,10 @@ func init() {
 }
 
 func TestCheckToValidateSuccessOutput(t *testing.T) {
-	xog:= etree.NewDocument()
+	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "mockSuccess.xml")
 
-	output, err:= Check(xog)
+	output, err := Check(xog)
 
 	if output.Code != common.OUTPUT_SUCCESS || strings.Contains(output.Debug, "Elapsed time:") == false {
 		t.Errorf("Expected output %s and recëived output %s", common.OUTPUT_SUCCESS, output.Code)
@@ -28,10 +28,10 @@ func TestCheckToValidateSuccessOutput(t *testing.T) {
 }
 
 func TestCheckToValidateSuccessOutputWithoutElapsedTime(t *testing.T) {
-	xog:= etree.NewDocument()
+	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "mockSuccessWithoutElapsedTime.xml")
 
-	output, err:= Check(xog)
+	output, err := Check(xog)
 
 	if output.Code != common.OUTPUT_SUCCESS || strings.Contains(output.Debug, "Elapsed time:") {
 		t.Errorf("Expected output %s and recëived output %s", common.OUTPUT_SUCCESS, output.Code)
@@ -42,10 +42,10 @@ func TestCheckToValidateSuccessOutputWithoutElapsedTime(t *testing.T) {
 }
 
 func TestCheckToValidateErrorOutput(t *testing.T) {
-	xog:= etree.NewDocument()
+	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "mockError.xml")
 
-	output, err:= Check(xog)
+	output, err := Check(xog)
 
 	if output.Code != common.OUTPUT_ERROR {
 		t.Errorf("Expected output %s and recëived output %s", common.OUTPUT_ERROR, output.Code)
@@ -56,10 +56,10 @@ func TestCheckToValidateErrorOutput(t *testing.T) {
 }
 
 func TestCheckToValidateWarningOutput(t *testing.T) {
-	xog:= etree.NewDocument()
+	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "mockWarning.xml")
 
-	output, err:= Check(xog)
+	output, err := Check(xog)
 
 	if output.Code != common.OUTPUT_WARNING {
 		t.Errorf("Expected output %s and recëived output %s", common.OUTPUT_WARNING, output.Code)
@@ -70,10 +70,10 @@ func TestCheckToValidateWarningOutput(t *testing.T) {
 }
 
 func TestCheckToValidateZeroTotalResultsOutput(t *testing.T) {
-	xog:= etree.NewDocument()
+	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "mockZeroTotalResults.xml")
 
-	output, err:= Check(xog)
+	output, err := Check(xog)
 
 	if output.Code != common.OUTPUT_ERROR {
 		t.Errorf("Expected output %s and recëived output %s", common.OUTPUT_ERROR, output.Code)
@@ -84,10 +84,10 @@ func TestCheckToValidateZeroTotalResultsOutput(t *testing.T) {
 }
 
 func TestCheckToValidateOneFailureResultOutput(t *testing.T) {
-	xog:= etree.NewDocument()
+	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "mockOneFailureResult.xml")
 
-	output, err:= Check(xog)
+	output, err := Check(xog)
 
 	if output.Code != common.OUTPUT_ERROR {
 		t.Errorf("Expected output %s and recëived output %s", common.OUTPUT_ERROR, output.Code)
@@ -98,12 +98,12 @@ func TestCheckToValidateOneFailureResultOutput(t *testing.T) {
 }
 
 func TestCheckToValidateNoStatusTag(t *testing.T) {
-	xog:= etree.NewDocument()
-	xog.ReadFromFile(packageMockFolder 	+ "mockNoStatusTag.xml")
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "mockNoStatusTag.xml")
 
-	output, err:= Check(xog)
+	output, err := Check(xog)
 
-	if output.Code != common.OUTPUT_ERROR  {
+	if output.Code != common.OUTPUT_ERROR {
 		t.Errorf("Expected output %s and recëived output %s", common.OUTPUT_ERROR, output.Code)
 	}
 	if err == nil || err.Error() != "no status tag defined" {
@@ -112,10 +112,10 @@ func TestCheckToValidateNoStatusTag(t *testing.T) {
 }
 
 func TestCheckToValidateNoXOGOutputTag(t *testing.T) {
-	xog:= etree.NewDocument()
-	xog.ReadFromFile(packageMockFolder 	+ "mockNoXOGOutputTag.xml")
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "mockNoXOGOutputTag.xml")
 
-	output, err:= Check(xog)
+	output, err := Check(xog)
 
 	if output.Code != common.OUTPUT_ERROR {
 		t.Errorf("Expected output %s and recëived output %s", common.OUTPUT_ERROR, output.Code)
@@ -126,7 +126,7 @@ func TestCheckToValidateNoXOGOutputTag(t *testing.T) {
 }
 
 func TestCheckToValidateInvalidXml(t *testing.T) {
-	output, err:= Check(nil)
+	output, err := Check(nil)
 
 	if output.Code != common.OUTPUT_ERROR {
 		t.Errorf("Expected output %s and recëived output %s", common.OUTPUT_ERROR, output.Code)

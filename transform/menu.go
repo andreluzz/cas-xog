@@ -2,9 +2,9 @@ package transform
 
 import (
 	"errors"
-	"strconv"
-	"github.com/beevik/etree"
 	"github.com/andreluzz/cas-xog/common"
+	"github.com/beevik/etree"
+	"strconv"
 )
 
 func specificMenuTransformations(xog, aux *etree.Document, file common.DriverFile) error {
@@ -15,7 +15,7 @@ func specificMenuTransformations(xog, aux *etree.Document, file common.DriverFil
 		removeElementFromParent(aux, "//objects")
 		removeElementFromParent(aux, "//pages")
 
-		for _,s := range file.Sections {
+		for _, s := range file.Sections {
 			sourceSectionElement := xog.FindElement("//section[@code='" + s.Code + "']")
 			if sourceSectionElement == nil {
 				return errors.New("invalid source menu section code(" + s.Code + ")")
@@ -30,14 +30,14 @@ func specificMenuTransformations(xog, aux *etree.Document, file common.DriverFil
 				if len(s.Links) <= 0 {
 					return errors.New("can't update menu section code(" + s.Code + ") without tag link")
 				}
-				for _,l := range s.Links {
+				for _, l := range s.Links {
 					sourceLinkElement := sourceSectionElement.FindElement("//link[@pageCode='" + l.Code + "']")
 					if sourceLinkElement == nil {
 						return errors.New("invalid source menu section link code(" + l.Code + ")")
 					}
 					targetSectionElement.AddChild(sourceLinkElement)
 				}
-				for i,e := range targetSectionElement.FindElements("//link") {
+				for i, e := range targetSectionElement.FindElements("//link") {
 					e.CreateAttr("position", strconv.Itoa(i))
 				}
 			case common.ACTION_INSERT:
@@ -49,9 +49,9 @@ func specificMenuTransformations(xog, aux *etree.Document, file common.DriverFil
 					position = s.TargetPosition
 				}
 				if len(s.Links) > 0 {
-					for _,e := range sourceSectionElement.FindElements("//link") {
+					for _, e := range sourceSectionElement.FindElements("//link") {
 						removeLink := true
-						for _,l := range s.Links {
+						for _, l := range s.Links {
 							if l.Code == e.SelectAttrValue("pageCode", "") {
 								removeLink = false
 							}
@@ -66,7 +66,7 @@ func specificMenuTransformations(xog, aux *etree.Document, file common.DriverFil
 					return errors.New("invalid target section position(" + position + ")")
 				}
 				targetElementAtPosition.Parent().InsertChild(targetElementAtPosition, sourceSectionElement)
-				for i,e := range aux.FindElements("//section") {
+				for i, e := range aux.FindElements("//section") {
 					e.CreateAttr("position", strconv.Itoa(i))
 				}
 			}

@@ -1,9 +1,9 @@
 package transform
 
 import (
-	"strings"
-	"github.com/beevik/etree"
 	"github.com/andreluzz/cas-xog/common"
+	"github.com/beevik/etree"
+	"strings"
 )
 
 func ProcessPackageFile(file common.DriverFile, packageFolder, writeFolder string, definitions []common.Definition) error {

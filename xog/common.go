@@ -1,9 +1,9 @@
 package xog
 
 import (
-	"github.com/beevik/etree"
 	"github.com/andreluzz/cas-xog/common"
 	"github.com/andreluzz/cas-xog/validate"
+	"github.com/beevik/etree"
 )
 
 func debug(index, total int, action, status, path, err string) {

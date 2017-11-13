@@ -1,17 +1,17 @@
 package xog
 
 import (
-	"os"
-	"fmt"
-	"time"
-	"errors"
-	"strconv"
-	"strings"
-	"io/ioutil"
 	"encoding/xml"
-	"path/filepath"
+	"errors"
+	"fmt"
 	"github.com/andreluzz/cas-xog/common"
 	"github.com/andreluzz/cas-xog/transform"
+	"io/ioutil"
+	"os"
+	"path/filepath"
+	"strconv"
+	"strings"
+	"time"
 )
 
 var packagesDriversFileInfo []common.Driver
@@ -55,7 +55,7 @@ func unzipPackages() error {
 	os.MkdirAll(common.FOLDER_PACKAGE, os.ModePerm)
 
 	for _, f := range packagesFiles {
-		_, err := common.Unzip(userPackagesFolder + f.Name(), common.FOLDER_PACKAGE)
+		_, err := common.Unzip(userPackagesFolder+f.Name(), common.FOLDER_PACKAGE)
 		if err != nil {
 			return err
 		}
