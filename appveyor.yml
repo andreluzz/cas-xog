@@ -1,0 +1,47 @@
+version: 2.0.{build}
+
+branches:
+  only:
+  - master
+
+skip_tags: true
+
+clone_folder: c:\gopath\src\github.com\andreluzz\go-travisci-example
+
+environment:
+  GOPATH: c:\gopath
+
+install:
+- cmd: >-
+    echo %PATH%
+    echo %GOPATH%
+    set PATH=%GOPATH%\bin;c:\go\bin;%PATH%
+    go version
+    go env
+    go get -v -t -d ./...
+
+build_script:
+- cmd: go build -o _buildOutput\cas-xog.exe -i .
+
+test_script:
+- ps: >-
+    bash testCoverage.sh
+    $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
+    Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
+    bash codecov.sh -f "coverage.txt" -t 6c33dd73-92a1-4527-a4e7-994c3c1a8e1f
+
+artifacts:
+- path: _buildOutput\cas-xog.exe
+  name: binary
+- path: xogRead.xml
+  name: config
+
+deploy:
+- provider: GitHub
+  tag: v$(appveyor_build_version)
+  release: cas-xog $(appveyor_build_version)
+  description: 'This is a release build with CI for a stable version with improved functionalities and bug corrections.'
+  auth_token:
+    secure: eis8p27PKzPZRUHXV+2FrJ4cNkAj8DN/LCkLbktucyzmmCt2JzKA2CLqWRFH1Wkh
+  artifact: binary,config
+  force_update: true
