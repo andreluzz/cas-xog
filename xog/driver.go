@@ -4,38 +4,38 @@ import (
 	"encoding/xml"
 	"errors"
 	"fmt"
+	"github.com/andreluzz/cas-xog/constant"
+	"github.com/andreluzz/cas-xog/migration"
+	"github.com/andreluzz/cas-xog/model"
+	"github.com/andreluzz/cas-xog/transform"
+	"github.com/andreluzz/cas-xog/util"
+	"github.com/andreluzz/cas-xog/validate"
+	"github.com/beevik/etree"
 	"io/ioutil"
-	"os"
 	"reflect"
 	"strconv"
-	"time"
-
-	"github.com/andreluzz/cas-xog/common"
-	"github.com/andreluzz/cas-xog/migration"
-	"github.com/andreluzz/cas-xog/transform"
-	"github.com/beevik/etree"
 )
 
-var driverXOG *common.Driver
-var driverPath string
+var driverXOG *model.Driver
 
-func LoadDriver(path string) error {
+func LoadDriver(path string) (int, error) {
+	driverXOG = &model.Driver{}
 	driverXOG.Clear()
 	xmlFile, err := ioutil.ReadFile(path)
 	if err != nil {
-		return errors.New("Error loading driver file: " + err.Error())
+		return 0, errors.New("Error loading driver file - " + err.Error())
 	}
-	driverPath = path
-	driverXOGTypePattern := common.DriverTypesPattern{}
+
+	driverXOGTypePattern := model.DriverTypesPattern{}
 	xml.Unmarshal(xmlFile, &driverXOGTypePattern)
 
 	v, err := strconv.ParseFloat(driverXOGTypePattern.Version, 64)
-	if err != nil || v < common.VERSION {
-		return errors.New(fmt.Sprintf("invalid driver(%s) version, expected version %.1f or greater", driverPath, common.VERSION))
+	if err != nil || v < constant.VERSION {
+		return 0, errors.New(fmt.Sprintf("invalid driver(%s) version, expected version %.1f or greater", path, constant.VERSION))
 	}
 
 	if len(driverXOGTypePattern.Files) > 0 {
-		return errors.New(fmt.Sprintf("invalid driver(%s) tag <file> is no longer supported", driverPath))
+		return 0, errors.New(fmt.Sprintf("invalid driver(%s) tag <file> is no longer supported", path))
 	}
 
 	types := reflect.ValueOf(&driverXOGTypePattern).Elem()
@@ -43,268 +43,147 @@ func LoadDriver(path string) error {
 	for i := 0; i < types.NumField(); i++ {
 		t := types.Field(i)
 		if t.Kind() == reflect.Slice {
-			for _, f := range t.Interface().([]common.DriverFile) {
+			for _, f := range t.Interface().([]model.DriverFile) {
 				f.Type = typeOfT.Field(i).Name
 				driverXOG.Files = append(driverXOG.Files, f)
 			}
 		}
 	}
 	driverXOG.Version = driverXOGTypePattern.Version
+	driverXOG.FilePath = path
 
-	return nil
+	return len(driverXOG.Files), nil
 }
 
-var output map[string]int
-
-func ProcessDriverFiles(action string) {
-	start := time.Now()
-
-	output = map[string]int{common.OUTPUT_SUCCESS: 0, common.OUTPUT_WARNING: 0, common.OUTPUT_ERROR: 0}
-
-	common.Info("\n------------------------------------------------------------------")
-	common.Info("\n[blue[Initiated at]]: %s", start.Format("Mon _2 Jan 2006 - 15:04:05"))
-	common.Info("\nProcessing driver: %s", driverPath)
-	common.Info("\n------------------------------------------------------------------\n")
-
-	var env *EnvType
-
-	if action == "r" {
-		os.RemoveAll(common.FOLDER_READ)
-		os.MkdirAll(common.FOLDER_READ, os.ModePerm)
-		os.RemoveAll(common.FOLDER_WRITE)
-		os.MkdirAll(common.FOLDER_WRITE, os.ModePerm)
-		env = SourceEnv.copyEnv()
-	} else if action == "w" {
-		os.RemoveAll(common.FOLDER_DEBUG)
-		os.MkdirAll(common.FOLDER_DEBUG, os.ModePerm)
-		env = TargetEnv.copyEnv()
-	} else if action == "m" {
-		os.RemoveAll(common.FOLDER_MIGRATION)
-		os.MkdirAll(common.FOLDER_MIGRATION, os.ModePerm)
-	}
-
-	for i, f := range driverXOG.Files {
-		folder := common.FOLDER_WRITE
-		actionLabel := "Reading"
-		if action == "r" {
-			_, dirErr := os.Stat(common.FOLDER_READ + f.Type)
-			if os.IsNotExist(dirErr) {
-				_ = os.Mkdir(common.FOLDER_READ+f.Type, os.ModePerm)
-			}
-		} else if action == "w" {
-			folder = common.FOLDER_DEBUG
-			actionLabel = "Writing"
-		} else if action == "m" {
-			folder = common.FOLDER_MIGRATION
-			actionLabel = "Creating"
-		}
-
-		common.Info("\n[CAS-XOG][blue[%s]] %03d/%03d | file: %s", actionLabel, i+1, len(driverXOG.Files), f.Path)
-
-		if f.IgnoreReading && action == "r" {
-			debug(i+1, len(driverXOG.Files), action, common.OUTPUT_WARNING, f.Path, "File reading ignored")
-			continue
-		}
-
-		if action == "m" && f.Type != common.MIGRATION {
-			debug(i+1, len(driverXOG.Files), action, common.OUTPUT_WARNING, f.Path, "Use action 'r' to this type("+f.Type+") of file")
-			continue
-		} else if action == "r" && f.Type == common.MIGRATION {
-			debug(i+1, len(driverXOG.Files), action, common.OUTPUT_WARNING, f.Path, "Use action 'm' to this type("+f.Type+") of file")
-			continue
-		}
-
-		//check if target folder type dir exists
-		_, dirErr := os.Stat(folder + f.Type)
-		if os.IsNotExist(dirErr) {
-			_ = os.Mkdir(folder+f.Type, os.ModePerm)
-		}
-
-		resp, validateOutput, err := loadAndValidate(action, folder, &f, env)
-
-		if err != nil {
-			debug(i+1, len(driverXOG.Files), action, validateOutput.Code, f.Path, err.Error())
-			continue
-		}
-
-		if action == "r" {
-			var aux *etree.Document
-			var auxFile common.DriverFile
-			loadAuxFile := false
-			auxEnv := TargetEnv.copyEnv()
-
-			switch f.Type {
-			case common.PROCESS:
-				if f.CopyPermissions != "" {
-					loadAuxFile = true
-					auxFile = common.DriverFile{Code: f.CopyPermissions, Path: "aux_" + f.CopyPermissions + ".xml", Type: common.PROCESS}
-				}
-			case common.VIEW:
-				if f.Code != "*" {
-					loadAuxFile = true
-					partition := f.SourcePartition
-					if f.TargetPartition != "" {
-						partition = f.TargetPartition
-					}
-					auxFile = common.DriverFile{Code: f.Code, ObjCode: f.ObjCode, Path: "aux_" + f.Path + ".xml", SourcePartition: partition, Type: common.VIEW}
-				}
-			case common.MENU:
-				if len(f.Sections) > 0 {
-					loadAuxFile = true
-					auxFile = common.DriverFile{Code: f.Code, Path: "aux_" + f.Path + ".xml", Type: common.MENU}
-				}
-			}
-
-			if loadAuxFile {
-				aux, _, err = loadAndValidate(action, folder, &auxFile, auxEnv)
-				if err != nil {
-					debug(i+1, len(driverXOG.Files), action, common.OUTPUT_ERROR, f.Path, "[Auxiliary XOG] "+err.Error())
-					continue
-				}
-			}
-
-			err := transform.Execute(resp, aux, f)
-			if err != nil {
-				debug(i+1, len(driverXOG.Files), action, common.OUTPUT_ERROR, f.Path, err.Error())
-				continue
-			}
-
-			if f.ExportToExcel {
-				folder := common.FOLDER_READ + f.Type + "/"
-				err := migration.ExportInstancesToExcel(resp, f, folder)
-				if err != nil {
-					debug(i+1, len(driverXOG.Files), action, common.OUTPUT_ERROR, f.Path, err.Error())
-					continue
-				}
-			}
-		}
-
-		if action == "m" {
-			resp, err = migration.ReadDataFromExcel(f)
-			if err != nil {
-				debug(i+1, len(driverXOG.Files), action, common.OUTPUT_ERROR, f.Path, err.Error())
-				continue
-			}
-			validateOutput = common.XOGOutput{Code: common.OUTPUT_SUCCESS, Debug: ""}
-		}
-
-		nikuDataBusElement := resp.FindElement("//NikuDataBus")
-		if nikuDataBusElement != nil {
-			resp.SetRoot(nikuDataBusElement)
-		}
-
-		resp.IndentTabs()
-		if action == "r" && f.Type == common.PROCESS || f.Type == common.LOOKUP {
-			var xogString, iniTagRegexpStr, endTagRegexpStr string
-			var err error
-
-			if f.Type == common.PROCESS {
-				iniTagRegexpStr = `<([^/].*):(query|update)(.*)>`
-				endTagRegexpStr = `</(.*):(query|update)>`
-				xogString, err = transform.IncludeEscapeText(resp)
-				if err != nil {
-					debug(i+1, len(driverXOG.Files), action, common.OUTPUT_ERROR, f.Path, err.Error())
-					continue
-				}
-			} else {
-				iniTagRegexpStr = `<nsql(.*)>`
-				endTagRegexpStr = `</nsql>`
-				xogString, _ = resp.WriteToString()
-			}
-
-			xogString, err = transform.IncludeCDATA(xogString, iniTagRegexpStr, endTagRegexpStr)
-
-			if err != nil {
-				debug(i+1, len(driverXOG.Files), action, common.OUTPUT_ERROR, f.Path, err.Error())
-				continue
-			}
-
-			ioutil.WriteFile(folder+f.Type+"/"+f.Path, []byte(xogString), os.ModePerm)
-		} else {
-			resp.WriteToFile(folder + f.Type + "/" + f.Path)
-		}
-
-		actionLabel = "Read"
-		if action == "w" {
-			actionLabel = "Write"
-		}
-		if action == "m" {
-			actionLabel = "Create"
-		}
-
-		debug(i+1, len(driverXOG.Files), action, validateOutput.Code, f.Path, validateOutput.Debug)
-	}
-
-	elapsed := time.Since(start)
-
-	TargetEnv.logout()
-	SourceEnv.logout()
-
-	common.Info("\n\n------------------------------------------------------------------")
-	common.Info("\nStats: total = %d | failure = %d | success = %d | warning = %d", len(driverXOG.Files), output[common.OUTPUT_ERROR], output[common.OUTPUT_SUCCESS], output[common.OUTPUT_WARNING])
-	common.Info("\n[blue[Concluded in]]: %.3f seconds", elapsed.Seconds())
-	common.Info("\n------------------------------------------------------------------\n")
+func GetLoadedDriver() *model.Driver {
+	return driverXOG
 }
 
-func RenderDrivers() {
-	var driverIndex = 1
-	driverPath := "drivers/"
-	driversFileList, _ := ioutil.ReadDir(driverPath)
+func ValidateLoadedDriver() bool {
+	return driverXOG != nil && len(driverXOG.Files) > 0
+}
+
+func GetDriversList(folder string) ([]model.Driver, error) {
+	driversFileList, _ := ioutil.ReadDir(folder)
 
 	if len(driversFileList) == 0 {
-		common.Info("\n[CAS-XOG][red[ERROR]] - XogDriver folders or file not found! Press enter key to exit...\n")
-		scanexit := ""
-		fmt.Scanln(&scanexit)
-		os.Exit(0)
+		return nil, errors.New("\n[CAS-XOG][red[ERROR]] - XogDriver folders or file not found! Press enter key to exit...\n")
 	}
 
-	var driversList []common.Driver
+	var driversList []model.Driver
 	for _, f := range driversFileList {
-		driver := new(common.Driver)
+		driver := new(model.Driver)
 		driver.Info = f
-		driver.FilePath = driverPath + f.Name()
+		driver.FilePath = folder + f.Name()
 		driversList = append(driversList, *driver)
 	}
 
-	driversList = append(driversList, packagesDriversFileInfo...)
+	return append(driversList, GetPackagesDriversFileInfoList()...), nil
+}
 
-	fmt.Println("")
-	fmt.Println("Available drivers:")
-	for k, d := range driversList {
-		if d.PackageDriver {
-			common.Info("%d - [blue[Package driver:]] %s\n", k+1, d.Info.Name())
-		} else {
-			common.Info("%d - %s\n", k+1, d.Info.Name())
+func ProcessDriverFile(file *model.DriverFile, action string, environments *model.Environments) model.Output {
+	output := model.Output{Code: constant.OUTPUT_SUCCESS, Debug: ""}
+	sourceFolder, outputFolder := createFileFolder(action, file.Type)
+	transformedString := ""
+
+	if action == constant.MIGRATE && file.Type != constant.MIGRATION {
+		output.Code = constant.OUTPUT_WARNING
+		output.Debug = "Use action 'r' to this type(" + file.Type + ") of file"
+		return output
+	} else if action == constant.READ && file.Type == constant.MIGRATION {
+		output.Code = constant.OUTPUT_WARNING
+		output.Debug = "Use action 'm' to this type(" + file.Type + ") of file"
+		return output
+	}
+
+	if action == constant.MIGRATE {
+		resp, err := migration.ReadDataFromExcel(file)
+		if err != nil {
+			output.Code = constant.OUTPUT_ERROR
+			output.Debug = err.Error()
+			return output
 		}
-	}
-	if startInstallingPackage == 0 {
-		fmt.Print("Choose driver [1] or p = Install Package: ")
-	} else {
-		fmt.Print("Choose driver [1]: ")
-	}
-
-	input := "1"
-	fmt.Scanln(&input)
-
-	if input == "p" && startInstallingPackage == 0 {
-		startInstallingPackage = 1
-		return
-	}
-	startInstallingPackage = -1
-
-	var err error
-	driverIndex, err = strconv.Atoi(input)
-
-	if err != nil || driverIndex-1 < 0 || driverIndex > len(driversList) {
-		common.Info("\n[CAS-XOG][red[ERROR]] - Invalid XOG driver!\n")
-		return
+		transformedString, _ = resp.WriteToString()
+		file.SetXML(transformedString)
+		file.Write(outputFolder)
+		return output
 	}
 
-	err = LoadDriver(driversList[driverIndex-1].FilePath)
+	err := file.InitXML(action, sourceFolder)
 	if err != nil {
-		common.Info("\n[CAS-XOG][red[ERROR]] - %s\n", err.Error())
-		return
+		output.Code = constant.OUTPUT_ERROR
+		output.Debug = err.Error()
+		return output
+	}
+	if action == constant.WRITE {
+		includeCDATA(file)
+	}
+	err = file.RunXML(action, sourceFolder, environments)
+	if err != nil {
+		output.Code = constant.OUTPUT_ERROR
+		output.Debug = err.Error()
+		return output
+	}
+	xogResponse := etree.NewDocument()
+	xogResponse.ReadFromString(file.GetXML())
+	output, err = validate.Check(xogResponse)
+	if err != nil {
+		output.Code = constant.OUTPUT_ERROR
+		output.Debug = err.Error()
+		return output
+	}
+	if action == constant.READ {
+		var auxResponse *etree.Document
+		if file.NeedAuxXML() {
+			auxResponse = etree.NewDocument()
+			auxResponse.ReadFromString(file.GetAuxXML())
+			output, err = validate.Check(xogResponse)
+			if err != nil {
+				output.Code = constant.OUTPUT_ERROR
+				output.Debug = "[aux] " + err.Error()
+				return output
+			}
+		}
+		err = transform.Execute(xogResponse, auxResponse, file)
+		str, _ := xogResponse.WriteToString()
+		file.SetXML(str)
+		if err != nil {
+			output.Code = constant.OUTPUT_ERROR
+			output.Debug = err.Error()
+			return output
+		}
+		includeCDATA(file)
 	}
 
-	common.Info("\n[CAS-XOG][blue[Loaded XOG Driver file]]: %s | Total files: [green[%d]]\n", driversList[driverIndex-1].FilePath, len(driverXOG.Files))
+	file.Write(outputFolder)
+	return output
+}
+
+func includeCDATA(file *model.DriverFile) {
+	iniTagRegexpStr, endTagRegexpStr := file.TagCDATA()
+	if iniTagRegexpStr != "" && endTagRegexpStr != "" {
+		transformedString := transform.IncludeCDATA(file.GetXML(), iniTagRegexpStr, endTagRegexpStr)
+		file.SetXML(transformedString)
+	}
+}
+
+func createFileFolder(action, fileType string) (string, string) {
+	sourceFolder := ""
+	outputFolder := ""
+	switch action {
+	case constant.READ:
+		sourceFolder = constant.FOLDER_READ
+		outputFolder = constant.FOLDER_WRITE
+		util.ValidateFolder(constant.FOLDER_READ + fileType)
+	case constant.WRITE:
+		sourceFolder = constant.FOLDER_WRITE
+		outputFolder = constant.FOLDER_DEBUG
+	case constant.MIGRATE:
+		sourceFolder = constant.FOLDER_WRITE
+		outputFolder = constant.FOLDER_MIGRATION
+	}
+
+	util.ValidateFolder(outputFolder + fileType)
+
+	return sourceFolder, outputFolder
 }

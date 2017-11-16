@@ -1,22 +1,22 @@
 package transform
 
 import (
-	"testing"
-
-	"github.com/andreluzz/cas-xog/common"
+	"github.com/andreluzz/cas-xog/constant"
+	"github.com/andreluzz/cas-xog/model"
 	"github.com/beevik/etree"
+	"testing"
 )
 
 func TestExecuteToReturnView(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code:    "*",
 		ObjCode: "obj_sistema",
-		Type:    common.VIEW,
+		Type:    constant.VIEW,
 	}
 
 	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "view_full_xog.xml")
-	err := Execute(xog, nil, file)
+	err := Execute(xog, nil, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming view XOG file. Debug: %s", err.Error())
@@ -28,16 +28,16 @@ func TestExecuteToReturnView(t *testing.T) {
 }
 
 func TestExecuteToReturnViewSourcePartition(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code:            "*",
 		ObjCode:         "obj_sistema",
-		Type:            common.VIEW,
+		Type:            constant.VIEW,
 		SourcePartition: "partition10",
 	}
 
 	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
-	err := Execute(xog, nil, file)
+	err := Execute(xog, nil, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming view XOG file. Debug: %s", err.Error())
@@ -49,17 +49,17 @@ func TestExecuteToReturnViewSourcePartition(t *testing.T) {
 }
 
 func TestExecuteToReturnViewSourceTargetPartition(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code:            "*",
 		ObjCode:         "obj_sistema",
-		Type:            common.VIEW,
+		Type:            constant.VIEW,
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
 	}
 
 	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
-	err := Execute(xog, nil, file)
+	err := Execute(xog, nil, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming view XOG file. Debug: %s", err.Error())
@@ -71,8 +71,8 @@ func TestExecuteToReturnViewSourceTargetPartition(t *testing.T) {
 }
 
 func TestExecuteToReturnViewSingle(t *testing.T) {
-	file := common.DriverFile{
-		Type:            common.VIEW,
+	file := model.DriverFile{
+		Type:            constant.VIEW,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
@@ -82,7 +82,7 @@ func TestExecuteToReturnViewSingle(t *testing.T) {
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming view XOG file. Debug: %s", err.Error())
@@ -94,8 +94,8 @@ func TestExecuteToReturnViewSingle(t *testing.T) {
 }
 
 func TestExecuteToReturnViewSingleNotInTarget(t *testing.T) {
-	file := common.DriverFile{
-		Type:            common.VIEW,
+	file := model.DriverFile{
+		Type:            constant.VIEW,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
@@ -105,7 +105,7 @@ func TestExecuteToReturnViewSingleNotInTarget(t *testing.T) {
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "view_partition_aux_without_view.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming view XOG file. Debug: %s", err.Error())
@@ -117,8 +117,8 @@ func TestExecuteToReturnViewSingleNotInTarget(t *testing.T) {
 }
 
 func TestExecuteToReturnViewSingleSection(t *testing.T) {
-	file := common.DriverFile{
-		Type:            common.VIEW,
+	file := model.DriverFile{
+		Type:            constant.VIEW,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
@@ -128,7 +128,7 @@ func TestExecuteToReturnViewSingleSection(t *testing.T) {
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming view XOG file. Debug: %s", err.Error())
@@ -140,14 +140,14 @@ func TestExecuteToReturnViewSingleSection(t *testing.T) {
 }
 
 func TestExecuteToReturnViewReplaceSection(t *testing.T) {
-	file := common.DriverFile{
-		Type:            common.VIEW,
+	file := model.DriverFile{
+		Type:            constant.VIEW,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
-		Sections: []common.Section{
+		Sections: []model.Section{
 			{
-				Action:         common.ACTION_REPLACE,
+				Action:         constant.ACTION_REPLACE,
 				SourcePosition: "1",
 				TargetPosition: "1",
 			},
@@ -158,7 +158,7 @@ func TestExecuteToReturnViewReplaceSection(t *testing.T) {
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming view XOG file. Debug: %s", err.Error())
@@ -170,14 +170,14 @@ func TestExecuteToReturnViewReplaceSection(t *testing.T) {
 }
 
 func TestExecuteToReturnViewRemoveSection(t *testing.T) {
-	file := common.DriverFile{
-		Type:            common.VIEW,
+	file := model.DriverFile{
+		Type:            constant.VIEW,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
-		Sections: []common.Section{
+		Sections: []model.Section{
 			{
-				Action:         common.ACTION_REMOVE,
+				Action:         constant.ACTION_REMOVE,
 				TargetPosition: "3",
 			},
 		},
@@ -187,7 +187,7 @@ func TestExecuteToReturnViewRemoveSection(t *testing.T) {
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming view XOG file. Debug: %s", err.Error())
@@ -199,31 +199,31 @@ func TestExecuteToReturnViewRemoveSection(t *testing.T) {
 }
 
 func TestExecuteToReturnViewUpdateSection(t *testing.T) {
-	file := common.DriverFile{
-		Type:            common.VIEW,
+	file := model.DriverFile{
+		Type:            constant.VIEW,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
-		Sections: []common.Section{
+		Sections: []model.Section{
 			{
-				Action:         common.ACTION_UPDATE,
+				Action:         constant.ACTION_UPDATE,
 				SourcePosition: "1",
 				TargetPosition: "1",
-				Fields: []common.SectionField{
+				Fields: []model.SectionField{
 					{
 						Code:         "analista",
-						Column:       common.COLUMN_LEFT,
+						Column:       constant.COLUMN_LEFT,
 						InsertBefore: "created_by",
 					},
 					{
 						Code:         "status",
-						Column:       common.COLUMN_LEFT,
+						Column:       constant.COLUMN_LEFT,
 						InsertBefore: "created_by",
 					},
 					{
 						Code:   "status_novo",
-						Column: common.COLUMN_RIGHT,
+						Column: constant.COLUMN_RIGHT,
 					},
 					{
 						Code:   "created_date",
@@ -238,7 +238,7 @@ func TestExecuteToReturnViewUpdateSection(t *testing.T) {
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "view_partition20_full_xog.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming view XOG file. Debug: %s", err.Error())
@@ -250,30 +250,30 @@ func TestExecuteToReturnViewUpdateSection(t *testing.T) {
 }
 
 func TestExecuteToReturnViewUpdateSectionColumns(t *testing.T) {
-	file := common.DriverFile{
-		Type:            common.VIEW,
+	file := model.DriverFile{
+		Type:            constant.VIEW,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
-		Sections: []common.Section{
+		Sections: []model.Section{
 			{
-				Action:         common.ACTION_UPDATE,
+				Action:         constant.ACTION_UPDATE,
 				SourcePosition: "1",
 				TargetPosition: "1",
-				Fields: []common.SectionField{
+				Fields: []model.SectionField{
 					{
 						Code:   "analista",
-						Column: common.COLUMN_LEFT,
+						Column: constant.COLUMN_LEFT,
 					},
 					{
 						Code:         "status",
-						Column:       common.COLUMN_LEFT,
+						Column:       constant.COLUMN_LEFT,
 						InsertBefore: "created_by",
 					},
 					{
 						Code:         "status_novo",
-						Column:       common.COLUMN_RIGHT,
+						Column:       constant.COLUMN_RIGHT,
 						InsertBefore: "created_date",
 					},
 					{
@@ -289,7 +289,7 @@ func TestExecuteToReturnViewUpdateSectionColumns(t *testing.T) {
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "view_partition20_full_xog.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming view XOG file. Debug: %s", err.Error())
@@ -301,30 +301,30 @@ func TestExecuteToReturnViewUpdateSectionColumns(t *testing.T) {
 }
 
 func TestExecuteToReturnViewUpdateSectionTargetNoRightColumn(t *testing.T) {
-	file := common.DriverFile{
-		Type:            common.VIEW,
+	file := model.DriverFile{
+		Type:            constant.VIEW,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
-		Sections: []common.Section{
+		Sections: []model.Section{
 			{
-				Action:         common.ACTION_UPDATE,
+				Action:         constant.ACTION_UPDATE,
 				SourcePosition: "1",
 				TargetPosition: "1",
-				Fields: []common.SectionField{
+				Fields: []model.SectionField{
 					{
 						Code:   "analista",
-						Column: common.COLUMN_LEFT,
+						Column: constant.COLUMN_LEFT,
 					},
 					{
 						Code:         "status",
-						Column:       common.COLUMN_LEFT,
+						Column:       constant.COLUMN_LEFT,
 						InsertBefore: "created_by",
 					},
 					{
 						Code:   "status_novo",
-						Column: common.COLUMN_RIGHT,
+						Column: constant.COLUMN_RIGHT,
 					},
 				},
 			},
@@ -335,7 +335,7 @@ func TestExecuteToReturnViewUpdateSectionTargetNoRightColumn(t *testing.T) {
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "view_partition20_no_right_column_full_xog.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming view XOG file. Debug: %s", err.Error())
@@ -347,33 +347,33 @@ func TestExecuteToReturnViewUpdateSectionTargetNoRightColumn(t *testing.T) {
 }
 
 func TestExecuteToReturnViewUpdateSectionTargetNoLeftColumn(t *testing.T) {
-	file := common.DriverFile{
-		Type:            common.VIEW,
+	file := model.DriverFile{
+		Type:            constant.VIEW,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
-		Sections: []common.Section{
+		Sections: []model.Section{
 			{
-				Action:         common.ACTION_UPDATE,
+				Action:         constant.ACTION_UPDATE,
 				SourcePosition: "1",
 				TargetPosition: "1",
-				Fields: []common.SectionField{
+				Fields: []model.SectionField{
 					{
 						Code:   "analista",
-						Column: common.COLUMN_LEFT,
+						Column: constant.COLUMN_LEFT,
 					},
 					{
 						Code:   "status",
-						Column: common.COLUMN_LEFT,
+						Column: constant.COLUMN_LEFT,
 					},
 					{
 						Code:   "created_by",
-						Column: common.COLUMN_LEFT,
+						Column: constant.COLUMN_LEFT,
 					},
 					{
 						Code:         "status_novo",
-						Column:       common.COLUMN_RIGHT,
+						Column:       constant.COLUMN_RIGHT,
 						InsertBefore: "created_date",
 					},
 					{
@@ -389,7 +389,7 @@ func TestExecuteToReturnViewUpdateSectionTargetNoLeftColumn(t *testing.T) {
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "view_partition20_no_left_column_full_xog.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming view XOG file. Debug: %s", err.Error())
@@ -401,14 +401,14 @@ func TestExecuteToReturnViewUpdateSectionTargetNoLeftColumn(t *testing.T) {
 }
 
 func TestExecuteToReturnViewInsertSection(t *testing.T) {
-	file := common.DriverFile{
-		Type:            common.VIEW,
+	file := model.DriverFile{
+		Type:            constant.VIEW,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
-		Sections: []common.Section{
+		Sections: []model.Section{
 			{
-				Action:         common.ACTION_INSERT,
+				Action:         constant.ACTION_INSERT,
 				SourcePosition: "1",
 				TargetPosition: "1",
 			},
@@ -419,7 +419,7 @@ func TestExecuteToReturnViewInsertSection(t *testing.T) {
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming view XOG file. Debug: %s", err.Error())
@@ -431,14 +431,14 @@ func TestExecuteToReturnViewInsertSection(t *testing.T) {
 }
 
 func TestExecuteToReturnErrorSectionsWithoutSingleView(t *testing.T) {
-	file := common.DriverFile{
-		Type:            common.VIEW,
+	file := model.DriverFile{
+		Type:            constant.VIEW,
 		Code:            "*",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
-		Sections: []common.Section{
+		Sections: []model.Section{
 			{
-				Action:         common.ACTION_INSERT,
+				Action:         constant.ACTION_INSERT,
 				SourcePosition: "1",
 				TargetPosition: "1",
 			},
@@ -449,7 +449,7 @@ func TestExecuteToReturnErrorSectionsWithoutSingleView(t *testing.T) {
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err == nil {
 		t.Fatalf("Error transforming view XOG file. Debug: not validating if code is * and sections defined")
@@ -457,8 +457,8 @@ func TestExecuteToReturnErrorSectionsWithoutSingleView(t *testing.T) {
 }
 
 func TestExecuteToReturnErrorTargetWithoutSourcePartition(t *testing.T) {
-	file := common.DriverFile{
-		Type:            common.VIEW,
+	file := model.DriverFile{
+		Type:            constant.VIEW,
 		Code:            "*",
 		ObjCode:         "obj_sistema",
 		TargetPartition: "partition10",
@@ -468,7 +468,7 @@ func TestExecuteToReturnErrorTargetWithoutSourcePartition(t *testing.T) {
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err == nil {
 		t.Fatalf("Error transforming view XOG file. Debug: not validating if using target partition without source partition")
@@ -476,15 +476,15 @@ func TestExecuteToReturnErrorTargetWithoutSourcePartition(t *testing.T) {
 }
 
 func TestExecuteToReturnErrorSingleViewNotInTarget(t *testing.T) {
-	file := common.DriverFile{
-		Type:            common.VIEW,
+	file := model.DriverFile{
+		Type:            constant.VIEW,
 		Code:            "INVALID_VIEW_CODE",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition10",
-		Sections: []common.Section{
+		Sections: []model.Section{
 			{
-				Action:         common.ACTION_INSERT,
+				Action:         constant.ACTION_INSERT,
 				TargetPosition: "1",
 				SourcePosition: "1",
 			},
@@ -495,7 +495,7 @@ func TestExecuteToReturnErrorSingleViewNotInTarget(t *testing.T) {
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err == nil {
 		t.Fatalf("Error transforming view XOG file. Debug: not validating if view exists in target")
@@ -503,14 +503,14 @@ func TestExecuteToReturnErrorSingleViewNotInTarget(t *testing.T) {
 }
 
 func TestExecuteToReturnErrorSectionSourcePositionNotDefined(t *testing.T) {
-	file := common.DriverFile{
-		Type:            common.VIEW,
+	file := model.DriverFile{
+		Type:            constant.VIEW,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
-		Sections: []common.Section{
+		Sections: []model.Section{
 			{
-				Action:         common.ACTION_INSERT,
+				Action:         constant.ACTION_INSERT,
 				TargetPosition: "1",
 			},
 		},
@@ -520,7 +520,7 @@ func TestExecuteToReturnErrorSectionSourcePositionNotDefined(t *testing.T) {
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err == nil {
 		t.Fatalf("Error transforming view XOG file. Debug: not validating if section source position were defined")
@@ -528,14 +528,14 @@ func TestExecuteToReturnErrorSectionSourcePositionNotDefined(t *testing.T) {
 }
 
 func TestExecuteToReturnErrorSectionSourcePositionIndexOutOfBounds(t *testing.T) {
-	file := common.DriverFile{
-		Type:            common.VIEW,
+	file := model.DriverFile{
+		Type:            constant.VIEW,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
-		Sections: []common.Section{
+		Sections: []model.Section{
 			{
-				Action:         common.ACTION_INSERT,
+				Action:         constant.ACTION_INSERT,
 				SourcePosition: "11",
 				TargetPosition: "1",
 			},
@@ -546,7 +546,7 @@ func TestExecuteToReturnErrorSectionSourcePositionIndexOutOfBounds(t *testing.T)
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err == nil {
 		t.Fatalf("Error transforming view XOG file. Debug: not validating if source has section in the defined position")
@@ -554,14 +554,14 @@ func TestExecuteToReturnErrorSectionSourcePositionIndexOutOfBounds(t *testing.T)
 }
 
 func TestExecuteToReturnErrorSectionTargetPositionIndexOutOfBounds(t *testing.T) {
-	file := common.DriverFile{
-		Type:            common.VIEW,
+	file := model.DriverFile{
+		Type:            constant.VIEW,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
-		Sections: []common.Section{
+		Sections: []model.Section{
 			{
-				Action:         common.ACTION_INSERT,
+				Action:         constant.ACTION_INSERT,
 				SourcePosition: "1",
 				TargetPosition: "11",
 			},
@@ -572,7 +572,7 @@ func TestExecuteToReturnErrorSectionTargetPositionIndexOutOfBounds(t *testing.T)
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err == nil {
 		t.Fatalf("Error transforming view XOG file. Debug: not validating if target has section in the defined position")
@@ -580,14 +580,14 @@ func TestExecuteToReturnErrorSectionTargetPositionIndexOutOfBounds(t *testing.T)
 }
 
 func TestExecuteToReturnErrorSectionReplaceWithoutTargetPosition(t *testing.T) {
-	file := common.DriverFile{
-		Type:            common.VIEW,
+	file := model.DriverFile{
+		Type:            constant.VIEW,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
-		Sections: []common.Section{
+		Sections: []model.Section{
 			{
-				Action:         common.ACTION_REPLACE,
+				Action:         constant.ACTION_REPLACE,
 				SourcePosition: "1",
 			},
 		},
@@ -597,7 +597,7 @@ func TestExecuteToReturnErrorSectionReplaceWithoutTargetPosition(t *testing.T) {
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err == nil {
 		t.Fatalf("Error transforming view XOG file. Debug: not validating if target position were defined to replace section")
@@ -605,14 +605,14 @@ func TestExecuteToReturnErrorSectionReplaceWithoutTargetPosition(t *testing.T) {
 }
 
 func TestExecuteToReturnErrorSectionRemoveWithoutTargetPosition(t *testing.T) {
-	file := common.DriverFile{
-		Type:            common.VIEW,
+	file := model.DriverFile{
+		Type:            constant.VIEW,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
-		Sections: []common.Section{
+		Sections: []model.Section{
 			{
-				Action:         common.ACTION_REMOVE,
+				Action:         constant.ACTION_REMOVE,
 				SourcePosition: "1",
 			},
 		},
@@ -622,7 +622,7 @@ func TestExecuteToReturnErrorSectionRemoveWithoutTargetPosition(t *testing.T) {
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err == nil {
 		t.Fatalf("Error transforming view XOG file. Debug: not validating if target position were defined to remove section")
@@ -630,14 +630,14 @@ func TestExecuteToReturnErrorSectionRemoveWithoutTargetPosition(t *testing.T) {
 }
 
 func TestExecuteToReturnErrorSectionUpdateWithoutField(t *testing.T) {
-	file := common.DriverFile{
-		Type:            common.VIEW,
+	file := model.DriverFile{
+		Type:            constant.VIEW,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
-		Sections: []common.Section{
+		Sections: []model.Section{
 			{
-				Action:         common.ACTION_UPDATE,
+				Action:         constant.ACTION_UPDATE,
 				SourcePosition: "1",
 				TargetPosition: "1",
 			},
@@ -648,7 +648,7 @@ func TestExecuteToReturnErrorSectionUpdateWithoutField(t *testing.T) {
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err == nil {
 		t.Fatalf("Error transforming view XOG file. Debug: not validating if trying to update section without tag field")
@@ -656,18 +656,18 @@ func TestExecuteToReturnErrorSectionUpdateWithoutField(t *testing.T) {
 }
 
 func TestExecuteToReturnErrorUpdateSectionRemoveInvalidFieldCode(t *testing.T) {
-	file := common.DriverFile{
-		Type:            common.VIEW,
+	file := model.DriverFile{
+		Type:            constant.VIEW,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
-		Sections: []common.Section{
+		Sections: []model.Section{
 			{
-				Action:         common.ACTION_UPDATE,
+				Action:         constant.ACTION_UPDATE,
 				SourcePosition: "1",
 				TargetPosition: "1",
-				Fields: []common.SectionField{
+				Fields: []model.SectionField{
 					{
 						Code:   "INVALID_FIELD_CODE",
 						Remove: true,
@@ -681,7 +681,7 @@ func TestExecuteToReturnErrorUpdateSectionRemoveInvalidFieldCode(t *testing.T) {
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "view_partition20_full_xog.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err == nil {
 		t.Fatalf("Error transforming view XOG file. Debug: not validating if trying to remove field from section with invalid code")
@@ -689,21 +689,21 @@ func TestExecuteToReturnErrorUpdateSectionRemoveInvalidFieldCode(t *testing.T) {
 }
 
 func TestExecuteToReturnErrorUpdateSectionInsertInvalidFieldCode(t *testing.T) {
-	file := common.DriverFile{
-		Type:            common.VIEW,
+	file := model.DriverFile{
+		Type:            constant.VIEW,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
-		Sections: []common.Section{
+		Sections: []model.Section{
 			{
-				Action:         common.ACTION_UPDATE,
+				Action:         constant.ACTION_UPDATE,
 				SourcePosition: "1",
 				TargetPosition: "1",
-				Fields: []common.SectionField{
+				Fields: []model.SectionField{
 					{
 						Code:   "INVALID_FIELD_CODE",
-						Column: common.COLUMN_LEFT,
+						Column: constant.COLUMN_LEFT,
 					},
 				},
 			},
@@ -714,7 +714,7 @@ func TestExecuteToReturnErrorUpdateSectionInsertInvalidFieldCode(t *testing.T) {
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "view_partition20_full_xog.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err == nil {
 		t.Fatalf("Error transforming view XOG file. Debug: not validating if trying to insert field from source section with invalid code")
@@ -722,21 +722,21 @@ func TestExecuteToReturnErrorUpdateSectionInsertInvalidFieldCode(t *testing.T) {
 }
 
 func TestExecuteToReturnErrorUpdateSectionInsertInvalidTargetInsertBeforeCode(t *testing.T) {
-	file := common.DriverFile{
-		Type:            common.VIEW,
+	file := model.DriverFile{
+		Type:            constant.VIEW,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
-		Sections: []common.Section{
+		Sections: []model.Section{
 			{
-				Action:         common.ACTION_UPDATE,
+				Action:         constant.ACTION_UPDATE,
 				SourcePosition: "1",
 				TargetPosition: "1",
-				Fields: []common.SectionField{
+				Fields: []model.SectionField{
 					{
 						Code:         "analista",
-						Column:       common.COLUMN_LEFT,
+						Column:       constant.COLUMN_LEFT,
 						InsertBefore: "INVALID_FIELD_CODE",
 					},
 				},
@@ -748,7 +748,7 @@ func TestExecuteToReturnErrorUpdateSectionInsertInvalidTargetInsertBeforeCode(t 
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "view_partition20_full_xog.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err == nil {
 		t.Fatalf("Error transforming view XOG file. Debug: not validating if trying to insert before invalid code in target")
@@ -756,13 +756,13 @@ func TestExecuteToReturnErrorUpdateSectionInsertInvalidTargetInsertBeforeCode(t 
 }
 
 func TestExecuteToReturnErrorUpdateSectionInvalidSectionAction(t *testing.T) {
-	file := common.DriverFile{
-		Type:            common.VIEW,
+	file := model.DriverFile{
+		Type:            constant.VIEW,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
-		Sections: []common.Section{
+		Sections: []model.Section{
 			{
 				Action:         "INVALID_SECTION_ACTION",
 				SourcePosition: "1",
@@ -775,7 +775,7 @@ func TestExecuteToReturnErrorUpdateSectionInvalidSectionAction(t *testing.T) {
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "view_partition20_full_xog.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err == nil {
 		t.Fatalf("Error transforming view XOG file. Debug: not validating if trying use an invalid section action value")
@@ -783,18 +783,18 @@ func TestExecuteToReturnErrorUpdateSectionInvalidSectionAction(t *testing.T) {
 }
 
 func TestExecuteToReturnErrorUpdateSectionInvalidFieldColumn(t *testing.T) {
-	file := common.DriverFile{
-		Type:            common.VIEW,
+	file := model.DriverFile{
+		Type:            constant.VIEW,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
-		Sections: []common.Section{
+		Sections: []model.Section{
 			{
-				Action:         common.ACTION_UPDATE,
+				Action:         constant.ACTION_UPDATE,
 				SourcePosition: "1",
 				TargetPosition: "1",
-				Fields: []common.SectionField{
+				Fields: []model.SectionField{
 					{
 						Code:   "analista",
 						Column: "INVALID_COLUMN",
@@ -808,7 +808,7 @@ func TestExecuteToReturnErrorUpdateSectionInvalidFieldColumn(t *testing.T) {
 	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "view_partition20_full_xog.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err == nil {
 		t.Fatalf("Error transforming view XOG file. Debug: not validating if trying to use a invalid column value")
@@ -816,15 +816,15 @@ func TestExecuteToReturnErrorUpdateSectionInvalidFieldColumn(t *testing.T) {
 }
 
 func TestExecuteToReturnErrorSingleViewNotInSource(t *testing.T) {
-	file := common.DriverFile{
-		Type:            common.VIEW,
+	file := model.DriverFile{
+		Type:            constant.VIEW,
 		Code:            "obj_sistemaList",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition20",
 		TargetPartition: "partition10",
-		Sections: []common.Section{
+		Sections: []model.Section{
 			{
-				Action:         common.ACTION_INSERT,
+				Action:         constant.ACTION_INSERT,
 				TargetPosition: "1",
 				SourcePosition: "1",
 			},
@@ -836,7 +836,7 @@ func TestExecuteToReturnErrorSingleViewNotInSource(t *testing.T) {
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
 
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err == nil {
 		t.Fatalf("Error transforming view XOG file. Debug: not validating if view exists in source")

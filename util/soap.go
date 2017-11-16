@@ -1,24 +1,21 @@
-package common
+package util
 
 import (
 	"bytes"
-	"github.com/beevik/etree"
 	"io/ioutil"
 	"net/http"
 )
 
-func SoapCall(request, endpoint string) (*etree.Document, error) {
+func SoapCall(request, endpoint string) (string, error) {
 	httpClient := new(http.Client)
 	resp, err := httpClient.Post(endpoint+"/niku/xog", "text/xml; charset=utf-8", bytes.NewBufferString(request))
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return nil, err
+		return "", err
 	}
-	doc := etree.NewDocument()
-	doc.ReadFromBytes(body)
 
-	return doc, nil
+	return BytesToString(body), nil
 }

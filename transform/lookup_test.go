@@ -1,20 +1,21 @@
 package transform
 
 import (
-	"github.com/andreluzz/cas-xog/common"
+	"github.com/andreluzz/cas-xog/constant"
+	"github.com/andreluzz/cas-xog/model"
 	"github.com/beevik/etree"
 	"testing"
 )
 
 func TestExecuteToReturnStaticLookupTransformed(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code: "LOOKUP_CAS_XOG",
-		Type: common.LOOKUP,
+		Type: constant.LOOKUP,
 	}
 
 	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "lookup_static_full_xog.xml")
-	err := Execute(xog, nil, file)
+	err := Execute(xog, nil, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming static lookup XOG file. Debug: %s", err.Error())
@@ -26,16 +27,16 @@ func TestExecuteToReturnStaticLookupTransformed(t *testing.T) {
 }
 
 func TestExecuteToReturnStaticLookupTargetPartition(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code:            "LOOKUP_CAS_XOG",
-		Type:            common.LOOKUP,
+		Type:            constant.LOOKUP,
 		TargetPartition: "NIKU.ROOT",
 		Path:            "testTarget.xml",
 	}
 
 	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "lookup_static_full_xog.xml")
-	err := Execute(xog, nil, file)
+	err := Execute(xog, nil, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming static lookup XOG file. Debug: %s", err.Error())
@@ -47,9 +48,9 @@ func TestExecuteToReturnStaticLookupTargetPartition(t *testing.T) {
 }
 
 func TestExecuteToReturnStaticLookupSourceAndTargetPartition(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code:            "LOOKUP_CAS_XOG",
-		Type:            common.LOOKUP,
+		Type:            constant.LOOKUP,
 		SourcePartition: "NIKU.ROOT",
 		TargetPartition: "partition10",
 		Path:            "testSourceAndTarget.xml",
@@ -57,7 +58,7 @@ func TestExecuteToReturnStaticLookupSourceAndTargetPartition(t *testing.T) {
 
 	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "lookup_static_full_xog.xml")
-	err := Execute(xog, nil, file)
+	err := Execute(xog, nil, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming static lookup XOG file. Debug: %s", err.Error())
@@ -69,14 +70,14 @@ func TestExecuteToReturnStaticLookupSourceAndTargetPartition(t *testing.T) {
 }
 
 func TestExecuteToReturnDynamicLookupPartitionsTransformed(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code: "LOOKUP_CAS_XOG",
-		Type: common.LOOKUP,
+		Type: constant.LOOKUP,
 	}
 
 	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "lookup_dynamic_full_xog.xml")
-	err := Execute(xog, nil, file)
+	err := Execute(xog, nil, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming static lookup XOG file. Debug: %s", err.Error())

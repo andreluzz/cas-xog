@@ -3,45 +3,37 @@ package xog
 import (
 	"encoding/xml"
 	"errors"
-	"fmt"
-	"github.com/andreluzz/cas-xog/common"
+	"github.com/andreluzz/cas-xog/constant"
+	"github.com/andreluzz/cas-xog/model"
 	"github.com/andreluzz/cas-xog/transform"
+	"github.com/andreluzz/cas-xog/util"
+	"github.com/andreluzz/cas-xog/validate"
+	"github.com/beevik/etree"
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"strconv"
 	"strings"
-	"time"
 )
 
-var packagesDriversFileInfo []common.Driver
-var availablePackages []common.Package
-var selectedPackage common.Package
-var selectedVersion common.Version
+var packagesDriversFileInfo []model.Driver
+var availablePackages []model.Package
 
-func LoadPackages() {
+func LoadPackages() error {
 	err := unzipPackages()
 	if err != nil {
-		common.Info("\n[CAS-XOG][red[ERROR]] - Error unzipping packages: %s", err.Error())
-		common.Info("\n[CAS-XOG][red[FATAL]] - Check your packages folder. Press enter key to exit...")
-		scanExit := ""
-		fmt.Scanln(&scanExit)
-		os.Exit(0)
+		return err
 	}
 
-	_, dirErr := os.Stat(common.FOLDER_PACKAGE)
+	_, dirErr := os.Stat(constant.FOLDER_PACKAGE)
 	if os.IsNotExist(dirErr) {
-		return
+		return nil
 	}
 
 	err = loadAvailablePackages()
 	if err != nil {
-		common.Info("\n[CAS-XOG][red[ERROR]] - Error loading packages: %s", err.Error())
-		common.Info("\n[CAS-XOG][red[FATAL]] - Check your _packages folder. Press enter key to exit...")
-		scanExit := ""
-		fmt.Scanln(&scanExit)
-		os.Exit(0)
+		return err
 	}
+	return nil
 }
 
 func unzipPackages() error {
@@ -51,11 +43,11 @@ func unzipPackages() error {
 		return nil
 	}
 
-	os.RemoveAll(common.FOLDER_PACKAGE)
-	os.MkdirAll(common.FOLDER_PACKAGE, os.ModePerm)
+	os.RemoveAll(constant.FOLDER_PACKAGE)
+	os.MkdirAll(constant.FOLDER_PACKAGE, os.ModePerm)
 
 	for _, f := range packagesFiles {
-		_, err := common.Unzip(userPackagesFolder+f.Name(), common.FOLDER_PACKAGE)
+		_, err := util.Unzip(userPackagesFolder+f.Name(), constant.FOLDER_PACKAGE)
 		if err != nil {
 			return err
 		}
@@ -72,12 +64,12 @@ func loadAvailablePackages() error {
 			if err != nil {
 				return errors.New("Error loading package file: " + err.Error())
 			}
-			driverXOG = new(common.Driver)
-			pkg := new(common.Package)
+			driverXOG = new(model.Driver)
+			pkg := new(model.Package)
 			xml.Unmarshal(xmlPackageFile, pkg)
 			availablePackages = append(availablePackages, *pkg)
 		} else if strings.Contains(path, ".driver") {
-			driver := new(common.Driver)
+			driver := new(model.Driver)
 			driver.Info = info
 			driver.PackageDriver = true
 			driver.FilePath = path
@@ -89,159 +81,53 @@ func loadAvailablePackages() error {
 	return err
 }
 
-func InstallPackage() error {
-	start := time.Now()
-
-	output = map[string]int{common.OUTPUT_SUCCESS: 0, common.OUTPUT_WARNING: 0, common.OUTPUT_ERROR: 0}
-
-	driverPath := common.FOLDER_PACKAGE + selectedPackage.Folder + selectedPackage.DriverFileName
-	if selectedVersion.DriverFileName != "" {
-		driverPath = common.FOLDER_PACKAGE + selectedPackage.Folder + selectedVersion.Folder + selectedVersion.DriverFileName
-	}
-
-	err := LoadDriver(driverPath)
-	if err != nil {
-		return err
-	}
-
-	os.RemoveAll(common.FOLDER_DEBUG)
-	os.MkdirAll(common.FOLDER_DEBUG, os.ModePerm)
-	os.RemoveAll(common.FOLDER_WRITE)
-	os.MkdirAll(common.FOLDER_WRITE, os.ModePerm)
-
-	common.Info("\n------------------------------------------------------------------")
-	common.Info("\n[blue[Initiated at]]: %s", start.Format("Mon _2 Jan 2006 - 15:04:05"))
-	common.Info("\nProcessing Package: [blue[%s]] (%s)", selectedPackage.Name, selectedVersion.Name)
-	common.Info("\n------------------------------------------------------------------\n")
-
-	for i, f := range driverXOG.Files {
-		packageFolder := common.FOLDER_PACKAGE + selectedPackage.Folder + selectedVersion.Folder + "/" + f.Type + "/"
-		writeFolder := common.FOLDER_WRITE + f.Type
-		err := transform.ProcessPackageFile(f, packageFolder, writeFolder, selectedVersion.Definitions)
-		if err != nil {
-			common.Info("\n[CAS-XOG][blue[Processed]] %03d/%03d | file: %s", i+1, len(driverXOG.Files), f.Path)
-		} else {
-			common.Info("\n[CAS-XOG][red[Error    ]] %03d/%03d | file: %s | Debug: %s", i+1, len(driverXOG.Files), f.Path, err.Error())
-		}
-
-	}
-
-	elapsed := time.Since(start)
-
-	common.Info("\n\n------------------------------------------------------------------")
-	common.Info("\n[blue[Concluded in]]: %.3f seconds", elapsed.Seconds())
-	common.Info("\n------------------------------------------------------------------\n")
-
-	start = time.Now()
-
-	common.Info("\n------------------------------------------------------------------")
-	common.Info("\n[blue[Initiated at]]: %s", start.Format("Mon _2 Jan 2006 - 15:04:05"))
-	common.Info("\nInstalling Package: [blue[%s]] (%s)", selectedPackage.Name, selectedVersion.Name)
-	common.Info("\nTarget environment: [blue[%s]]", TargetEnv.Name)
-	if len(selectedVersion.Definitions) > 0 {
-		common.Info("\nDefinitions:")
-		for _, d := range selectedVersion.Definitions {
-			common.Info("\n   %s: %s", d.Action, d.Value)
-		}
-	}
-	common.Info("\n------------------------------------------------------------------\n")
-	common.Info("\n[CAS-XOG]Start package install? (y = Yes, n = No) [n]: ")
-	input := "n"
-	fmt.Scanln(&input)
-	if input == "n" || input != "y" {
-		return nil
-	}
-
-	start = time.Now()
-
-	for i, f := range driverXOG.Files {
-		common.Info("\n[CAS-XOG]Writing %03d/%03d | file: %s   ", i+1, len(driverXOG.Files), f.Path)
-
-		action := "w"
-		folder := common.FOLDER_DEBUG
-
-		//check if target folder type dir exists
-		_, dirErr := os.Stat(folder + f.Type)
-		if os.IsNotExist(dirErr) {
-			_ = os.Mkdir(folder+f.Type, os.ModePerm)
-		}
-
-		_, validateOutput, err := loadAndValidate(action, folder, &f, TargetEnv)
-
-		if err != nil {
-			debug(i+1, len(driverXOG.Files), action, validateOutput.Code, f.Path, err.Error())
-			continue
-		}
-
-		debug(i+1, len(driverXOG.Files), action, validateOutput.Code, f.Path, validateOutput.Debug)
-	}
-
-	TargetEnv.logout()
-	elapsed = time.Since(start)
-
-	common.Info("\n\n------------------------------------------------------------------")
-	common.Info("\nStats: total = %d | failure = %d | success = %d | warning = %d", len(driverXOG.Files), output[common.OUTPUT_ERROR], output[common.OUTPUT_SUCCESS], output[common.OUTPUT_WARNING])
-	common.Info("\n[blue[Concluded in]]: %.3f seconds", elapsed.Seconds())
-	common.Info("\n------------------------------------------------------------------\n")
-
-	return nil
+func GetPackagesDriversFileInfoList() []model.Driver {
+	return packagesDriversFileInfo
 }
 
-func RenderPackages() bool {
+func GetAvailablePackages() []model.Package {
+	return availablePackages
+}
 
-	if len(availablePackages) <= 0 {
-		common.Info("\n[CAS-XOG][yellow[WARNING]] - No package available, check your packages folder!\n")
-		return false
+func ProcessPackageFile(file model.DriverFile, selectedPackage *model.Package, selectedVersion *model.Version) model.Output {
+	output := model.Output{Code: constant.OUTPUT_SUCCESS, Debug: ""}
+	packageFolder := constant.FOLDER_PACKAGE + selectedPackage.Folder + selectedVersion.Folder + "/" + file.Type + "/"
+	writeFolder := constant.FOLDER_WRITE + file.Type
+	err := transform.ProcessPackageFile(file, packageFolder, writeFolder, selectedVersion.Definitions)
+	if err != nil {
+		output.Code = constant.OUTPUT_ERROR
+		output.Debug = err.Error()
+	}
+	return output
+}
+
+func InstallPackageFile(file *model.DriverFile, environments *model.Environments) model.Output {
+	output := model.Output{Code: constant.OUTPUT_SUCCESS, Debug: ""}
+
+	util.ValidateFolder(constant.FOLDER_DEBUG + file.Type)
+
+	err := file.InitXML(constant.WRITE, constant.FOLDER_WRITE)
+	if err != nil {
+		output.Code = constant.OUTPUT_ERROR
+		output.Debug = err.Error()
+		return output
 	}
 
-	common.Info("\n")
-	common.Info("Available packages:\n")
-	for i, p := range availablePackages {
-		common.Info("%d - %s\n", i+1, p.Name)
-	}
-	common.Info("Choose package to install [1]: ")
-	input := "1"
-	fmt.Scanln(&input)
-
-	packageIndex, err := strconv.Atoi(input)
-
-	if err != nil || packageIndex-1 < 0 || packageIndex > len(availablePackages) {
-		common.Info("\n[CAS-XOG][red[ERROR]] - Invalid package!\n")
-		return false
+	iniTagRegexpStr, endTagRegexpStr := file.TagCDATA()
+	if iniTagRegexpStr != "" && endTagRegexpStr != "" {
+		responseString := transform.IncludeCDATA(file.GetXML(), iniTagRegexpStr, endTagRegexpStr)
+		file.SetXML(responseString)
 	}
 
-	selectedPackage = availablePackages[packageIndex-1]
-	common.Info("\n[CAS-XOG] [blue[Package %s selected]]\n", selectedPackage.Name)
-
-	versionIndex := 1
-	if len(selectedPackage.Versions) > 1 {
-		common.Info("Available package versions:\n")
-		for i, v := range selectedPackage.Versions {
-			common.Info("%d - %s\n", i+1, v.Name)
-		}
-		common.Info("Choose version to install [1]: ")
-		input := "1"
-		fmt.Scanln(&input)
-		versionIndex, err = strconv.Atoi(input)
-
-		if err != nil {
-			common.Info("\n[CAS-XOG][red[ERROR]] - Package definition error: %s\n", err.Error())
-			return false
-		}
+	err = file.RunXML(constant.WRITE, constant.FOLDER_WRITE, environments)
+	xogResponse := etree.NewDocument()
+	xogResponse.ReadFromString(file.GetXML())
+	output, err = validate.Check(xogResponse)
+	if err != nil {
+		output.Code = constant.OUTPUT_ERROR
+		output.Debug = err.Error()
+		return output
 	}
-
-	common.Info("\n[CAS-XOG] [blue[Package required definitions:]]\n")
-	selectedVersion = selectedPackage.Versions[versionIndex-1]
-	for i, d := range selectedVersion.Definitions {
-		common.Info("%s [%s]:", d.Description, d.Default)
-		input := d.Default
-		fmt.Scanln(&input)
-		if input == "" {
-			common.Info("\n[CAS-XOG][red[ERROR]] - Invalid definition!\n")
-			return false
-		}
-		selectedVersion.Definitions[i].Value = input
-	}
-
-	return true
+	file.Write(constant.FOLDER_DEBUG)
+	return output
 }

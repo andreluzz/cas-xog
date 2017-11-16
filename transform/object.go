@@ -1,11 +1,11 @@
 package transform
 
 import (
-	"github.com/andreluzz/cas-xog/common"
+	"github.com/andreluzz/cas-xog/model"
 	"github.com/beevik/etree"
 )
 
-func specificObjectTransformations(xog *etree.Document, file common.DriverFile) {
+func specificObjectTransformations(xog *etree.Document, file *model.DriverFile) {
 
 	object := xog.FindElement("//objects/object")
 	for _, e := range object.FindElements("//object") {
@@ -31,11 +31,11 @@ func specificObjectTransformations(xog *etree.Document, file common.DriverFile) 
 	}
 }
 
-func removeOtherPartitionsAttributes(xog *etree.Document, file common.DriverFile) {
+func removeOtherPartitionsAttributes(xog *etree.Document, file *model.DriverFile) {
 	partitionElements := xog.FindElements("//[@partitionCode='" + file.SourcePartition + "']")
-	var includes []common.Element
+	var includes []model.Element
 	for _, e := range partitionElements {
-		var include common.Element
+		var include model.Element
 		switch e.Tag {
 		case "customAttribute":
 			include.Type = "attribute"
@@ -53,7 +53,7 @@ func removeOtherPartitionsAttributes(xog *etree.Document, file common.DriverFile
 	}
 }
 
-func removeUndefinedIncludes(xog *etree.Document, includes []common.Element) {
+func removeUndefinedIncludes(xog *etree.Document, includes []model.Element) {
 	removeActions := true
 	removeLinks := true
 	removeAttributes := true
@@ -84,7 +84,7 @@ func removeUndefinedIncludes(xog *etree.Document, includes []common.Element) {
 	}
 }
 
-func processObjectIncludes(xog *etree.Document, includes []common.Element) {
+func processObjectIncludes(xog *etree.Document, includes []model.Element) {
 	validateAttributesToRemove(xog, includes, "//customAttribute", "code", "attribute")
 	validateAttributesToRemove(xog, includes, "//attributeDefault", "code", "attribute")
 	validateAttributesToRemove(xog, includes, "//attributeAutonumbering", "code", "attribute")
@@ -94,7 +94,7 @@ func processObjectIncludes(xog *etree.Document, includes []common.Element) {
 	validateAttributesToRemove(xog, includes, "//action", "code", "action")
 }
 
-func validateInclude(includeType, code string, includes []common.Element) bool {
+func validateInclude(includeType, code string, includes []model.Element) bool {
 	for _, include := range includes {
 		if include.Type == includeType {
 			if include.Code == code {
@@ -105,7 +105,7 @@ func validateInclude(includeType, code string, includes []common.Element) bool {
 	return true
 }
 
-func validateAttributesToRemove(xog *etree.Document, includes []common.Element, path, attributeKey, includeType string) {
+func validateAttributesToRemove(xog *etree.Document, includes []model.Element, path, attributeKey, includeType string) {
 	for _, e := range xog.FindElements(path) {
 		code := e.SelectAttrValue(attributeKey, "")
 		if validateInclude(includeType, code, includes) {

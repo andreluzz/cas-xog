@@ -1,35 +1,35 @@
 package transform
 
 import (
+	"github.com/andreluzz/cas-xog/constant"
+	"github.com/andreluzz/cas-xog/model"
+	"github.com/beevik/etree"
 	"strings"
 	"testing"
-
-	"github.com/andreluzz/cas-xog/common"
-	"github.com/beevik/etree"
 )
 
 var packageMockFolder string
 
 func init() {
-	packageMockFolder = "../" + common.FOLDER_MOCK + "transform/"
+	packageMockFolder = "../" + constant.FOLDER_MOCK + "transform/"
 }
 
 func TestExecuteToReturnErrorNoHeaderElement(t *testing.T) {
 	xog := etree.NewDocument()
-	err := Execute(xog, nil, common.DriverFile{})
+	err := Execute(xog, nil, &model.DriverFile{})
 	if err == nil {
 		t.Fatalf("Error executing transformation. Not testing if xog has element head.")
 	}
 }
 
 func TestExecuteToReturnPage(t *testing.T) {
-	file := common.DriverFile{
-		Type: common.PAGE,
+	file := model.DriverFile{
+		Type: constant.PAGE,
 	}
 
 	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "page_full_xog.xml")
-	err := Execute(xog, nil, file)
+	err := Execute(xog, nil, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming page XOG file. Debug: %s", err.Error())
@@ -41,9 +41,9 @@ func TestExecuteToReturnPage(t *testing.T) {
 }
 
 func TestExecuteToReturnPageWithoutElementOBSandSecurity(t *testing.T) {
-	file := common.DriverFile{
-		Type: common.PAGE,
-		Elements: []common.Element{
+	file := model.DriverFile{
+		Type: constant.PAGE,
+		Elements: []model.Element{
 			{
 				Action: "remove",
 				XPath:  "//OBSAssocs",
@@ -57,7 +57,7 @@ func TestExecuteToReturnPageWithoutElementOBSandSecurity(t *testing.T) {
 
 	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "page_full_xog.xml")
-	err := Execute(xog, nil, file)
+	err := Execute(xog, nil, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming page XOG file. Debug: %s", err.Error())
@@ -69,14 +69,14 @@ func TestExecuteToReturnPageWithoutElementOBSandSecurity(t *testing.T) {
 }
 
 func TestExecuteToReturnGroup(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code: "ObjectAdmin",
-		Type: common.GROUP,
+		Type: constant.GROUP,
 	}
 
 	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "group_full_xog.xml")
-	err := Execute(xog, nil, file)
+	err := Execute(xog, nil, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming group XOG file. Debug: %s", err.Error())
@@ -88,10 +88,10 @@ func TestExecuteToReturnGroup(t *testing.T) {
 }
 
 func TestExecuteToReturnGroupWithoutMembers(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code: "ObjectAdmin",
-		Type: common.GROUP,
-		Elements: []common.Element{
+		Type: constant.GROUP,
+		Elements: []model.Element{
 			{
 				Action: "remove",
 				XPath:  "//members",
@@ -101,7 +101,7 @@ func TestExecuteToReturnGroupWithoutMembers(t *testing.T) {
 
 	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "group_full_xog.xml")
-	err := Execute(xog, nil, file)
+	err := Execute(xog, nil, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming group XOG file. Debug: %s", err.Error())
@@ -113,14 +113,14 @@ func TestExecuteToReturnGroupWithoutMembers(t *testing.T) {
 }
 
 func TestExecuteToReturnPortletFromQuery(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code: "apm.appByQuadrant",
-		Type: common.PORTLET,
+		Type: constant.PORTLET,
 	}
 
 	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "portlet_query_full_xog.xml")
-	err := Execute(xog, nil, file)
+	err := Execute(xog, nil, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming query portlet XOG file. Debug: %s", err.Error())
@@ -132,14 +132,14 @@ func TestExecuteToReturnPortletFromQuery(t *testing.T) {
 }
 
 func TestExecuteToReturnPortletFromObject(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code: "test_cas_xog",
-		Type: common.PORTLET,
+		Type: constant.PORTLET,
 	}
 
 	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "portlet_object_full_xog.xml")
-	err := Execute(xog, nil, file)
+	err := Execute(xog, nil, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming object portlet XOG file. Debug: %s", err.Error())
@@ -151,14 +151,14 @@ func TestExecuteToReturnPortletFromObject(t *testing.T) {
 }
 
 func TestExecuteToReturnQuery(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code: "cop.processBottlenecks",
-		Type: common.QUERY,
+		Type: constant.QUERY,
 	}
 
 	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "query_full_xog.xml")
-	err := Execute(xog, nil, file)
+	err := Execute(xog, nil, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming query XOG file. Debug: %s", err.Error())
@@ -181,21 +181,21 @@ func readMockResultAndCompare(xog *etree.Document, compareXml string) bool {
 	xogProcessedToCompareString, _ := xogProcessedToCompare.WriteToString()
 	xogProcessedToCompareString = strings.Replace(xogProcessedToCompareString, " ", "", -1)
 	if xogString != xogProcessedToCompareString {
-		xog.WriteToFile("../" + common.FOLDER_DEBUG + "go_test_debug.xml")
+		xog.WriteToFile("../" + constant.FOLDER_DEBUG + "go_test_debug.xml")
 		return false
 	}
 	return true
 }
 
 func TestExecuteToReturnOBS(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code: "strat_plan",
-		Type: common.OBS,
+		Type: constant.OBS,
 	}
 
 	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "obs_full_xog.xml")
-	err := Execute(xog, nil, file)
+	err := Execute(xog, nil, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming OBS XOG file. Debug: %s", err.Error())
@@ -207,10 +207,10 @@ func TestExecuteToReturnOBS(t *testing.T) {
 }
 
 func TestExecuteToReturnOBSWithoutSecurityAndObject(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code: "strat_plan",
-		Type: common.OBS,
-		Elements: []common.Element{
+		Type: constant.OBS,
+		Elements: []model.Element{
 			{
 				Action: "remove",
 				XPath:  "//associatedObject",
@@ -228,7 +228,7 @@ func TestExecuteToReturnOBSWithoutSecurityAndObject(t *testing.T) {
 
 	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "obs_full_xog.xml")
-	err := Execute(xog, nil, file)
+	err := Execute(xog, nil, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming OBS XOG file. Debug: %s", err.Error())
@@ -240,12 +240,12 @@ func TestExecuteToReturnOBSWithoutSecurityAndObject(t *testing.T) {
 }
 
 func TestExecuteToReturnInstanceCorrectHeader(t *testing.T) {
-	file := common.DriverFile{
-		Type: common.RESOURCE_CLASS_INSTANCE,
+	file := model.DriverFile{
+		Type: constant.RESOURCE_CLASS_INSTANCE,
 	}
 	xog := etree.NewDocument()
 	xog.ReadFromString("<NikuDataBus><Header action=\"write\" externalSource=\"NIKU\" objectType=\"contentPack\" version=\"8.0\"/></NikuDataBus>")
-	err := Execute(xog, nil, file)
+	err := Execute(xog, nil, &file)
 	if err != nil {
 		t.Fatalf("Error transforming instance(RESOURCE_CLASS_INSTANCE) XOG file. Debug: %s", err.Error())
 	}
@@ -255,12 +255,12 @@ func TestExecuteToReturnInstanceCorrectHeader(t *testing.T) {
 		t.Errorf("Error transforming instance(RESOURCE_CLASS_INSTANCE) XOG file. Header wrong version number")
 	}
 
-	file = common.DriverFile{
-		Type: common.WIP_CLASS_INSTANCE,
+	file = model.DriverFile{
+		Type: constant.WIP_CLASS_INSTANCE,
 	}
 	xog = etree.NewDocument()
 	xog.ReadFromString("<NikuDataBus><Header action=\"write\" externalSource=\"NIKU\" objectType=\"contentPack\" version=\"8.0\"/></NikuDataBus>")
-	err = Execute(xog, nil, file)
+	err = Execute(xog, nil, &file)
 	if err != nil {
 		t.Fatalf("Error transforming instance(WIP_CLASS_INSTANCE) XOG file. Debug: %s", err.Error())
 	}
@@ -270,12 +270,12 @@ func TestExecuteToReturnInstanceCorrectHeader(t *testing.T) {
 		t.Errorf("Error transforming instance(WIP_CLASS_INSTANCE) XOG file. Header wrong version number")
 	}
 
-	file = common.DriverFile{
-		Type: common.TRANSACTION_CLASS_INSTANCE,
+	file = model.DriverFile{
+		Type: constant.TRANSACTION_CLASS_INSTANCE,
 	}
 	xog = etree.NewDocument()
 	xog.ReadFromString("<NikuDataBus><Header action=\"write\" externalSource=\"NIKU\" objectType=\"contentPack\" version=\"8.0\"/></NikuDataBus>")
-	err = Execute(xog, nil, file)
+	err = Execute(xog, nil, &file)
 	if err != nil {
 		t.Fatalf("Error transforming instance(TRANSACTION_CLASS_INSTANCE) XOG file. Debug: %s", err.Error())
 	}
@@ -285,12 +285,12 @@ func TestExecuteToReturnInstanceCorrectHeader(t *testing.T) {
 		t.Errorf("Error transforming instance(TRANSACTION_CLASS_INSTANCE) XOG file. Header wrong version number")
 	}
 
-	file = common.DriverFile{
-		Type: common.INVESTMENT_CLASS_INSTANCE,
+	file = model.DriverFile{
+		Type: constant.INVESTMENT_CLASS_INSTANCE,
 	}
 	xog = etree.NewDocument()
 	xog.ReadFromString("<NikuDataBus><Header action=\"write\" externalSource=\"NIKU\" objectType=\"contentPack\" version=\"8.0\"/></NikuDataBus>")
-	err = Execute(xog, nil, file)
+	err = Execute(xog, nil, &file)
 	if err != nil {
 		t.Fatalf("Error transforming instance(INVESTMENT_CLASS_INSTANCE) XOG file. Debug: %s", err.Error())
 	}
@@ -309,11 +309,7 @@ func TestIncludeCDATAToReturnString(t *testing.T) {
 	iniTagRegexp := `<([^/].*):(query|update)(.*)>`
 	endTagRegexp := `</(.*):(query|update)>`
 
-	XOGString, err := IncludeCDATA(xogString, iniTagRegexp, endTagRegexp)
-
-	if err != nil {
-		t.Errorf("Error including CDATA tag to process XOG file. Debug: %s", err.Error())
-	}
+	XOGString := IncludeCDATA(xogString, iniTagRegexp, endTagRegexp)
 
 	result := etree.NewDocument()
 	result.ReadFromString(XOGString)
@@ -331,11 +327,7 @@ func TestIncludeCDATAWithoutQueryToReturnXML(t *testing.T) {
 	iniTagRegexp := `<([^/].*):(query|update)(.*)>`
 	endTagRegexp := `</(.*):(query|update)>`
 
-	XOGString, err := IncludeCDATA(xogString, iniTagRegexp, endTagRegexp)
-
-	if err != nil {
-		t.Errorf("Error including escapeText attribute to process XOG file. Debug: %s", err.Error())
-	}
+	XOGString := IncludeCDATA(xogString, iniTagRegexp, endTagRegexp)
 
 	result := etree.NewDocument()
 	result.ReadFromString(XOGString)

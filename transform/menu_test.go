@@ -1,16 +1,17 @@
 package transform
 
 import (
-	"github.com/andreluzz/cas-xog/common"
+	"github.com/andreluzz/cas-xog/constant"
+	"github.com/andreluzz/cas-xog/model"
 	"github.com/beevik/etree"
 	"testing"
 )
 
 func TestExecuteToReturnErrorMenuInvalidSourceSection(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code: "application",
-		Type: common.MENU,
-		Sections: []common.Section{
+		Type: constant.MENU,
+		Sections: []model.Section{
 			{
 				Code: "invalid_code",
 			},
@@ -22,7 +23,7 @@ func TestExecuteToReturnErrorMenuInvalidSourceSection(t *testing.T) {
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "menu_full_aux_xog_no_section_code.xml")
 
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err == nil {
 		t.Fatalf("Error transforming Menu XOG file. Debug: not validating if section code exists on source")
@@ -30,12 +31,12 @@ func TestExecuteToReturnErrorMenuInvalidSourceSection(t *testing.T) {
 }
 
 func TestExecuteToReturnErrorMenuInvalidTargetSection(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code: "application",
-		Type: common.MENU,
-		Sections: []common.Section{
+		Type: constant.MENU,
+		Sections: []model.Section{
 			{
-				Action: common.ACTION_UPDATE,
+				Action: constant.ACTION_UPDATE,
 				Code:   "npt.personal",
 			},
 		},
@@ -46,7 +47,7 @@ func TestExecuteToReturnErrorMenuInvalidTargetSection(t *testing.T) {
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "menu_full_aux_xog_no_section_code.xml")
 
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err == nil {
 		t.Fatalf("Error transforming Menu XOG file. Debug: not validating if section code exists on target")
@@ -54,12 +55,12 @@ func TestExecuteToReturnErrorMenuInvalidTargetSection(t *testing.T) {
 }
 
 func TestExecuteToReturnErrorMenuUpdateWithoutLinks(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code: "application",
-		Type: common.MENU,
-		Sections: []common.Section{
+		Type: constant.MENU,
+		Sections: []model.Section{
 			{
-				Action: common.ACTION_UPDATE,
+				Action: constant.ACTION_UPDATE,
 				Code:   "npt.personal",
 			},
 		},
@@ -70,7 +71,7 @@ func TestExecuteToReturnErrorMenuUpdateWithoutLinks(t *testing.T) {
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "menu_full_aux_xog.xml")
 
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err == nil {
 		t.Fatalf("Error transforming Menu XOG file. Debug: not validating if section code exists on target")
@@ -78,14 +79,14 @@ func TestExecuteToReturnErrorMenuUpdateWithoutLinks(t *testing.T) {
 }
 
 func TestExecuteToReturnErrorMenuLinkInvalidCode(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code: "application",
-		Type: common.MENU,
-		Sections: []common.Section{
+		Type: constant.MENU,
+		Sections: []model.Section{
 			{
-				Action: common.ACTION_UPDATE,
+				Action: constant.ACTION_UPDATE,
 				Code:   "npt.personal",
-				Links: []common.SectionLink{
+				Links: []model.SectionLink{
 					{
 						Code: "invalid_link_code",
 					},
@@ -99,7 +100,7 @@ func TestExecuteToReturnErrorMenuLinkInvalidCode(t *testing.T) {
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "menu_full_aux_xog.xml")
 
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err == nil {
 		t.Fatalf("Error transforming Menu XOG file. Debug: not validating if source section link exists")
@@ -107,12 +108,12 @@ func TestExecuteToReturnErrorMenuLinkInvalidCode(t *testing.T) {
 }
 
 func TestExecuteToReturnErrorMenuInsertExistentSection(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code: "application",
-		Type: common.MENU,
-		Sections: []common.Section{
+		Type: constant.MENU,
+		Sections: []model.Section{
 			{
-				Action: common.ACTION_INSERT,
+				Action: constant.ACTION_INSERT,
 				Code:   "npt.personal",
 			},
 		},
@@ -123,7 +124,7 @@ func TestExecuteToReturnErrorMenuInsertExistentSection(t *testing.T) {
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "menu_full_aux_xog.xml")
 
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err == nil {
 		t.Fatalf("Error transforming Menu XOG file. Debug: not validating if source section link exists")
@@ -131,12 +132,12 @@ func TestExecuteToReturnErrorMenuInsertExistentSection(t *testing.T) {
 }
 
 func TestExecuteToReturnErrorMenuTargetInvalidSectionPosition(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code: "application",
-		Type: common.MENU,
-		Sections: []common.Section{
+		Type: constant.MENU,
+		Sections: []model.Section{
 			{
-				Action:         common.ACTION_INSERT,
+				Action:         constant.ACTION_INSERT,
 				Code:           "menu_sec_cas_xog",
 				TargetPosition: "129",
 			},
@@ -148,7 +149,7 @@ func TestExecuteToReturnErrorMenuTargetInvalidSectionPosition(t *testing.T) {
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "menu_full_aux_xog.xml")
 
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err == nil {
 		t.Fatalf("Error transforming Menu XOG file. Debug: not validating insert invalid target section position")
@@ -156,15 +157,15 @@ func TestExecuteToReturnErrorMenuTargetInvalidSectionPosition(t *testing.T) {
 }
 
 func TestExecuteToReturnMenu(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code: "application",
-		Type: common.MENU,
+		Type: constant.MENU,
 	}
 
 	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "menu_full_xog.xml")
 
-	err := Execute(xog, nil, file)
+	err := Execute(xog, nil, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming Menu XOG file. Debug: %s", err.Error())
@@ -176,19 +177,19 @@ func TestExecuteToReturnMenu(t *testing.T) {
 }
 
 func TestExecuteToReturnMenuSectionAndLinks(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code: "application",
-		Type: common.MENU,
-		Sections: []common.Section{
+		Type: constant.MENU,
+		Sections: []model.Section{
 			{
-				Action:         common.ACTION_INSERT,
+				Action:         constant.ACTION_INSERT,
 				Code:           "menu_sec_cas_xog",
 				TargetPosition: "2",
 			},
 			{
-				Action: common.ACTION_UPDATE,
+				Action: constant.ACTION_UPDATE,
 				Code:   "npt.personal",
-				Links: []common.SectionLink{
+				Links: []model.SectionLink{
 					{
 						Code: "odf.obj_testeList",
 					},
@@ -202,7 +203,7 @@ func TestExecuteToReturnMenuSectionAndLinks(t *testing.T) {
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "menu_full_aux_xog.xml")
 
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming Menu XOG file. Debug: %s", err.Error())
@@ -214,15 +215,15 @@ func TestExecuteToReturnMenuSectionAndLinks(t *testing.T) {
 }
 
 func TestExecuteToReturnMenuInsertSectionWithLinks(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code: "application",
-		Type: common.MENU,
-		Sections: []common.Section{
+		Type: constant.MENU,
+		Sections: []model.Section{
 			{
-				Action:         common.ACTION_INSERT,
+				Action:         constant.ACTION_INSERT,
 				Code:           "menu_sec_cas_xog",
 				TargetPosition: "2",
-				Links: []common.SectionLink{
+				Links: []model.SectionLink{
 					{
 						Code: "cas_proc_running_tab",
 					},
@@ -236,7 +237,7 @@ func TestExecuteToReturnMenuInsertSectionWithLinks(t *testing.T) {
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "menu_full_aux_xog.xml")
 
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming Menu XOG file. Debug: %s", err.Error())

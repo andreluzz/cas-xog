@@ -1,22 +1,22 @@
 package transform
 
 import (
+	"github.com/andreluzz/cas-xog/constant"
+	"github.com/andreluzz/cas-xog/model"
+	"github.com/beevik/etree"
 	"strings"
 	"testing"
-
-	"github.com/andreluzz/cas-xog/common"
-	"github.com/beevik/etree"
 )
 
 func TestExecuteToReturnProcess(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code: "PRC_0002",
-		Type: common.PROCESS,
+		Type: constant.PROCESS,
 	}
 
 	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "process_full_xog.xml")
-	err := Execute(xog, nil, file)
+	err := Execute(xog, nil, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming process XOG file. Debug: %s", err.Error())
@@ -28,10 +28,10 @@ func TestExecuteToReturnProcess(t *testing.T) {
 }
 
 func TestExecuteToReturnProcessReplace(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code: "PRC_0002",
-		Type: common.PROCESS,
-		Replace: []common.FileReplace{
+		Type: constant.PROCESS,
+		Replace: []model.FileReplace{
 			{
 				From: "Test cas-xog 002",
 				To:   "Test CAS XOG after replace",
@@ -41,7 +41,7 @@ func TestExecuteToReturnProcessReplace(t *testing.T) {
 
 	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "process_full_xog.xml")
-	err := Execute(xog, nil, file)
+	err := Execute(xog, nil, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming process XOG file. Debug: %s", err.Error())
@@ -59,9 +59,9 @@ func TestExecuteToReturnProcessReplace(t *testing.T) {
 }
 
 func TestExecuteToReturnProcessCopyingPermissions(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code:            "PRC_0002",
-		Type:            common.PROCESS,
+		Type:            constant.PROCESS,
 		CopyPermissions: "PRC_0001",
 	}
 
@@ -70,7 +70,7 @@ func TestExecuteToReturnProcessCopyingPermissions(t *testing.T) {
 
 	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "process_full_xog.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming process XOG file. Debug: %s", err.Error())
@@ -82,9 +82,9 @@ func TestExecuteToReturnProcessCopyingPermissions(t *testing.T) {
 }
 
 func TestExecuteToReturnErrorProcessCopyingPermissions(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code:            "PRC_0002",
-		Type:            common.PROCESS,
+		Type:            constant.PROCESS,
 		CopyPermissions: "PRC_0001",
 	}
 
@@ -93,7 +93,7 @@ func TestExecuteToReturnErrorProcessCopyingPermissions(t *testing.T) {
 
 	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "process_full_xog.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err == nil {
 		t.Errorf("Error transforming process XOG file. Debug: not validating if aux file has the security tag")
@@ -101,9 +101,9 @@ func TestExecuteToReturnErrorProcessCopyingPermissions(t *testing.T) {
 }
 
 func TestExecuteToReturnErrorProcessElementNotFound(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Code:            "PRC_0002",
-		Type:            common.PROCESS,
+		Type:            constant.PROCESS,
 		CopyPermissions: "PRC_0001",
 	}
 
@@ -112,7 +112,7 @@ func TestExecuteToReturnErrorProcessElementNotFound(t *testing.T) {
 
 	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "process_full_xog_empty.xml")
-	err := Execute(xog, aux, file)
+	err := Execute(xog, aux, &file)
 
 	if err == nil {
 		t.Errorf("Error transforming process XOG file. Debug: not validating if element process exist")
@@ -123,12 +123,8 @@ func TestIncludeEscapeTextToReturnString(t *testing.T) {
 	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "process_full_xog_escapetext.xml")
 
-	XOGString, err := IncludeEscapeText(xog)
-
-	if err != nil {
-		t.Errorf("Error including escapeText attribute to process XOG file. Debug: %s", err.Error())
-	}
-
+	IncludeEscapeText(xog)
+	XOGString, _ := xog.WriteToString()
 	result := etree.NewDocument()
 	result.ReadFromString(XOGString)
 
@@ -141,12 +137,8 @@ func TestIncludeEscapeTextWithoutQueryToReturnXML(t *testing.T) {
 	xog := etree.NewDocument()
 	xog.ReadFromFile(packageMockFolder + "process_full_xog.xml")
 
-	XOGString, err := IncludeEscapeText(xog)
-
-	if err != nil {
-		t.Errorf("Error including escapeText attribute to process XOG file. Debug: %s", err.Error())
-	}
-
+	IncludeEscapeText(xog)
+	XOGString, _ := xog.WriteToString()
 	result := etree.NewDocument()
 	result.ReadFromString(XOGString)
 

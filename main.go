@@ -1,14 +1,14 @@
 package main
 
 import (
-	"github.com/andreluzz/cas-xog/xog"
+	"github.com/andreluzz/cas-xog/render"
 )
 
 func main() {
-	xog.RenderHome()
+	render.Home()
 	var exit = false
 	for {
-		exit = xog.RenderInterface()
+		exit = render.Interface()
 		if exit {
 			break
 		}

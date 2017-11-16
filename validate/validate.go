@@ -2,13 +2,14 @@ package validate
 
 import (
 	"errors"
-	"github.com/andreluzz/cas-xog/common"
+	"github.com/andreluzz/cas-xog/constant"
+	"github.com/andreluzz/cas-xog/model"
 	"github.com/beevik/etree"
 )
 
-func Check(xog *etree.Document) (common.XOGOutput, error) {
-	errorOutput := common.XOGOutput{Code: common.OUTPUT_ERROR, Debug: ""}
-	warningOutput := common.XOGOutput{Code: common.OUTPUT_WARNING, Debug: ""}
+func Check(xog *etree.Document) (model.Output, error) {
+	errorOutput := model.Output{Code: constant.OUTPUT_ERROR, Debug: ""}
+	warningOutput := model.Output{Code: constant.OUTPUT_WARNING, Debug: ""}
 
 	if xog == nil {
 		return errorOutput, errors.New("invalid xog")
@@ -58,12 +59,12 @@ func Check(xog *etree.Document) (common.XOGOutput, error) {
 		}
 	}
 
-	elapsedTime := statusElement.SelectAttrValue("elapsedTime", common.UNDEFINED)
+	elapsedTime := statusElement.SelectAttrValue("elapsedTime", constant.UNDEFINED)
 
 	debug := ""
-	if elapsedTime != common.UNDEFINED {
+	if elapsedTime != constant.UNDEFINED {
 		debug = "| Elapsed time: " + elapsedTime
 	}
 
-	return common.XOGOutput{Code: common.OUTPUT_SUCCESS, Debug: debug}, nil
+	return model.Output{Code: constant.OUTPUT_SUCCESS, Debug: debug}, nil
 }
