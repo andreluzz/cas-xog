@@ -1,12 +1,14 @@
 package transform
 
 import (
-	"github.com/andreluzz/cas-xog/common"
+	"github.com/andreluzz/cas-xog/constant"
+	"github.com/andreluzz/cas-xog/model"
+	"github.com/andreluzz/cas-xog/util"
 	"github.com/beevik/etree"
 	"strings"
 )
 
-func ProcessPackageFile(file common.DriverFile, packageFolder, writeFolder string, definitions []common.Definition) error {
+func ProcessPackageFile(file model.DriverFile, packageFolder, writeFolder string, definitions []model.Definition) error {
 
 	xog := etree.NewDocument()
 	err := xog.ReadFromFile(packageFolder + file.Path)
@@ -20,14 +22,14 @@ func ProcessPackageFile(file common.DriverFile, packageFolder, writeFolder strin
 		}
 		switch def.Action {
 		case "targetPartitionModel":
-			if file.Type == common.OBJECT {
+			if file.Type == constant.OBJECT {
 				e := xog.FindElement("//object[@partitionModelCode]")
 				if e != nil {
 					e.CreateAttr("partitionModelCode", def.Value)
 				}
 			}
 		case "targetPartition":
-			if file.Type == common.OBJECT || file.Type == common.VIEW {
+			if file.Type == constant.OBJECT || file.Type == constant.VIEW {
 				changePartition(xog, "", def.Value)
 			}
 		case "replaceString":
@@ -39,13 +41,13 @@ func ProcessPackageFile(file common.DriverFile, packageFolder, writeFolder strin
 				continue
 			}
 			if def.TransformTypes == "" || strings.Contains(def.TransformTypes, file.Type) {
-				findAndReplace(xog, []common.FileReplace{{From: def.From, To: replaced}})
+				findAndReplace(xog, []model.FileReplace{{From: def.From, To: replaced}})
 			}
 		}
 	}
 
 	xog.IndentTabs()
-	common.ValidateFolder(writeFolder)
+	util.ValidateFolder(writeFolder)
 	xog.WriteToFile(writeFolder + "/" + file.Path)
 
 	return nil

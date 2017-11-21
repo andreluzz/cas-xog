@@ -2,12 +2,13 @@ package transform
 
 import (
 	"errors"
-	"github.com/andreluzz/cas-xog/common"
+	"github.com/andreluzz/cas-xog/constant"
+	"github.com/andreluzz/cas-xog/model"
 	"github.com/beevik/etree"
 	"strconv"
 )
 
-func specificMenuTransformations(xog, aux *etree.Document, file common.DriverFile) error {
+func specificMenuTransformations(xog, aux *etree.Document, file *model.DriverFile) error {
 	removeElementFromParent(xog, "//objects")
 	removeElementFromParent(xog, "//pages")
 
@@ -23,7 +24,7 @@ func specificMenuTransformations(xog, aux *etree.Document, file common.DriverFil
 
 			targetSectionElement := aux.FindElement("//section[@code='" + s.Code + "']")
 			switch s.Action {
-			case common.ACTION_UPDATE:
+			case constant.ACTION_UPDATE:
 				if targetSectionElement == nil {
 					return errors.New("invalid target menu section code(" + s.Code + ")")
 				}
@@ -40,12 +41,12 @@ func specificMenuTransformations(xog, aux *etree.Document, file common.DriverFil
 				for i, e := range targetSectionElement.FindElements("//link") {
 					e.CreateAttr("position", strconv.Itoa(i))
 				}
-			case common.ACTION_INSERT:
+			case constant.ACTION_INSERT:
 				if targetSectionElement != nil {
 					return errors.New("cannot insert section code(" + s.Code + ") because it already exists in target")
 				}
 				position := "-1"
-				if s.TargetPosition != common.UNDEFINED {
+				if s.TargetPosition != constant.UNDEFINED {
 					position = s.TargetPosition
 				}
 				if len(s.Links) > 0 {

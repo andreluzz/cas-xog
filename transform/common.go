@@ -2,14 +2,14 @@ package transform
 
 import (
 	"errors"
+	"github.com/andreluzz/cas-xog/constant"
+	"github.com/andreluzz/cas-xog/model"
+	"github.com/beevik/etree"
 	"regexp"
 	"strings"
-
-	"github.com/andreluzz/cas-xog/common"
-	"github.com/beevik/etree"
 )
 
-func Execute(xog, aux *etree.Document, file common.DriverFile) error {
+func Execute(xog, aux *etree.Document, file *model.DriverFile) error {
 	err := errors.New("")
 	err = nil
 
@@ -20,37 +20,37 @@ func Execute(xog, aux *etree.Document, file common.DriverFile) error {
 	headerElement.CreateAttr("version", "8.0")
 
 	switch file.Type {
-	case common.LOOKUP:
+	case constant.LOOKUP:
 		specificLookupTransformations(xog, file)
-	case common.PROCESS:
+	case constant.PROCESS:
 		err = specificProcessTransformations(xog, aux, file)
 		if err != nil {
 			return errors.New("[transform error] " + err.Error())
 		}
-	case common.OBJECT:
+	case constant.OBJECT:
 		specificObjectTransformations(xog, file)
-	case common.VIEW:
+	case constant.VIEW:
 		err = specificViewTransformations(xog, aux, file)
 		if err != nil {
 			return errors.New("[transform error] " + err.Error())
 		}
-	case common.PORTLET, common.QUERY:
+	case constant.PORTLET, constant.QUERY:
 		removeElementFromParent(xog, "//lookups")
 		removeElementFromParent(xog, "//objects")
-	case common.MENU:
+	case constant.MENU:
 		err = specificMenuTransformations(xog, aux, file)
 		if err != nil {
 			return errors.New("[transform error] " + err.Error())
 		}
-	case common.RESOURCE_CLASS_INSTANCE, common.WIP_CLASS_INSTANCE, common.TRANSACTION_CLASS_INSTANCE:
+	case constant.RESOURCE_CLASS_INSTANCE, constant.WIP_CLASS_INSTANCE, constant.TRANSACTION_CLASS_INSTANCE:
 		headerElement.CreateAttr("version", "12.0")
-	case common.INVESTMENT_CLASS_INSTANCE:
+	case constant.INVESTMENT_CLASS_INSTANCE:
 		headerElement.CreateAttr("version", "14.1")
 	}
 
 	if len(file.Elements) > 0 {
 		for _, e := range file.Elements {
-			if e.Action == common.ACTION_REMOVE && e.XPath != "" && e.Type == "" && e.Code == "" {
+			if e.Action == constant.ACTION_REMOVE && e.XPath != "" && e.Type == "" && e.Code == "" {
 				if strings.HasPrefix(e.XPath, "/") {
 					e.XPath = "." + e.XPath
 				}
@@ -82,7 +82,7 @@ func removeElementsFromParent(xog *etree.Document, path string) {
 	}
 }
 
-func findAndReplace(xog *etree.Document, replace []common.FileReplace) {
+func findAndReplace(xog *etree.Document, replace []model.FileReplace) {
 	xogString, _ := xog.WriteToString()
 	for _, r := range replace {
 		xogString = strings.Replace(xogString, r.From, r.To, -1)
@@ -109,7 +109,7 @@ func changePartition(xog *etree.Document, sourcePartition, targetPartition strin
 	}
 }
 
-func IncludeCDATA(xogString string, iniTagRegexpStr string, endTagRegexpStr string) (string, error) {
+func IncludeCDATA(xogString string, iniTagRegexpStr string, endTagRegexpStr string) string {
 	iniTagRegexp, _ := regexp.Compile(iniTagRegexpStr)
 	endTagRegexp, _ := regexp.Compile(endTagRegexpStr)
 
@@ -142,5 +142,5 @@ func IncludeCDATA(xogString string, iniTagRegexpStr string, endTagRegexpStr stri
 	replacer := strings.NewReplacer("&gt;", ">", "&lt;", "<", "&apos;", "'", "&quot;", "\"")
 	xogString = replacer.Replace(xogString)
 
-	return xogString, nil
+	return xogString
 }

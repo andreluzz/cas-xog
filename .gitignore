@@ -24,6 +24,7 @@ _write/
 _debug/
 _packages/
 _migration/
+_logs/
 extra/
 drivers/
 packages/

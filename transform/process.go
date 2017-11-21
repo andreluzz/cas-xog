@@ -2,13 +2,12 @@ package transform
 
 import (
 	"errors"
-	"regexp"
-
-	"github.com/andreluzz/cas-xog/common"
+	"github.com/andreluzz/cas-xog/model"
 	"github.com/beevik/etree"
+	"regexp"
 )
 
-func specificProcessTransformations(xog, aux *etree.Document, file common.DriverFile) error {
+func specificProcessTransformations(xog, aux *etree.Document, file *model.DriverFile) error {
 	removeElementFromParent(xog, "//lookups")
 
 	if file.CopyPermissions != "" {
@@ -24,6 +23,8 @@ func specificProcessTransformations(xog, aux *etree.Document, file common.Driver
 		process.AddChild(securityElement)
 	}
 
+	IncludeEscapeText(xog)
+
 	return nil
 }
 
@@ -37,13 +38,13 @@ func copyProcessPermissions(xog *etree.Document) (*etree.Element, error) {
 	return element.Copy(), nil
 }
 
-func IncludeEscapeText(xog *etree.Document) (string, error) {
+func IncludeEscapeText(xog *etree.Document) {
 	xogQueryTagString, _ := xog.WriteToString()
 	sqlQueryTagRegexp, _ := regexp.Compile(`(<[^/].*):(query|update)`)
 	sqlTags := sqlQueryTagRegexp.FindAllString(xogQueryTagString, -1)
 
 	if len(sqlTags) <= 0 {
-		return xogQueryTagString, nil
+		return
 	}
 
 	for _, tag := range sqlTags {
@@ -51,8 +52,4 @@ func IncludeEscapeText(xog *etree.Document) (string, error) {
 			e.CreateAttr("escapeText", "false")
 		}
 	}
-
-	xogString, _ := xog.WriteToString()
-
-	return xogString, nil
 }

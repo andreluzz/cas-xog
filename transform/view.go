@@ -2,12 +2,13 @@ package transform
 
 import (
 	"errors"
-	"github.com/andreluzz/cas-xog/common"
+	"github.com/andreluzz/cas-xog/constant"
+	"github.com/andreluzz/cas-xog/model"
 	"github.com/beevik/etree"
 	"strconv"
 )
 
-func specificViewTransformations(xog, aux *etree.Document, file common.DriverFile) error {
+func specificViewTransformations(xog, aux *etree.Document, file *model.DriverFile) error {
 
 	if len(file.Sections) > 0 && file.Code == "*" {
 		return errors.New("tag <section> is only available for single view")
@@ -44,7 +45,7 @@ func specificViewTransformations(xog, aux *etree.Document, file common.DriverFil
 	return nil
 }
 
-func updateSections(xog, aux *etree.Document, file common.DriverFile) error {
+func updateSections(xog, aux *etree.Document, file *model.DriverFile) error {
 
 	validateCodeAndRemoveElementsFromParent(aux, "//views/property", file.Code)
 	validateCodeAndRemoveElementsFromParent(aux, "//views/filter", file.Code)
@@ -65,7 +66,7 @@ func updateSections(xog, aux *etree.Document, file common.DriverFile) error {
 	}
 
 	for _, section := range file.Sections {
-		if section.Action == common.ACTION_REPLACE {
+		if section.Action == constant.ACTION_REPLACE {
 			err := processSectionByType(section, sourceView, targetView)
 			if err != nil {
 				return err
@@ -74,7 +75,7 @@ func updateSections(xog, aux *etree.Document, file common.DriverFile) error {
 	}
 
 	for _, section := range file.Sections {
-		if section.Action == common.ACTION_UPDATE {
+		if section.Action == constant.ACTION_UPDATE {
 			err := processSectionByType(section, sourceView, targetView)
 			if err != nil {
 				return err
@@ -83,7 +84,7 @@ func updateSections(xog, aux *etree.Document, file common.DriverFile) error {
 	}
 
 	for _, section := range file.Sections {
-		if section.Action == common.ACTION_REMOVE {
+		if section.Action == constant.ACTION_REMOVE {
 			err := processSectionByType(section, sourceView, targetView)
 			if err != nil {
 				return err
@@ -92,7 +93,7 @@ func updateSections(xog, aux *etree.Document, file common.DriverFile) error {
 	}
 
 	for _, section := range file.Sections {
-		if section.Action == common.ACTION_INSERT {
+		if section.Action == constant.ACTION_INSERT {
 			err := processSectionByType(section, sourceView, targetView)
 			if err != nil {
 				return err
@@ -101,7 +102,7 @@ func updateSections(xog, aux *etree.Document, file common.DriverFile) error {
 	}
 
 	for _, section := range file.Sections {
-		if section.Action != common.ACTION_REMOVE && section.Action != common.ACTION_REPLACE && section.Action != common.ACTION_INSERT && section.Action != common.ACTION_UPDATE {
+		if section.Action != constant.ACTION_REMOVE && section.Action != constant.ACTION_REPLACE && section.Action != constant.ACTION_INSERT && section.Action != constant.ACTION_UPDATE {
 			return errors.New("invalid action attribute (" + section.Action + ") on tag <section>")
 		}
 	}
@@ -115,9 +116,9 @@ func updateSections(xog, aux *etree.Document, file common.DriverFile) error {
 	return nil
 }
 
-func processSectionByType(section common.Section, sourceView, targetView *etree.Element) error {
+func processSectionByType(section model.Section, sourceView, targetView *etree.Element) error {
 	var sourceSection *etree.Element
-	if section.Action != common.ACTION_REMOVE {
+	if section.Action != constant.ACTION_REMOVE {
 		if section.SourcePosition == "" {
 			return errors.New("attribute sourcePosition from tag <section> is not defined")
 		}
@@ -137,20 +138,20 @@ func processSectionByType(section common.Section, sourceView, targetView *etree.
 	}
 
 	switch section.Action {
-	case common.ACTION_REPLACE:
+	case constant.ACTION_REPLACE:
 		if section.TargetPosition == "" {
 			return errors.New("cannot replace section because attribute targetPosition from tag <section> is not defined")
 		}
 		targetView.InsertChild(targetSection, sourceSection)
 		targetView.RemoveChild(targetSection)
-	case common.ACTION_REMOVE:
+	case constant.ACTION_REMOVE:
 		if section.TargetPosition == "" {
 			return errors.New("cannot remove section because attribute targetPosition from tag <section> is not defined")
 		}
 		targetView.RemoveChild(targetSection)
-	case common.ACTION_INSERT:
+	case constant.ACTION_INSERT:
 		targetView.InsertChild(targetSection, sourceSection)
-	case common.ACTION_UPDATE:
+	case constant.ACTION_UPDATE:
 		if len(section.Fields) == 0 {
 			return errors.New("cannot update section because there is no tag <field> defined")
 		}
@@ -192,13 +193,13 @@ func processSectionByType(section common.Section, sourceView, targetView *etree.
 				}
 			}
 			switch f.Column {
-			case common.COLUMN_LEFT:
+			case constant.COLUMN_LEFT:
 				if f.InsertBefore == "" {
 					columnLeft.AddChild(attributeElement)
 				} else {
 					columnLeft.InsertChild(targetAttribute, attributeElement)
 				}
-			case common.COLUMN_RIGHT:
+			case constant.COLUMN_RIGHT:
 				if f.InsertBefore == "" {
 					columnRight.AddChild(attributeElement)
 				} else {
@@ -222,7 +223,7 @@ func validateCodeAndRemoveElementsFromParent(xog *etree.Document, path, code str
 	}
 }
 
-func updatePropertySet(xog, aux *etree.Document, file common.DriverFile) {
+func updatePropertySet(xog, aux *etree.Document, file *model.DriverFile) {
 	sourcePropertySetView := xog.FindElement("//propertySet/update/view[@code='" + file.Code + "']")
 	if sourcePropertySetView != nil {
 		auxPropertySetView := aux.FindElement("//propertySet/update/view[@code='" + file.Code + "']")

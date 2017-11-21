@@ -1,7 +1,8 @@
 package migration
 
 import (
-	"github.com/andreluzz/cas-xog/common"
+	"github.com/andreluzz/cas-xog/constant"
+	"github.com/andreluzz/cas-xog/model"
 	"github.com/beevik/etree"
 	"github.com/tealeg/xlsx"
 	"testing"
@@ -10,55 +11,55 @@ import (
 var packageMockFolder string
 
 func init() {
-	packageMockFolder = "../" + common.FOLDER_MOCK + "migration/"
+	packageMockFolder = "../" + constant.FOLDER_MOCK + "migration/"
 }
 
 func TestReadDataFromExcelToReturnErrorExcelStartRow(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		ExcelStartRow: "A",
 	}
-	_, err := ReadDataFromExcel(file)
+	_, err := ReadDataFromExcel(&file)
 	if err == nil {
 		t.Errorf("Error reading data from excel to XOG file. Debug: not validating if ExcelStartRow is a number")
 	}
 }
 
 func TestReadDataFromExcelToReturnErrorTemplateExists(t *testing.T) {
-	file := common.DriverFile{}
-	_, err := ReadDataFromExcel(file)
+	file := model.DriverFile{}
+	_, err := ReadDataFromExcel(&file)
 	if err == nil {
 		t.Errorf("Error reading data from excel to XOG file. Debug: not validating if Template exists")
 	}
 }
 
 func TestReadDataFromExcelToReturnErrorInstanceElementExists(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Template:    packageMockFolder + "template.xml",
 		InstanceTag: "WrongInstance",
 	}
-	_, err := ReadDataFromExcel(file)
+	_, err := ReadDataFromExcel(&file)
 	if err == nil {
 		t.Errorf("Error reading data from excel to XOG file. Debug: not validating if Instance element exists")
 	}
 }
 
 func TestReadDataFromExcelToReturnErrorExcelFileExists(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Template: packageMockFolder + "template.xml",
 	}
-	_, err := ReadDataFromExcel(file)
+	_, err := ReadDataFromExcel(&file)
 	if err == nil {
 		t.Errorf("Error reading data from excel to XOG file. Debug: not validating if ExcelFile exists")
 	}
 }
 
 func TestReadDataFromExcelToReturnErrorMatchElementExists(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Template:      packageMockFolder + "template.xml",
 		ExcelFile:     packageMockFolder + "data.xlsx",
 		InstanceTag:   "instance",
 		ExcelStartRow: "1",
-		MatchExcel: []common.MatchExcel{
+		MatchExcel: []model.MatchExcel{
 			{
 				Col:           1,
 				XPath:         "invalid_xpath",
@@ -66,19 +67,19 @@ func TestReadDataFromExcelToReturnErrorMatchElementExists(t *testing.T) {
 			},
 		},
 	}
-	_, err := ReadDataFromExcel(file)
+	_, err := ReadDataFromExcel(&file)
 	if err == nil {
 		t.Errorf("Error reading data from excel to XOG file. Debug: not validating if Match Tag element exists")
 	}
 }
 
 func TestReadDataFromExcelToReturnXMLResult(t *testing.T) {
-	file := common.DriverFile{
+	file := model.DriverFile{
 		Template:      packageMockFolder + "template.xml",
 		ExcelFile:     packageMockFolder + "data.xlsx",
 		InstanceTag:   "instance",
 		ExcelStartRow: "1",
-		MatchExcel: []common.MatchExcel{
+		MatchExcel: []model.MatchExcel{
 			{
 				Col:           1,
 				AttributeName: "instanceCode",
@@ -108,7 +109,7 @@ func TestReadDataFromExcelToReturnXMLResult(t *testing.T) {
 		},
 	}
 
-	result, err := ReadDataFromExcel(file)
+	result, err := ReadDataFromExcel(&file)
 
 	if err != nil {
 		t.Fatalf("Error reading data from excel to XOG file. Debug: %s", err.Error())
@@ -127,11 +128,11 @@ func TestReadDataFromExcelToReturnXMLResult(t *testing.T) {
 }
 
 func TestExportInstancesToExcelToReturnErrorExcelPath(t *testing.T) {
-	file := common.DriverFile{
-		Type:          common.CUSTOM_OBJECT_INSTANCE,
+	file := model.DriverFile{
+		Type:          constant.CUSTOM_OBJECT_INSTANCE,
 		ExportToExcel: true,
 		InstanceTag:   "instance",
-		MatchExcel: []common.MatchExcel{
+		MatchExcel: []model.MatchExcel{
 			{
 				AttributeName: "instanceCode",
 			},
@@ -161,11 +162,11 @@ func TestExportInstancesToExcelToReturnErrorExcelPath(t *testing.T) {
 }
 
 func TestExportInstancesToExcelToReturnErrorXPath(t *testing.T) {
-	file := common.DriverFile{
-		Type:          common.CUSTOM_OBJECT_INSTANCE,
+	file := model.DriverFile{
+		Type:          constant.CUSTOM_OBJECT_INSTANCE,
 		ExportToExcel: true,
 		InstanceTag:   "instance",
-		MatchExcel: []common.MatchExcel{
+		MatchExcel: []model.MatchExcel{
 			{
 				XPath: "//WrongXPath",
 			},
@@ -182,12 +183,12 @@ func TestExportInstancesToExcelToReturnErrorXPath(t *testing.T) {
 }
 
 func TestExportInstancesToExcelToReturnExcelFile(t *testing.T) {
-	file := common.DriverFile{
-		Type:          common.CUSTOM_OBJECT_INSTANCE,
+	file := model.DriverFile{
+		Type:          constant.CUSTOM_OBJECT_INSTANCE,
 		ExportToExcel: true,
 		ExcelFile:     "instances.xlsx",
 		InstanceTag:   "instance",
-		MatchExcel: []common.MatchExcel{
+		MatchExcel: []model.MatchExcel{
 			{
 				AttributeName: "instanceCode",
 			},
@@ -210,7 +211,7 @@ func TestExportInstancesToExcelToReturnExcelFile(t *testing.T) {
 
 	result := etree.NewDocument()
 	result.ReadFromFile(packageMockFolder + "result.xml")
-	folder := "../" + common.FOLDER_READ + file.Type + "/"
+	folder := "../" + constant.FOLDER_READ + file.Type + "/"
 	err := ExportInstancesToExcel(result, file, folder)
 	if err != nil {
 		t.Fatalf("Error exporting instances to excel file. Debug: %s", err.Error())

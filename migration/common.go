@@ -2,14 +2,15 @@ package migration
 
 import (
 	"errors"
-	"github.com/andreluzz/cas-xog/common"
+	"github.com/andreluzz/cas-xog/model"
+	"github.com/andreluzz/cas-xog/util"
 	"github.com/beevik/etree"
 	"github.com/tealeg/xlsx"
 	"strconv"
 	"strings"
 )
 
-func ReadDataFromExcel(file common.DriverFile) (*etree.Document, error) {
+func ReadDataFromExcel(file *model.DriverFile) (*etree.Document, error) {
 
 	err := errors.New("")
 	err = nil
@@ -88,7 +89,7 @@ func ReadDataFromExcel(file common.DriverFile) (*etree.Document, error) {
 	return xog, nil
 }
 
-func ExportInstancesToExcel(xog *etree.Document, file common.DriverFile, folder string) error {
+func ExportInstancesToExcel(xog *etree.Document, file model.DriverFile, folder string) error {
 	xlsxFile := xlsx.NewFile()
 	sheet, _ := xlsxFile.AddSheet("Instances")
 
@@ -131,7 +132,7 @@ func ExportInstancesToExcel(xog *etree.Document, file common.DriverFile, folder 
 		}
 	}
 
-	common.ValidateFolder(folder)
+	util.ValidateFolder(folder)
 	err := xlsxFile.Save(folder + file.ExcelFile)
 	if err != nil {
 		return errors.New("migration - ExportInstancesToExcel saving excel error. Debug: " + err.Error())

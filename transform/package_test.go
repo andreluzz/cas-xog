@@ -1,23 +1,20 @@
 package transform
 
 import (
-	"github.com/andreluzz/cas-xog/common"
+	"github.com/andreluzz/cas-xog/constant"
+	"github.com/andreluzz/cas-xog/model"
 	"github.com/beevik/etree"
 	"strings"
 	"testing"
 )
 
-func init() {
-
-}
-
 func TestProcessPackageToReplaceTargetPartitionModel(t *testing.T) {
-	file := common.DriverFile{
-		Type: common.OBJECT,
+	file := model.DriverFile{
+		Type: constant.OBJECT,
 		Path: "package_change_partition.xml",
 	}
 
-	def := []common.Definition{
+	def := []model.Definition{
 		{
 			Action:  "targetPartitionModel",
 			Default: "PartitionModel1",
@@ -25,7 +22,7 @@ func TestProcessPackageToReplaceTargetPartitionModel(t *testing.T) {
 		},
 	}
 
-	folder := "../" + common.FOLDER_WRITE + file.Type
+	folder := "../" + constant.FOLDER_WRITE + file.Type
 	err := ProcessPackageFile(file, packageMockFolder, folder, def)
 
 	if err != nil {
@@ -39,7 +36,7 @@ func TestProcessPackageToReplaceTargetPartitionModel(t *testing.T) {
 	}
 
 	element := result.FindElement("//object[@partitionModelCode]")
-	partitionModelCodeValue := element.SelectAttrValue("partitionModelCode", common.UNDEFINED)
+	partitionModelCodeValue := element.SelectAttrValue("partitionModelCode", constant.UNDEFINED)
 
 	if partitionModelCodeValue != def[0].Value {
 		t.Errorf("Error processing package file. Expected %s got %s partitionModelCode.", def[0].Value, partitionModelCodeValue)
@@ -47,12 +44,12 @@ func TestProcessPackageToReplaceTargetPartitionModel(t *testing.T) {
 }
 
 func TestProcessPackageToDiscardObjectWithoutPartitionModel(t *testing.T) {
-	file := common.DriverFile{
-		Type: common.OBJECT,
+	file := model.DriverFile{
+		Type: constant.OBJECT,
 		Path: "package_object_with_no_partition_model.xml",
 	}
 
-	def := []common.Definition{
+	def := []model.Definition{
 		{
 			Action:  "targetPartitionModel",
 			Default: "PartitionModel1",
@@ -60,7 +57,7 @@ func TestProcessPackageToDiscardObjectWithoutPartitionModel(t *testing.T) {
 		},
 	}
 
-	folder := "../" + common.FOLDER_WRITE + file.Type
+	folder := "../" + constant.FOLDER_WRITE + file.Type
 	err := ProcessPackageFile(file, packageMockFolder, folder, def)
 
 	if err != nil {
@@ -80,12 +77,12 @@ func TestProcessPackageToDiscardObjectWithoutPartitionModel(t *testing.T) {
 }
 
 func TestProcessPackageToReplaceTargetPartition(t *testing.T) {
-	file := common.DriverFile{
-		Type: common.OBJECT,
+	file := model.DriverFile{
+		Type: constant.OBJECT,
 		Path: "package_change_partition.xml",
 	}
 
-	def := []common.Definition{
+	def := []model.Definition{
 		{
 			Action:  "targetPartition",
 			Default: "partition20",
@@ -98,7 +95,7 @@ func TestProcessPackageToReplaceTargetPartition(t *testing.T) {
 		},
 	}
 
-	folder := "../" + common.FOLDER_WRITE + file.Type
+	folder := "../" + constant.FOLDER_WRITE + file.Type
 	err := ProcessPackageFile(file, packageMockFolder, folder, def)
 
 	if err != nil {
@@ -119,12 +116,12 @@ func TestProcessPackageToReplaceTargetPartition(t *testing.T) {
 
 func TestProcessPackageToProcessDefinitionReplaceString(t *testing.T) {
 
-	file := common.DriverFile{
-		Type: common.PROCESS,
+	file := model.DriverFile{
+		Type: constant.PROCESS,
 		Path: "package_replace_string.xml",
 	}
 
-	def := []common.Definition{
+	def := []model.Definition{
 		{
 			Action:  "replaceString",
 			From:    "Test cas-xog 002",
@@ -154,7 +151,7 @@ func TestProcessPackageToProcessDefinitionReplaceString(t *testing.T) {
 		},
 	}
 
-	folder := "../" + common.FOLDER_WRITE + file.Type
+	folder := "../" + constant.FOLDER_WRITE + file.Type
 	err := ProcessPackageFile(file, packageMockFolder, folder, def)
 
 	if err != nil {
@@ -176,7 +173,7 @@ func TestProcessPackageToProcessDefinitionReplaceString(t *testing.T) {
 
 func TestProcessPackageToReturnErrorFileIsNil(t *testing.T) {
 
-	err := ProcessPackageFile(common.DriverFile{}, "", "", nil)
+	err := ProcessPackageFile(model.DriverFile{}, "", "", nil)
 
 	if err == nil {
 		t.Errorf("Error processing package file. Debug: not validating if driver file is null")
