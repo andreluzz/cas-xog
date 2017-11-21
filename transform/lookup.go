@@ -23,4 +23,11 @@ func specificLookupTransformations(xog *etree.Document, file *model.DriverFile) 
 			}
 		}
 	}
+
+	if file.NSQL != "" {
+		nsqlElement := xog.FindElement("//nsql")
+		if nsqlElement != nil {
+			nsqlElement.SetText(file.NSQL)
+		}
+	}
 }

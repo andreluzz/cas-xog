@@ -190,6 +190,31 @@ Used to read and transform only the selected fields from the section. Only secti
 </xogdriver>
 ```
 
+### Sub tag `nsql`
+Used to replace the nsql query inside an dynamic lookup.
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+	<lookup code="LOOKUP_CAS_XOG_1" path="LOOKUP_CAS_XOG_1.xml" targetPartition="NIKU.ROOT">
+		<nsql>
+            SELECT @SELECT:RESOURCES.ID:ID@,
+            @SELECT:RESOURCES.LAST_NAME:LAST_NAME@,
+            @SELECT:RESOURCES.FIRST_NAME:FIRST_NAME@,
+            @SELECT:RESOURCES.FULL_NAME:FULL_NAME@,
+            @SELECT:RESOURCES.UNIQUE_NAME:UNIQUE_NAME@,
+            @SELECT:RESOURCES.UNIQUE_NAME:UNIQUE_CODE@
+            FROM SRM_RESOURCES RESOURCES
+            WHERE @FILTER@
+            AND @WHERE:SECURITY:RESOURCE:RESOURCES.ID@
+            @BROWSE-ONLY:
+            AND RESOURCES.IS_ACTIVE = 1
+            :BROWSE-ONLY@
+		</nsql>
+	</lookup>
+</xogdriver>
+```
+
 ## Tag `portlet`
 
 | Attribute | Description | Required |
@@ -313,7 +338,7 @@ Used to read only the selected links inside a section tag from the menu.
 </xogdriver>
 ```
 
-## Tag`customObjectInstance`
+## Tag `customObjectInstance`
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |

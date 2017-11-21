@@ -81,6 +81,7 @@ type DriverFile struct {
 	ExcelStartRow     string        `xml:"startRow,attr"`
 	InstanceTag       string        `xml:"instance,attr"`
 	ExportToExcel     bool          `xml:"exportToExcel,attr"`
+	NSQL			  string		`xml:"nsql"`
 	Sections          []Section     `xml:"section"`
 	Elements          []Element     `xml:"element"`
 	Replace           []FileReplace `xml:"replace"`
@@ -318,5 +319,5 @@ type DriverTypesPattern struct {
 	OtherInvestmentInstances  []DriverFile `xml:"otherInvestmentInstance"`
 	ProductInstances          []DriverFile `xml:"productInstance"`
 	ServiceInstances          []DriverFile `xml:"serviceInstance"`
-	Migrations                []DriverFile `xml:"migrate"`
+	Migrations                []DriverFile `xml:"migration"`
 }

@@ -87,3 +87,23 @@ func TestExecuteToReturnDynamicLookupPartitionsTransformed(t *testing.T) {
 		t.Errorf("Error transforming static lookup XOG file. Invalid result XML.")
 	}
 }
+
+func TestExecuteToReturnDynamicLookupReplacedNSQL(t *testing.T) {
+	file := model.DriverFile{
+		Code: "LOOKUP_CAS_XOG",
+		Type: constant.LOOKUP,
+		NSQL: "select * from inv_investments",
+	}
+
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "lookup_dynamic_full_xog.xml")
+	err := Execute(xog, nil, &file)
+
+	if err != nil {
+		t.Fatalf("Error transforming static lookup XOG file. Debug: %s", err.Error())
+	}
+
+	if readMockResultAndCompare(xog, "lookup_dynamic_replace_nsql_result.xml") == false {
+		t.Errorf("Error transforming static lookup XOG file. Invalid result XML.")
+	}
+}
