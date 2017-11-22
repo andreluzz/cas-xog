@@ -122,19 +122,20 @@ func IncludeCDATA(xogString string, iniTagRegexpStr string, endTagRegexpStr stri
 		index := iniIndex[i][1] + shiftIndex
 		xogString = xogString[:index] + "<![CDATA[" + xogString[index:]
 
-		sqlString := xogString[index:endIndex[i][1]]
+		shiftIndex += 9
+		eIndex := endIndex[i][0] + shiftIndex
+		sqlString := xogString[index:eIndex]
 
 		paramRegexp, _ := regexp.Compile(`<(.*):param(.*)/>`)
 		paramIndex := paramRegexp.FindStringIndex(sqlString)
 
-		shiftIndex += 9
-
-		eIndex := endIndex[i][0] + shiftIndex
 		if len(paramIndex) > 0 {
-			eIndex = endIndex[i][0] + 12 - (len(sqlString) - paramIndex[0])
+			sqlString = sqlString[:paramIndex[0]] + "]]>" + sqlString[paramIndex[0]:]
+		} else {
+			sqlString = sqlString + "]]>"
 		}
 
-		xogString = xogString[:eIndex] + "]]>" + xogString[eIndex:]
+		xogString = xogString[:index] + sqlString + xogString[eIndex:]
 
 		shiftIndex += 3
 	}
