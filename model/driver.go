@@ -86,6 +86,7 @@ type DriverFile struct {
 	Elements          []Element     `xml:"element"`
 	Replace           []FileReplace `xml:"replace"`
 	MatchExcel        []MatchExcel  `xml:"match"`
+	ExecutionOrder 	  int
 	xogXML            string
 	auxXML            string
 }
@@ -170,6 +171,64 @@ func (d *DriverFile) TagCDATA() (string, string) {
 		return `<nsql(.*)>`, `</nsql>`
 	}
 	return "", ""
+}
+
+func (d *DriverFile) GetXMLType() string {
+	switch d.Type {
+	case "Files":
+		return "file"
+	case "Objects":
+		return "object"
+	case "Views":
+		return "view"
+	case "Processes":
+		return "process"
+	case "Lookups":
+		return "lookup"
+	case "Portlets":
+		return "portlet"
+	case "Queries":
+		return "query"
+	case "Pages":
+		return "page"
+	case "Menus":
+		return "menu"
+	case "Obs":
+		return "obs"
+	case "Groups":
+		return "group"
+	case "CustomObjectInstances":
+		return "customObjectInstance"
+	case "ResourceClassInstances":
+		return "resourceClassInstance"
+	case "WipClassInstances":
+		return "wipClassInstance"
+	case "InvestmentClassInstances":
+		return "investmentClassInstance"
+	case "TransactionClassInstances":
+		return "transactionClassInstance"
+	case "ResourceInstances":
+		return "resourceInstance"
+	case "UserInstances":
+		return "userInstance"
+	case "ProjectInstances":
+		return "projectInstance"
+	case "IdeaInstances":
+		return "ideaInstance"
+	case "ApplicationInstances":
+		return "applicationInstance"
+	case "AssetInstances":
+		return "assetInstance"
+	case "OtherInvestmentInstances":
+		return "otherInvestmentInstance"
+	case "ProductInstances":
+		return "productInstance"
+	case "ServiceInstances":
+		return "serviceInstance"
+	case "Migrations":
+		return "migration"
+	}
+	return constant.UNDEFINED
 }
 
 func getAuxDriverFile(d *DriverFile) *DriverFile {
@@ -291,6 +350,11 @@ func (d *Driver) Clear() {
 	d.FilePath = ""
 	d.Info = nil
 }
+
+type ByExecutionOrder []DriverFile
+func (d ByExecutionOrder) Len() int           { return len(d) }
+func (d ByExecutionOrder) Swap(i, j int)      { d[i], d[j] = d[j], d[i] }
+func (d ByExecutionOrder) Less(i, j int) bool { return d[i].ExecutionOrder < d[j].ExecutionOrder }
 
 type DriverTypesPattern struct {
 	Version                   string       `xml:"version,attr"`
