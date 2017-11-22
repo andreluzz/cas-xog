@@ -53,4 +53,7 @@ const (
 
 	COLUMN_LEFT  = "left"
 	COLUMN_RIGHT = "right"
+
+	INPUT_SOURCE = "source"
+	INPUT_TARGET = "target"
 )

@@ -24,25 +24,56 @@ type EnvType struct {
 	Copy     bool
 }
 
-func (e *EnvType) init(envIndex string) error {
+func (e *EnvType) init(envIndex string, username string, password string) (error, bool) {
+	noLogin := false
 	envElement := envXml.FindElement("//env[" + envIndex + "]").Copy()
 	if envElement == nil {
-		return errors.New("trying to initiate an invalid environment")
+		return errors.New("trying to initiate an invalid environment"), noLogin
 	}
 
 	e.Name = envElement.SelectAttrValue("name", "Environment name not defined")
-	e.Username = envElement.FindElement("//username").Text()
-	e.Password = envElement.FindElement("//password").Text()
+
+	envElemUsername := envElement.FindElement("//username")
+	if envElemUsername != nil {
+		e.Username = envElemUsername.Text()
+	}
+
+	envElemPassword := envElement.FindElement("//password")
+	if envElemPassword != nil {
+		e.Password = envElemPassword.Text()
+	}
+
+	if envElemUsername == nil || envElemPassword == nil {
+		if username == "" || password == "" {
+			noLogin = true
+			return nil, noLogin
+		} else {
+			requestLoginElement := docXogReadXML.FindElement("//xogtype[@type='requestLogin']").Copy()
+
+			reqLogElemUsername := requestLoginElement.FindElement("//username")
+			reqLogElemPassword := requestLoginElement.FindElement("//password")
+
+			reqLogElemUsername.SetText(username)
+			reqLogElemPassword.SetText(password)
+
+			envXml.FindElement("//env[" + envIndex + "]").AddChild(reqLogElemUsername)
+			envXml.FindElement("//env[" + envIndex + "]").AddChild(reqLogElemPassword)
+
+			e.Username = username
+			e.Password = password
+		}
+	}
+
 	e.URL = envElement.FindElement("//endpoint").Text()
 
 	session, err := login(e)
 	if err != nil {
-		return err
+		return err, noLogin
 	}
 	e.Session = session
 	e.Copy = false
 
-	return nil
+	return nil, noLogin
 }
 
 func (e *EnvType) logout() error {
@@ -89,14 +120,14 @@ type Environments struct {
 	Available []*etree.Element
 }
 
-func (e *Environments) InitSource(index string) error {
+func (e *Environments) InitSource(index string, username string, password string) (error, bool) {
 	e.Source = new(EnvType)
-	return e.Source.init(index)
+	return e.Source.init(index, username, password)
 }
 
-func (e *Environments) InitTarget(index string) error {
+func (e *Environments) InitTarget(index string, username string, password string) (error, bool) {
 	e.Target = new(EnvType)
-	return e.Target.init(index)
+	return e.Target.init(index, username, password)
 }
 
 func (e *Environments) CopyTargetFromSource() {
