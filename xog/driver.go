@@ -14,6 +14,8 @@ import (
 	"io/ioutil"
 	"reflect"
 	"strconv"
+	"sort"
+	"strings"
 )
 
 var driverXOG *model.Driver
@@ -45,10 +47,29 @@ func LoadDriver(path string) (int, error) {
 		if t.Kind() == reflect.Slice {
 			for _, f := range t.Interface().([]model.DriverFile) {
 				f.Type = typeOfT.Field(i).Name
+				f.ExecutionOrder = -1
 				driverXOG.Files = append(driverXOG.Files, f)
 			}
 		}
 	}
+
+	doc := etree.NewDocument()
+	doc.ReadFromBytes(xmlFile)
+
+	for i, e := range doc.FindElements("//xogdriver/*") {
+		tag := e.Tag
+		path := e.SelectAttrValue("path", constant.UNDEFINED)
+		code := e.SelectAttrValue("code", constant.UNDEFINED)
+		for y, f := range driverXOG.Files {
+			if f.ExecutionOrder == -1 && (strings.ToLower(f.GetXMLType()) == strings.ToLower(tag)) && (f.Path == path) && (f.Code == code) {
+				driverXOG.Files[y].ExecutionOrder = i
+				break
+			}
+		}
+	}
+
+	sort.Sort(model.ByExecutionOrder(driverXOG.Files))
+
 	driverXOG.Version = driverXOGTypePattern.Version
 	driverXOG.FilePath = path
 
