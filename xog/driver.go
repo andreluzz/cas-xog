@@ -13,8 +13,8 @@ import (
 	"github.com/beevik/etree"
 	"io/ioutil"
 	"reflect"
-	"strconv"
 	"sort"
+	"strconv"
 	"strings"
 )
 
@@ -81,14 +81,17 @@ func GetLoadedDriver() *model.Driver {
 }
 
 func ValidateLoadedDriver() bool {
-	return driverXOG != nil && len(driverXOG.Files) > 0
+	if driverXOG == nil {
+		return false
+	}
+	return len(driverXOG.Files) > 0
 }
 
 func GetDriversList(folder string) ([]model.Driver, error) {
-	driversFileList, _ := ioutil.ReadDir(folder)
+	driversFileList, err := ioutil.ReadDir(folder)
 
-	if len(driversFileList) == 0 {
-		return nil, errors.New("\n[CAS-XOG][red[ERROR]] - XogDriver folders or file not found! Press enter key to exit...\n")
+	if err != nil || len(driversFileList) == 0 {
+		return nil, errors.New("driver folder not found or empty")
 	}
 
 	var driversList []model.Driver
@@ -137,7 +140,11 @@ func ProcessDriverFile(file *model.DriverFile, action string, environments *mode
 		return output
 	}
 	if action == constant.WRITE {
-		includeCDATA(file)
+		iniTagRegexpStr, endTagRegexpStr := file.TagCDATA()
+		if iniTagRegexpStr != "" && endTagRegexpStr != "" {
+			transformedString := transform.IncludeCDATA(file.GetXML(), iniTagRegexpStr, endTagRegexpStr)
+			file.SetXML(transformedString)
+		}
 	}
 	err = file.RunXML(action, sourceFolder, environments)
 	if err != nil {
@@ -173,19 +180,15 @@ func ProcessDriverFile(file *model.DriverFile, action string, environments *mode
 			output.Debug = err.Error()
 			return output
 		}
-		includeCDATA(file)
+		iniTagRegexpStr, endTagRegexpStr := file.TagCDATA()
+		if iniTagRegexpStr != "" && endTagRegexpStr != "" {
+			transformedString := transform.IncludeCDATA(file.GetXML(), iniTagRegexpStr, endTagRegexpStr)
+			file.SetXML(transformedString)
+		}
 	}
 
 	file.Write(outputFolder)
 	return output
-}
-
-func includeCDATA(file *model.DriverFile) {
-	iniTagRegexpStr, endTagRegexpStr := file.TagCDATA()
-	if iniTagRegexpStr != "" && endTagRegexpStr != "" {
-		transformedString := transform.IncludeCDATA(file.GetXML(), iniTagRegexpStr, endTagRegexpStr)
-		file.SetXML(transformedString)
-	}
 }
 
 func createFileFolder(action, fileType string) (string, string) {

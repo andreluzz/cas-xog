@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <file code="cas_fin_lkp_status_fila_trs" path="cas_fin_lkp_status_fila_trs.xml" type="lookups"/>
+    <file code="cas_fin_obj_fila_trs" path="cas_fin_obj_fila_trs.xml" type="objects" />
+    <file code="cas_fin_lkp_lista_filas_exec" path="cas_fin_lkp_lista_filas_exec.xml" type="lookups" />
+    <file code="cas_fin_lkp_list_team_proj" path="cas_fin_lkp_list_team_proj.xml" type="lookups" />
+    <file code="cas_fin_lkp_list_taks_proj" path="cas_fin_lkp_list_taks_proj.xml" type="lookups" />
+    <file code="cas_fin_lkp_status_transacao" path="cas_fin_lkp_status_transacao.xml" type="lookups" />
+    <file code="project" path="project.xml" type="objects" targetPartition="NIKU.ROOT">
+        <include type="attribute" code="cas_fins_upd_transac" />
+        <include type="attribute" code="cas_fins_conc_tarefa" />
+        <include type="attribute" code="cas_fin_data_bck_ept" />
+        <include type="attribute" code="cas_fins_auto_dt_upd" />
+        <include type="attribute" code="cas_fins_auto_regist" />
+    </file>
+    <file code="task" path="task.xml" type="objects" targetPartition="NIKU.ROOT">
+        <include type="attribute" code="cas_fin_peso" />
+        <include type="attribute" code="cas_fin_trans_entry" />
+        <include type="attribute" code="cas_fin_pctcomplete" />
+    </file>
+    <file code="cas_fin_lkp_niveis_curva_s_fisica" path="cas_fin_lkp_niveis_curva_s_fisica.xml" type="lookups" />
+    <file code="assignment" path="assignment.xml" type="objects" targetPartition="NIKU.ROOT">
+        <include type="attribute" code="cas_fin_backup_ept" />
+    </file>
+    <file code="cas_fin_obj_trans" path="cas_fin_obj_trans.xml" type="objects" />
+    <file code="*" path="cas_fin_obj_fila_trs.xml" type="views" objectCode="cas_fin_obj_fila_trs" />
+    <file code="*" path="cas_fin_obj_trans.xml" type="views" objectCode="cas_fin_obj_trans" />
+    <file code="cas_fin_qry_curva_s_financeira" path="cas_fin_qry_curva_s_financeira.xml" type="queries" />
+    <file code="cas_fin_prt_curva_s_financeira" path="cas_fin_prt_curva_s_financeira.xml" type="portlets" />
+    <file code="cas_fin_prc_config_trans" path="cas_fin_prc_config_trans.xml" type="processes" />
+    <file code="cas_fin_prc_fila_trans_aguarda" path="cas_fin_prc_fila_trans_aguarda.xml" type="processes" />
+    <file code="cas_fin_prc_cria_trans_cronog" path="cas_fin_prc_cria_trans_cronog.xml" type="processes" />
+    <file code="cas_fin_prc_custo_matriz" path="cas_fin_prc_custo_matriz.xml" type="processes" />
+    <file code="cas_fin_prc_processa_fila" path="cas_fin_prc_processa_fila.xml" type="processes" />
+    <file code="cas_fin_prc_registra_transacao" path="cas_fin_prc_registra_transacao.xml" type="processes" />
+    <file code="cas_fin_obj_trans" path="cas_fin_obj_trans.xml" type="objects" ignoreReading="true" />
+    <file code="cas_fin_lkp_lista_filas_exec" path="cas_fin_lkp_lista_filas_exec.xml" type="lookups" />
+    <file code="cas_fin_lkp_niveis_curva_s_fisica" path="cas_fin_lkp_niveis_curva_s_fisica.xml" type="lookups" />
+    <file code="cas_fin_lkp_list_team_proj" path="cas_fin_lkp_list_team_proj.xml" type="lookups" />
+    <file code="cas_fin_lkp_list_taks_proj" path="cas_fin_lkp_list_taks_proj.xml" type="lookups" />
+    <file code="cas_fin_obj_trans" path="cas_fin_obj_trans.xml" type="objects" ignoreReading="true" />
+</xogdriver>

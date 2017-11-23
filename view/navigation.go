@@ -29,10 +29,7 @@ func Home() {
 	environments = new(model.Environments)
 	model.LoadEnvironmentsList("xogEnv.xml", environments)
 
-	err := xog.LoadPackages()
-	if err != nil {
-		log.Info("\n[CAS-XOG][red[ERROR]] Packages: %s", err.Error())
-	}
+	xog.LoadPackages(constant.FOLDER_PACKAGE, "packages/")
 
 	Drivers()
 }

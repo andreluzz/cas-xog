@@ -2,7 +2,6 @@ package xog
 
 import (
 	"encoding/xml"
-	"errors"
 	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/model"
 	"github.com/andreluzz/cas-xog/transform"
@@ -15,56 +14,43 @@ import (
 	"strings"
 )
 
-var packagesDriversFileInfo []model.Driver
 var availablePackages []model.Package
+var packagesDriversFileInfo []model.Driver
 
-func LoadPackages() error {
-	err := unzipPackages()
-	if err != nil {
-		return err
-	}
+func LoadPackages(systemPackageFolder, userPackageFolder string) {
+	availablePackages = nil
+	packagesDriversFileInfo = nil
+	unzipPackages(systemPackageFolder, userPackageFolder)
 
-	_, dirErr := os.Stat(constant.FOLDER_PACKAGE)
+	_, dirErr := os.Stat(systemPackageFolder)
 	if os.IsNotExist(dirErr) {
-		return nil
+		return
 	}
 
-	err = loadAvailablePackages()
-	if err != nil {
-		return err
-	}
-	return nil
+	loadAvailablePackages(systemPackageFolder)
 }
 
-func unzipPackages() error {
-	userPackagesFolder := "packages/"
-	packagesFiles, _ := ioutil.ReadDir(userPackagesFolder)
+func unzipPackages(systemPackageFolder, userPackageFolder string) {
+	os.RemoveAll(systemPackageFolder)
+
+	packagesFiles, _ := ioutil.ReadDir(userPackageFolder)
 	if len(packagesFiles) == 0 {
-		return nil
+		return
 	}
 
-	os.RemoveAll(constant.FOLDER_PACKAGE)
-	os.MkdirAll(constant.FOLDER_PACKAGE, os.ModePerm)
+	os.MkdirAll(systemPackageFolder, os.ModePerm)
 
 	for _, f := range packagesFiles {
-		_, err := util.Unzip(userPackagesFolder+f.Name(), constant.FOLDER_PACKAGE)
-		if err != nil {
-			return err
-		}
+		util.Unzip(userPackageFolder+f.Name(), systemPackageFolder)
 	}
-
-	return nil
 }
 
-func loadAvailablePackages() error {
+func loadAvailablePackages(folder string) {
 	availablePackages = nil
-	err := filepath.Walk("./_packages", func(path string, info os.FileInfo, err error) error {
+	packagesDriversFileInfo = nil
+	filepath.Walk(folder, func(path string, info os.FileInfo, err error) error {
 		if strings.Contains(path, ".package") {
-			xmlPackageFile, err := ioutil.ReadFile(path)
-			if err != nil {
-				return errors.New("Error loading package file: " + err.Error())
-			}
-			driverXOG = new(model.Driver)
+			xmlPackageFile, _ := ioutil.ReadFile(path)
 			pkg := new(model.Package)
 			xml.Unmarshal(xmlPackageFile, pkg)
 			availablePackages = append(availablePackages, *pkg)
@@ -77,22 +63,18 @@ func loadAvailablePackages() error {
 		}
 		return err
 	})
-
-	return err
-}
-
-func GetPackagesDriversFileInfoList() []model.Driver {
-	return packagesDriversFileInfo
 }
 
 func GetAvailablePackages() []model.Package {
 	return availablePackages
 }
 
-func ProcessPackageFile(file model.DriverFile, selectedPackage *model.Package, selectedVersion *model.Version) model.Output {
+func GetPackagesDriversFileInfoList() []model.Driver {
+	return packagesDriversFileInfo
+}
+
+func ProcessPackageFile(file model.DriverFile, selectedVersion *model.Version, packageFolder, writeFolder string) model.Output {
 	output := model.Output{Code: constant.OUTPUT_SUCCESS, Debug: ""}
-	packageFolder := constant.FOLDER_PACKAGE + selectedPackage.Folder + selectedVersion.Folder + "/" + file.Type + "/"
-	writeFolder := constant.FOLDER_WRITE + file.Type
 	err := transform.ProcessPackageFile(file, packageFolder, writeFolder, selectedVersion.Definitions)
 	if err != nil {
 		output.Code = constant.OUTPUT_ERROR
