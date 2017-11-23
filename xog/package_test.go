@@ -12,7 +12,7 @@ import (
 
 func TestLoadPackages(t *testing.T) {
 	folder := "../mock/xog/" + constant.FOLDER_PACKAGE
-	LoadPackages(folder, "../mock/xog/packages/")
+	LoadPackages(folder, "../mock/xog/mock_packages/")
 
 	packages := GetAvailablePackages()
 	if len(packages) == 0 {
@@ -42,7 +42,7 @@ func TestLoadPackagesInvalidUserPackageFolder(t *testing.T) {
 
 func TestLoadAvailablePackages(t *testing.T) {
 	folder := "../mock/xog/" + constant.FOLDER_PACKAGE
-	unzipPackages(folder, "../mock/xog/packages/")
+	unzipPackages(folder, "../mock/xog/mock_packages/")
 	loadAvailablePackages(folder)
 
 	packages := GetAvailablePackages()
@@ -63,7 +63,7 @@ func TestLoadAvailablePackages(t *testing.T) {
 
 func TestUnzipPackages(t *testing.T) {
 	folder := "../mock/xog/" + constant.FOLDER_PACKAGE
-	unzipPackages(folder, "../mock/xog/packages/")
+	unzipPackages(folder, "../mock/xog/mock_packages/")
 
 	total := 0
 	filepath.Walk(folder+"mock-pkg/", func(path string, file os.FileInfo, err error) error {
@@ -78,7 +78,7 @@ func TestUnzipPackages(t *testing.T) {
 
 func TestProcessPackageFile(t *testing.T) {
 	folder := "../mock/xog/" + constant.FOLDER_PACKAGE
-	LoadPackages(folder, "../mock/xog/packages/")
+	LoadPackages(folder, "../mock/xog/mock_packages/")
 
 	selectedPackage := GetAvailablePackages()[0]
 	driverPath := folder + selectedPackage.Folder + selectedPackage.DriverFileName
@@ -105,7 +105,7 @@ func TestInstallPackageFile(t *testing.T) {
 	model.LoadXMLReadList("../xogRead.xml")
 
 	folder := "../mock/xog/" + constant.FOLDER_PACKAGE
-	LoadPackages(folder, "../mock/xog/packages/")
+	LoadPackages(folder, "../mock/xog/mock_packages/")
 
 	selectedPackage := GetAvailablePackages()[0]
 	driverPath := folder + selectedPackage.Folder + selectedPackage.DriverFileName
