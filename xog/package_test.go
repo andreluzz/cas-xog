@@ -133,7 +133,7 @@ func TestInstallPackageFile(t *testing.T) {
 	}
 
 	soapMock := func(request, endpoint string) (string, error) {
-		file, _ := ioutil.ReadFile("../mock/xog/soap/soap_lookup_write_response.xml")
+		file, _ := ioutil.ReadFile("../mock/xog/soap/soap_success_write_response.xml")
 		return util.BytesToString(file), nil
 	}
 

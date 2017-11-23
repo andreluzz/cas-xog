@@ -105,9 +105,8 @@ func GetDriversList(folder string) ([]model.Driver, error) {
 	return append(driversList, GetPackagesDriversFileInfoList()...), nil
 }
 
-func ProcessDriverFile(file *model.DriverFile, action string, environments *model.Environments, soapFunc util.Soap) model.Output {
+func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolder string, environments *model.Environments, soapFunc util.Soap) model.Output {
 	output := model.Output{Code: constant.OUTPUT_SUCCESS, Debug: ""}
-	sourceFolder, outputFolder := createFileFolder(action, file.Type)
 	transformedString := ""
 
 	if action == constant.MIGRATE && file.Type != constant.MIGRATION {
@@ -191,7 +190,7 @@ func ProcessDriverFile(file *model.DriverFile, action string, environments *mode
 	return output
 }
 
-func createFileFolder(action, fileType string) (string, string) {
+func CreateFileFolder(action, fileType string) (string, string) {
 	sourceFolder := ""
 	outputFolder := ""
 	switch action {

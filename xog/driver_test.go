@@ -4,6 +4,9 @@ import (
 	"github.com/andreluzz/cas-xog/constant"
 	"os"
 	"testing"
+	"github.com/andreluzz/cas-xog/model"
+	"io/ioutil"
+	"github.com/andreluzz/cas-xog/util"
 )
 
 func TestValidateLoadedDriver(t *testing.T) {
@@ -46,7 +49,7 @@ func TestGetDriversListInvalidFolder(t *testing.T) {
 func TestCreateFileFolder(t *testing.T) {
 	fileType := constant.PROCESS
 
-	sourceFolder, outputFolder := createFileFolder(constant.READ, fileType)
+	sourceFolder, outputFolder := CreateFileFolder(constant.READ, fileType)
 
 	if sourceFolder != constant.FOLDER_READ {
 		t.Errorf("Error creating file folder, expected source folder %s and received %s", constant.FOLDER_READ, sourceFolder)
@@ -70,7 +73,7 @@ func TestCreateFileFolder(t *testing.T) {
 	os.RemoveAll(folder)
 	os.RemoveAll(outputFolder)
 
-	sourceFolder, outputFolder = createFileFolder(constant.WRITE, fileType)
+	sourceFolder, outputFolder = CreateFileFolder(constant.WRITE, fileType)
 
 	if sourceFolder != constant.FOLDER_WRITE {
 		t.Errorf("Error creating file folder, expected source folder %s and received %s", constant.FOLDER_READ, sourceFolder)
@@ -86,7 +89,7 @@ func TestCreateFileFolder(t *testing.T) {
 	os.RemoveAll(folder)
 	os.RemoveAll(outputFolder)
 
-	sourceFolder, outputFolder = createFileFolder(constant.MIGRATE, fileType)
+	sourceFolder, outputFolder = CreateFileFolder(constant.MIGRATE, fileType)
 
 	if sourceFolder != constant.FOLDER_WRITE {
 		t.Errorf("Error creating file folder, expected source folder %s and received %s", constant.FOLDER_READ, sourceFolder)
@@ -154,4 +157,40 @@ func TestLoadDriverInvalidPath(t *testing.T) {
 	if err == nil {
 		t.Errorf("Error loading driver. Not catching error with invalid file path")
 	}
+}
+
+func TestProcessDriverFile(t *testing.T) {
+	model.LoadXMLReadList("../xogRead.xml")
+
+	LoadDriver("../mock/xog/xog.driver")
+	file := GetLoadedDriver().Files[17]
+
+	mockEnvironments := &model.Environments{
+		Source: &model.EnvType{
+			Name: "Mock Source Env",
+			URL: "Mock URL",
+			Session: "Mock session",
+		},
+		Target: &model.EnvType{
+			Name: "Mock Source Env",
+			URL: "Mock URL",
+			Session: "Mock session",
+		},
+	}
+
+	soapMock := func(request, endpoint string) (string, error) {
+		file, _ := ioutil.ReadFile("../mock/xog/soap/soap_success_write_response.xml")
+		return util.BytesToString(file), nil
+	}
+
+	sourceFolder := "../mock/xog/soap/"
+	util.ValidateFolder(sourceFolder+file.Type)
+	outputFolder := constant.FOLDER_DEBUG
+	util.ValidateFolder(outputFolder+file.Type)
+
+	output := ProcessDriverFile(&file, constant.WRITE, sourceFolder, outputFolder, mockEnvironments, soapMock)
+	if output.Code != constant.OUTPUT_SUCCESS {
+		t.Errorf("Error installing package file. Debug: %s", output.Debug)
+	}
+
 }

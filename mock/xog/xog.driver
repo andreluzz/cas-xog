@@ -53,8 +53,8 @@
     <group code="ObjectAdmin" path="ObjectAdmin.xml">
         <element action="remove" xpath="/NikuDataBus/groups/group/members" />
     </group>
-    
-    <lookup code="CSK_RESOURCE_BROWSE" path="CSK_RESOURCE_BROWSE.xml" />
+
+    <lookup code="LOOKUP_CAS_XOG_1" path="lookup_cas_xog_1.xml" />
     <lookup code="LOOKUP_CAS_XOG" path="LOOKUP_CAS_XOG_PARTITION.xml" sourcePartition="NIKU.ROOT" targetPartition="partition10" />
     
     <object code="obj_sistema" path="sistema1.xml" targetPartition="NIKU.ROOT" />
