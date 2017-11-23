@@ -24,11 +24,10 @@ type EnvType struct {
 	Copy     bool
 }
 
-func (e *EnvType) init(envIndex string, username string, password string) (error, bool) {
-	noLogin := false
+func (e *EnvType) init(envIndex string) error {
 	envElement := envXml.FindElement("//env[" + envIndex + "]").Copy()
 	if envElement == nil {
-		return errors.New("trying to initiate an invalid environment"), noLogin
+		return errors.New("trying to initiate an invalid environment")
 	}
 
 	e.Name = envElement.SelectAttrValue("name", "Environment name not defined")
@@ -43,37 +42,20 @@ func (e *EnvType) init(envIndex string, username string, password string) (error
 		e.Password = envElemPassword.Text()
 	}
 
-	if envElemUsername == nil || envElemPassword == nil {
-		if username == "" || password == "" {
-			noLogin = true
-			return nil, noLogin
-		} else {
-			requestLoginElement := docXogReadXML.FindElement("//xogtype[@type='requestLogin']").Copy()
-
-			reqLogElemUsername := requestLoginElement.FindElement("//username")
-			reqLogElemPassword := requestLoginElement.FindElement("//password")
-
-			reqLogElemUsername.SetText(username)
-			reqLogElemPassword.SetText(password)
-
-			envXml.FindElement("//env[" + envIndex + "]").AddChild(reqLogElemUsername)
-			envXml.FindElement("//env[" + envIndex + "]").AddChild(reqLogElemPassword)
-
-			e.Username = username
-			e.Password = password
-		}
-	}
-
 	e.URL = envElement.FindElement("//endpoint").Text()
+
+	if envElemUsername == nil || envElemPassword == nil {
+		return nil
+	}
 
 	session, err := login(e)
 	if err != nil {
-		return err, noLogin
+		return err
 	}
 	e.Session = session
 	e.Copy = false
 
-	return nil, noLogin
+	return nil
 }
 
 func (e *EnvType) logout() error {
@@ -120,18 +102,39 @@ type Environments struct {
 	Available []*etree.Element
 }
 
-func (e *Environments) InitSource(index string, username string, password string) (error, bool) {
+func (e *Environments) InitSource(index string) error {
 	e.Source = new(EnvType)
-	return e.Source.init(index, username, password)
+	return e.Source.init(index)
 }
 
-func (e *Environments) InitTarget(index string, username string, password string) (error, bool) {
+func (e *Environments) InitTarget(index string) error {
 	e.Target = new(EnvType)
-	return e.Target.init(index, username, password)
+	return e.Target.init(index)
 }
 
 func (e *Environments) CopyTargetFromSource() {
 	e.Target = e.Source.copyEnv()
+}
+
+func (e *EnvType) Login(envIndex string) error {
+	var err error
+
+	requestLoginElement := docXogReadXML.FindElement("//xogtype[@type='requestLogin']").Copy()
+
+	reqLogElemUsername := requestLoginElement.FindElement("//username")
+	reqLogElemPassword := requestLoginElement.FindElement("//password")
+
+	reqLogElemUsername.SetText(e.Username)
+	reqLogElemPassword.SetText(e.Password)
+
+	envXml.FindElement("//env[" + envIndex + "]").AddChild(reqLogElemUsername)
+	envXml.FindElement("//env[" + envIndex + "]").AddChild(reqLogElemPassword)
+
+	e.Session, err = login(e)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (e *Environments) Logout() error {
