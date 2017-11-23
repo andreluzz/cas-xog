@@ -79,7 +79,7 @@ func InstallPackage(environments *model.Environments, selectedPackage *model.Pac
 
 	for i, f := range xog.GetLoadedDriver().Files {
 		log.Info("\n[CAS-XOG][blue[Installing]] %03d/%03d | file: %s %s", i+1, total, f.Path)
-		output := xog.InstallPackageFile(&f, environments)
+		output := xog.InstallPackageFile(&f, environments, util.SoapCall)
 		status, color := util.GetStatusColorFromOutput(output.Code)
 		log.Info("\r[CAS-XOG][%s[Install %s]] %03d/%03d | file: %s %s", color, status, i+1, total, f.Path, util.GetOutputDebug(output.Debug))
 		outputResults[output.Code] += 1

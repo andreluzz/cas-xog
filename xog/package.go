@@ -83,17 +83,12 @@ func ProcessPackageFile(file model.DriverFile, selectedVersion *model.Version, p
 	return output
 }
 
-func InstallPackageFile(file *model.DriverFile, environments *model.Environments) model.Output {
+func InstallPackageFile(file *model.DriverFile, environments *model.Environments, soapFunc util.Soap) model.Output {
 	output := model.Output{Code: constant.OUTPUT_SUCCESS, Debug: ""}
 
 	util.ValidateFolder(constant.FOLDER_DEBUG + file.Type)
 
-	err := file.InitXML(constant.WRITE, constant.FOLDER_WRITE)
-	if err != nil {
-		output.Code = constant.OUTPUT_ERROR
-		output.Debug = err.Error()
-		return output
-	}
+	file.InitXML(constant.WRITE, constant.FOLDER_WRITE)
 
 	iniTagRegexpStr, endTagRegexpStr := file.TagCDATA()
 	if iniTagRegexpStr != "" && endTagRegexpStr != "" {
@@ -101,7 +96,7 @@ func InstallPackageFile(file *model.DriverFile, environments *model.Environments
 		file.SetXML(responseString)
 	}
 
-	err = file.RunXML(constant.WRITE, constant.FOLDER_WRITE, environments)
+	err := file.RunXML(constant.WRITE, constant.FOLDER_WRITE, environments, soapFunc)
 	xogResponse := etree.NewDocument()
 	xogResponse.ReadFromString(file.GetXML())
 	output, err = validate.Check(xogResponse)

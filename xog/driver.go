@@ -105,7 +105,7 @@ func GetDriversList(folder string) ([]model.Driver, error) {
 	return append(driversList, GetPackagesDriversFileInfoList()...), nil
 }
 
-func ProcessDriverFile(file *model.DriverFile, action string, environments *model.Environments) model.Output {
+func ProcessDriverFile(file *model.DriverFile, action string, environments *model.Environments, soapFunc util.Soap) model.Output {
 	output := model.Output{Code: constant.OUTPUT_SUCCESS, Debug: ""}
 	sourceFolder, outputFolder := createFileFolder(action, file.Type)
 	transformedString := ""
@@ -146,7 +146,7 @@ func ProcessDriverFile(file *model.DriverFile, action string, environments *mode
 			file.SetXML(transformedString)
 		}
 	}
-	err = file.RunXML(action, sourceFolder, environments)
+	err = file.RunXML(action, sourceFolder, environments, soapFunc)
 	if err != nil {
 		output.Code = constant.OUTPUT_ERROR
 		output.Debug = err.Error()

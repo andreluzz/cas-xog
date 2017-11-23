@@ -39,7 +39,7 @@ func ProcessDriverFiles(driver *model.Driver, action string, environments *model
 
 	for i, f := range driver.Files {
 		log.Info("\n[CAS-XOG][blue[Processing]] %03d/%03d | file: %s", i+1, total, f.Path)
-		output := xog.ProcessDriverFile(&f, action, environments)
+		output := xog.ProcessDriverFile(&f, action, environments, util.SoapCall)
 		status, color := util.GetStatusColorFromOutput(output.Code)
 		log.Info("\r[CAS-XOG][%s[%s %s]] %03d/%03d | file: %s %s", color, util.GetActionLabel(action), status, i+1, total, f.Path, util.GetOutputDebug(output.Debug))
 		outputResults[output.Code] += 1

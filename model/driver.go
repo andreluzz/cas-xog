@@ -117,7 +117,7 @@ func (d *DriverFile) GetAuxXML() string {
 	return d.auxXML
 }
 
-func (d *DriverFile) RunXML(action, sourceFolder string, environments *Environments) error {
+func (d *DriverFile) RunXML(action, sourceFolder string, environments *Environments, soapFunc util.Soap) error {
 	var env *EnvType
 	if action == constant.READ {
 		env = environments.Source
@@ -126,7 +126,7 @@ func (d *DriverFile) RunXML(action, sourceFolder string, environments *Environme
 	}
 	d.Write(sourceFolder)
 	body := strings.Replace(d.xogXML, "<xog:SessionID/>", "<xog:SessionID>"+env.Session+"</xog:SessionID>", -1)
-	xog, err := util.SoapCall(body, env.URL)
+	xog, err := soapFunc(body, env.URL)
 	if err != nil {
 		return err
 	}
@@ -137,7 +137,7 @@ func (d *DriverFile) RunXML(action, sourceFolder string, environments *Environme
 			auxEnv = environments.Source
 		}
 		body := strings.Replace(d.auxXML, "<xog:SessionID/>", "<xog:SessionID>"+auxEnv.Session+"</xog:SessionID>", -1)
-		aux, err := util.SoapCall(body, auxEnv.URL)
+		aux, err := soapFunc(body, auxEnv.URL)
 		if err != nil {
 			return err
 		}

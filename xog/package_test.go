@@ -6,6 +6,8 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+	"io/ioutil"
+	"github.com/andreluzz/cas-xog/util"
 )
 
 func TestLoadPackages(t *testing.T) {
@@ -69,8 +71,8 @@ func TestUnzipPackages(t *testing.T) {
 		return err
 	})
 
-	if total != 16 {
-		t.Errorf("Error unziping package, expected 15 files received %d", total)
+	if total != 20 {
+		t.Errorf("Error unziping package, expected 20 files received %d", total)
 	}
 }
 
@@ -96,5 +98,56 @@ func TestProcessPackageFile(t *testing.T) {
 	output = ProcessPackageFile(model.DriverFile{}, &selectedPackage.Versions[0], packageFolder, writeFolder)
 	if output.Code != constant.OUTPUT_ERROR {
 		t.Errorf("Error processing package file. Not validating invalid file")
+	}
+}
+
+func TestInstallPackageFile(t *testing.T) {
+	model.LoadXMLReadList("../xogRead.xml")
+
+	folder := "../mock/xog/" + constant.FOLDER_PACKAGE
+	LoadPackages(folder, "../mock/xog/packages/")
+
+	selectedPackage := GetAvailablePackages()[0]
+	driverPath := folder + selectedPackage.Folder + selectedPackage.DriverFileName
+
+	LoadDriver(driverPath)
+
+	file := GetLoadedDriver().Files[4]
+
+	packageFolder := folder + selectedPackage.Folder + selectedPackage.Versions[0].Folder + file.Type + "/"
+	writeFolder := constant.FOLDER_WRITE + file.Type
+
+	output := ProcessPackageFile(file, &selectedPackage.Versions[0], packageFolder, writeFolder)
+
+	mockEnvironments := &model.Environments{
+		Source: &model.EnvType{
+			Name: "Mock Source Env",
+			URL: "Mock URL",
+			Session: "Mock session",
+		},
+		Target: &model.EnvType{
+			Name: "Mock Source Env",
+			URL: "Mock URL",
+			Session: "Mock session",
+		},
+	}
+
+	soapMock := func(request, endpoint string) (string, error) {
+		file, _ := ioutil.ReadFile("../mock/xog/soap/soap_lookup_write_response.xml")
+		return util.BytesToString(file), nil
+	}
+
+	output = InstallPackageFile(&file, mockEnvironments, soapMock)
+	if output.Code != constant.OUTPUT_SUCCESS {
+		t.Errorf("Error installing package file. Debug: %s", output.Debug)
+	}
+
+	soapMock = func(request, endpoint string) (string, error) {
+		return "", nil
+	}
+
+	output = InstallPackageFile(&file, mockEnvironments, soapMock)
+	if output.Code != constant.OUTPUT_ERROR {
+		t.Errorf("Error installing package file. Not validating soap response")
 	}
 }

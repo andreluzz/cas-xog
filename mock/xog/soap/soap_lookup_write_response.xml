@@ -1,0 +1,6 @@
+<XOGOutput xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/status.xsd">
+    <Object type="contentPack"/>
+    <Status elapsedTime="0.789 seconds" state="SUCCESS"/>
+    <Statistics failureRecords="0" insertedRecords="0" totalNumberOfRecords="1" updatedRecords="1"/>
+    <Records/>
+</XOGOutput>
