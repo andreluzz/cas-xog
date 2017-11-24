@@ -1,0 +1,8 @@
+<NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
+			<Header action="read" externalSource="NIKU" objectType="contentPack" version="8.0">
+				<args name="no_dependencies" value="true"/>
+			</Header>
+			<LookupQuery>
+				<Filter criteria="EQUALS" name="code">LOOKUP_CAS_XOG_1</Filter>
+			</LookupQuery>
+		</NikuDataBus>

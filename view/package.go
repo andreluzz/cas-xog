@@ -39,7 +39,9 @@ func InstallPackage(environments *model.Environments, selectedPackage *model.Pac
 
 	for i, f := range xog.GetLoadedDriver().Files {
 		log.Info("\n[CAS-XOG][blue[Processing]] %03d/%03d | file: %s %s", i+1, total, f.Path)
-		output := xog.ProcessPackageFile(f, selectedPackage, selectedVersion)
+		packageFolder := constant.FOLDER_PACKAGE + selectedPackage.Folder + selectedVersion.Folder + f.Type + "/"
+		writeFolder := constant.FOLDER_WRITE + f.Type
+		output := xog.ProcessPackageFile(f, selectedVersion, packageFolder, writeFolder)
 		status, color := util.GetStatusColorFromOutput(output.Code)
 		log.Info("\r[CAS-XOG][%s[Processed %s]] %03d/%03d | file: %s %s", color, status, i+1, total, f.Path, util.GetOutputDebug(output.Debug))
 		outputResults[output.Code] += 1
@@ -77,7 +79,7 @@ func InstallPackage(environments *model.Environments, selectedPackage *model.Pac
 
 	for i, f := range xog.GetLoadedDriver().Files {
 		log.Info("\n[CAS-XOG][blue[Installing]] %03d/%03d | file: %s %s", i+1, total, f.Path)
-		output := xog.InstallPackageFile(&f, environments)
+		output := xog.InstallPackageFile(&f, environments, util.SoapCall)
 		status, color := util.GetStatusColorFromOutput(output.Code)
 		log.Info("\r[CAS-XOG][%s[Install %s]] %03d/%03d | file: %s %s", color, status, i+1, total, f.Path, util.GetOutputDebug(output.Debug))
 		outputResults[output.Code] += 1

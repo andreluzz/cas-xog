@@ -1,0 +1,378 @@
+<NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_contentPack.xsd">
+    <Header action="write" externalSource="NIKU" objectType="contentPack" version="8.0"/>
+    <contentPack update="true">
+        <lookups update="true">
+            <dynamicLookup autoSuggestEnabled="true" autoSuggestMaxSuggestions="10" code="LOOKUP_CAS_XOG_1" displayAttributeName="last_name" hiddenAttributeName="id" objectCode="" sortAttributeName="last_name" sortDirection="asc" source="niku.com" status="active" update="true">
+                <nls description="" languageCode="ca" name="Lookup cas-xog"/>
+                <nls description="" languageCode="cs" name="Lookup cas-xog"/>
+                <nls description="" languageCode="da" name="Lookup cas-xog"/>
+                <nls description="" languageCode="de" name="Lookup cas-xog"/>
+                <nls description="" languageCode="en" name="Lookup cas-xog"/>
+                <nls description="" languageCode="es" name="Lookup cas-xog"/>
+                <nls description="" languageCode="fi" name="Lookup cas-xog"/>
+                <nls description="" languageCode="fr" name="Lookup cas-xog"/>
+                <nls description="" languageCode="hu" name="Lookup cas-xog"/>
+                <nls description="" languageCode="it" name="Lookup cas-xog"/>
+                <nls description="" languageCode="ja" name="Lookup cas-xog"/>
+                <nls description="" languageCode="ko" name="Lookup cas-xog"/>
+                <nls description="" languageCode="nl" name="Lookup cas-xog"/>
+                <nls description="" languageCode="no" name="Lookup cas-xog"/>
+                <nls description="" languageCode="pl" name="Lookup cas-xog"/>
+                <nls description="" languageCode="pt" name="Lookup cas-xog"/>
+                <nls description="" languageCode="ru" name="Lookup cas-xog"/>
+                <nls description="" languageCode="sv" name="Lookup cas-xog"/>
+                <nls description="" languageCode="tr" name="Lookup cas-xog"/>
+                <nls description="" languageCode="zh" name="Lookup cas-xog"/>
+                <nls description="" languageCode="zh_TW" name="Lookup cas-xog"/>
+                <nsql databaseId="Niku" dbVendor="all"><![CDATA[SELECT @SELECT:RESOURCES.ID:ID@,
+            @SELECT:RESOURCES.LAST_NAME:LAST_NAME@,
+            @SELECT:RESOURCES.FIRST_NAME:FIRST_NAME@,
+            @SELECT:RESOURCES.FULL_NAME:FULL_NAME@,
+            @SELECT:RESOURCES.UNIQUE_NAME:UNIQUE_NAME@,
+            @SELECT:RESOURCES.UNIQUE_NAME:UNIQUE_CODE@
+            FROM SRM_RESOURCES RESOURCES
+            WHERE @FILTER@
+            AND @WHERE:SECURITY:RESOURCE:RESOURCES.ID@
+            @BROWSE-ONLY:
+            AND RESOURCES.IS_ACTIVE = 1
+            :BROWSE-ONLY@]]></nsql>
+                <displayedSuggestionAttributes>
+                    <displayedSuggestionAttribute value="last_name"/>
+                </displayedSuggestionAttributes>
+                <searchedSuggestionAttributes>
+                    <searchedSuggestionAttribute value="last_name"/>
+                </searchedSuggestionAttributes>
+                <browsePage>
+                    <singleSelectPageTitles>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="ca" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="cs" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="da" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="de" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="en" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="es" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="fi" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="fr" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="hu" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="it" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="ja" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="ko" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="nl" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="no" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="pl" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="pt" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="ru" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="sv" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="tr" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="zh" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="zh_TW" name="LOOKUP_CAS_XOG_1_01"/>
+                    </singleSelectPageTitles>
+                    <multiSelectPageTitles>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="ca" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="cs" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="da" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="de" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="en" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="es" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="fi" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="fr" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="hu" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="it" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="ja" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="ko" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="nl" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="no" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="pl" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="pt" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="ru" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="sv" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="tr" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="zh" name="LOOKUP_CAS_XOG_1_01"/>
+                        <nls description="LOOKUP_CAS_XOG_1_01" languageCode="zh_TW" name="LOOKUP_CAS_XOG_1_01"/>
+                    </multiSelectPageTitles>
+                    <filter code="id" defaultValue="" order="1" widgetType="text">
+                        <nls description="" languageCode="ca" name="id"/>
+                        <nls description="" languageCode="cs" name="id"/>
+                        <nls description="" languageCode="da" name="id"/>
+                        <nls description="" languageCode="de" name="id"/>
+                        <nls description="" languageCode="en" name="id"/>
+                        <nls description="" languageCode="es" name="id"/>
+                        <nls description="" languageCode="fi" name="id"/>
+                        <nls description="" languageCode="fr" name="id"/>
+                        <nls description="" languageCode="hu" name="id"/>
+                        <nls description="" languageCode="it" name="id"/>
+                        <nls description="" languageCode="ja" name="id"/>
+                        <nls description="" languageCode="ko" name="id"/>
+                        <nls description="" languageCode="nl" name="id"/>
+                        <nls description="" languageCode="no" name="id"/>
+                        <nls description="" languageCode="pl" name="id"/>
+                        <nls description="" languageCode="pt" name="id"/>
+                        <nls description="" languageCode="ru" name="id"/>
+                        <nls description="" languageCode="sv" name="id"/>
+                        <nls description="" languageCode="tr" name="id"/>
+                        <nls description="" languageCode="zh" name="id"/>
+                        <nls description="" languageCode="zh_TW" name="id"/>
+                    </filter>
+                    <filter code="last_name" defaultValue="" order="2" widgetType="text">
+                        <nls description="" languageCode="ca" name="last_name"/>
+                        <nls description="" languageCode="cs" name="last_name"/>
+                        <nls description="" languageCode="da" name="last_name"/>
+                        <nls description="" languageCode="de" name="last_name"/>
+                        <nls description="" languageCode="en" name="last_name"/>
+                        <nls description="" languageCode="es" name="last_name"/>
+                        <nls description="" languageCode="fi" name="last_name"/>
+                        <nls description="" languageCode="fr" name="last_name"/>
+                        <nls description="" languageCode="hu" name="last_name"/>
+                        <nls description="" languageCode="it" name="last_name"/>
+                        <nls description="" languageCode="ja" name="last_name"/>
+                        <nls description="" languageCode="ko" name="last_name"/>
+                        <nls description="" languageCode="nl" name="last_name"/>
+                        <nls description="" languageCode="no" name="last_name"/>
+                        <nls description="" languageCode="pl" name="last_name"/>
+                        <nls description="" languageCode="pt" name="last_name"/>
+                        <nls description="" languageCode="ru" name="last_name"/>
+                        <nls description="" languageCode="sv" name="last_name"/>
+                        <nls description="" languageCode="tr" name="last_name"/>
+                        <nls description="" languageCode="zh" name="last_name"/>
+                        <nls description="" languageCode="zh_TW" name="last_name"/>
+                    </filter>
+                    <filter code="first_name" defaultValue="" order="3" widgetType="text">
+                        <nls description="" languageCode="ca" name="first_name"/>
+                        <nls description="" languageCode="cs" name="first_name"/>
+                        <nls description="" languageCode="da" name="first_name"/>
+                        <nls description="" languageCode="de" name="first_name"/>
+                        <nls description="" languageCode="en" name="first_name"/>
+                        <nls description="" languageCode="es" name="first_name"/>
+                        <nls description="" languageCode="fi" name="first_name"/>
+                        <nls description="" languageCode="fr" name="first_name"/>
+                        <nls description="" languageCode="hu" name="first_name"/>
+                        <nls description="" languageCode="it" name="first_name"/>
+                        <nls description="" languageCode="ja" name="first_name"/>
+                        <nls description="" languageCode="ko" name="first_name"/>
+                        <nls description="" languageCode="nl" name="first_name"/>
+                        <nls description="" languageCode="no" name="first_name"/>
+                        <nls description="" languageCode="pl" name="first_name"/>
+                        <nls description="" languageCode="pt" name="first_name"/>
+                        <nls description="" languageCode="ru" name="first_name"/>
+                        <nls description="" languageCode="sv" name="first_name"/>
+                        <nls description="" languageCode="tr" name="first_name"/>
+                        <nls description="" languageCode="zh" name="first_name"/>
+                        <nls description="" languageCode="zh_TW" name="first_name"/>
+                    </filter>
+                    <filter code="full_name" defaultValue="" order="4" widgetType="text">
+                        <nls description="" languageCode="ca" name="full_name"/>
+                        <nls description="" languageCode="cs" name="full_name"/>
+                        <nls description="" languageCode="da" name="full_name"/>
+                        <nls description="" languageCode="de" name="full_name"/>
+                        <nls description="" languageCode="en" name="full_name"/>
+                        <nls description="" languageCode="es" name="full_name"/>
+                        <nls description="" languageCode="fi" name="full_name"/>
+                        <nls description="" languageCode="fr" name="full_name"/>
+                        <nls description="" languageCode="hu" name="full_name"/>
+                        <nls description="" languageCode="it" name="full_name"/>
+                        <nls description="" languageCode="ja" name="full_name"/>
+                        <nls description="" languageCode="ko" name="full_name"/>
+                        <nls description="" languageCode="nl" name="full_name"/>
+                        <nls description="" languageCode="no" name="full_name"/>
+                        <nls description="" languageCode="pl" name="full_name"/>
+                        <nls description="" languageCode="pt" name="full_name"/>
+                        <nls description="" languageCode="ru" name="full_name"/>
+                        <nls description="" languageCode="sv" name="full_name"/>
+                        <nls description="" languageCode="tr" name="full_name"/>
+                        <nls description="" languageCode="zh" name="full_name"/>
+                        <nls description="" languageCode="zh_TW" name="full_name"/>
+                    </filter>
+                    <filter code="unique_name" defaultValue="" order="5" widgetType="text">
+                        <nls description="" languageCode="ca" name="unique_name"/>
+                        <nls description="" languageCode="cs" name="unique_name"/>
+                        <nls description="" languageCode="da" name="unique_name"/>
+                        <nls description="" languageCode="de" name="unique_name"/>
+                        <nls description="" languageCode="en" name="unique_name"/>
+                        <nls description="" languageCode="es" name="unique_name"/>
+                        <nls description="" languageCode="fi" name="unique_name"/>
+                        <nls description="" languageCode="fr" name="unique_name"/>
+                        <nls description="" languageCode="hu" name="unique_name"/>
+                        <nls description="" languageCode="it" name="unique_name"/>
+                        <nls description="" languageCode="ja" name="unique_name"/>
+                        <nls description="" languageCode="ko" name="unique_name"/>
+                        <nls description="" languageCode="nl" name="unique_name"/>
+                        <nls description="" languageCode="no" name="unique_name"/>
+                        <nls description="" languageCode="pl" name="unique_name"/>
+                        <nls description="" languageCode="pt" name="unique_name"/>
+                        <nls description="" languageCode="ru" name="unique_name"/>
+                        <nls description="" languageCode="sv" name="unique_name"/>
+                        <nls description="" languageCode="tr" name="unique_name"/>
+                        <nls description="" languageCode="zh" name="unique_name"/>
+                        <nls description="" languageCode="zh_TW" name="unique_name"/>
+                    </filter>
+                    <filter code="unique_code" defaultValue="" order="6" widgetType="text">
+                        <nls description="" languageCode="ca" name="unique_code"/>
+                        <nls description="" languageCode="cs" name="unique_code"/>
+                        <nls description="" languageCode="da" name="unique_code"/>
+                        <nls description="" languageCode="de" name="unique_code"/>
+                        <nls description="" languageCode="en" name="unique_code"/>
+                        <nls description="" languageCode="es" name="unique_code"/>
+                        <nls description="" languageCode="fi" name="unique_code"/>
+                        <nls description="" languageCode="fr" name="unique_code"/>
+                        <nls description="" languageCode="hu" name="unique_code"/>
+                        <nls description="" languageCode="it" name="unique_code"/>
+                        <nls description="" languageCode="ja" name="unique_code"/>
+                        <nls description="" languageCode="ko" name="unique_code"/>
+                        <nls description="" languageCode="nl" name="unique_code"/>
+                        <nls description="" languageCode="no" name="unique_code"/>
+                        <nls description="" languageCode="pl" name="unique_code"/>
+                        <nls description="" languageCode="pt" name="unique_code"/>
+                        <nls description="" languageCode="ru" name="unique_code"/>
+                        <nls description="" languageCode="sv" name="unique_code"/>
+                        <nls description="" languageCode="tr" name="unique_code"/>
+                        <nls description="" languageCode="zh" name="unique_code"/>
+                        <nls description="" languageCode="zh_TW" name="unique_code"/>
+                    </filter>
+                    <listColumn code="id" order="1" widgetType="text">
+                        <nls description="" languageCode="ca" name="id"/>
+                        <nls description="" languageCode="cs" name="id"/>
+                        <nls description="" languageCode="da" name="id"/>
+                        <nls description="" languageCode="de" name="id"/>
+                        <nls description="" languageCode="en" name="id"/>
+                        <nls description="" languageCode="es" name="id"/>
+                        <nls description="" languageCode="fi" name="id"/>
+                        <nls description="" languageCode="fr" name="id"/>
+                        <nls description="" languageCode="hu" name="id"/>
+                        <nls description="" languageCode="it" name="id"/>
+                        <nls description="" languageCode="ja" name="id"/>
+                        <nls description="" languageCode="ko" name="id"/>
+                        <nls description="" languageCode="nl" name="id"/>
+                        <nls description="" languageCode="no" name="id"/>
+                        <nls description="" languageCode="pl" name="id"/>
+                        <nls description="" languageCode="pt" name="id"/>
+                        <nls description="" languageCode="ru" name="id"/>
+                        <nls description="" languageCode="sv" name="id"/>
+                        <nls description="" languageCode="tr" name="id"/>
+                        <nls description="" languageCode="zh" name="id"/>
+                        <nls description="" languageCode="zh_TW" name="id"/>
+                    </listColumn>
+                    <listColumn code="last_name" order="2" widgetType="text">
+                        <nls description="" languageCode="ca" name="last_name"/>
+                        <nls description="" languageCode="cs" name="last_name"/>
+                        <nls description="" languageCode="da" name="last_name"/>
+                        <nls description="" languageCode="de" name="last_name"/>
+                        <nls description="" languageCode="en" name="last_name"/>
+                        <nls description="" languageCode="es" name="last_name"/>
+                        <nls description="" languageCode="fi" name="last_name"/>
+                        <nls description="" languageCode="fr" name="last_name"/>
+                        <nls description="" languageCode="hu" name="last_name"/>
+                        <nls description="" languageCode="it" name="last_name"/>
+                        <nls description="" languageCode="ja" name="last_name"/>
+                        <nls description="" languageCode="ko" name="last_name"/>
+                        <nls description="" languageCode="nl" name="last_name"/>
+                        <nls description="" languageCode="no" name="last_name"/>
+                        <nls description="" languageCode="pl" name="last_name"/>
+                        <nls description="" languageCode="pt" name="last_name"/>
+                        <nls description="" languageCode="ru" name="last_name"/>
+                        <nls description="" languageCode="sv" name="last_name"/>
+                        <nls description="" languageCode="tr" name="last_name"/>
+                        <nls description="" languageCode="zh" name="last_name"/>
+                        <nls description="" languageCode="zh_TW" name="last_name"/>
+                    </listColumn>
+                    <listColumn code="first_name" order="3" widgetType="text">
+                        <nls description="" languageCode="ca" name="first_name"/>
+                        <nls description="" languageCode="cs" name="first_name"/>
+                        <nls description="" languageCode="da" name="first_name"/>
+                        <nls description="" languageCode="de" name="first_name"/>
+                        <nls description="" languageCode="en" name="first_name"/>
+                        <nls description="" languageCode="es" name="first_name"/>
+                        <nls description="" languageCode="fi" name="first_name"/>
+                        <nls description="" languageCode="fr" name="first_name"/>
+                        <nls description="" languageCode="hu" name="first_name"/>
+                        <nls description="" languageCode="it" name="first_name"/>
+                        <nls description="" languageCode="ja" name="first_name"/>
+                        <nls description="" languageCode="ko" name="first_name"/>
+                        <nls description="" languageCode="nl" name="first_name"/>
+                        <nls description="" languageCode="no" name="first_name"/>
+                        <nls description="" languageCode="pl" name="first_name"/>
+                        <nls description="" languageCode="pt" name="first_name"/>
+                        <nls description="" languageCode="ru" name="first_name"/>
+                        <nls description="" languageCode="sv" name="first_name"/>
+                        <nls description="" languageCode="tr" name="first_name"/>
+                        <nls description="" languageCode="zh" name="first_name"/>
+                        <nls description="" languageCode="zh_TW" name="first_name"/>
+                    </listColumn>
+                    <listColumn code="full_name" order="4" widgetType="text">
+                        <nls description="" languageCode="ca" name="full_name"/>
+                        <nls description="" languageCode="cs" name="full_name"/>
+                        <nls description="" languageCode="da" name="full_name"/>
+                        <nls description="" languageCode="de" name="full_name"/>
+                        <nls description="" languageCode="en" name="full_name"/>
+                        <nls description="" languageCode="es" name="full_name"/>
+                        <nls description="" languageCode="fi" name="full_name"/>
+                        <nls description="" languageCode="fr" name="full_name"/>
+                        <nls description="" languageCode="hu" name="full_name"/>
+                        <nls description="" languageCode="it" name="full_name"/>
+                        <nls description="" languageCode="ja" name="full_name"/>
+                        <nls description="" languageCode="ko" name="full_name"/>
+                        <nls description="" languageCode="nl" name="full_name"/>
+                        <nls description="" languageCode="no" name="full_name"/>
+                        <nls description="" languageCode="pl" name="full_name"/>
+                        <nls description="" languageCode="pt" name="full_name"/>
+                        <nls description="" languageCode="ru" name="full_name"/>
+                        <nls description="" languageCode="sv" name="full_name"/>
+                        <nls description="" languageCode="tr" name="full_name"/>
+                        <nls description="" languageCode="zh" name="full_name"/>
+                        <nls description="" languageCode="zh_TW" name="full_name"/>
+                    </listColumn>
+                    <listColumn code="unique_name" order="5" widgetType="text">
+                        <nls description="" languageCode="ca" name="unique_name"/>
+                        <nls description="" languageCode="cs" name="unique_name"/>
+                        <nls description="" languageCode="da" name="unique_name"/>
+                        <nls description="" languageCode="de" name="unique_name"/>
+                        <nls description="" languageCode="en" name="unique_name"/>
+                        <nls description="" languageCode="es" name="unique_name"/>
+                        <nls description="" languageCode="fi" name="unique_name"/>
+                        <nls description="" languageCode="fr" name="unique_name"/>
+                        <nls description="" languageCode="hu" name="unique_name"/>
+                        <nls description="" languageCode="it" name="unique_name"/>
+                        <nls description="" languageCode="ja" name="unique_name"/>
+                        <nls description="" languageCode="ko" name="unique_name"/>
+                        <nls description="" languageCode="nl" name="unique_name"/>
+                        <nls description="" languageCode="no" name="unique_name"/>
+                        <nls description="" languageCode="pl" name="unique_name"/>
+                        <nls description="" languageCode="pt" name="unique_name"/>
+                        <nls description="" languageCode="ru" name="unique_name"/>
+                        <nls description="" languageCode="sv" name="unique_name"/>
+                        <nls description="" languageCode="tr" name="unique_name"/>
+                        <nls description="" languageCode="zh" name="unique_name"/>
+                        <nls description="" languageCode="zh_TW" name="unique_name"/>
+                    </listColumn>
+                    <listColumn code="unique_code" order="6" widgetType="text">
+                        <nls description="" languageCode="ca" name="unique_code"/>
+                        <nls description="" languageCode="cs" name="unique_code"/>
+                        <nls description="" languageCode="da" name="unique_code"/>
+                        <nls description="" languageCode="de" name="unique_code"/>
+                        <nls description="" languageCode="en" name="unique_code"/>
+                        <nls description="" languageCode="es" name="unique_code"/>
+                        <nls description="" languageCode="fi" name="unique_code"/>
+                        <nls description="" languageCode="fr" name="unique_code"/>
+                        <nls description="" languageCode="hu" name="unique_code"/>
+                        <nls description="" languageCode="it" name="unique_code"/>
+                        <nls description="" languageCode="ja" name="unique_code"/>
+                        <nls description="" languageCode="ko" name="unique_code"/>
+                        <nls description="" languageCode="nl" name="unique_code"/>
+                        <nls description="" languageCode="no" name="unique_code"/>
+                        <nls description="" languageCode="pl" name="unique_code"/>
+                        <nls description="" languageCode="pt" name="unique_code"/>
+                        <nls description="" languageCode="ru" name="unique_code"/>
+                        <nls description="" languageCode="sv" name="unique_code"/>
+                        <nls description="" languageCode="tr" name="unique_code"/>
+                        <nls description="" languageCode="zh" name="unique_code"/>
+                        <nls description="" languageCode="zh_TW" name="unique_code"/>
+                    </listColumn>
+                </browsePage>
+            </dynamicLookup>
+        </lookups>
+    </contentPack>
+    <XOGOutput>
+        <Object type="contentPack"/>
+        <Status elapsedTime="0.789 seconds" state="SUCCESS"/>
+        <Statistics failureRecords="0" insertedRecords="0" totalNumberOfRecords="1" updatedRecords="1"/>
+        <Records/>
+    </XOGOutput>
+</NikuDataBus>

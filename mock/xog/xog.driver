@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <view code="*" objectCode="obj_sistema" path="view_result.xml" />
+    <view code="*" objectCode="obj_sistema" path="view_source_partition_result.xml" sourcePartition="partition10" />
+    <view code="*" objectCode="obj_sistema" path="view_source_target_partition_result.xml" sourcePartition="partition10" targetPartition="partition20" />
+    <view code="obj_sistema.auditoria" objectCode="obj_sistema" path="view_single_result.xml" sourcePartition="partition10" />
+    <view code="obj_sistema.auditoria" objectCode="obj_sistema" path="view_section_replace_result.xml" sourcePartition="partition10">
+        <section sourcePosition="1" targetPosition="1" action="replace" />
+    </view>
+    <view code="obj_sistema.auditoria" objectCode="obj_sistema" path="view_section_remove_result.xml" sourcePartition="partition10">
+        <section targetPosition="3" action="remove" />
+    </view>
+    <view code="obj_sistema.auditoria" objectCode="obj_sistema" path="view_section_insert_result.xml" sourcePartition="partition10">
+        <section sourcePosition="1" targetPosition="1" action="insert" />
+    </view>
+    <view code="obj_sistema.auditoria" objectCode="obj_sistema" path="view_section_update_result.xml" sourcePartition="partition10" targetPartition="partition20">
+        <section sourcePosition="1" targetPosition="1" action="update">
+            <field code="analista" insertBefore="created_by" column="left" />
+            <field code="status" insertBefore="created_by" column="left" />
+            <field code="status_novo" column="right" />
+            <field code="created_date" remove="true" />
+        </section>
+    </view>
+
+    <menu code="application" path="menu_result.xml" />
+    <menu code="application" path="menu_result_section_link.xml">
+        <section action="insert" code="menu_sec_cas_xog" targetPosition="2" />
+        <section action="update" code="npt.personal">
+            <link code="odf.obj_testeList" />
+        </section>
+    </menu>
+    <menu code="application" path="menu_insert_section_link_result.xml">
+        <section action="insert" code="menu_sec_cas_xog" targetPosition="2">
+            <link code="cas_proc_running_tab" />
+        </section>
+    </menu>
+    
+    <obs code="strat_plan" path="obs_result.xml" />
+    <obs code="strat_plan" path="obs_no_object_and_security_result.xml">
+        <element action="remove" xpath="//associatedObject" />
+        <element action="remove" xpath="//Security" />
+        <element action="remove" xpath="//rights" />
+    </obs>
+    
+    <query code="cop.processBottlenecks" path="processBottlenecks.xml" />
+
+    <page code="projmgr.projectPageFrame" path="page_project.xml" />
+    <page code="projmgr.projectPageFrame" path="page_project_processed.xml">
+        <element action="remove" xpath="//OBSAssocs" />
+        <element action="remove" xpath="//Security" />
+    </page>
+    
+    <group code="ObjectAdmin" path="ObjectAdmin.xml">
+        <element action="remove" xpath="/NikuDataBus/groups/group/members" />
+    </group>
+
+    <lookup code="LOOKUP_CAS_XOG_1" path="lookup_cas_xog_1.xml" />
+    <lookup code="LOOKUP_CAS_XOG" path="LOOKUP_CAS_XOG_PARTITION.xml" sourcePartition="NIKU.ROOT" targetPartition="partition10" />
+    
+    <object code="obj_sistema" path="sistema1.xml" targetPartition="NIKU.ROOT" />
+    <object code="obj_sistema" path="sistema2.xml" sourcePartition="partition10" targetPartition="NIKU.ROOT" />
+    <object code="obj_sistema" path="sistema3.xml" partitionModel="NEW_PARTITION_MODEL" />
+    <object code="obj_sistema" path="sistema4.xml" />
+    <object code="obj_sistema" path="sistema5.xml">
+        <element type="attribute" code="status" />
+    </object>
+    <object code="obj_sistema" path="sistema6.xml">
+        <element type="link" code="obj_sistema.lk_test" />
+    </object>
+    <object code="obj_sistema" path="sistema7.xml">
+        <element type="action" code="action_cas_xog" />
+    </object>
+
+    <process code="Idea_Approval" path="Idea_Approval.xml" />
+    <process code="PRC_0002" path="PRC_0002.xml" copyPermissions="PRC_0001" />
+    <process code="PRC_0002" path="PRC_0002.xml">
+        <replace>
+            <from>isMileStone="false"</from>
+            <to>isMileStone="true"</to>
+        </replace>
+        <replace>
+            <from>Test cas-xog 002</from>
+            <to>[cas-xog]Test 002</to>
+        </replace>
+    </process>
+</xogdriver>

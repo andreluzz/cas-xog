@@ -13,8 +13,8 @@ import (
 	"github.com/beevik/etree"
 	"io/ioutil"
 	"reflect"
-	"strconv"
 	"sort"
+	"strconv"
 	"strings"
 )
 
@@ -81,14 +81,17 @@ func GetLoadedDriver() *model.Driver {
 }
 
 func ValidateLoadedDriver() bool {
-	return driverXOG != nil && len(driverXOG.Files) > 0
+	if driverXOG == nil {
+		return false
+	}
+	return len(driverXOG.Files) > 0
 }
 
 func GetDriversList(folder string) ([]model.Driver, error) {
-	driversFileList, _ := ioutil.ReadDir(folder)
+	driversFileList, err := ioutil.ReadDir(folder)
 
-	if len(driversFileList) == 0 {
-		return nil, errors.New("\n[CAS-XOG][red[ERROR]] - XogDriver folders or file not found! Press enter key to exit...\n")
+	if err != nil || len(driversFileList) == 0 {
+		return nil, errors.New("driver folder not found or empty")
 	}
 
 	var driversList []model.Driver
@@ -102,9 +105,8 @@ func GetDriversList(folder string) ([]model.Driver, error) {
 	return append(driversList, GetPackagesDriversFileInfoList()...), nil
 }
 
-func ProcessDriverFile(file *model.DriverFile, action string, environments *model.Environments) model.Output {
+func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolder string, environments *model.Environments, soapFunc util.Soap) model.Output {
 	output := model.Output{Code: constant.OUTPUT_SUCCESS, Debug: ""}
-	sourceFolder, outputFolder := createFileFolder(action, file.Type)
 	transformedString := ""
 
 	if action == constant.MIGRATE && file.Type != constant.MIGRATION {
@@ -137,9 +139,13 @@ func ProcessDriverFile(file *model.DriverFile, action string, environments *mode
 		return output
 	}
 	if action == constant.WRITE {
-		includeCDATA(file)
+		iniTagRegexpStr, endTagRegexpStr := file.TagCDATA()
+		if iniTagRegexpStr != "" && endTagRegexpStr != "" {
+			transformedString := transform.IncludeCDATA(file.GetXML(), iniTagRegexpStr, endTagRegexpStr)
+			file.SetXML(transformedString)
+		}
 	}
-	err = file.RunXML(action, sourceFolder, environments)
+	err = file.RunXML(action, sourceFolder, environments, soapFunc)
 	if err != nil {
 		output.Code = constant.OUTPUT_ERROR
 		output.Debug = err.Error()
@@ -158,7 +164,7 @@ func ProcessDriverFile(file *model.DriverFile, action string, environments *mode
 		if file.NeedAuxXML() {
 			auxResponse = etree.NewDocument()
 			auxResponse.ReadFromString(file.GetAuxXML())
-			output, err = validate.Check(xogResponse)
+			output, err = validate.Check(auxResponse)
 			if err != nil {
 				output.Code = constant.OUTPUT_ERROR
 				output.Debug = "[aux] " + err.Error()
@@ -173,22 +179,18 @@ func ProcessDriverFile(file *model.DriverFile, action string, environments *mode
 			output.Debug = err.Error()
 			return output
 		}
-		includeCDATA(file)
+		iniTagRegexpStr, endTagRegexpStr := file.TagCDATA()
+		if iniTagRegexpStr != "" && endTagRegexpStr != "" {
+			transformedString := transform.IncludeCDATA(file.GetXML(), iniTagRegexpStr, endTagRegexpStr)
+			file.SetXML(transformedString)
+		}
 	}
 
 	file.Write(outputFolder)
 	return output
 }
 
-func includeCDATA(file *model.DriverFile) {
-	iniTagRegexpStr, endTagRegexpStr := file.TagCDATA()
-	if iniTagRegexpStr != "" && endTagRegexpStr != "" {
-		transformedString := transform.IncludeCDATA(file.GetXML(), iniTagRegexpStr, endTagRegexpStr)
-		file.SetXML(transformedString)
-	}
-}
-
-func createFileFolder(action, fileType string) (string, string) {
+func CreateFileFolder(action, fileType string) (string, string) {
 	sourceFolder := ""
 	outputFolder := ""
 	switch action {
