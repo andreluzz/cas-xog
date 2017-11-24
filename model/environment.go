@@ -25,33 +25,39 @@ func LoadEnvironmentsList(path string) (*Environments, error) {
 }
 
 type EnvType struct {
-	Name     string `xml:"name,attr"`
-	URL      string `xml:"endpoint"`
-	Username string `xml:"username"`
-	Password string `xml:"password"`
-	Session  string
-	Copy     bool
+	Name         string `xml:"name,attr"`
+	URL          string `xml:"endpoint"`
+	Username     string `xml:"username"`
+	Password     string `xml:"password"`
+	Session      string
+	Copy         bool
+	RequestLogin bool
 }
 
-func (e *EnvType) Init(envIndex int) error {
+func (e *EnvType) Init(envIndex int) {
 	available := environments.Available[envIndex].copyEnv()
 
 	e.Name = available.Name
 	e.Username = available.Username
 	e.Password = available.Password
 	e.URL = available.URL
+	e.RequestLogin = false
 
 	if e.Username == "" || e.Password == "" {
-		return nil
+		e.RequestLogin = true
 	}
+}
 
-	session, err := login(e)
+func (e *EnvType) Login(envIndex int) error {
+	var err error
+
+	environments.Available[envIndex].Username = e.Username
+	environments.Available[envIndex].Password = e.Password
+
+	e.Session, err = login(e)
 	if err != nil {
 		return err
 	}
-	e.Session = session
-	e.Copy = false
-
 	return nil
 }
 
@@ -101,19 +107,6 @@ type Environments struct {
 
 func (e *Environments) CopyTargetFromSource() {
 	e.Target = e.Source.copyEnv()
-}
-
-func (e *EnvType) Login(envIndex int) error {
-	var err error
-
-	environments.Available[envIndex].Username = e.Username
-	environments.Available[envIndex].Password = e.Password
-
-	e.Session, err = login(e)
-	if err != nil {
-		return err
-	}
-	return nil
 }
 
 func (e *Environments) Logout() error {

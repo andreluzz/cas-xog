@@ -2,7 +2,6 @@ package view
 
 import (
 	"fmt"
-	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/log"
 	"github.com/andreluzz/cas-xog/model"
 	"github.com/howeyc/gopass"
@@ -40,7 +39,6 @@ func Environments(action string, environments *model.Environments) bool {
 		sourceInput = "1"
 		fmt.Scanln(&sourceInput)
 
-		var err error
 		envIndex, err := strconv.Atoi(sourceInput)
 		envIndex--
 
@@ -49,17 +47,19 @@ func Environments(action string, environments *model.Environments) bool {
 			return false
 		}
 
+		environments.Source.Init(envIndex)
+		if environments.Source.RequestLogin {
+			requestLogin(environments.Source)
+		}
 		log.Info("[CAS-XOG]Processing environment login")
-		err = environments.Source.Init(envIndex)
+		err = environments.Source.Login(envIndex)
+
 		if err != nil {
 			log.Info("\n[CAS-XOG][red[ERROR]] - %s", err.Error())
 			log.Info("\n[CAS-XOG][red[FATAL]] - Check your xogEnv.xml file. Press enter key to exit...")
 			scanExit := ""
 			fmt.Scanln(&scanExit)
 			os.Exit(0)
-		}
-		if environments.Source.Session == "" {
-			requestLogin(envIndex, environments.Source)
 		}
 		log.Info("\r[CAS-XOG][green[Login successfully]] - Environment: %s \n", environments.Source.Name)
 	}
@@ -91,8 +91,12 @@ func Environments(action string, environments *model.Environments) bool {
 	if sourceInput == targetInput {
 		environments.CopyTargetFromSource()
 	} else {
+		environments.Target.Init(envIndex)
+		if environments.Target.RequestLogin {
+			requestLogin(environments.Target)
+		}
 		log.Info("[CAS-XOG]Processing environment login")
-		err = environments.Target.Init(envIndex)
+		err := environments.Target.Login(envIndex)
 		if err != nil {
 			log.Info("\n[CAS-XOG][red[ERROR]] - %s", err.Error())
 			log.Info("\n[CAS-XOG][red[FATAL]] - Check your xogEnv.xml file. Press enter key to exit...")
@@ -100,25 +104,19 @@ func Environments(action string, environments *model.Environments) bool {
 			fmt.Scanln(&scanExit)
 			os.Exit(0)
 		}
-		if environments.Target.Session == "" {
-			requestLogin(envIndex, environments.Target)
-		}
 		log.Info("\r[CAS-XOG][green[Login successfully]] - Environment: %s \n", environments.Target.Name)
 	}
 
 	return true
 }
 
-func requestLogin(envIndex int, envType *model.EnvType) {
-	log.Info("\r%s\n", constant.BLANK_LINE)
-	log.Info("[CAS-XOG][yellow[Request Login]] - Environment: %s \n", envType.Name)
+func requestLogin(envType *model.EnvType) {
+	log.Info("\n[CAS-XOG][yellow[Login needed]] - Enter credentials for environment: %s \n", envType.Name)
 	log.Info("Username: ")
 	fmt.Scanln(&envType.Username)
 
 	log.Info("Password: ")
 	passwordTemp, _ := gopass.GetPasswdMasked()
 	envType.Password = string(passwordTemp[:])
-
-	log.Info("\n[CAS-XOG]Processing environment login")
-	envType.Login(envIndex)
+	log.Info("\n")
 }
