@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/andreluzz/cas-xog/log"
 	"github.com/andreluzz/cas-xog/model"
+	"github.com/howeyc/gopass"
 	"os"
 	"strconv"
 )
@@ -30,7 +31,7 @@ func Environments(action string, environments *model.Environments) bool {
 	}
 
 	for i, e := range environments.Available {
-		log.Info("%d - %s\n", i+1, e.SelectAttrValue("name", "Unknown environment name"))
+		log.Info("%d - %s\n", i+1, e.Name)
 	}
 
 	if action == "r" {
@@ -38,16 +39,21 @@ func Environments(action string, environments *model.Environments) bool {
 		sourceInput = "1"
 		fmt.Scanln(&sourceInput)
 
-		var err error
 		envIndex, err := strconv.Atoi(sourceInput)
+		envIndex--
 
-		if err != nil || envIndex <= 0 || envIndex > len(environments.Available) {
+		if err != nil || envIndex < 0 || envIndex > len(environments.Available) {
 			log.Info("\n[CAS-XOG][red[ERROR]] - Invalid reading environment index!\n")
 			return false
 		}
 
+		environments.Source.Init(envIndex)
+		if environments.Source.RequestLogin {
+			requestLogin(environments.Source)
+		}
 		log.Info("[CAS-XOG]Processing environment login")
-		err = environments.InitSource(sourceInput)
+		err = environments.Source.Login(envIndex)
+
 		if err != nil {
 			log.Info("\n[CAS-XOG][red[ERROR]] - %s", err.Error())
 			log.Info("\n[CAS-XOG][red[FATAL]] - Check your xogEnv.xml file. Press enter key to exit...")
@@ -55,7 +61,6 @@ func Environments(action string, environments *model.Environments) bool {
 			fmt.Scanln(&scanExit)
 			os.Exit(0)
 		}
-
 		log.Info("\r[CAS-XOG][green[Login successfully]] - Environment: %s \n", environments.Source.Name)
 	}
 
@@ -64,6 +69,12 @@ func Environments(action string, environments *model.Environments) bool {
 	fmt.Scanln(&targetInput)
 
 	envIndex, err := strconv.Atoi(targetInput)
+	envIndex--
+
+	if err != nil || envIndex < 0 || envIndex > len(environments.Available) {
+		log.Info("\n[CAS-XOG][red[ERROR]] - Invalid writing environment index!\n")
+		return false
+	}
 
 	if action == "r" {
 		targetEnvInput = targetInput
@@ -77,16 +88,15 @@ func Environments(action string, environments *model.Environments) bool {
 		}
 	}
 
-	if err != nil || envIndex <= 0 || envIndex > len(environments.Available) {
-		log.Info("\n[CAS-XOG][red[ERROR]] - Invalid writing environment index!\n")
-		return false
-	}
-
 	if sourceInput == targetInput {
 		environments.CopyTargetFromSource()
 	} else {
+		environments.Target.Init(envIndex)
+		if environments.Target.RequestLogin {
+			requestLogin(environments.Target)
+		}
 		log.Info("[CAS-XOG]Processing environment login")
-		err = environments.InitTarget(targetInput)
+		err := environments.Target.Login(envIndex)
 		if err != nil {
 			log.Info("\n[CAS-XOG][red[ERROR]] - %s", err.Error())
 			log.Info("\n[CAS-XOG][red[FATAL]] - Check your xogEnv.xml file. Press enter key to exit...")
@@ -94,8 +104,19 @@ func Environments(action string, environments *model.Environments) bool {
 			fmt.Scanln(&scanExit)
 			os.Exit(0)
 		}
-		log.Info("\r[CAS-XOG]Environment: %s - [green[Login successfully]]\n", environments.Target.Name)
+		log.Info("\r[CAS-XOG][green[Login successfully]] - Environment: %s \n", environments.Target.Name)
 	}
 
 	return true
+}
+
+func requestLogin(envType *model.EnvType) {
+	log.Info("\n[CAS-XOG][yellow[Login needed]] - Enter credentials for environment: %s \n", envType.Name)
+	log.Info("Username: ")
+	fmt.Scanln(&envType.Username)
+
+	log.Info("Password: ")
+	passwordTemp, _ := gopass.GetPasswdMasked()
+	envType.Password = string(passwordTemp[:])
+	log.Info("\n")
 }
