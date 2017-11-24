@@ -1,47 +1,63 @@
 package model
 
 import (
+	"encoding/xml"
 	"errors"
 	"github.com/andreluzz/cas-xog/util"
 	"github.com/beevik/etree"
+	"io/ioutil"
 )
 
-var envXml *etree.Document
+var environments *Environments
 
-func LoadEnvironmentsList(path string, environments *Environments) error {
-	envXml = etree.NewDocument()
-	err := envXml.ReadFromFile(path)
-	environments.Available = envXml.FindElements("./xogenvs/env")
-	return err
+func LoadEnvironmentsList(path string) (*Environments, error) {
+	environments = &Environments{}
+
+	xmlFile, err := ioutil.ReadFile(path)
+	if err != nil {
+		return nil, errors.New("Error loading driver file - " + err.Error())
+	}
+
+	xml.Unmarshal(xmlFile, environments)
+	environments.Source = &EnvType{}
+	environments.Target = &EnvType{}
+	return environments, err
 }
 
 type EnvType struct {
-	Name     string
-	URL      string
-	Username string
-	Password string
-	Session  string
-	Copy     bool
+	Name         string `xml:"name,attr"`
+	URL          string `xml:"endpoint"`
+	Username     string `xml:"username"`
+	Password     string `xml:"password"`
+	Session      string
+	Copy         bool
+	RequestLogin bool
 }
 
-func (e *EnvType) init(envIndex string) error {
-	envElement := envXml.FindElement("//env[" + envIndex + "]").Copy()
-	if envElement == nil {
-		return errors.New("trying to initiate an invalid environment")
+func (e *EnvType) Init(envIndex int) {
+	available := environments.Available[envIndex].copyEnv()
+
+	e.Name = available.Name
+	e.Username = available.Username
+	e.Password = available.Password
+	e.URL = available.URL
+	e.RequestLogin = false
+
+	if e.Username == "" || e.Password == "" {
+		e.RequestLogin = true
 	}
+}
 
-	e.Name = envElement.SelectAttrValue("name", "Environment name not defined")
-	e.Username = envElement.FindElement("//username").Text()
-	e.Password = envElement.FindElement("//password").Text()
-	e.URL = envElement.FindElement("//endpoint").Text()
+func (e *EnvType) Login(envIndex int) error {
+	var err error
 
-	session, err := login(e)
+	environments.Available[envIndex].Username = e.Username
+	environments.Available[envIndex].Password = e.Password
+
+	e.Session, err = login(e)
 	if err != nil {
 		return err
 	}
-	e.Session = session
-	e.Copy = false
-
 	return nil
 }
 
@@ -84,19 +100,9 @@ func (e *EnvType) clear() error {
 }
 
 type Environments struct {
+	Available []*EnvType `xml:"env"`
 	Target    *EnvType
 	Source    *EnvType
-	Available []*etree.Element
-}
-
-func (e *Environments) InitSource(index string) error {
-	e.Source = new(EnvType)
-	return e.Source.init(index)
-}
-
-func (e *Environments) InitTarget(index string) error {
-	e.Target = new(EnvType)
-	return e.Target.init(index)
 }
 
 func (e *Environments) CopyTargetFromSource() {

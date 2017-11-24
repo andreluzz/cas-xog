@@ -14,6 +14,7 @@ var startInstallingPackage int
 var environments *model.Environments
 
 func Home() {
+	var err error
 
 	log.InitLog()
 
@@ -26,8 +27,7 @@ func Home() {
 
 	model.LoadXMLReadList("xogRead.xml")
 
-	environments = new(model.Environments)
-	model.LoadEnvironmentsList("xogEnv.xml", environments)
+	environments, err = model.LoadEnvironmentsList("xogEnv.xml")
 
 	xog.LoadPackages(constant.FOLDER_PACKAGE, "packages/")
 
