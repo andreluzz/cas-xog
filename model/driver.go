@@ -7,8 +7,8 @@ import (
 	"github.com/beevik/etree"
 	"io/ioutil"
 	"os"
-	"regexp"
 	"strings"
+	"regexp"
 )
 
 var docXogReadXML, soapEnvelope *etree.Document
@@ -81,12 +81,12 @@ type DriverFile struct {
 	ExcelStartRow     string        `xml:"startRow,attr"`
 	InstanceTag       string        `xml:"instance,attr"`
 	ExportToExcel     bool          `xml:"exportToExcel,attr"`
-	NSQL              string        `xml:"nsql"`
+	NSQL			  string		`xml:"nsql"`
 	Sections          []Section     `xml:"section"`
 	Elements          []Element     `xml:"element"`
 	Replace           []FileReplace `xml:"replace"`
 	MatchExcel        []MatchExcel  `xml:"match"`
-	ExecutionOrder    int
+	ExecutionOrder 	  int
 	xogXML            string
 	auxXML            string
 }
@@ -352,7 +352,6 @@ func (d *Driver) Clear() {
 }
 
 type ByExecutionOrder []DriverFile
-
 func (d ByExecutionOrder) Len() int           { return len(d) }
 func (d ByExecutionOrder) Swap(i, j int)      { d[i], d[j] = d[j], d[i] }
 func (d ByExecutionOrder) Less(i, j int) bool { return d[i].ExecutionOrder < d[j].ExecutionOrder }

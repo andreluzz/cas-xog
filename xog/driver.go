@@ -13,8 +13,8 @@ import (
 	"github.com/beevik/etree"
 	"io/ioutil"
 	"reflect"
-	"sort"
 	"strconv"
+	"sort"
 	"strings"
 )
 
