@@ -1,13 +1,20 @@
 package xog
 
 import (
+	"errors"
 	"github.com/andreluzz/cas-xog/constant"
+	"github.com/andreluzz/cas-xog/model"
+	"github.com/andreluzz/cas-xog/util"
+	"io/ioutil"
 	"os"
 	"testing"
-	"github.com/andreluzz/cas-xog/model"
-	"io/ioutil"
-	"github.com/andreluzz/cas-xog/util"
 )
+
+func deleteTestFolders() {
+	os.RemoveAll(constant.FOLDER_DEBUG)
+	os.RemoveAll(constant.FOLDER_READ)
+	os.RemoveAll(constant.FOLDER_WRITE)
+}
 
 func TestValidateLoadedDriver(t *testing.T) {
 	result := ValidateLoadedDriver()
@@ -159,7 +166,7 @@ func TestLoadDriverInvalidPath(t *testing.T) {
 	}
 }
 
-func TestProcessDriverFile(t *testing.T) {
+func TestProcessDriverFileWrite(t *testing.T) {
 	model.LoadXMLReadList("../xogRead.xml")
 
 	LoadDriver("../mock/xog/xog.driver")
@@ -167,13 +174,13 @@ func TestProcessDriverFile(t *testing.T) {
 
 	mockEnvironments := &model.Environments{
 		Source: &model.EnvType{
-			Name: "Mock Source Env",
-			URL: "Mock URL",
+			Name:    "Mock Source Env",
+			URL:     "Mock URL",
 			Session: "Mock session",
 		},
 		Target: &model.EnvType{
-			Name: "Mock Source Env",
-			URL: "Mock URL",
+			Name:    "Mock Source Env",
+			URL:     "Mock URL",
 			Session: "Mock session",
 		},
 	}
@@ -184,13 +191,313 @@ func TestProcessDriverFile(t *testing.T) {
 	}
 
 	sourceFolder := "../mock/xog/soap/"
-	util.ValidateFolder(sourceFolder+file.Type)
+	util.ValidateFolder(sourceFolder + file.Type)
 	outputFolder := constant.FOLDER_DEBUG
-	util.ValidateFolder(outputFolder+file.Type)
+	util.ValidateFolder(outputFolder + file.Type)
 
 	output := ProcessDriverFile(&file, constant.WRITE, sourceFolder, outputFolder, mockEnvironments, soapMock)
 	if output.Code != constant.OUTPUT_SUCCESS {
-		t.Errorf("Error installing package file. Debug: %s", output.Debug)
+		t.Errorf("Error processing driver file. Debug: %s", output.Debug)
 	}
 
+}
+
+func TestProcessDriverFileActionMigrate(t *testing.T) {
+	packageMockFolder := "../" + constant.FOLDER_MOCK + "migration/"
+	file := model.DriverFile{
+		Type:          constant.MIGRATION,
+		Template:      packageMockFolder + "template.xml",
+		ExcelFile:     packageMockFolder + "data.xlsx",
+		InstanceTag:   "instance",
+		ExcelStartRow: "1",
+		MatchExcel: []model.MatchExcel{
+			{
+				Col:           1,
+				AttributeName: "instanceCode",
+			},
+			{
+				Col:   1,
+				XPath: "//ColumnValue[@name='code']",
+			},
+			{
+				Col:   2,
+				XPath: "//ColumnValue[@name='name']",
+			},
+			{
+				Col:   3,
+				XPath: "//ColumnValue[@name='status_novo']",
+			},
+			{
+				Col:         4,
+				XPath:       "//ColumnValue[@name='multivalue_status']",
+				MultiValued: true,
+				Separator:   ";",
+			},
+			{
+				Col:   5,
+				XPath: "//ColumnValue[@name='analista']",
+			},
+		},
+	}
+	output := ProcessDriverFile(&file, constant.MIGRATE, "", "", nil, nil)
+	if output.Code != constant.OUTPUT_SUCCESS {
+		t.Errorf("Error processing driver file. Action migrate with errors. Debug: %s", output.Debug)
+	}
+
+	file = model.DriverFile{
+		Type:          constant.MIGRATION,
+		Template:      packageMockFolder + "template.xml",
+		ExcelFile:     packageMockFolder + "data.xlsx",
+		InstanceTag:   "instance",
+		ExcelStartRow: "1",
+		MatchExcel: []model.MatchExcel{
+			{
+				Col:           1,
+				XPath:         "invalid_xpath",
+				AttributeName: "name",
+			},
+		},
+	}
+	output = ProcessDriverFile(&file, constant.MIGRATE, "", "", nil, nil)
+	if output.Code != constant.OUTPUT_ERROR {
+		t.Errorf("Error processing driver file. Action migrate with errors not being validated.")
+	}
+}
+
+func TestProcessDriverFileReturnInitXMLError(t *testing.T) {
+	model.LoadXMLReadList("../xogRead.xml")
+
+	file := model.DriverFile{
+		Type: constant.UNDEFINED,
+	}
+	output := ProcessDriverFile(&file, constant.READ, "", "", nil, nil)
+	if output.Code != constant.OUTPUT_ERROR {
+		t.Errorf("Error processing driver file. Not treating invalid InitXML. Debug: %s", output.Debug)
+	}
+}
+
+func TestProcessDriverFileReturnRunXMLError(t *testing.T) {
+	model.LoadXMLReadList("../xogRead.xml")
+
+	file := model.DriverFile{
+		Type: constant.PROCESS,
+		Code: "code",
+		Path: "test.xml",
+	}
+
+	soapMock := func(request, endpoint string) (string, error) {
+		return "", errors.New("soap mock error")
+	}
+
+	environments := model.Environments{
+		Source: &model.EnvType{},
+		Target: &model.EnvType{},
+	}
+
+	output := ProcessDriverFile(&file, constant.READ, constant.FOLDER_DEBUG, "", &environments, soapMock)
+	if output.Code != constant.OUTPUT_ERROR {
+		t.Errorf("Error processing driver file. Not treating invalid RunXML. Debug: %s", output.Debug)
+	}
+}
+
+func TestProcessDriverFileReturnValidateXMLError(t *testing.T) {
+	model.LoadXMLReadList("../xogRead.xml")
+
+	file := model.DriverFile{
+		Type: constant.PROCESS,
+		Code: "code",
+		Path: "test.xml",
+	}
+
+	soapMock := func(request, endpoint string) (string, error) {
+		return "", nil
+	}
+
+	environments := model.Environments{
+		Source: &model.EnvType{},
+		Target: &model.EnvType{},
+	}
+
+	output := ProcessDriverFile(&file, constant.READ, constant.FOLDER_DEBUG, "", &environments, soapMock)
+	if output.Code != constant.OUTPUT_ERROR {
+		t.Errorf("Error processing driver file. Not treating invalid validate check. Debug: %s", output.Debug)
+	}
+}
+
+func TestProcessDriverFileActionMigrateInvalidFileType(t *testing.T) {
+	file := model.DriverFile{
+		Type: constant.LOOKUP,
+	}
+	output := ProcessDriverFile(&file, constant.MIGRATE, "", "", nil, nil)
+	if output.Code != constant.OUTPUT_WARNING {
+		t.Errorf("Error processing driver file. Not treating invalid action and file type. Debug: %s", output.Debug)
+	}
+}
+
+func TestProcessDriverFileActionReadInvalidFileTypeMigration(t *testing.T) {
+	file := model.DriverFile{
+		Type: constant.MIGRATION,
+	}
+	output := ProcessDriverFile(&file, constant.READ, "", "", nil, nil)
+	if output.Code != constant.OUTPUT_WARNING {
+		t.Errorf("Error processing driver file. Not treating invalid action and file type. Debug: %s", output.Debug)
+	}
+}
+
+func TestProcessDriverFileActionRead(t *testing.T) {
+	model.LoadXMLReadList("../xogRead.xml")
+
+	LoadDriver("../mock/xog/xog.driver")
+	file := GetLoadedDriver().Files[17]
+
+	mockEnvironments := &model.Environments{
+		Source: &model.EnvType{
+			Name:    "Mock Source Env",
+			URL:     "Mock URL",
+			Session: "Mock session",
+		},
+		Target: &model.EnvType{
+			Name:    "Mock Source Env",
+			URL:     "Mock URL",
+			Session: "Mock session",
+		},
+	}
+
+	sourceFolder := "../mock/xog/soap/"
+	util.ValidateFolder(sourceFolder + file.Type)
+	outputFolder := constant.FOLDER_DEBUG
+	util.ValidateFolder(outputFolder + file.Type)
+
+	soapMock := func(request, endpoint string) (string, error) {
+		file, _ := ioutil.ReadFile("../mock/xog/soap/soap_success_read_response.xml")
+		return util.BytesToString(file), nil
+	}
+
+	output := ProcessDriverFile(&file, constant.READ, sourceFolder, outputFolder, mockEnvironments, soapMock)
+	if output.Code != constant.OUTPUT_SUCCESS {
+		t.Errorf("Error processing driver file. Debug: %s", output.Debug)
+	}
+}
+
+func TestProcessDriverFileActionReadNeedAux(t *testing.T) {
+	model.LoadXMLReadList("../xogRead.xml")
+
+	file := model.DriverFile{
+		Type:            constant.PROCESS,
+		CopyPermissions: "code",
+		Code:            "code",
+		Path:            "test.xml",
+	}
+
+	mockEnvironments := &model.Environments{
+		Source: &model.EnvType{
+			Name:    "Mock Source Env",
+			URL:     "Mock URL",
+			Session: "Mock session",
+		},
+		Target: &model.EnvType{
+			Name:    "Mock Source Env",
+			URL:     "Aux Mock URL",
+			Session: "Mock session",
+		},
+	}
+
+	sourceFolder := constant.FOLDER_READ
+	util.ValidateFolder(sourceFolder + file.Type)
+	outputFolder := constant.FOLDER_DEBUG
+	util.ValidateFolder(outputFolder + file.Type)
+
+	soapMock := func(request, endpoint string) (string, error) {
+		file, _ := ioutil.ReadFile("../mock/xog/soap/soap_success_read_process_response.xml")
+		return util.BytesToString(file), nil
+	}
+
+	output := ProcessDriverFile(&file, constant.READ, sourceFolder, outputFolder, mockEnvironments, soapMock)
+	if output.Code != constant.OUTPUT_SUCCESS {
+		t.Errorf("Error processing driver file. Debug: %s", output.Debug)
+	}
+}
+
+func TestProcessDriverFileActionReadAuxValidateError(t *testing.T) {
+	model.LoadXMLReadList("../xogRead.xml")
+
+	file := model.DriverFile{
+		Type:            constant.PROCESS,
+		CopyPermissions: "code",
+		Code:            "code",
+		Path:            "test.xml",
+	}
+
+	mockEnvironments := &model.Environments{
+		Source: &model.EnvType{
+			Name:    "Mock Source Env",
+			URL:     "Mock URL",
+			Session: "Mock session",
+		},
+		Target: &model.EnvType{
+			Name:    "Mock Source Env",
+			URL:     "Aux Mock URL",
+			Session: "Mock session",
+		},
+	}
+
+	sourceFolder := constant.FOLDER_READ
+	util.ValidateFolder(sourceFolder + file.Type)
+	outputFolder := constant.FOLDER_DEBUG
+	util.ValidateFolder(outputFolder + file.Type)
+
+	soapMock := func(request, endpoint string) (string, error) {
+		if endpoint == mockEnvironments.Target.URL {
+			file, _ := ioutil.ReadFile("../mock/xog/soap/soap_read_process_no_output_response.xml")
+			return util.BytesToString(file), nil
+		}
+		file, _ := ioutil.ReadFile("../mock/xog/soap/soap_success_read_process_response.xml")
+		return util.BytesToString(file), nil
+	}
+
+	output := ProcessDriverFile(&file, constant.READ, sourceFolder, outputFolder, mockEnvironments, soapMock)
+	if output.Code != constant.OUTPUT_ERROR {
+		t.Errorf("Error processing driver file. Not treating aux output validatin error. Debug: %s", output.Debug)
+	}
+}
+
+func TestProcessDriverFileActionReadTransformError(t *testing.T) {
+	model.LoadXMLReadList("../xogRead.xml")
+
+	LoadDriver("../mock/xog/xog.driver")
+	file := GetLoadedDriver().Files[17]
+
+	mockEnvironments := &model.Environments{
+		Source: &model.EnvType{
+			Name:    "Mock Source Env",
+			URL:     "Mock URL",
+			Session: "Mock session",
+		},
+		Target: &model.EnvType{
+			Name:    "Mock Source Env",
+			URL:     "Mock URL",
+			Session: "Mock session",
+		},
+	}
+
+	sourceFolder := constant.FOLDER_READ
+	util.ValidateFolder(sourceFolder + file.Type)
+	outputFolder := constant.FOLDER_DEBUG
+	util.ValidateFolder(outputFolder + file.Type)
+
+	soapMock := func(request, endpoint string) (string, error) {
+		return `<XOGOutput>
+        	<Object type="contentPack"/>
+        	<Status elapsedTime="0.789 seconds" state="SUCCESS"/>
+        	<Statistics failureRecords="0" insertedRecords="0" totalNumberOfRecords="1" updatedRecords="1"/>
+        	<Records/>
+    	</XOGOutput>`, nil
+	}
+
+	output := ProcessDriverFile(&file, constant.READ, sourceFolder, outputFolder, mockEnvironments, soapMock)
+	if output.Code != constant.OUTPUT_ERROR {
+		t.Errorf("Error processing driver file. Debug: %s", output.Debug)
+	}
+
+	deleteTestFolders()
 }

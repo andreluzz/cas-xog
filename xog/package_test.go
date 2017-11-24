@@ -3,11 +3,11 @@ package xog
 import (
 	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/model"
+	"github.com/andreluzz/cas-xog/util"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"testing"
-	"io/ioutil"
-	"github.com/andreluzz/cas-xog/util"
 )
 
 func TestLoadPackages(t *testing.T) {
@@ -121,13 +121,13 @@ func TestInstallPackageFile(t *testing.T) {
 
 	mockEnvironments := &model.Environments{
 		Source: &model.EnvType{
-			Name: "Mock Source Env",
-			URL: "Mock URL",
+			Name:    "Mock Source Env",
+			URL:     "Mock URL",
 			Session: "Mock session",
 		},
 		Target: &model.EnvType{
-			Name: "Mock Source Env",
-			URL: "Mock URL",
+			Name:    "Mock Source Env",
+			URL:     "Mock URL",
 			Session: "Mock session",
 		},
 	}
@@ -150,4 +150,6 @@ func TestInstallPackageFile(t *testing.T) {
 	if output.Code != constant.OUTPUT_ERROR {
 		t.Errorf("Error installing package file. Not validating soap response")
 	}
+
+	deleteTestFolders()
 }

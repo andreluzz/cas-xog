@@ -164,7 +164,7 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 		if file.NeedAuxXML() {
 			auxResponse = etree.NewDocument()
 			auxResponse.ReadFromString(file.GetAuxXML())
-			output, err = validate.Check(xogResponse)
+			output, err = validate.Check(auxResponse)
 			if err != nil {
 				output.Code = constant.OUTPUT_ERROR
 				output.Debug = "[aux] " + err.Error()
