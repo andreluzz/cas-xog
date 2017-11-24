@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xogread version="1.0">
-    <xogtype type="requestLogin">
-        <username />
-        <password />
-    </xogtype>
     <xogtype type="login">
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:obj="http://www.niku.com/xog/Object">
             <soapenv:Header/>

@@ -53,4 +53,6 @@ const (
 
 	COLUMN_LEFT  = "left"
 	COLUMN_RIGHT = "right"
+
+	BLANK_LINE = "                                                                                "
 )
