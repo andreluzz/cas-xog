@@ -28,6 +28,9 @@ func Home() {
 	model.LoadXMLReadList("xogRead.xml")
 
 	environments, err = model.LoadEnvironmentsList("xogEnv.xml")
+	if err != nil {
+		log.Info("\n[CAS-XOG][red[Error]]: %s\n", err.Error())
+	}
 
 	xog.LoadPackages(constant.FOLDER_PACKAGE, "packages/")
 
