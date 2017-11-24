@@ -776,6 +776,20 @@ This tag is required for export to excel data.
 ```
 
 # XOG Environment example:
+This is an example of configuring the environments file.
+
+If the user does not have XOG access to an environment, simply remove the username and password tags. In this case, the system will prompt you to login at run time. Allowing someone else to enter with the necessary credentials.
+
+This information is stored in memory and will be requested again only if the system is restarted.
+
+If the URL has a non-default port (80/443) it should be informed as follows: `http://development.server.com:8888`
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `name` | Defines an unique identifier that will be displayed in the application for choice of actions. | yes |
+| `username` | Username with permission to execute XOG in the environment. | no |
+| `password` | Password associated with username. | no |
+| `endpoint` | Defines the environment's URL. | yes |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
