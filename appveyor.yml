@@ -30,7 +30,21 @@ build_script:
 
 test_script:
 - ps: >-
-    bash testCoverage.sh
+    go test -race -coverprofile=profile.out -covermode=atomic github.com/andreluzz/cas-xog/migration
+    cat profile.out >> coverage.txt
+    rm profile.out
+
+    go test -race -coverprofile=profile.out -covermode=atomic github.com/andreluzz/cas-xog/transform
+    cat profile.out >> coverage.txt
+    rm profile.out
+
+    go test -race -coverprofile=profile.out -covermode=atomic github.com/andreluzz/cas-xog/validate
+    cat profile.out >> coverage.txt
+    rm profile.out
+
+    go test -race -coverprofile=profile.out -covermode=atomic github.com/andreluzz/cas-xog/xog
+    cat profile.out >> coverage.txt
+    rm profile.out
 
     $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
 
