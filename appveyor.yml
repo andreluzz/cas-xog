@@ -30,19 +30,19 @@ build_script:
 
 test_script:
 - ps: >-
-    go test -race -coverprofile=profile.out -covermode=atomic github.com/andreluzz/cas-xog/migration
+    go test -race -coverprofile=profile.out -covermode=atomic ./migration
     cat profile.out >> coverage.txt
     rm profile.out
 
-    go test -race -coverprofile=profile.out -covermode=atomic github.com/andreluzz/cas-xog/transform
+    go test -race -coverprofile=profile.out -covermode=atomic ./transform
     cat profile.out >> coverage.txt
     rm profile.out
 
-    go test -race -coverprofile=profile.out -covermode=atomic github.com/andreluzz/cas-xog/validate
+    go test -race -coverprofile=profile.out -covermode=atomic ./validate
     cat profile.out >> coverage.txt
     rm profile.out
 
-    go test -race -coverprofile=profile.out -covermode=atomic github.com/andreluzz/cas-xog/xog
+    go test -race -coverprofile=profile.out -covermode=atomic ./xog
     cat profile.out >> coverage.txt
     rm profile.out
 
