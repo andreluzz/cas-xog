@@ -7,6 +7,12 @@ import (
 )
 
 func specificLookupTransformations(xog *etree.Document, file *model.DriverFile) {
+	if file.OnlyStructure {
+		xog.SetRoot(file.GetDummyLookup())
+		xog.FindElement("//dynamicLookup").CreateAttr("code", file.Code)
+		return
+	}
+
 	if file.TargetPartition != "" {
 		elems := xog.FindElements("//lookupValue")
 		for _, e := range elems {
@@ -24,14 +30,10 @@ func specificLookupTransformations(xog *etree.Document, file *model.DriverFile) 
 		}
 	}
 
-	if file.NSQL != "" || file.OnlyStructure {
+	if file.NSQL != "" {
 		nsqlElement := xog.FindElement("//nsql")
 		if nsqlElement != nil {
-			if file.NSQL != "" {
-				nsqlElement.SetText(file.NSQL)
-			} else {
-				nsqlElement.SetText("select @select:u.id:id@ from cmn_sec_users u where 1 = 1")
-			}
+			nsqlElement.SetText(file.NSQL)
 		}
 	}
 }

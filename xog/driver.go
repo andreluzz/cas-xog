@@ -102,7 +102,7 @@ func GetDriversList(folder string) ([]model.Driver, error) {
 		driversList = append(driversList, *driver)
 	}
 
-	return append(driversList, GetPackagesDriversFileInfoList()...), nil
+	return driversList, nil
 }
 
 func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolder string, environments *model.Environments, soapFunc util.Soap) model.Output {

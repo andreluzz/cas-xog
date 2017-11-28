@@ -37,13 +37,17 @@ func InstallPackage(environments *model.Environments, selectedPackage *model.Pac
 	log.Info("\nProcessing Package: [blue[%s]] (%s)", selectedPackage.Name, selectedVersion.Name)
 	log.Info("\n------------------------------------------------------------------\n")
 
-	for i, f := range xog.GetLoadedDriver().Files {
-		log.Info("\n[CAS-XOG][blue[Processing]] %03d/%03d | file: %s %s", i+1, total, f.Path)
+	driver := xog.GetLoadedDriver()
+	typePadLength := driver.MaxTypeNameLen()
+
+	for i, f := range driver.Files {
+		formattedType := util.RightPad(f.GetXMLType(), " ", typePadLength)
+		log.Info("\n[CAS-XOG][blue[Processing]] %03d/%03d | [blue[%s]] | file: %s", i+1, total, formattedType, f.Path)
 		packageFolder := constant.FOLDER_PACKAGE + selectedPackage.Folder + selectedVersion.Folder + f.Type + "/"
 		writeFolder := constant.FOLDER_WRITE + f.Type
 		output := xog.ProcessPackageFile(f, selectedVersion, packageFolder, writeFolder)
 		status, color := util.GetStatusColorFromOutput(output.Code)
-		log.Info("\r[CAS-XOG][%s[Processed %s]] %03d/%03d | file: %s %s", color, status, i+1, total, f.Path, util.GetOutputDebug(output.Debug))
+		log.Info("\r[CAS-XOG][%s[Processed %s]] %03d/%03d | [blue[%s]] | file: %s %s", color, status, i+1, total, formattedType, f.Path, util.GetOutputDebug(output.Debug))
 		outputResults[output.Code] += 1
 	}
 
@@ -77,11 +81,12 @@ func InstallPackage(environments *model.Environments, selectedPackage *model.Pac
 
 	start = time.Now()
 
-	for i, f := range xog.GetLoadedDriver().Files {
-		log.Info("\n[CAS-XOG][blue[Installing]] %03d/%03d | file: %s %s", i+1, total, f.Path)
+	for i, f := range driver.Files {
+		formattedType := util.RightPad(f.GetXMLType(), " ", typePadLength)
+		log.Info("\n[CAS-XOG][blue[Installing]] %03d/%03d | [blue[%s]] | file: %s", i+1, total, formattedType, f.Path)
 		output := xog.InstallPackageFile(&f, environments, util.SoapCall)
 		status, color := util.GetStatusColorFromOutput(output.Code)
-		log.Info("\r[CAS-XOG][%s[Install %s]] %03d/%03d | file: %s %s", color, status, i+1, total, f.Path, util.GetOutputDebug(output.Debug))
+		log.Info("\r[CAS-XOG][%s[Install %s]] %03d/%03d | [blue[%s]] | file: %s %s", color, status, i+1, total, formattedType, f.Path, util.GetOutputDebug(output.Debug))
 		outputResults[output.Code] += 1
 	}
 

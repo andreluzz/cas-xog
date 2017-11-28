@@ -5,6 +5,7 @@ import (
 	"os"
 	"reflect"
 	"unsafe"
+	"strings"
 )
 
 func BytesToString(b []byte) string {
@@ -53,4 +54,11 @@ func GetActionLabel(action string) string {
 		return "Create"
 	}
 	return ""
+}
+
+func RightPad(s, padStr string, length int) string {
+	var padCountInt int
+	padCountInt = 1 + ((length - len(padStr)) / len(padStr))
+	var retStr = s + strings.Repeat(padStr, padCountInt)
+	return retStr[:length]
 }

@@ -169,9 +169,15 @@ func (d *DriverFile) TagCDATA() (string, string) {
 	case constant.PROCESS:
 		return `<([^/].*):(query|update)(.*)>`, `</(.*):(query|update)>`
 	case constant.LOOKUP:
-		return `<nsql(.*)>`, `</nsql>`
+		if !d.OnlyStructure {
+			return `<nsql(.*)>`, `</nsql>`
+		}
 	}
 	return "", ""
+}
+
+func (d *DriverFile) GetDummyLookup() *etree.Element {
+	return docXogReadXML.FindElement("//xogtype[@type='DummyLookup']/NikuDataBus").Copy()
 }
 
 func (d *DriverFile) GetXMLType() string {
@@ -350,6 +356,17 @@ func (d *Driver) Clear() {
 	d.PackageDriver = false
 	d.FilePath = ""
 	d.Info = nil
+}
+
+func (d *Driver) MaxTypeNameLen() int {
+	max := 0
+	for _, f := range d.Files {
+		strLen := len(f.GetXMLType())
+		if  strLen> max {
+			max = strLen
+		}
+	}
+	return max
 }
 
 type ByExecutionOrder []DriverFile

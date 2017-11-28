@@ -50,6 +50,7 @@ const (
 	OUTPUT_ERROR   = "error"
 	OUTPUT_WARNING = "warning"
 	OUTPUT_SUCCESS = "success"
+	OUTPUT_IGNORED = "ignored"
 
 	COLUMN_LEFT  = "left"
 	COLUMN_RIGHT = "right"

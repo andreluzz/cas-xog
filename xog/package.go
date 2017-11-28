@@ -69,10 +69,6 @@ func GetAvailablePackages() []model.Package {
 	return availablePackages
 }
 
-func GetPackagesDriversFileInfoList() []model.Driver {
-	return packagesDriversFileInfo
-}
-
 func ProcessPackageFile(file model.DriverFile, selectedVersion *model.Version, packageFolder, writeFolder string) model.Output {
 	output := model.Output{Code: constant.OUTPUT_SUCCESS, Debug: ""}
 	err := transform.ProcessPackageFile(file, packageFolder, writeFolder, selectedVersion.Definitions)
