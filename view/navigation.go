@@ -32,8 +32,6 @@ func Home() {
 		log.Info("\n[CAS-XOG][red[Error]]: %s\n", err.Error())
 	}
 
-	xog.LoadPackages(constant.FOLDER_PACKAGE, "packages/")
-
 	Drivers()
 }
 
@@ -61,6 +59,7 @@ func Interface() bool {
 		}
 		ProcessDriverFiles(xog.GetLoadedDriver(), action, environments)
 	case "p":
+		xog.LoadPackages(constant.FOLDER_PACKAGE, "packages/")
 		output, selectedPackage, selectedVersion := Packages()
 		if !output {
 			return false

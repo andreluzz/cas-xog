@@ -167,10 +167,10 @@ func (d *DriverFile) NeedAuxXML() bool {
 func (d *DriverFile) TagCDATA() (string, string) {
 	switch d.Type {
 	case constant.PROCESS:
-		return `<([^/].*):(query|update)(.*)>`, `</(.*):(query|update)>`
+		return `<([^/].*):(query|update)(.*)"\s*>`, `</(.*):(query|update)>`
 	case constant.LOOKUP:
 		if !d.OnlyStructure {
-			return `<nsql(.*)>`, `</nsql>`
+			return `<nsql(.*)"\s*>`, `</nsql>`
 		}
 	}
 	return "", ""

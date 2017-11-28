@@ -306,7 +306,7 @@ func TestIncludeCDATAToReturnString(t *testing.T) {
 	xog.ReadFromFile(packageMockFolder + "process_full_xog_cdata.xml")
 
 	xogString, _ := xog.WriteToString()
-	iniTagRegexp := `<([^/].*):(query|update)(.*)>`
+	iniTagRegexp := `<([^/].*):(query|update)(.*)"\s*>`
 	endTagRegexp := `</(.*):(query|update)>`
 
 	XOGString := IncludeCDATA(xogString, iniTagRegexp, endTagRegexp)
@@ -324,7 +324,7 @@ func TestIncludeCDATAWithoutQueryToReturnXML(t *testing.T) {
 	xog.ReadFromFile(packageMockFolder + "process_full_xog.xml")
 
 	xogString, _ := xog.WriteToString()
-	iniTagRegexp := `<([^/].*):(query|update)(.*)>`
+	iniTagRegexp := `<([^/].*):(query|update)(.*)"\s*>`
 	endTagRegexp := `</(.*):(query|update)>`
 
 	XOGString := IncludeCDATA(xogString, iniTagRegexp, endTagRegexp)

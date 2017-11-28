@@ -15,7 +15,7 @@ import (
 func InstallPackage(environments *model.Environments, selectedPackage *model.Package, selectedVersion *model.Version) error {
 	start := time.Now()
 
-	outputResults := map[string]int{constant.OUTPUT_SUCCESS: 0, constant.OUTPUT_WARNING: 0, constant.OUTPUT_ERROR: 0}
+	outputResults := map[string]int{constant.OUTPUT_SUCCESS: 0, constant.OUTPUT_WARNING: 0, constant.OUTPUT_ERROR: 0, constant.OUTPUT_IGNORED: 0}
 
 	driverPath := constant.FOLDER_PACKAGE + selectedPackage.Folder + selectedPackage.DriverFileName
 	if selectedVersion.DriverFileName != "" {
@@ -42,6 +42,11 @@ func InstallPackage(environments *model.Environments, selectedPackage *model.Pac
 
 	for i, f := range driver.Files {
 		formattedType := util.RightPad(f.GetXMLType(), " ", typePadLength)
+		if f.IgnoreReading {
+			log.Info("\n[CAS-XOG][yellow[Processed ignored]] %03d/%03d | [blue[%s]] | file: %s", i+1, total, formattedType, f.Path)
+			outputResults[constant.OUTPUT_IGNORED] += 1
+			continue
+		}
 		log.Info("\n[CAS-XOG][blue[Processing]] %03d/%03d | [blue[%s]] | file: %s", i+1, total, formattedType, f.Path)
 		packageFolder := constant.FOLDER_PACKAGE + selectedPackage.Folder + selectedVersion.Folder + f.Type + "/"
 		writeFolder := constant.FOLDER_WRITE + f.Type
@@ -53,12 +58,12 @@ func InstallPackage(environments *model.Environments, selectedPackage *model.Pac
 
 	elapsed := time.Since(start)
 
-	log.Info("\n\n------------------------------------------------------------------")
-	log.Info("\nStats: total = %d | failure = %d | success = %d | warning = %d", total, outputResults[constant.OUTPUT_ERROR], outputResults[constant.OUTPUT_SUCCESS], outputResults[constant.OUTPUT_WARNING])
+	log.Info("\n\n-----------------------------------------------------------------------------")
+	log.Info("\nStats: total = %d | failure = %d | success = %d | warning = %d | ignored = %d", total, outputResults[constant.OUTPUT_ERROR], outputResults[constant.OUTPUT_SUCCESS], outputResults[constant.OUTPUT_WARNING], outputResults[constant.OUTPUT_IGNORED])
 	log.Info("\n[blue[Concluded in]]: %.3f seconds", elapsed.Seconds())
-	log.Info("\n------------------------------------------------------------------\n")
+	log.Info("\n-----------------------------------------------------------------------------\n")
 
-	outputResults = map[string]int{constant.OUTPUT_SUCCESS: 0, constant.OUTPUT_WARNING: 0, constant.OUTPUT_ERROR: 0}
+	outputResults = map[string]int{constant.OUTPUT_SUCCESS: 0, constant.OUTPUT_WARNING: 0, constant.OUTPUT_ERROR: 0, constant.OUTPUT_IGNORED: 0}
 	start = time.Now()
 
 	log.Info("\n------------------------------------------------------------------")
@@ -115,9 +120,13 @@ func Packages() (bool, *model.Package, *model.Version) {
 	for i, p := range availablePackages {
 		log.Info("%d - %s\n", i+1, p.Name)
 	}
-	log.Info("Choose package to install [1]: ")
+	log.Info("Choose package to install [1] or b = Back to options menu: ")
 	input := "1"
 	fmt.Scanln(&input)
+
+	if input == "b" {
+		return false, nil, nil
+	}
 
 	packageIndex, err := strconv.Atoi(input)
 
@@ -146,17 +155,19 @@ func Packages() (bool, *model.Package, *model.Version) {
 		}
 	}
 
-	log.Info("\n[CAS-XOG] [blue[Package required definitions:]]\n")
 	selectedVersion := selectedPackage.Versions[versionIndex-1]
-	for i, d := range selectedVersion.Definitions {
-		log.Info("%s [%s]:", d.Description, d.Default)
-		input := d.Default
-		fmt.Scanln(&input)
-		if input == "" {
-			log.Info("\n[CAS-XOG][red[ERROR]] - Invalid definition!\n")
-			return false, nil, nil
+	if len(selectedVersion.Definitions) > 0 {
+		log.Info("\n[CAS-XOG] [blue[Package required definitions:]]\n")
+		for i, d := range selectedVersion.Definitions {
+			log.Info("%s [%s]:", d.Description, d.Default)
+			input := d.Default
+			fmt.Scanln(&input)
+			if input == "" {
+				log.Info("\n[CAS-XOG][red[ERROR]] - Invalid definition!\n")
+				return false, nil, nil
+			}
+			selectedVersion.Definitions[i].Value = input
 		}
-		selectedVersion.Definitions[i].Value = input
 	}
 
 	return true, &selectedPackage, &selectedVersion
