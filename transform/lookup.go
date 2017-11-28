@@ -24,10 +24,14 @@ func specificLookupTransformations(xog *etree.Document, file *model.DriverFile) 
 		}
 	}
 
-	if file.NSQL != "" {
+	if file.NSQL != "" || file.OnlyStructure {
 		nsqlElement := xog.FindElement("//nsql")
 		if nsqlElement != nil {
-			nsqlElement.SetText(file.NSQL)
+			if file.NSQL != "" {
+				nsqlElement.SetText(file.NSQL)
+			} else {
+				nsqlElement.SetText("select @select:u.id:id@ from cmn_sec_users u where 1 = 1")
+			}
 		}
 	}
 }
