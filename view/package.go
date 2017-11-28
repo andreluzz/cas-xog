@@ -85,7 +85,7 @@ func InstallPackage(environments *model.Environments, selectedPackage *model.Pac
 		outputResults[output.Code] += 1
 	}
 
-	environments.Logout()
+	environments.Logout(util.SoapCall)
 	elapsed = time.Since(start)
 
 	log.Info("\n\n------------------------------------------------------------------")

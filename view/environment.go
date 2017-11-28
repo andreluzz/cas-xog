@@ -7,6 +7,7 @@ import (
 	"github.com/howeyc/gopass"
 	"os"
 	"strconv"
+	"github.com/andreluzz/cas-xog/util"
 )
 
 var targetEnvInput string
@@ -52,7 +53,7 @@ func Environments(action string, environments *model.Environments) bool {
 			requestLogin(environments.Source)
 		}
 		log.Info("[CAS-XOG]Processing environment login")
-		err = environments.Source.Login(envIndex)
+		err = environments.Source.Login(envIndex, util.SoapCall)
 
 		if err != nil {
 			log.Info("\n[CAS-XOG][red[ERROR]] - %s", err.Error())
@@ -96,7 +97,7 @@ func Environments(action string, environments *model.Environments) bool {
 			requestLogin(environments.Target)
 		}
 		log.Info("[CAS-XOG]Processing environment login")
-		err := environments.Target.Login(envIndex)
+		err := environments.Target.Login(envIndex, util.SoapCall)
 		if err != nil {
 			log.Info("\n[CAS-XOG][red[ERROR]] - %s", err.Error())
 			log.Info("\n[CAS-XOG][red[FATAL]] - Check your xogEnv.xml file. Press enter key to exit...")

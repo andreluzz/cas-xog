@@ -48,20 +48,20 @@ func (e *EnvType) Init(envIndex int) {
 	}
 }
 
-func (e *EnvType) Login(envIndex int) error {
+func (e *EnvType) Login(envIndex int, soapFunc util.Soap) error {
 	var err error
 
 	environments.Available[envIndex].Username = e.Username
 	environments.Available[envIndex].Password = e.Password
 
-	e.Session, err = login(e)
+	e.Session, err = login(e, soapFunc)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func (e *EnvType) logout() error {
+func (e *EnvType) logout(soapFunc util.Soap) error {
 	if e == nil {
 		return nil
 	}
@@ -73,7 +73,7 @@ func (e *EnvType) logout() error {
 		e.clear()
 		return nil
 	}
-	err := logout(e)
+	err := logout(e, soapFunc)
 	e.clear()
 	return err
 }
@@ -109,19 +109,19 @@ func (e *Environments) CopyTargetFromSource() {
 	e.Target = e.Source.copyEnv()
 }
 
-func (e *Environments) Logout() error {
-	err := e.Source.logout()
+func (e *Environments) Logout(soapFunc util.Soap) error {
+	err := e.Source.logout(soapFunc)
 	if err != nil {
 		return err
 	}
-	err = e.Target.logout()
+	err = e.Target.logout(soapFunc)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func login(env *EnvType) (string, error) {
+func login(env *EnvType, soapFunc util.Soap) (string, error) {
 	loginEnvelopeElement := docXogReadXML.FindElement("//xogtype[@type='login']/soapenv:Envelope").Copy()
 	request := etree.NewDocument()
 	request.SetRoot(loginEnvelopeElement)
@@ -135,7 +135,7 @@ func login(env *EnvType) (string, error) {
 		return "", errors.New("Problems getting login xml: " + err.Error())
 	}
 
-	response, err := util.SoapCall(body, env.URL)
+	response, err := soapFunc(body, env.URL)
 	resp := etree.NewDocument()
 	resp.ReadFromString(response)
 
@@ -153,7 +153,7 @@ func login(env *EnvType) (string, error) {
 	return sessionElement.Text(), nil
 }
 
-func logout(env *EnvType) error {
+func logout(env *EnvType, soapFunc util.Soap) error {
 	logoutEnvelopeElement := docXogReadXML.FindElement("//xogtype[@type='logout']/soapenv:Envelope").Copy()
 	request := etree.NewDocument()
 	request.SetRoot(logoutEnvelopeElement)
@@ -165,7 +165,7 @@ func logout(env *EnvType) error {
 		return errors.New("Problems getting logout xml: " + err.Error())
 	}
 
-	_, err = util.SoapCall(body, env.URL)
+	_, err = soapFunc(body, env.URL)
 
 	if err != nil {
 		return errors.New("Problems trying to logout from environment: " + env.Name + " | Debug: " + err.Error())
