@@ -73,7 +73,7 @@ func InstallPackage(environments *model.Environments, selectedPackage *model.Pac
 	if len(selectedVersion.Definitions) > 0 {
 		log.Info("\nDefinitions:")
 		for _, d := range selectedVersion.Definitions {
-			log.Info("\n   %s: %s", d.Action, d.Value)
+			log.Info("\n   %s: %s", d.Description, d.Value)
 		}
 	}
 	log.Info("\n------------------------------------------------------------------\n")
