@@ -3,6 +3,7 @@ package transform
 import (
 	"github.com/andreluzz/cas-xog/model"
 	"github.com/beevik/etree"
+	"github.com/andreluzz/cas-xog/constant"
 )
 
 func specificObjectTransformations(xog *etree.Document, file *model.DriverFile) {
@@ -17,8 +18,17 @@ func specificObjectTransformations(xog *etree.Document, file *model.DriverFile) 
 	}
 
 	if len(file.Elements) > 0 {
-		removeUndefinedIncludes(xog, file.Elements)
-		processObjectIncludes(xog, file.Elements)
+		remove := true
+		for _, f := range file.Elements {
+			if f.Action == constant.ACTION_REMOVE {
+				remove = false
+				break
+			}
+		}
+		if remove {
+			removeUndefinedIncludes(xog, file.Elements)
+			processObjectIncludes(xog, file.Elements)
+		}
 	}
 
 	if file.TargetPartition != "" {
