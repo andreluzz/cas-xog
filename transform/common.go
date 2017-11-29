@@ -59,12 +59,15 @@ func Execute(xog, aux *etree.Document, file *model.DriverFile) error {
 		}
 	}
 
+	removeElementFromParent(xog, "//Entities")
 	removeElementFromParent(xog, "//partitionModels")
 	removeElementFromParent(xog, "//XOGOutput")
 
 	if len(file.Replace) > 0 {
 		findAndReplace(xog, file.Replace)
 	}
+
+	xog.Indent(4)
 
 	return err
 }
