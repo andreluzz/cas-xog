@@ -52,7 +52,7 @@ func InstallPackage(environments *model.Environments, selectedPackage *model.Pac
 		writeFolder := constant.FOLDER_WRITE + f.Type
 		output := xog.ProcessPackageFile(f, selectedVersion, packageFolder, writeFolder)
 		status, color := util.GetStatusColorFromOutput(output.Code)
-		log.Info("\r[CAS-XOG][%s[Processed %s]] %03d/%03d | [blue[%s]] | file: %s %s", color, status, i+1, total, formattedType, f.Path, util.GetOutputDebug(output.Debug))
+		log.Info("\r[CAS-XOG][%s[Processed %s]] %03d/%03d | [blue[%s]] | file: %s %s", color, status, i+1, total, formattedType, f.Path, util.GetOutputDebug(output.Code, output.Debug))
 		outputResults[output.Code] += 1
 	}
 
@@ -88,10 +88,10 @@ func InstallPackage(environments *model.Environments, selectedPackage *model.Pac
 
 	for i, f := range driver.Files {
 		formattedType := util.RightPad(f.GetXMLType(), " ", typePadLength)
-		log.Info("\n[CAS-XOG][blue[Installing]] %03d/%03d | [blue[%s]] | file: %s", i+1, total, formattedType, f.Path)
+		log.Info("\n[CAS-XOG][blue[Installing     ]] %03d/%03d | [blue[%s]] | file: %s", i+1, total, formattedType, f.Path)
 		output := xog.InstallPackageFile(&f, environments, util.SoapCall)
 		status, color := util.GetStatusColorFromOutput(output.Code)
-		log.Info("\r[CAS-XOG][%s[Install %s]] %03d/%03d | [blue[%s]] | file: %s %s", color, status, i+1, total, formattedType, f.Path, util.GetOutputDebug(output.Debug))
+		log.Info("\r[CAS-XOG][%s[Install %s]] %03d/%03d | [blue[%s]] | file: %s %s", color, status, i+1, total, formattedType, f.Path, util.GetOutputDebug(output.Code, output.Debug))
 		outputResults[output.Code] += 1
 	}
 

@@ -25,11 +25,11 @@ func ValidateFolder(folder string) error {
 	return nil
 }
 
-func GetOutputDebug(debug string) string {
-	if debug == "" {
-		return ""
+func GetOutputDebug(code, debug string) string {
+	if code != constant.OUTPUT_SUCCESS {
+		return "| Debug: " + debug
 	}
-	return "| Debug: " + debug
+	return debug
 }
 
 func GetStatusColorFromOutput(code string) (string, string) {

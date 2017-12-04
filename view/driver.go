@@ -49,7 +49,7 @@ func ProcessDriverFiles(driver *model.Driver, action string, environments *model
 		sourceFolder, outputFolder := xog.CreateFileFolder(action, f.Type)
 		output := xog.ProcessDriverFile(&f, action, sourceFolder, outputFolder, environments, util.SoapCall)
 		status, color := util.GetStatusColorFromOutput(output.Code)
-		log.Info("\r[CAS-XOG][%s[%s %s]] %03d/%03d | [blue[%s]] | file: %s %s", color, util.GetActionLabel(action), status, i+1, total, formattedType, f.Path, util.GetOutputDebug(output.Debug))
+		log.Info("\r[CAS-XOG][%s[%s %s]] %03d/%03d | [blue[%s]] | file: %s %s", color, util.GetActionLabel(action), status, i+1, total, formattedType, f.Path, util.GetOutputDebug(output.Code, output.Debug))
 		outputResults[output.Code] += 1
 	}
 
