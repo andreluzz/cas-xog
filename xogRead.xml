@@ -338,10 +338,50 @@
                         </searchedSuggestionAttributes>
                         <browsePage>
                             <singleSelectPageTitles>
+                                <nls description="dummyLookup_01" languageCode="ca" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="cs" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="da" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="de" name="dummyLookup_01"/>
                                 <nls description="dummyLookup_01" languageCode="en" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="es" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="fi" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="fr" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="hu" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="it" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="ja" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="ko" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="nl" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="no" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="pl" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="pt" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="ru" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="sv" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="tr" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="zh" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="zh_TW" name="dummyLookup_01"/>
                             </singleSelectPageTitles>
                             <multiSelectPageTitles>
+                                <nls description="dummyLookup_01" languageCode="ca" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="cs" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="da" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="de" name="dummyLookup_01"/>
                                 <nls description="dummyLookup_01" languageCode="en" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="es" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="fi" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="fr" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="hu" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="it" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="ja" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="ko" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="nl" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="no" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="pl" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="pt" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="ru" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="sv" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="tr" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="zh" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="zh_TW" name="dummyLookup_01"/>
                             </multiSelectPageTitles>
                             <filter code="id" defaultValue="" order="1" widgetType="text">
                                 <nls description="" languageCode="en" name="id"/>
