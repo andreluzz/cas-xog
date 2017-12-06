@@ -59,12 +59,15 @@ func Execute(xog, aux *etree.Document, file *model.DriverFile) error {
 		}
 	}
 
+	removeElementFromParent(xog, "//Entities")
 	removeElementFromParent(xog, "//partitionModels")
 	removeElementFromParent(xog, "//XOGOutput")
 
 	if len(file.Replace) > 0 {
 		findAndReplace(xog, file.Replace)
 	}
+
+	xog.Indent(4)
 
 	return err
 }
@@ -117,6 +120,7 @@ func IncludeCDATA(xogString string, iniTagRegexpStr string, endTagRegexpStr stri
 	endIndex := endTagRegexp.FindAllStringIndex(xogString, -1)
 
 	shiftIndex := 0
+	replacer := strings.NewReplacer("&gt;", ">", "&lt;", "<", "&apos;", "'", "&quot;", "\"")
 
 	for i := 0; i < len(iniIndex); i++ {
 		index := iniIndex[i][1] + shiftIndex
@@ -135,13 +139,16 @@ func IncludeCDATA(xogString string, iniTagRegexpStr string, endTagRegexpStr stri
 			sqlString = sqlString + "]]>"
 		}
 
+		shiftSqlStringAfterReplace := len(sqlString)
+
+		sqlString = replacer.Replace(sqlString)
+
+		shiftSqlStringAfterReplace -= len(sqlString)
+
 		xogString = xogString[:index] + sqlString + xogString[eIndex:]
 
-		shiftIndex += 3
+		shiftIndex = shiftIndex + 3 - shiftSqlStringAfterReplace
 	}
-
-	replacer := strings.NewReplacer("&gt;", ">", "&lt;", "<", "&apos;", "'", "&quot;", "\"")
-	xogString = replacer.Replace(xogString)
 
 	return xogString
 }

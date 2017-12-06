@@ -7,6 +7,12 @@ import (
 )
 
 func specificLookupTransformations(xog *etree.Document, file *model.DriverFile) {
+	if file.OnlyStructure {
+		xog.SetRoot(file.GetDummyLookup())
+		xog.FindElement("//dynamicLookup").CreateAttr("code", file.Code)
+		return
+	}
+
 	if file.TargetPartition != "" {
 		elems := xog.FindElements("//lookupValue")
 		for _, e := range elems {

@@ -7,8 +7,8 @@ import (
 	"github.com/beevik/etree"
 	"io/ioutil"
 	"os"
-	"strings"
 	"regexp"
+	"strings"
 )
 
 var docXogReadXML, soapEnvelope *etree.Document
@@ -81,12 +81,13 @@ type DriverFile struct {
 	ExcelStartRow     string        `xml:"startRow,attr"`
 	InstanceTag       string        `xml:"instance,attr"`
 	ExportToExcel     bool          `xml:"exportToExcel,attr"`
-	NSQL			  string		`xml:"nsql"`
+	OnlyStructure     bool          `xml:"onlyStructure,attr"`
+	NSQL              string        `xml:"nsql"`
 	Sections          []Section     `xml:"section"`
 	Elements          []Element     `xml:"element"`
 	Replace           []FileReplace `xml:"replace"`
 	MatchExcel        []MatchExcel  `xml:"match"`
-	ExecutionOrder 	  int
+	ExecutionOrder    int
 	xogXML            string
 	auxXML            string
 }
@@ -166,11 +167,17 @@ func (d *DriverFile) NeedAuxXML() bool {
 func (d *DriverFile) TagCDATA() (string, string) {
 	switch d.Type {
 	case constant.PROCESS:
-		return `<([^/].*):(query|update)(.*)>`, `</(.*):(query|update)>`
+		return `<([^/].*):(query|update)(.*)"\s*>`, `</(.*):(query|update)>`
 	case constant.LOOKUP:
-		return `<nsql(.*)>`, `</nsql>`
+		if !d.OnlyStructure {
+			return `<nsql(.*)"\s*>`, `</nsql>`
+		}
 	}
 	return "", ""
+}
+
+func (d *DriverFile) GetDummyLookup() *etree.Element {
+	return docXogReadXML.FindElement("//xogtype[@type='DummyLookup']/NikuDataBus").Copy()
 }
 
 func (d *DriverFile) GetXMLType() string {
@@ -351,7 +358,19 @@ func (d *Driver) Clear() {
 	d.Info = nil
 }
 
+func (d *Driver) MaxTypeNameLen() int {
+	max := 0
+	for _, f := range d.Files {
+		strLen := len(f.GetXMLType())
+		if  strLen> max {
+			max = strLen
+		}
+	}
+	return max
+}
+
 type ByExecutionOrder []DriverFile
+
 func (d ByExecutionOrder) Len() int           { return len(d) }
 func (d ByExecutionOrder) Swap(i, j int)      { d[i], d[j] = d[j], d[i] }
 func (d ByExecutionOrder) Less(i, j int) bool { return d[i].ExecutionOrder < d[j].ExecutionOrder }

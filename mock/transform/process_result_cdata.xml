@@ -417,6 +417,7 @@
                                                         inv.id > 1
                                                         ]]><sql:param value="${gel_objectInstanceId}"/>
                                                     </sql:query>
+                                                    <sql:query dataSource="${nikuDS}" var="rs_idea"><![CDATA[select inv.code code from inv_investments inv]]></sql:query>
                                                 </core:if>
                                             </core:catch>
                                             <core:if test="${erro != null}">

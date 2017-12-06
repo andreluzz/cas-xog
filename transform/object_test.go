@@ -257,3 +257,28 @@ func TestExecuteToReturnObjectChangePartitionModel(t *testing.T) {
 		t.Errorf("Error transforming object XOG file. Invalid result XML.")
 	}
 }
+
+func TestExecuteToReturnObjectRemoveAttribute(t *testing.T) {
+	file := model.DriverFile{
+		Code:           "cas_environment",
+		Type:           constant.OBJECT,
+		Elements: []model.Element{
+			{
+				XPath: "//customAttribute[@code='analista']",
+				Action: constant.ACTION_REMOVE,
+			},
+		},
+	}
+
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "object_full_xog.xml")
+	err := Execute(xog, nil, &file)
+
+	if err != nil {
+		t.Fatalf("Error transforming object XOG file. Debug: %s", err.Error())
+	}
+
+	if readMockResultAndCompare(xog, "object_remove_attribute_result.xml") == false {
+		t.Errorf("Error transforming object XOG file. Invalid result XML.")
+	}
+}

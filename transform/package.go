@@ -21,18 +21,18 @@ func ProcessPackageFile(file model.DriverFile, packageFolder, writeFolder string
 			continue
 		}
 		switch def.Action {
-		case "targetPartitionModel":
+		case constant.PACKAGE_ACTION_CHANGE_PARTITION_MODEL:
 			if file.Type == constant.OBJECT {
 				e := xog.FindElement("//object[@partitionModelCode]")
 				if e != nil {
 					e.CreateAttr("partitionModelCode", def.Value)
 				}
 			}
-		case "targetPartition":
+		case constant.PACKAGE_ACTION_CHANGE_PARTITION:
 			if file.Type == constant.OBJECT || file.Type == constant.VIEW {
 				changePartition(xog, "", def.Value)
 			}
-		case "replaceString":
+		case constant.PACKAGE_ACTION_REPLACE_STRING:
 			if def.Value == "" {
 				continue
 			}

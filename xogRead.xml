@@ -302,4 +302,97 @@
             </Query>
         </NikuDataBus>
     </xogtype>
+    <xogtype type="DummyLookup">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_contentPack.xsd">
+            <Header action="write" externalSource="NIKU" objectType="contentPack" version="8.0"/>
+            <contentPack update="true">
+                <lookups update="true">
+                    <dynamicLookup code="" displayAttributeName="id" hiddenAttributeName="id" objectCode="" sortAttributeName="id" sortDirection="asc" source="niku.com" status="active" update="true">
+                        <nls description="CAS - Used importing lookups with tag only structure defined" languageCode="ca" name="CAS - Dummy lookup"/>
+                        <nls description="CAS - Used importing lookups with tag only structure defined" languageCode="cs" name="CAS - Dummy lookup"/>
+                        <nls description="CAS - Used importing lookups with tag only structure defined" languageCode="da" name="CAS - Dummy lookup"/>
+                        <nls description="CAS - Used importing lookups with tag only structure defined" languageCode="de" name="CAS - Dummy lookup"/>
+                        <nls description="CAS - Used importing lookups with tag only structure defined" languageCode="en" name="CAS - Dummy lookup"/>
+                        <nls description="CAS - Used importing lookups with tag only structure defined" languageCode="es" name="CAS - Dummy lookup"/>
+                        <nls description="CAS - Used importing lookups with tag only structure defined" languageCode="fi" name="CAS - Dummy lookup"/>
+                        <nls description="CAS - Used importing lookups with tag only structure defined" languageCode="fr" name="CAS - Dummy lookup"/>
+                        <nls description="CAS - Used importing lookups with tag only structure defined" languageCode="hu" name="CAS - Dummy lookup"/>
+                        <nls description="CAS - Used importing lookups with tag only structure defined" languageCode="it" name="CAS - Dummy lookup"/>
+                        <nls description="CAS - Used importing lookups with tag only structure defined" languageCode="ja" name="CAS - Dummy lookup"/>
+                        <nls description="CAS - Used importing lookups with tag only structure defined" languageCode="ko" name="CAS - Dummy lookup"/>
+                        <nls description="CAS - Used importing lookups with tag only structure defined" languageCode="nl" name="CAS - Dummy lookup"/>
+                        <nls description="CAS - Used importing lookups with tag only structure defined" languageCode="no" name="CAS - Dummy lookup"/>
+                        <nls description="CAS - Used importing lookups with tag only structure defined" languageCode="pl" name="CAS - Dummy lookup"/>
+                        <nls description="CAS - Used importing lookups with tag only structure defined" languageCode="pt" name="CAS - Dummy lookup"/>
+                        <nls description="CAS - Used importing lookups with tag only structure defined" languageCode="ru" name="CAS - Dummy lookup"/>
+                        <nls description="CAS - Used importing lookups with tag only structure defined" languageCode="sv" name="CAS - Dummy lookup"/>
+                        <nls description="CAS - Used importing lookups with tag only structure defined" languageCode="tr" name="CAS - Dummy lookup"/>
+                        <nls description="CAS - Used importing lookups with tag only structure defined" languageCode="zh" name="CAS - Dummy lookup"/>
+                        <nls description="CAS - Used importing lookups with tag only structure defined" languageCode="zh_TW" name="CAS - Dummy lookup"/>
+                        <nsql databaseId="Niku" dbVendor="all">SELECT @SELECT:u.id:Id@ FROM cmn_sec_users u WHERE 1 = 1</nsql>
+                        <displayedSuggestionAttributes>
+                            <displayedSuggestionAttribute value="id"/>
+                        </displayedSuggestionAttributes>
+                        <searchedSuggestionAttributes>
+                            <searchedSuggestionAttribute value="id"/>
+                        </searchedSuggestionAttributes>
+                        <browsePage>
+                            <singleSelectPageTitles>
+                                <nls description="dummyLookup_01" languageCode="ca" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="cs" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="da" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="de" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="en" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="es" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="fi" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="fr" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="hu" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="it" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="ja" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="ko" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="nl" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="no" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="pl" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="pt" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="ru" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="sv" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="tr" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="zh" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="zh_TW" name="dummyLookup_01"/>
+                            </singleSelectPageTitles>
+                            <multiSelectPageTitles>
+                                <nls description="dummyLookup_01" languageCode="ca" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="cs" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="da" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="de" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="en" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="es" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="fi" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="fr" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="hu" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="it" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="ja" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="ko" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="nl" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="no" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="pl" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="pt" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="ru" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="sv" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="tr" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="zh" name="dummyLookup_01"/>
+                                <nls description="dummyLookup_01" languageCode="zh_TW" name="dummyLookup_01"/>
+                            </multiSelectPageTitles>
+                            <filter code="id" defaultValue="" order="1" widgetType="text">
+                                <nls description="" languageCode="en" name="id"/>
+                            </filter>
+                            <listColumn code="id" order="1" widgetType="text">
+                                <nls description="" languageCode="en" name="id"/>
+                            </listColumn>
+                        </browsePage>
+                    </dynamicLookup>
+                </lookups>
+            </contentPack>
+        </NikuDataBus>
+    </xogtype>
 </xogread>

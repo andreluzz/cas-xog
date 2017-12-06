@@ -22,12 +22,6 @@ func TestLoadPackages(t *testing.T) {
 	if packages[0].Name != "Mock Package" {
 		t.Errorf("Error loading .package file, expected name 'Mock Package' received '%s'", packages[0].Name)
 	}
-
-	driversList := GetPackagesDriversFileInfoList()
-
-	if len(driversList) != 2 {
-		t.Errorf("Error loading available packages no driver loaded, expected 2 received %d", len(driversList))
-	}
 }
 
 func TestLoadPackagesInvalidUserPackageFolder(t *testing.T) {
@@ -52,12 +46,6 @@ func TestLoadAvailablePackages(t *testing.T) {
 
 	if packages[0].Name != "Mock Package" {
 		t.Errorf("Error loading .package file, expected name 'Mock Package' received '%s'", packages[0].Name)
-	}
-
-	driversList := GetPackagesDriversFileInfoList()
-
-	if len(driversList) != 2 {
-		t.Errorf("Error loading available packages no driver loaded, expected 2 received %d", len(driversList))
 	}
 }
 
