@@ -12,19 +12,22 @@ func Check(xog *etree.Document) (model.Output, error) {
 	warningOutput := model.Output{Code: constant.OUTPUT_WARNING, Debug: ""}
 
 	if xog == nil {
-		return errorOutput, errors.New("invalid xog")
+		errorOutput.Debug = "invalid xog"
+		return errorOutput, errors.New(errorOutput.Debug)
 	}
 
 	output := xog.FindElement("//XOGOutput")
 
 	if output == nil {
-		return errorOutput, errors.New("no output tag defined")
+		errorOutput.Debug = "no output tag defined"
+		return errorOutput, errors.New(errorOutput.Debug)
 	}
 
 	statusElement := output.FindElement("Status")
 
 	if statusElement == nil {
-		return errorOutput, errors.New("no status tag defined")
+		errorOutput.Debug = "no status tag defined"
+		return errorOutput, errors.New(errorOutput.Debug)
 	}
 
 	errorInformationElement := output.FindElement("//ErrorInformation")
@@ -41,7 +44,8 @@ func Check(xog *etree.Document) (model.Output, error) {
 				warningOutput.Debug = desc
 				return warningOutput, nil
 			} else {
-				return errorOutput, errors.New(desc)
+				errorOutput.Debug = desc
+				return errorOutput, errors.New(errorOutput.Debug)
 			}
 		}
 	}
@@ -51,11 +55,13 @@ func Check(xog *etree.Document) (model.Output, error) {
 	if statisticsElement != nil {
 		statTotalNumberOfRecords := statisticsElement.SelectAttrValue("totalNumberOfRecords", "0")
 		if statTotalNumberOfRecords == "0" {
-			return errorOutput, errors.New("output statistics totalNumberOfRecords = 0")
+			errorOutput.Debug = "output statistics totalNumberOfRecords = 0"
+			return errorOutput, errors.New(errorOutput.Debug)
 		}
 		statFailureRecords := statisticsElement.SelectAttrValue("failureRecords", "0")
 		if statFailureRecords != "0" {
-			return errorOutput, errors.New("output statistics failure on " + statFailureRecords + " records out of " + statTotalNumberOfRecords)
+			errorOutput.Debug = "output statistics failure on " + statFailureRecords + " records out of " + statTotalNumberOfRecords
+			return errorOutput, errors.New(errorOutput.Debug)
 		}
 	}
 

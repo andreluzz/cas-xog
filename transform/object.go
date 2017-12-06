@@ -1,9 +1,9 @@
 package transform
 
 import (
+	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/model"
 	"github.com/beevik/etree"
-	"github.com/andreluzz/cas-xog/constant"
 )
 
 func specificObjectTransformations(xog *etree.Document, file *model.DriverFile) {

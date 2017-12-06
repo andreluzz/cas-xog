@@ -52,9 +52,9 @@ const (
 	OUTPUT_SUCCESS = "success"
 	OUTPUT_IGNORED = "ignored"
 
-	PACKAGE_ACTION_CHANGE_PARTITION_MODEL 	= "changePartitionModel"
-	PACKAGE_ACTION_CHANGE_PARTITION 		= "changePartition"
-	PACKAGE_ACTION_REPLACE_STRING 			= "replaceString"
+	PACKAGE_ACTION_CHANGE_PARTITION_MODEL = "changePartitionModel"
+	PACKAGE_ACTION_CHANGE_PARTITION       = "changePartition"
+	PACKAGE_ACTION_REPLACE_STRING         = "replaceString"
 
 	COLUMN_LEFT  = "left"
 	COLUMN_RIGHT = "right"

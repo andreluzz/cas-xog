@@ -110,8 +110,8 @@ func TestExecuteToReturnDynamicLookupReplacedNSQL(t *testing.T) {
 
 func TestExecuteToReturnDynamicLookupOnlyStructure(t *testing.T) {
 	file := model.DriverFile{
-		Code: "LOOKUP_CAS_XOG",
-		Type: constant.LOOKUP,
+		Code:          "LOOKUP_CAS_XOG",
+		Type:          constant.LOOKUP,
 		OnlyStructure: true,
 	}
 

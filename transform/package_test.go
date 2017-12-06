@@ -3,7 +3,9 @@ package transform
 import (
 	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/model"
+	"github.com/andreluzz/cas-xog/util"
 	"github.com/beevik/etree"
+	"io/ioutil"
 	"strings"
 	"testing"
 )
@@ -23,14 +25,14 @@ func TestProcessPackageToReplaceTargetPartitionModel(t *testing.T) {
 	}
 
 	folder := "../" + constant.FOLDER_WRITE + file.Type
-	err := ProcessPackageFile(file, packageMockFolder, folder, def)
+	output := ProcessPackageFile(&file, packageMockFolder, folder, def)
 
-	if err != nil {
-		t.Fatalf("Error processing package file. Debug: %s", err.Error())
+	if output.Code != constant.OUTPUT_SUCCESS {
+		t.Fatalf("Error processing package file. Code: %s | Debug: %s", output.Code, output.Debug)
 	}
 
 	result := etree.NewDocument()
-	err = result.ReadFromFile(folder + "/" + file.Path)
+	err := result.ReadFromFile(folder + "/" + file.Path)
 	if err != nil {
 		t.Fatalf("Error processing package file. Debug: %s", err.Error())
 	}
@@ -58,14 +60,14 @@ func TestProcessPackageToDiscardObjectWithoutPartitionModel(t *testing.T) {
 	}
 
 	folder := "../" + constant.FOLDER_WRITE + file.Type
-	err := ProcessPackageFile(file, packageMockFolder, folder, def)
+	output := ProcessPackageFile(&file, packageMockFolder, folder, def)
 
-	if err != nil {
-		t.Fatalf("Error processing package file. Debug: %s", err.Error())
+	if output.Code != constant.OUTPUT_SUCCESS {
+		t.Fatalf("Error processing package file. Code: %s | Debug: %s", output.Code, output.Debug)
 	}
 
 	result := etree.NewDocument()
-	err = result.ReadFromFile(folder + "/" + file.Path)
+	err := result.ReadFromFile(folder + "/" + file.Path)
 	if err != nil {
 		t.Fatalf("Error processing package file. Debug: %s", err.Error())
 	}
@@ -96,14 +98,14 @@ func TestProcessPackageToReplaceTargetPartition(t *testing.T) {
 	}
 
 	folder := "../" + constant.FOLDER_WRITE + file.Type
-	err := ProcessPackageFile(file, packageMockFolder, folder, def)
+	output := ProcessPackageFile(&file, packageMockFolder, folder, def)
 
-	if err != nil {
-		t.Fatalf("Error processing package file. Debug: %s", err.Error())
+	if output.Code != constant.OUTPUT_SUCCESS {
+		t.Fatalf("Error processing package file. Code: %s | Debug: %s", output.Code, output.Debug)
 	}
 
 	result := etree.NewDocument()
-	err = result.ReadFromFile(folder + "/" + file.Path)
+	err := result.ReadFromFile(folder + "/" + file.Path)
 	if err != nil {
 		t.Fatalf("Error processing package file. Debug: %s", err.Error())
 	}
@@ -115,7 +117,6 @@ func TestProcessPackageToReplaceTargetPartition(t *testing.T) {
 }
 
 func TestProcessPackageToProcessDefinitionReplaceString(t *testing.T) {
-
 	file := model.DriverFile{
 		Type: constant.PROCESS,
 		Path: "package_replace_string.xml",
@@ -152,14 +153,14 @@ func TestProcessPackageToProcessDefinitionReplaceString(t *testing.T) {
 	}
 
 	folder := "../" + constant.FOLDER_WRITE + file.Type
-	err := ProcessPackageFile(file, packageMockFolder, folder, def)
+	output := ProcessPackageFile(&file, packageMockFolder, folder, def)
 
-	if err != nil {
-		t.Fatalf("Error processing package file. Debug: %s", err.Error())
+	if output.Code != constant.OUTPUT_SUCCESS {
+		t.Fatalf("Error processing package file. Code: %s | Debug: %s", output.Code, output.Debug)
 	}
 
 	result := etree.NewDocument()
-	err = result.ReadFromFile(folder + "/" + file.Path)
+	err := result.ReadFromFile(folder + "/" + file.Path)
 	if err != nil {
 		t.Fatalf("Error processing package file. Debug: %s", err.Error())
 	}
@@ -172,10 +173,113 @@ func TestProcessPackageToProcessDefinitionReplaceString(t *testing.T) {
 }
 
 func TestProcessPackageToReturnErrorFileIsNil(t *testing.T) {
+	output := ProcessPackageFile(nil, "", "", nil)
 
-	err := ProcessPackageFile(model.DriverFile{}, "", "", nil)
+	if output.Code != constant.OUTPUT_ERROR {
+		t.Fatalf("Error processing package file. Code: %s | Debug: not validating if driver file is nil", output.Code)
+	}
+}
 
-	if err == nil {
-		t.Errorf("Error processing package file. Debug: not validating if driver file is null")
+func TestProcessPackageToReturnErrorTypeCannotTransform(t *testing.T) {
+	file := model.DriverFile{
+		Type:             constant.PORTLET,
+		Path:             "package_change_partition.xml",
+		PackageTransform: true,
+	}
+
+	folder := "../" + constant.FOLDER_WRITE + file.Type
+	output := ProcessPackageFile(&file, packageMockFolder, folder, nil)
+
+	if output.Code != constant.OUTPUT_WARNING {
+		t.Fatalf("Error processing package file. Code: %s | Debug: error validating if trying to transform an invalid type", output.Code)
+	}
+}
+
+func TestProcessPackageToTransform(t *testing.T) {
+	file := model.DriverFile{
+		Type:             constant.VIEW,
+		Code:             "cas_environmentProperties",
+		ObjCode:          "cas_environment",
+		Path:             "package_transform_view_source.xml",
+		PackageTransform: true,
+		Sections: []model.Section{
+			{
+				Action:         constant.ACTION_INSERT,
+				SourcePosition: "2",
+			},
+		},
+	}
+	soapMock := func(request, endpoint string) (string, error) {
+		file, _ := ioutil.ReadFile("../mock/transform/package_transform_view_target.xml")
+		return util.BytesToString(file), nil
+	}
+	file.RunAuxXML(&model.EnvType{}, soapMock)
+
+	folder := "../" + constant.FOLDER_WRITE + file.Type
+	output := ProcessPackageFile(&file, packageMockFolder, folder, nil)
+
+	if output.Code != constant.OUTPUT_SUCCESS {
+		t.Fatalf("Error processing package file. Code: %s | Debug: %s", output.Code, output.Debug)
+	}
+}
+
+func TestProcessPackageToReturnErrorTransformValidate(t *testing.T) {
+	file := model.DriverFile{
+		Type:             constant.VIEW,
+		Path:             "package_transform_view_source.xml",
+		PackageTransform: true,
+	}
+	soapMock := func(request, endpoint string) (string, error) {
+		return "", nil
+	}
+	file.RunAuxXML(&model.EnvType{}, soapMock)
+
+	folder := "../" + constant.FOLDER_WRITE + file.Type
+	output := ProcessPackageFile(&file, packageMockFolder, folder, nil)
+
+	if output.Code != constant.OUTPUT_ERROR {
+		t.Fatalf("Error processing package file. Code: %s | Debug: not validating if tranform validate without errors ", output.Code)
+	}
+}
+
+func TestProcessPackageToReturnErrorTransformExecute(t *testing.T) {
+	file := model.DriverFile{
+		Type:             constant.VIEW,
+		Code:             "viewCode",
+		ObjCode:          "cas_environment",
+		Path:             "package_transform_view_source.xml",
+		TargetPartition:  "Partition1",
+		PackageTransform: true,
+		Sections: []model.Section{
+			{
+				Action:         constant.ACTION_INSERT,
+				SourcePosition: "2",
+			},
+		},
+	}
+	soapMock := func(request, endpoint string) (string, error) {
+		file, _ := ioutil.ReadFile("../mock/transform/package_transform_view_target.xml")
+		return util.BytesToString(file), nil
+	}
+	file.RunAuxXML(&model.EnvType{}, soapMock)
+
+	folder := "../" + constant.FOLDER_WRITE + file.Type
+	output := ProcessPackageFile(&file, packageMockFolder, folder, nil)
+
+	if output.Code != constant.OUTPUT_ERROR {
+		t.Fatalf("Error processing package file, not validating if tranform executed without errors. Code: %s | Debug: %s", output.Code, output.Debug)
+	}
+}
+
+func TestProcessPackageToReturnErrorFilePathIsUndefined(t *testing.T) {
+	file := model.DriverFile{
+		Type: constant.PORTLET,
+		Path: constant.UNDEFINED,
+	}
+
+	output := ProcessPackageFile(&file, "", "", nil)
+
+	if output.Code != constant.OUTPUT_ERROR {
+		t.Fatalf("Error processing package file. Code: %s | Debug: %s", output.Code, output.Debug)
 	}
 }

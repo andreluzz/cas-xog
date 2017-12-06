@@ -4,8 +4,8 @@ import (
 	"github.com/andreluzz/cas-xog/constant"
 	"os"
 	"reflect"
-	"unsafe"
 	"strings"
+	"unsafe"
 )
 
 func BytesToString(b []byte) string {

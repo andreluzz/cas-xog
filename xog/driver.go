@@ -167,7 +167,7 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 			output, err = validate.Check(auxResponse)
 			if err != nil {
 				output.Code = constant.OUTPUT_ERROR
-				output.Debug = "[aux] " + err.Error()
+				output.Debug = "aux validation - " + err.Error()
 				return output
 			}
 		}

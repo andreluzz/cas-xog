@@ -69,14 +69,13 @@ func GetAvailablePackages() []model.Package {
 	return availablePackages
 }
 
-func ProcessPackageFile(file model.DriverFile, selectedVersion *model.Version, packageFolder, writeFolder string) model.Output {
-	output := model.Output{Code: constant.OUTPUT_SUCCESS, Debug: ""}
-	err := transform.ProcessPackageFile(file, packageFolder, writeFolder, selectedVersion.Definitions)
-	if err != nil {
-		output.Code = constant.OUTPUT_ERROR
-		output.Debug = err.Error()
+func ProcessPackageFile(file *model.DriverFile, selectedVersion *model.Version, packageFolder, writeFolder string, environments *model.Environments, soapFunc util.Soap) model.Output {
+	if file.PackageTransform && file.NeedPackageTransform() {
+		file.InitXML(constant.READ, constant.UNDEFINED)
+		file.RunAuxXML(environments.Target, soapFunc)
 	}
-	return output
+
+	return transform.ProcessPackageFile(file, packageFolder, writeFolder, selectedVersion.Definitions)
 }
 
 func InstallPackageFile(file *model.DriverFile, environments *model.Environments, soapFunc util.Soap) model.Output {
@@ -87,7 +86,7 @@ func InstallPackageFile(file *model.DriverFile, environments *model.Environments
 	file.InitXML(constant.WRITE, constant.FOLDER_WRITE)
 
 	iniTagRegexpStr, endTagRegexpStr := file.TagCDATA()
-	if iniTagRegexpStr != "" && endTagRegexpStr != "" {
+	if iniTagRegexpStr != constant.UNDEFINED && endTagRegexpStr != constant.UNDEFINED {
 		responseString := transform.IncludeCDATA(file.GetXML(), iniTagRegexpStr, endTagRegexpStr)
 		file.SetXML(responseString)
 	}
@@ -97,8 +96,6 @@ func InstallPackageFile(file *model.DriverFile, environments *model.Environments
 	xogResponse.ReadFromString(file.GetXML())
 	output, err = validate.Check(xogResponse)
 	if err != nil {
-		output.Code = constant.OUTPUT_ERROR
-		output.Debug = err.Error()
 		return output
 	}
 	file.Write(constant.FOLDER_DEBUG)

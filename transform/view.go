@@ -9,7 +9,6 @@ import (
 )
 
 func specificViewTransformations(xog, aux *etree.Document, file *model.DriverFile) error {
-
 	if len(file.Sections) > 0 && file.Code == "*" {
 		return errors.New("tag <section> is only available for single view")
 	}
