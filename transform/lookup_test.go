@@ -107,3 +107,25 @@ func TestExecuteToReturnDynamicLookupReplacedNSQL(t *testing.T) {
 		t.Errorf("Error transforming static lookup XOG file. Invalid result XML.")
 	}
 }
+
+func TestExecuteToReturnDynamicLookupOnlyStructure(t *testing.T) {
+	file := model.DriverFile{
+		Code: "LOOKUP_CAS_XOG",
+		Type: constant.LOOKUP,
+		OnlyStructure: true,
+	}
+
+	model.LoadXMLReadList("../xogRead.xml")
+
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "lookup_dynamic_full_xog.xml")
+	err := Execute(xog, nil, &file)
+
+	if err != nil {
+		t.Fatalf("Error transforming dynamic lookup XOG file. Debug: %s", err.Error())
+	}
+
+	if readMockResultAndCompare(xog, "lookup_dynamic_only_structure_result.xml") == false {
+		t.Errorf("Error transforming static lookup XOG file. Invalid result XML.")
+	}
+}
