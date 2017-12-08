@@ -71,17 +71,12 @@ func GetPathFolder(path string) string {
 	match := re.FindStringSubmatch(path)
 
 	if len(match) > 0 {
-		init := ""
 		folder = match[0]
 		matchInit, _ := regexp.MatchString(`^[/\\]`, path)
 
-		if matchInit {
-			init = path[:1]
-		} else {
-			init = "/"
+		if !matchInit {
+			folder = "/" + folder
 		}
-
-		folder = init + folder
 	}
 
 	return folder
