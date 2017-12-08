@@ -132,7 +132,7 @@ func ExportInstancesToExcel(xog *etree.Document, file model.DriverFile, folder s
 		}
 	}
 
-	util.ValidateFolder(folder)
+	util.ValidateFolder(folder + util.GetPathFolder(file.ExcelFile))
 	err := xlsxFile.Save(folder + file.ExcelFile)
 	if err != nil {
 		return errors.New("migration - ExportInstancesToExcel saving excel error. Debug: " + err.Error())

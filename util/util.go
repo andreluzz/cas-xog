@@ -4,6 +4,7 @@ import (
 	"github.com/andreluzz/cas-xog/constant"
 	"os"
 	"reflect"
+	"regexp"
 	"strings"
 	"unsafe"
 )
@@ -61,4 +62,27 @@ func RightPad(s, padStr string, length int) string {
 	padCountInt = 1 + ((length - len(padStr)) / len(padStr))
 	var retStr = s + strings.Repeat(padStr, padCountInt)
 	return retStr[:length]
+}
+
+func GetPathFolder(path string) string {
+	folder := ""
+
+	re := regexp.MustCompile(`.*[/\\]`)
+	match := re.FindStringSubmatch(path)
+
+	if len(match) > 0 {
+		init := ""
+		folder = match[0]
+		matchInit, _ := regexp.MatchString(`^[/\\]`, path)
+
+		if matchInit {
+			init = path[:1]
+		} else {
+			init = "/"
+		}
+
+		folder = init + folder
+	}
+
+	return folder
 }

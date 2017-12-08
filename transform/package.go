@@ -76,7 +76,7 @@ func ProcessPackageFile(file *model.DriverFile, packageFolder, writeFolder strin
 	}
 
 	xog.IndentTabs()
-	util.ValidateFolder(writeFolder)
+	util.ValidateFolder(writeFolder + util.GetPathFolder(file.Path))
 	xog.WriteToFile(writeFolder + "/" + file.Path)
 
 	return output

@@ -81,7 +81,7 @@ func ProcessPackageFile(file *model.DriverFile, selectedVersion *model.Version, 
 func InstallPackageFile(file *model.DriverFile, environments *model.Environments, soapFunc util.Soap) model.Output {
 	output := model.Output{Code: constant.OUTPUT_SUCCESS, Debug: constant.UNDEFINED}
 
-	util.ValidateFolder(constant.FOLDER_DEBUG + file.Type)
+	util.ValidateFolder(constant.FOLDER_DEBUG + file.Type + util.GetPathFolder(file.Path))
 
 	file.InitXML(constant.WRITE, constant.FOLDER_WRITE)
 
