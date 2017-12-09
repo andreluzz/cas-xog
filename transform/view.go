@@ -95,7 +95,7 @@ func processElements(xog, aux *etree.Document, file *model.DriverFile) (bool, er
 						}
 					}
 
-					if targetAction != nil{
+					if targetAction != nil {
 						targetAction.Parent().RemoveChild(targetAction)
 					}
 				} else if e.Action == constant.ACTION_REMOVE {

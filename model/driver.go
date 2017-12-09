@@ -42,10 +42,10 @@ type Section struct {
 }
 
 type Element struct {
-	Type   		 string `xml:"type,attr"`
-	XPath  		 string `xml:"xpath,attr"`
-	Code   		 string `xml:"code,attr"`
-	Action 		 string `xml:"action,attr"`
+	Type         string `xml:"type,attr"`
+	XPath        string `xml:"xpath,attr"`
+	Code         string `xml:"code,attr"`
+	Action       string `xml:"action,attr"`
 	InsertBefore string `xml:"insertBefore,attr"`
 }
 

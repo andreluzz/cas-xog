@@ -851,8 +851,8 @@ func TestExecuteToInsertGroupAction(t *testing.T) {
 		SourcePartition: "NIKU.ROOT",
 		Elements: []model.Element{
 			{
-				Type: 	constant.ELEMENT_TYPE_ACTIONGROUP,
-				Code: 	"actions_group_test",
+				Type:   constant.ELEMENT_TYPE_ACTIONGROUP,
+				Code:   "actions_group_test",
 				Action: constant.ACTION_INSERT,
 			},
 		},
@@ -882,9 +882,9 @@ func TestExecuteToInsertBeforeGroupAction(t *testing.T) {
 		SourcePartition: "NIKU.ROOT",
 		Elements: []model.Element{
 			{
-				Type: 	constant.ELEMENT_TYPE_ACTIONGROUP,
-				Code: 	"actions_group_test",
-				Action: constant.ACTION_INSERT,
+				Type:         constant.ELEMENT_TYPE_ACTIONGROUP,
+				Code:         "actions_group_test",
+				Action:       constant.ACTION_INSERT,
 				InsertBefore: "general",
 			},
 		},
@@ -914,8 +914,8 @@ func TestExecuteToRemoveGroupAction(t *testing.T) {
 		SourcePartition: "NIKU.ROOT",
 		Elements: []model.Element{
 			{
-				Type: 	constant.ELEMENT_TYPE_ACTIONGROUP,
-				Code: 	"actions_group_test",
+				Type:   constant.ELEMENT_TYPE_ACTIONGROUP,
+				Code:   "actions_group_test",
 				Action: constant.ACTION_REMOVE,
 			},
 		},
@@ -945,8 +945,8 @@ func TestExecuteToInsertAction(t *testing.T) {
 		SourcePartition: "NIKU.ROOT",
 		Elements: []model.Element{
 			{
-				Type: 	constant.ELEMENT_TYPE_ACTION,
-				Code: 	"rally_full_sync",
+				Type:   constant.ELEMENT_TYPE_ACTION,
+				Code:   "rally_full_sync",
 				Action: constant.ACTION_INSERT,
 			},
 		},
@@ -976,8 +976,8 @@ func TestExecuteToRemoveAction(t *testing.T) {
 		SourcePartition: "NIKU.ROOT",
 		Elements: []model.Element{
 			{
-				Type: 	constant.ELEMENT_TYPE_ACTION,
-				Code: 	"rally_full_sync",
+				Type:   constant.ELEMENT_TYPE_ACTION,
+				Code:   "rally_full_sync",
 				Action: constant.ACTION_REMOVE,
 			},
 		},
@@ -1007,9 +1007,9 @@ func TestExecuteToInsertBeforeAction(t *testing.T) {
 		SourcePartition: "NIKU.ROOT",
 		Elements: []model.Element{
 			{
-				Type: 	constant.ELEMENT_TYPE_ACTION,
-				Code: 	"rally_full_sync",
-				Action: constant.ACTION_INSERT,
+				Type:         constant.ELEMENT_TYPE_ACTION,
+				Code:         "rally_full_sync",
+				Action:       constant.ACTION_INSERT,
 				InsertBefore: "odf_XMLExportcas_environment",
 			},
 		},
