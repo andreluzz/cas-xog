@@ -58,4 +58,9 @@ const (
 
 	COLUMN_LEFT  = "left"
 	COLUMN_RIGHT = "right"
+
+	ELEMENT_TYPE_LINK        = "link"
+	ELEMENT_TYPE_ACTION      = "action"
+	ELEMENT_TYPE_ATTRIBUTE   = "attribute"
+	ELEMENT_TYPE_ACTIONGROUP = "actionGroup"
 )

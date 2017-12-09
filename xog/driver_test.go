@@ -56,7 +56,7 @@ func TestGetDriversListInvalidFolder(t *testing.T) {
 func TestCreateFileFolder(t *testing.T) {
 	fileType := constant.PROCESS
 
-	sourceFolder, outputFolder := CreateFileFolder(constant.READ, fileType)
+	sourceFolder, outputFolder := CreateFileFolder(constant.READ, fileType, "filename.xml")
 
 	if sourceFolder != constant.FOLDER_READ {
 		t.Errorf("Error creating file folder, expected source folder %s and received %s", constant.FOLDER_READ, sourceFolder)
@@ -80,7 +80,7 @@ func TestCreateFileFolder(t *testing.T) {
 	os.RemoveAll(folder)
 	os.RemoveAll(outputFolder)
 
-	sourceFolder, outputFolder = CreateFileFolder(constant.WRITE, fileType)
+	sourceFolder, outputFolder = CreateFileFolder(constant.WRITE, fileType, "filename.xml")
 
 	if sourceFolder != constant.FOLDER_WRITE {
 		t.Errorf("Error creating file folder, expected source folder %s and received %s", constant.FOLDER_READ, sourceFolder)
@@ -96,7 +96,7 @@ func TestCreateFileFolder(t *testing.T) {
 	os.RemoveAll(folder)
 	os.RemoveAll(outputFolder)
 
-	sourceFolder, outputFolder = CreateFileFolder(constant.MIGRATE, fileType)
+	sourceFolder, outputFolder = CreateFileFolder(constant.MIGRATE, fileType, "filename.xml")
 
 	if sourceFolder != constant.FOLDER_WRITE {
 		t.Errorf("Error creating file folder, expected source folder %s and received %s", constant.FOLDER_READ, sourceFolder)

@@ -842,3 +842,191 @@ func TestExecuteToReturnErrorSingleViewNotInSource(t *testing.T) {
 		t.Fatalf("Error transforming view XOG file. Debug: not validating if view exists in source")
 	}
 }
+
+func TestExecuteToInsertGroupAction(t *testing.T) {
+	file := model.DriverFile{
+		Type:            constant.VIEW,
+		Code:            "cas_environmentProperties",
+		ObjCode:         "cas_environment",
+		SourcePartition: "NIKU.ROOT",
+		Elements: []model.Element{
+			{
+				Type: 	constant.ELEMENT_TYPE_ACTIONGROUP,
+				Code: 	"actions_group_test",
+				Action: constant.ACTION_INSERT,
+			},
+		},
+	}
+
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "view_actions_source_full_xog.xml")
+	aux := etree.NewDocument()
+	aux.ReadFromFile(packageMockFolder + "view_actions_target_full_xog.xml")
+
+	err := Execute(xog, aux, &file)
+
+	if err != nil {
+		t.Fatalf("Error transforming view XOG file. Debug: %s", err.Error())
+	}
+
+	if readMockResultAndCompare(xog, "view_actions_insert_group_result.xml") == false {
+		t.Errorf("Error transforming view XOG file. Invalid result XML.")
+	}
+}
+
+func TestExecuteToInsertBeforeGroupAction(t *testing.T) {
+	file := model.DriverFile{
+		Type:            constant.VIEW,
+		Code:            "cas_environmentProperties",
+		ObjCode:         "cas_environment",
+		SourcePartition: "NIKU.ROOT",
+		Elements: []model.Element{
+			{
+				Type: 	constant.ELEMENT_TYPE_ACTIONGROUP,
+				Code: 	"actions_group_test",
+				Action: constant.ACTION_INSERT,
+				InsertBefore: "general",
+			},
+		},
+	}
+
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "view_actions_source_full_xog.xml")
+	aux := etree.NewDocument()
+	aux.ReadFromFile(packageMockFolder + "view_actions_target_full_xog.xml")
+
+	err := Execute(xog, aux, &file)
+
+	if err != nil {
+		t.Fatalf("Error transforming view XOG file. Debug: %s", err.Error())
+	}
+
+	if readMockResultAndCompare(xog, "view_actions_insert_before_group_result.xml") == false {
+		t.Errorf("Error transforming view XOG file. Invalid result XML.")
+	}
+}
+
+func TestExecuteToRemoveGroupAction(t *testing.T) {
+	file := model.DriverFile{
+		Type:            constant.VIEW,
+		Code:            "cas_environmentProperties",
+		ObjCode:         "cas_environment",
+		SourcePartition: "NIKU.ROOT",
+		Elements: []model.Element{
+			{
+				Type: 	constant.ELEMENT_TYPE_ACTIONGROUP,
+				Code: 	"actions_group_test",
+				Action: constant.ACTION_REMOVE,
+			},
+		},
+	}
+
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "view_actions_source_full_xog.xml")
+	aux := etree.NewDocument()
+	aux.ReadFromFile(packageMockFolder + "view_actions_source_full_xog.xml")
+
+	err := Execute(xog, aux, &file)
+
+	if err != nil {
+		t.Fatalf("Error transforming view XOG file. Debug: %s", err.Error())
+	}
+
+	if readMockResultAndCompare(xog, "view_actions_remove_group_result.xml") == false {
+		t.Errorf("Error transforming view XOG file. Invalid result XML.")
+	}
+}
+
+func TestExecuteToInsertAction(t *testing.T) {
+	file := model.DriverFile{
+		Type:            constant.VIEW,
+		Code:            "cas_environmentProperties",
+		ObjCode:         "cas_environment",
+		SourcePartition: "NIKU.ROOT",
+		Elements: []model.Element{
+			{
+				Type: 	constant.ELEMENT_TYPE_ACTION,
+				Code: 	"rally_full_sync",
+				Action: constant.ACTION_INSERT,
+			},
+		},
+	}
+
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "view_actions_source_full_xog.xml")
+	aux := etree.NewDocument()
+	aux.ReadFromFile(packageMockFolder + "view_actions_target_full_xog.xml")
+
+	err := Execute(xog, aux, &file)
+
+	if err != nil {
+		t.Fatalf("Error transforming view XOG file. Debug: %s", err.Error())
+	}
+
+	if readMockResultAndCompare(xog, "view_actions_insert_action_result.xml") == false {
+		t.Errorf("Error transforming view XOG file. Invalid result XML.")
+	}
+}
+
+func TestExecuteToRemoveAction(t *testing.T) {
+	file := model.DriverFile{
+		Type:            constant.VIEW,
+		Code:            "cas_environmentProperties",
+		ObjCode:         "cas_environment",
+		SourcePartition: "NIKU.ROOT",
+		Elements: []model.Element{
+			{
+				Type: 	constant.ELEMENT_TYPE_ACTION,
+				Code: 	"rally_full_sync",
+				Action: constant.ACTION_REMOVE,
+			},
+		},
+	}
+
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "view_actions_source_full_xog.xml")
+	aux := etree.NewDocument()
+	aux.ReadFromFile(packageMockFolder + "view_actions_source_full_xog.xml")
+
+	err := Execute(xog, aux, &file)
+
+	if err != nil {
+		t.Fatalf("Error transforming view XOG file. Debug: %s", err.Error())
+	}
+
+	if readMockResultAndCompare(xog, "view_actions_remove_action_result.xml") == false {
+		t.Errorf("Error transforming view XOG file. Invalid result XML.")
+	}
+}
+
+func TestExecuteToInsertBeforeAction(t *testing.T) {
+	file := model.DriverFile{
+		Type:            constant.VIEW,
+		Code:            "cas_environmentProperties",
+		ObjCode:         "cas_environment",
+		SourcePartition: "NIKU.ROOT",
+		Elements: []model.Element{
+			{
+				Type: 	constant.ELEMENT_TYPE_ACTION,
+				Code: 	"rally_full_sync",
+				Action: constant.ACTION_INSERT,
+				InsertBefore: "odf_XMLExportcas_environment",
+			},
+		},
+	}
+
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "view_actions_source_full_xog.xml")
+	aux := etree.NewDocument()
+	aux.ReadFromFile(packageMockFolder + "view_actions_target_full_xog.xml")
+
+	err := Execute(xog, aux, &file)
+
+	if err != nil {
+		t.Fatalf("Error transforming view XOG file. Debug: %s", err.Error())
+	}
+
+	if readMockResultAndCompare(xog, "view_actions_insert_before_action_result.xml") == false {
+		t.Errorf("Error transforming view XOG file. Invalid result XML.")
+	}
+}
