@@ -1,9 +1,9 @@
 package transform
 
 import (
+	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/model"
 	"github.com/beevik/etree"
-	"github.com/andreluzz/cas-xog/constant"
 )
 
 func specificObjectTransformations(xog *etree.Document, file *model.DriverFile) {
@@ -13,7 +13,7 @@ func specificObjectTransformations(xog *etree.Document, file *model.DriverFile) 
 		object.RemoveChild(e)
 	}
 
-	if file.SourcePartition != "" {
+	if file.SourcePartition != constant.UNDEFINED {
 		removeOtherPartitionsAttributes(xog, file)
 	}
 
@@ -31,11 +31,11 @@ func specificObjectTransformations(xog *etree.Document, file *model.DriverFile) 
 		}
 	}
 
-	if file.TargetPartition != "" {
+	if file.TargetPartition != constant.UNDEFINED {
 		changePartition(xog, file.SourcePartition, file.TargetPartition)
 	}
 
-	if file.PartitionModel != "" {
+	if file.PartitionModel != constant.UNDEFINED {
 		element := xog.FindElement("//object[@code='" + file.Code + "']")
 		element.CreateAttr("partitionModelCode", file.PartitionModel)
 	}
@@ -48,13 +48,13 @@ func removeOtherPartitionsAttributes(xog *etree.Document, file *model.DriverFile
 		var include model.Element
 		switch e.Tag {
 		case "customAttribute":
-			include.Type = "attribute"
-		case "link":
-			include.Type = "link"
-		case "action":
-			include.Type = "action"
+			include.Type = constant.ELEMENT_TYPE_ATTRIBUTE
+		case constant.ELEMENT_TYPE_LINK:
+			include.Type = constant.ELEMENT_TYPE_LINK
+		case constant.ELEMENT_TYPE_ACTION:
+			include.Type = constant.ELEMENT_TYPE_ACTION
 		}
-		include.Code = e.SelectAttrValue("code", "")
+		include.Code = e.SelectAttrValue("code", constant.UNDEFINED)
 		includes = append(includes, include)
 	}
 	if len(includes) > 0 {
@@ -68,13 +68,13 @@ func removeUndefinedIncludes(xog *etree.Document, includes []model.Element) {
 	removeLinks := true
 	removeAttributes := true
 	for _, include := range includes {
-		if include.Type == "action" {
+		if include.Type == constant.ELEMENT_TYPE_ACTION {
 			removeActions = false
 		}
-		if include.Type == "link" {
+		if include.Type == constant.ELEMENT_TYPE_LINK {
 			removeLinks = false
 		}
-		if include.Type == "attribute" {
+		if include.Type == constant.ELEMENT_TYPE_ATTRIBUTE {
 			removeAttributes = false
 		}
 	}
@@ -95,13 +95,13 @@ func removeUndefinedIncludes(xog *etree.Document, includes []model.Element) {
 }
 
 func processObjectIncludes(xog *etree.Document, includes []model.Element) {
-	validateAttributesToRemove(xog, includes, "//customAttribute", "code", "attribute")
-	validateAttributesToRemove(xog, includes, "//attributeDefault", "code", "attribute")
-	validateAttributesToRemove(xog, includes, "//attributeAutonumbering", "code", "attribute")
-	validateAttributesToRemove(xog, includes, "//displayMapping", "attributeCode", "attribute")
-	validateAttributesToRemove(xog, includes, "//audit/attribute", "code", "attribute")
-	validateAttributesToRemove(xog, includes, "//link", "code", "link")
-	validateAttributesToRemove(xog, includes, "//action", "code", "action")
+	validateAttributesToRemove(xog, includes, "//customAttribute", "code", constant.ELEMENT_TYPE_ATTRIBUTE)
+	validateAttributesToRemove(xog, includes, "//attributeDefault", "code", constant.ELEMENT_TYPE_ATTRIBUTE)
+	validateAttributesToRemove(xog, includes, "//attributeAutonumbering", "code", constant.ELEMENT_TYPE_ATTRIBUTE)
+	validateAttributesToRemove(xog, includes, "//displayMapping", "attributeCode", constant.ELEMENT_TYPE_ATTRIBUTE)
+	validateAttributesToRemove(xog, includes, "//audit/attribute", "code", constant.ELEMENT_TYPE_ATTRIBUTE)
+	validateAttributesToRemove(xog, includes, "//link", "code", constant.ELEMENT_TYPE_LINK)
+	validateAttributesToRemove(xog, includes, "//action", "code", constant.ELEMENT_TYPE_ACTION)
 }
 
 func validateInclude(includeType, code string, includes []model.Element) bool {
@@ -117,7 +117,7 @@ func validateInclude(includeType, code string, includes []model.Element) bool {
 
 func validateAttributesToRemove(xog *etree.Document, includes []model.Element, path, attributeKey, includeType string) {
 	for _, e := range xog.FindElements(path) {
-		code := e.SelectAttrValue(attributeKey, "")
+		code := e.SelectAttrValue(attributeKey, constant.UNDEFINED)
 		if validateInclude(includeType, code, includes) {
 			e.Parent().RemoveChild(e)
 		}

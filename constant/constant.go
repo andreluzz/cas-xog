@@ -52,10 +52,15 @@ const (
 	OUTPUT_SUCCESS = "success"
 	OUTPUT_IGNORED = "ignored"
 
-	PACKAGE_ACTION_CHANGE_PARTITION_MODEL 	= "changePartitionModel"
-	PACKAGE_ACTION_CHANGE_PARTITION 		= "changePartition"
-	PACKAGE_ACTION_REPLACE_STRING 			= "replaceString"
+	PACKAGE_ACTION_CHANGE_PARTITION_MODEL = "changePartitionModel"
+	PACKAGE_ACTION_CHANGE_PARTITION       = "changePartition"
+	PACKAGE_ACTION_REPLACE_STRING         = "replaceString"
 
 	COLUMN_LEFT  = "left"
 	COLUMN_RIGHT = "right"
+
+	ELEMENT_TYPE_LINK        = "link"
+	ELEMENT_TYPE_ACTION      = "action"
+	ELEMENT_TYPE_ATTRIBUTE   = "attribute"
+	ELEMENT_TYPE_ACTIONGROUP = "actionGroup"
 )

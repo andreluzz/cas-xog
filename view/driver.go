@@ -46,7 +46,7 @@ func ProcessDriverFiles(driver *model.Driver, action string, environments *model
 			continue
 		}
 		log.Info("\n[CAS-XOG][blue[Processing  ]] %03d/%03d | [blue[%s]] | file: %s", i+1, total, formattedType, f.Path)
-		sourceFolder, outputFolder := xog.CreateFileFolder(action, f.Type)
+		sourceFolder, outputFolder := xog.CreateFileFolder(action, f.Type, f.Path)
 		output := xog.ProcessDriverFile(&f, action, sourceFolder, outputFolder, environments, util.SoapCall)
 		status, color := util.GetStatusColorFromOutput(output.Code)
 		log.Info("\r[CAS-XOG][%s[%s %s]] %03d/%03d | [blue[%s]] | file: %s %s", color, util.GetActionLabel(action), status, i+1, total, formattedType, f.Path, util.GetOutputDebug(output.Code, output.Debug))
@@ -58,7 +58,7 @@ func ProcessDriverFiles(driver *model.Driver, action string, environments *model
 	environments.Logout(util.SoapCall)
 
 	log.Info("\n\n-----------------------------------------------------------------------------")
-	log.Info("\nStats: total = %d | failure = %d | success = %d | warning = %d | ignored = %d" , len(driver.Files), outputResults[constant.OUTPUT_ERROR], outputResults[constant.OUTPUT_SUCCESS], outputResults[constant.OUTPUT_WARNING], outputResults[constant.OUTPUT_IGNORED])
+	log.Info("\nStats: total = %d | failure = %d | success = %d | warning = %d | ignored = %d", len(driver.Files), outputResults[constant.OUTPUT_ERROR], outputResults[constant.OUTPUT_SUCCESS], outputResults[constant.OUTPUT_WARNING], outputResults[constant.OUTPUT_IGNORED])
 	log.Info("\n[blue[Concluded in]]: %.3f seconds", elapsed.Seconds())
 	log.Info("\n-----------------------------------------------------------------------------\n")
 }

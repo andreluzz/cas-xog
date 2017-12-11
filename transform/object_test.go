@@ -260,11 +260,11 @@ func TestExecuteToReturnObjectChangePartitionModel(t *testing.T) {
 
 func TestExecuteToReturnObjectRemoveAttribute(t *testing.T) {
 	file := model.DriverFile{
-		Code:           "cas_environment",
-		Type:           constant.OBJECT,
+		Code: "cas_environment",
+		Type: constant.OBJECT,
 		Elements: []model.Element{
 			{
-				XPath: "//customAttribute[@code='analista']",
+				XPath:  "//customAttribute[@code='analista']",
 				Action: constant.ACTION_REMOVE,
 			},
 		},

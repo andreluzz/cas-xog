@@ -167,7 +167,7 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 			output, err = validate.Check(auxResponse)
 			if err != nil {
 				output.Code = constant.OUTPUT_ERROR
-				output.Debug = "[aux] " + err.Error()
+				output.Debug = "aux validation - " + err.Error()
 				return output
 			}
 		}
@@ -190,14 +190,15 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 	return output
 }
 
-func CreateFileFolder(action, fileType string) (string, string) {
+func CreateFileFolder(action, fileType, path string) (string, string) {
 	sourceFolder := ""
 	outputFolder := ""
+
 	switch action {
 	case constant.READ:
 		sourceFolder = constant.FOLDER_READ
 		outputFolder = constant.FOLDER_WRITE
-		util.ValidateFolder(constant.FOLDER_READ + fileType)
+		util.ValidateFolder(constant.FOLDER_READ + fileType + util.GetPathFolder(path))
 	case constant.WRITE:
 		sourceFolder = constant.FOLDER_WRITE
 		outputFolder = constant.FOLDER_DEBUG
@@ -206,7 +207,7 @@ func CreateFileFolder(action, fileType string) (string, string) {
 		outputFolder = constant.FOLDER_MIGRATION
 	}
 
-	util.ValidateFolder(outputFolder + fileType)
+	util.ValidateFolder(outputFolder + fileType + util.GetPathFolder(path))
 
 	return sourceFolder, outputFolder
 }

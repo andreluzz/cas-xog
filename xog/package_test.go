@@ -59,8 +59,8 @@ func TestUnzipPackages(t *testing.T) {
 		return err
 	})
 
-	if total != 20 {
-		t.Errorf("Error unziping package, expected 20 files received %d", total)
+	if total != 24 {
+		t.Errorf("Error unziping package, expected 24 files received %d", total)
 	}
 }
 
@@ -78,12 +78,53 @@ func TestProcessPackageFile(t *testing.T) {
 	packageFolder := folder + selectedPackage.Folder + selectedPackage.Versions[0].Folder + file.Type + "/"
 	writeFolder := constant.FOLDER_WRITE + file.Type
 
-	output := ProcessPackageFile(file, &selectedPackage.Versions[0], packageFolder, writeFolder)
+	output := ProcessPackageFile(&file, &selectedPackage.Versions[0], packageFolder, writeFolder, nil, nil)
 	if output.Code != constant.OUTPUT_SUCCESS {
 		t.Errorf("Error processing package file. Debug: %s", output.Debug)
 	}
 
-	output = ProcessPackageFile(model.DriverFile{}, &selectedPackage.Versions[0], packageFolder, writeFolder)
+	output = ProcessPackageFile(&model.DriverFile{}, &selectedPackage.Versions[0], packageFolder, writeFolder, nil, nil)
+	if output.Code != constant.OUTPUT_ERROR {
+		t.Errorf("Error processing package file. Not validating invalid file")
+	}
+}
+
+func TestProcessAndTransformPackageFile(t *testing.T) {
+	folder := "../mock/xog/" + constant.FOLDER_PACKAGE
+	LoadPackages(folder, "../mock/xog/mock_packages/")
+
+	selectedPackage := GetAvailablePackages()[0]
+	driverPath := folder + selectedPackage.Folder + selectedPackage.DriverFileName
+
+	LoadDriver(driverPath)
+
+	file := GetLoadedDriver().Files[5]
+
+	packageFolder := folder + selectedPackage.Folder + selectedPackage.Versions[0].Folder + file.Type + "/"
+	writeFolder := constant.FOLDER_WRITE + file.Type
+
+	soapMock := func(request, endpoint string) (string, error) {
+		file, _ := ioutil.ReadFile("../mock/xog/package_transform_view_target.xml")
+		return util.BytesToString(file), nil
+	}
+	mockEnvironments := &model.Environments{
+		Source: &model.EnvType{
+			Name:    "Mock Source Env",
+			URL:     "Mock URL",
+			Session: "Mock session",
+		},
+		Target: &model.EnvType{
+			Name:    "Mock Source Env",
+			URL:     "Mock URL",
+			Session: "Mock session",
+		},
+	}
+	output := ProcessPackageFile(&file, &selectedPackage.Versions[0], packageFolder, writeFolder, mockEnvironments, soapMock)
+	if output.Code != constant.OUTPUT_SUCCESS {
+		t.Errorf("Error processing package file. Debug: %s", output.Debug)
+	}
+
+	output = ProcessPackageFile(&model.DriverFile{}, &selectedPackage.Versions[0], packageFolder, writeFolder, nil, nil)
 	if output.Code != constant.OUTPUT_ERROR {
 		t.Errorf("Error processing package file. Not validating invalid file")
 	}
@@ -105,7 +146,7 @@ func TestInstallPackageFile(t *testing.T) {
 	packageFolder := folder + selectedPackage.Folder + selectedPackage.Versions[0].Folder + file.Type + "/"
 	writeFolder := constant.FOLDER_WRITE + file.Type
 
-	output := ProcessPackageFile(file, &selectedPackage.Versions[0], packageFolder, writeFolder)
+	output := ProcessPackageFile(&file, &selectedPackage.Versions[0], packageFolder, writeFolder, nil, nil)
 
 	mockEnvironments := &model.Environments{
 		Source: &model.EnvType{

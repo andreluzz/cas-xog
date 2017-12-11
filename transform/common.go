@@ -15,7 +15,7 @@ func Execute(xog, aux *etree.Document, file *model.DriverFile) error {
 
 	headerElement := xog.FindElement("//NikuDataBus/Header")
 	if headerElement == nil {
-		return errors.New("[transform error] no header element")
+		return errors.New("transform error - no header element")
 	}
 	headerElement.CreateAttr("version", "8.0")
 
@@ -25,14 +25,14 @@ func Execute(xog, aux *etree.Document, file *model.DriverFile) error {
 	case constant.PROCESS:
 		err = specificProcessTransformations(xog, aux, file)
 		if err != nil {
-			return errors.New("[transform error] " + err.Error())
+			return errors.New("transform error - " + err.Error())
 		}
 	case constant.OBJECT:
 		specificObjectTransformations(xog, file)
 	case constant.VIEW:
 		err = specificViewTransformations(xog, aux, file)
 		if err != nil {
-			return errors.New("[transform error] " + err.Error())
+			return errors.New("transform error - " + err.Error())
 		}
 	case constant.PORTLET, constant.QUERY:
 		removeElementFromParent(xog, "//lookups")
@@ -40,7 +40,7 @@ func Execute(xog, aux *etree.Document, file *model.DriverFile) error {
 	case constant.MENU:
 		err = specificMenuTransformations(xog, aux, file)
 		if err != nil {
-			return errors.New("[transform error] " + err.Error())
+			return errors.New("transform error - " + err.Error())
 		}
 	case constant.RESOURCE_CLASS_INSTANCE, constant.WIP_CLASS_INSTANCE, constant.TRANSACTION_CLASS_INSTANCE:
 		headerElement.CreateAttr("version", "12.0")

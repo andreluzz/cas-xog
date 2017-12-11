@@ -154,6 +154,29 @@ Used to read and transform only the selected fields from the section. Only secti
 </xogdriver>
 ```
 
+### Sub tag `element`
+Used to read view actions and actions group.
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | Code of the element that you want to include or remove. | yes | 
+| `type` | Defines what element to read. Availables types: `actionGroup` and `action`. | yes | 
+| `action` | Defines what to do with the element in the target environment. Availables actions: `insert` and `remove`. | yes |
+| `insertBefore` | When a code is defined in this tag, the action or group will be positioned before this element in the target view. If not, it will be inserted as the last element. | no | 
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <view code="cas_environmentProperties" objectCode="cas_environment" path="cas_environment_view.xml" sourcePartition="NIKU.ROOT">
+        <element type="actionGroup" code="group_code" action="remove" />
+        <element type="actionGroup" code="group_code" action="insert" insertBefore="target_group_code"/>
+        <element type="action" code="action_code" action="insert" />
+        <element type="action" code="action_code" action="insert" insertBefore="target_action_code"/>
+        <element type="action" code="action_code" action="remove" />
+    </object>
+</xogdriver>
+```
+
 ## Tag `process`
 
 | Attribute | Description | Required |

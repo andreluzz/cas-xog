@@ -4,8 +4,9 @@ import (
 	"github.com/andreluzz/cas-xog/constant"
 	"os"
 	"reflect"
-	"unsafe"
+	"regexp"
 	"strings"
+	"unsafe"
 )
 
 func BytesToString(b []byte) string {
@@ -61,4 +62,22 @@ func RightPad(s, padStr string, length int) string {
 	padCountInt = 1 + ((length - len(padStr)) / len(padStr))
 	var retStr = s + strings.Repeat(padStr, padCountInt)
 	return retStr[:length]
+}
+
+func GetPathFolder(path string) string {
+	folder := ""
+
+	re := regexp.MustCompile(`.*[/\\]`)
+	match := re.FindStringSubmatch(path)
+
+	if len(match) > 0 {
+		folder = match[0]
+		matchInit, _ := regexp.MatchString(`^[/\\]`, path)
+
+		if !matchInit {
+			folder = "/" + folder
+		}
+	}
+
+	return folder
 }

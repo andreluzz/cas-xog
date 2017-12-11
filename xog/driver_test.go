@@ -56,7 +56,7 @@ func TestGetDriversListInvalidFolder(t *testing.T) {
 func TestCreateFileFolder(t *testing.T) {
 	fileType := constant.PROCESS
 
-	sourceFolder, outputFolder := CreateFileFolder(constant.READ, fileType)
+	sourceFolder, outputFolder := CreateFileFolder(constant.READ, fileType, "filename.xml")
 
 	if sourceFolder != constant.FOLDER_READ {
 		t.Errorf("Error creating file folder, expected source folder %s and received %s", constant.FOLDER_READ, sourceFolder)
@@ -80,7 +80,7 @@ func TestCreateFileFolder(t *testing.T) {
 	os.RemoveAll(folder)
 	os.RemoveAll(outputFolder)
 
-	sourceFolder, outputFolder = CreateFileFolder(constant.WRITE, fileType)
+	sourceFolder, outputFolder = CreateFileFolder(constant.WRITE, fileType, "filename.xml")
 
 	if sourceFolder != constant.FOLDER_WRITE {
 		t.Errorf("Error creating file folder, expected source folder %s and received %s", constant.FOLDER_READ, sourceFolder)
@@ -96,7 +96,7 @@ func TestCreateFileFolder(t *testing.T) {
 	os.RemoveAll(folder)
 	os.RemoveAll(outputFolder)
 
-	sourceFolder, outputFolder = CreateFileFolder(constant.MIGRATE, fileType)
+	sourceFolder, outputFolder = CreateFileFolder(constant.MIGRATE, fileType, "filename.xml")
 
 	if sourceFolder != constant.FOLDER_WRITE {
 		t.Errorf("Error creating file folder, expected source folder %s and received %s", constant.FOLDER_READ, sourceFolder)
@@ -418,6 +418,48 @@ func TestProcessDriverFileActionReadNeedAux(t *testing.T) {
 	}
 }
 
+func TestProcessDriverFileActionReadNeedAuxErrorInvalidCheck(t *testing.T) {
+	model.LoadXMLReadList("../xogRead.xml")
+
+	file := model.DriverFile{
+		Type:    constant.VIEW,
+		Code:    "code",
+		ObjCode: "project",
+		Path:    "test.xml",
+	}
+
+	mockEnvironments := &model.Environments{
+		Source: &model.EnvType{
+			Name:    "Mock Source Env",
+			URL:     "Mock URL",
+			Session: "Mock session",
+		},
+		Target: &model.EnvType{
+			Name:    "Mock Source Env",
+			URL:     "Aux_Mock_URL",
+			Session: "Mock session",
+		},
+	}
+
+	sourceFolder := constant.FOLDER_READ
+	util.ValidateFolder(sourceFolder + file.Type)
+	outputFolder := constant.FOLDER_DEBUG
+	util.ValidateFolder(outputFolder + file.Type)
+
+	soapMock := func(request, endpoint string) (string, error) {
+		if endpoint == "Aux_Mock_URL" {
+			return "", nil
+		}
+		file, _ := ioutil.ReadFile("../mock/xog/soap/soap_success_read_process_response.xml")
+		return util.BytesToString(file), nil
+	}
+
+	output := ProcessDriverFile(&file, constant.READ, sourceFolder, outputFolder, mockEnvironments, soapMock)
+	if output.Code != constant.OUTPUT_ERROR {
+		t.Errorf("Error processing driver file. Not validating aux response. Debug: %s", output.Debug)
+	}
+}
+
 func TestProcessDriverFileActionReadAuxValidateError(t *testing.T) {
 	model.LoadXMLReadList("../xogRead.xml")
 
@@ -447,11 +489,7 @@ func TestProcessDriverFileActionReadAuxValidateError(t *testing.T) {
 	util.ValidateFolder(outputFolder + file.Type)
 
 	soapMock := func(request, endpoint string) (string, error) {
-		if endpoint == mockEnvironments.Target.URL {
-			file, _ := ioutil.ReadFile("../mock/xog/soap/soap_read_process_no_output_response.xml")
-			return util.BytesToString(file), nil
-		}
-		file, _ := ioutil.ReadFile("../mock/xog/soap/soap_success_read_process_response.xml")
+		file, _ := ioutil.ReadFile("../mock/xog/soap/soap_read_process_no_output_response.xml")
 		return util.BytesToString(file), nil
 	}
 

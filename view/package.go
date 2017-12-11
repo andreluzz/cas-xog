@@ -31,6 +31,8 @@ func InstallPackage(environments *model.Environments, selectedPackage *model.Pac
 	os.MkdirAll(constant.FOLDER_DEBUG, os.ModePerm)
 	os.RemoveAll(constant.FOLDER_WRITE)
 	os.MkdirAll(constant.FOLDER_WRITE, os.ModePerm)
+	os.RemoveAll(constant.FOLDER_READ)
+	os.MkdirAll(constant.FOLDER_READ, os.ModePerm)
 
 	log.Info("\n------------------------------------------------------------------")
 	log.Info("\n[blue[Initiated at]]: %s", start.Format("Mon _2 Jan 2006 - 15:04:05"))
@@ -47,10 +49,10 @@ func InstallPackage(environments *model.Environments, selectedPackage *model.Pac
 			outputResults[constant.OUTPUT_IGNORED] += 1
 			continue
 		}
-		log.Info("\n[CAS-XOG][blue[Processing]] %03d/%03d | [blue[%s]] | file: %s", i+1, total, formattedType, f.Path)
+		log.Info("\n[CAS-XOG][blue[Processing       ]] %03d/%03d | [blue[%s]] | file: %s", i+1, total, formattedType, f.Path)
 		packageFolder := constant.FOLDER_PACKAGE + selectedPackage.Folder + selectedVersion.Folder + f.Type + "/"
 		writeFolder := constant.FOLDER_WRITE + f.Type
-		output := xog.ProcessPackageFile(f, selectedVersion, packageFolder, writeFolder)
+		output := xog.ProcessPackageFile(&f, selectedVersion, packageFolder, writeFolder, environments, util.SoapCall)
 		status, color := util.GetStatusColorFromOutput(output.Code)
 		log.Info("\r[CAS-XOG][%s[Processed %s]] %03d/%03d | [blue[%s]] | file: %s %s", color, status, i+1, total, formattedType, f.Path, util.GetOutputDebug(output.Code, output.Debug))
 		outputResults[output.Code] += 1

@@ -9,7 +9,6 @@ import (
 )
 
 func specificViewTransformations(xog, aux *etree.Document, file *model.DriverFile) error {
-
 	if len(file.Sections) > 0 && file.Code == "*" {
 		return errors.New("tag <section> is only available for single view")
 	}
@@ -32,17 +31,126 @@ func specificViewTransformations(xog, aux *etree.Document, file *model.DriverFil
 		removeElementFromParent(aux, "//lookups")
 		removeElementFromParent(aux, "//objects")
 
+		elementsTransform := false
+
+		if len(file.Elements) > 0 {
+			var err error
+			elementsTransform, err = processElements(xog, aux, file)
+			if err != nil {
+				return err
+			}
+		}
+
 		if len(file.Sections) > 0 {
 			err := updateSections(xog, aux, file)
 			if err != nil {
 				return err
 			}
-		} else {
-			updatePropertySet(xog, aux, file)
+			return nil
 		}
+
+		if elementsTransform {
+			xog.SetRoot(aux.Root())
+			return nil
+		}
+
+		updateSourceWithTargetPropertySet(xog, aux, file)
 	}
 
 	return nil
+}
+
+func processElements(xog, aux *etree.Document, file *model.DriverFile) (bool, error) {
+
+	validateCodeAndRemoveElementsFromParent(aux, "//views/property", file.Code)
+	validateCodeAndRemoveElementsFromParent(aux, "//views/filter", file.Code)
+	validateCodeAndRemoveElementsFromParent(aux, "//views/list", file.Code)
+
+	validElements := false
+	for _, e := range file.Elements {
+		if e.XPath == constant.UNDEFINED && (e.Type == constant.ELEMENT_TYPE_ACTIONGROUP || e.Type == constant.ELEMENT_TYPE_ACTION) {
+			validElements = true
+			switch e.Type {
+			case constant.ELEMENT_TYPE_ACTION:
+				if e.Action == constant.ACTION_INSERT {
+					sourceAction := xog.FindElement("//actions/group/action[@code='" + e.Code + "']")
+					if sourceAction == nil {
+						return false, errors.New("invalid source view action code")
+					}
+					sourceGroupCode := sourceAction.Parent().SelectAttrValue("code", constant.UNDEFINED)
+					targetAction := aux.FindElement("//actions/group[@code='" + sourceGroupCode + "']/action[@code='" + e.Code + "']")
+
+					if e.InsertBefore != constant.UNDEFINED {
+						insertBeforeAction := aux.FindElement("//actions/group/action[@code='" + e.InsertBefore + "']")
+						if insertBeforeAction == nil {
+							return false, errors.New("invalid insertBefore target view action code")
+						}
+						insertBeforeAction.Parent().InsertChild(insertBeforeAction, sourceAction)
+					} else {
+						if targetAction == nil {
+							targetActionNLS := aux.FindElement("//actions/group[@code='" + sourceGroupCode + "']/nls[1]")
+							targetActionNLS.Parent().InsertChild(targetActionNLS, sourceAction)
+						} else {
+							targetAction.Parent().InsertChild(targetAction, sourceAction)
+						}
+					}
+
+					if targetAction != nil {
+						targetAction.Parent().RemoveChild(targetAction)
+					}
+				} else if e.Action == constant.ACTION_REMOVE {
+					targetAction := aux.FindElement("//actions/group/action[@code='" + e.Code + "']")
+					if targetAction == nil {
+						return false, errors.New("cannot remove target view action - invalid code")
+					}
+					targetAction.Parent().RemoveChild(targetAction)
+				}
+			case constant.ELEMENT_TYPE_ACTIONGROUP:
+				if e.Action == constant.ACTION_INSERT {
+					sourceGroup := xog.FindElement("//actions/group[@code='" + e.Code + "']")
+					if sourceGroup == nil {
+						return false, errors.New("invalid source view action group code")
+					}
+
+					targetGroup := aux.FindElement("//actions/group[@code='" + e.Code + "']")
+
+					if e.InsertBefore != constant.UNDEFINED {
+						insertBeforeGroup := aux.FindElement("//actions/group[@code='" + e.InsertBefore + "']")
+						if insertBeforeGroup == nil {
+							return false, errors.New("invalid insertBefore target view action group code")
+						}
+						insertBeforeGroup.Parent().InsertChild(insertBeforeGroup, sourceGroup)
+					} else {
+						if targetGroup == nil {
+							actions := aux.FindElement("//actions")
+							actions.AddChild(sourceGroup)
+						} else {
+							targetGroup.Parent().InsertChild(targetGroup, sourceGroup)
+						}
+					}
+
+					if targetGroup != nil {
+						targetGroup.Parent().RemoveChild(targetGroup)
+					}
+
+				} else if e.Action == constant.ACTION_REMOVE {
+					targetGroup := aux.FindElement("//actions/group[@code='" + e.Code + "']")
+					if targetGroup == nil {
+						return false, errors.New("cannot remove target view action group - invalid code")
+					}
+					targetGroup.Parent().RemoveChild(targetGroup)
+				}
+			}
+		}
+	}
+
+	if validElements {
+		for i, g := range aux.FindElements("//actions/group") {
+			g.CreateAttr("groupOrder", strconv.Itoa(i))
+		}
+	}
+
+	return validElements, nil
 }
 
 func updateSections(xog, aux *etree.Document, file *model.DriverFile) error {
@@ -223,7 +331,7 @@ func validateCodeAndRemoveElementsFromParent(xog *etree.Document, path, code str
 	}
 }
 
-func updatePropertySet(xog, aux *etree.Document, file *model.DriverFile) {
+func updateSourceWithTargetPropertySet(xog, aux *etree.Document, file *model.DriverFile) {
 	sourcePropertySetView := xog.FindElement("//propertySet/update/view[@code='" + file.Code + "']")
 	if sourcePropertySetView != nil {
 		auxPropertySetView := aux.FindElement("//propertySet/update/view[@code='" + file.Code + "']")

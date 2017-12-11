@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"github.com/andreluzz/cas-xog/log"
 	"github.com/andreluzz/cas-xog/model"
+	"github.com/andreluzz/cas-xog/util"
 	"github.com/howeyc/gopass"
 	"os"
 	"strconv"
-	"github.com/andreluzz/cas-xog/util"
 )
 
 var targetEnvInput string
@@ -43,7 +43,7 @@ func Environments(action string, environments *model.Environments) bool {
 		envIndex, err := strconv.Atoi(sourceInput)
 		envIndex--
 
-		if err != nil || envIndex < 0 || envIndex > len(environments.Available) {
+		if err != nil || envIndex < 0 || envIndex >= len(environments.Available) {
 			log.Info("\n[CAS-XOG][red[ERROR]] - Invalid reading environment index!\n")
 			return false
 		}
@@ -72,7 +72,7 @@ func Environments(action string, environments *model.Environments) bool {
 	envIndex, err := strconv.Atoi(targetInput)
 	envIndex--
 
-	if err != nil || envIndex < 0 || envIndex > len(environments.Available) {
+	if err != nil || envIndex < 0 || envIndex >= len(environments.Available) {
 		log.Info("\n[CAS-XOG][red[ERROR]] - Invalid writing environment index!\n")
 		return false
 	}
