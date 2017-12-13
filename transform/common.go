@@ -28,7 +28,7 @@ func Execute(xog, aux *etree.Document, file *model.DriverFile) error {
 			return errors.New("transform error - " + err.Error())
 		}
 	case constant.OBJECT:
-		specificObjectTransformations(xog, file)
+		specificObjectTransformations(xog, aux, file)
 	case constant.VIEW:
 		err = specificViewTransformations(xog, aux, file)
 		if err != nil {

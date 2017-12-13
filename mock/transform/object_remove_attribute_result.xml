@@ -249,7 +249,79 @@
                         <linkParam dataRef="odf_pk" dataSource="data" paramCode="id"/>
                     </link>
                 </links>
-                <displayMappings/>
+                <displayMappings>
+                    <displayMapping attributeCode="status" defaultTypeCode="" type="color">
+                        <mapping hi="0" lo="0" mappingCode="range-0-0-null" typeCode="red" value="">
+                            <nls description="Error" languageCode="ca" name="Error"/>
+                            <nls description="Error" languageCode="cs" name="Error"/>
+                            <nls description="Error" languageCode="da" name="Error"/>
+                            <nls description="Error" languageCode="de" name="Error"/>
+                            <nls description="Error" languageCode="en" name="Error"/>
+                            <nls description="Error" languageCode="es" name="Error"/>
+                            <nls description="Error" languageCode="fi" name="Error"/>
+                            <nls description="Error" languageCode="fr" name="Error"/>
+                            <nls description="Error" languageCode="hu" name="Error"/>
+                            <nls description="Error" languageCode="it" name="Error"/>
+                            <nls description="Error" languageCode="ja" name="Error"/>
+                            <nls description="Error" languageCode="ko" name="Error"/>
+                            <nls description="Error" languageCode="nl" name="Error"/>
+                            <nls description="Error" languageCode="no" name="Error"/>
+                            <nls description="Error" languageCode="pl" name="Error"/>
+                            <nls description="Error" languageCode="pt" name="Error"/>
+                            <nls description="Error" languageCode="ru" name="Error"/>
+                            <nls description="Error" languageCode="sv" name="Error"/>
+                            <nls description="Error" languageCode="tr" name="Error"/>
+                            <nls description="Error" languageCode="zh" name="Error"/>
+                            <nls description="Error" languageCode="zh_TW" name="Error"/>
+                        </mapping>
+                        <mapping hi="1" lo="1" mappingCode="range-1-1-null" typeCode="yellow" value="">
+                            <nls description="Warning" languageCode="ca" name="Warning"/>
+                            <nls description="Warning" languageCode="cs" name="Warning"/>
+                            <nls description="Warning" languageCode="da" name="Warning"/>
+                            <nls description="Warning" languageCode="de" name="Warning"/>
+                            <nls description="Warning" languageCode="en" name="Warning"/>
+                            <nls description="Warning" languageCode="es" name="Warning"/>
+                            <nls description="Warning" languageCode="fi" name="Warning"/>
+                            <nls description="Warning" languageCode="fr" name="Warning"/>
+                            <nls description="Warning" languageCode="hu" name="Warning"/>
+                            <nls description="Warning" languageCode="it" name="Warning"/>
+                            <nls description="Warning" languageCode="ja" name="Warning"/>
+                            <nls description="Warning" languageCode="ko" name="Warning"/>
+                            <nls description="Warning" languageCode="nl" name="Warning"/>
+                            <nls description="Warning" languageCode="no" name="Warning"/>
+                            <nls description="Warning" languageCode="pl" name="Warning"/>
+                            <nls description="Warning" languageCode="pt" name="Warning"/>
+                            <nls description="Warning" languageCode="ru" name="Warning"/>
+                            <nls description="Warning" languageCode="sv" name="Warning"/>
+                            <nls description="Warning" languageCode="tr" name="Warning"/>
+                            <nls description="Warning" languageCode="zh" name="Warning"/>
+                            <nls description="Warning" languageCode="zh_TW" name="Warning"/>
+                        </mapping>
+                        <mapping hi="2" lo="2" mappingCode="range-2-2-null" typeCode="green" value="">
+                            <nls description="Success" languageCode="ca" name="Success"/>
+                            <nls description="Success" languageCode="cs" name="Success"/>
+                            <nls description="Success" languageCode="da" name="Success"/>
+                            <nls description="Success" languageCode="de" name="Success"/>
+                            <nls description="Success" languageCode="en" name="Success"/>
+                            <nls description="Success" languageCode="es" name="Success"/>
+                            <nls description="Success" languageCode="fi" name="Success"/>
+                            <nls description="Success" languageCode="fr" name="Success"/>
+                            <nls description="Success" languageCode="hu" name="Success"/>
+                            <nls description="Success" languageCode="it" name="Success"/>
+                            <nls description="Success" languageCode="ja" name="Success"/>
+                            <nls description="Success" languageCode="ko" name="Success"/>
+                            <nls description="Success" languageCode="nl" name="Success"/>
+                            <nls description="Success" languageCode="no" name="Success"/>
+                            <nls description="Success" languageCode="pl" name="Success"/>
+                            <nls description="Success" languageCode="pt" name="Success"/>
+                            <nls description="Success" languageCode="ru" name="Success"/>
+                            <nls description="Success" languageCode="sv" name="Success"/>
+                            <nls description="Success" languageCode="tr" name="Success"/>
+                            <nls description="Success" languageCode="zh" name="Success"/>
+                            <nls description="Success" languageCode="zh_TW" name="Success"/>
+                        </mapping>
+                    </displayMapping>
+                </displayMappings>
                 <scoreContributions/>
                 <actions>
                     <action action="odf.objectCopySourceInstances" code="odf_copy_srcobj_sistema" component="odf" isActive="true" isCustom="false" isGeneric="false" isInstance="true" isSingleSelect="false" jobDefinitionCode="NONE" navigateTo="MNP" needUserConfirmation="false" needUserInput="false" needsBridge="false" needsSelection="false" objectCode="obj_sistema" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" processCode="NONE" rendering="cviewAction" targetWidget="none" type="internalaction">

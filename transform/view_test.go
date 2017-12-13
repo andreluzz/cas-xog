@@ -914,9 +914,9 @@ func TestExecuteToInsertGroupActionWithExistingTarget(t *testing.T) {
 		SourcePartition: "NIKU.ROOT",
 		Elements: []model.Element{
 			{
-				Type:         constant.ELEMENT_TYPE_ACTIONGROUP,
-				Code:         "actions_group_test",
-				Action:       constant.ACTION_INSERT,
+				Type:   constant.ELEMENT_TYPE_ACTIONGROUP,
+				Code:   "actions_group_test",
+				Action: constant.ACTION_INSERT,
 			},
 		},
 	}
@@ -1070,9 +1070,9 @@ func TestExecuteToInsertActionWithExistingTarget(t *testing.T) {
 		SourcePartition: "NIKU.ROOT",
 		Elements: []model.Element{
 			{
-				Type:         constant.ELEMENT_TYPE_ACTION,
-				Code:         "rally_full_sync",
-				Action:       constant.ACTION_INSERT,
+				Type:   constant.ELEMENT_TYPE_ACTION,
+				Code:   "rally_full_sync",
+				Action: constant.ACTION_INSERT,
 			},
 		},
 	}
