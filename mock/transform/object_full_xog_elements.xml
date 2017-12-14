@@ -24,6 +24,29 @@
                 <nls languageCode="tr" name="Sistema"/>
                 <nls languageCode="zh" name="Sistema"/>
                 <nls languageCode="zh_TW" name="Sistema"/>
+                <customAttribute active="true" code="aprovador" column="analista" constant="false" currencyConnected="false" custom="true" dataSize="20" dataType="string" editable="true" multiValued="false" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" presenceRequired="false" private="false" required="false" unique="false" virtual="false">
+                    <nls languageCode="ca" name="Aprovador"/>
+                    <nls languageCode="cs" name="Aprovador"/>
+                    <nls languageCode="da" name="Aprovador"/>
+                    <nls languageCode="de" name="Aprovador"/>
+                    <nls languageCode="en" name="Aprovador"/>
+                    <nls languageCode="es" name="Aprovador"/>
+                    <nls languageCode="fi" name="Aprovador"/>
+                    <nls languageCode="fr" name="Aprovador"/>
+                    <nls languageCode="hu" name="Aprovador"/>
+                    <nls languageCode="it" name="Aprovador"/>
+                    <nls languageCode="ja" name="Aprovador"/>
+                    <nls languageCode="ko" name="Aprovador"/>
+                    <nls languageCode="nl" name="Aprovador"/>
+                    <nls languageCode="no" name="Aprovador"/>
+                    <nls languageCode="pl" name="Aprovador"/>
+                    <nls languageCode="pt" name="Aprovador"/>
+                    <nls languageCode="ru" name="Aprovador"/>
+                    <nls languageCode="sv" name="Aprovador"/>
+                    <nls languageCode="tr" name="Aprovador"/>
+                    <nls languageCode="zh" name="Aprovador"/>
+                    <nls languageCode="zh_TW" name="Aprovador"/>
+                </customAttribute>
                 <customAttribute active="true" code="analista" column="analista" constant="false" currencyConnected="false" custom="true" dataSize="20" dataType="string" editable="true" multiValued="false" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" presenceRequired="false" private="false" required="false" unique="false" virtual="false">
                     <nls languageCode="ca" name="Analista"/>
                     <nls languageCode="cs" name="Analista"/>
@@ -117,6 +140,7 @@
                     <nls languageCode="zh_TW" name="Status novo 2"/>
                 </customAttribute>
                 <attributeDefault code="page_layout" value="odf.obj_sistemaFrame"/>
+                <attributeDefault code="aprovador" value="test_default"/>
                 <links objectCode="obj_sistema">
                     <link action="SubPage.5161273.actionLink" active="true" code="obj_sistema.auditoria" isObjectInstanceLink="false" partitionCode="NIKU.ROOT" partitionMode="PARTITION_ONLY" system="true">
                         <nls description="Link to Sistema properties Auditoria subpage" languageCode="ca" name="Sistema Auditoria Link"/>
@@ -514,6 +538,35 @@
                         <linkParam dataRef="odf_pk" dataSource="data" paramCode="odf_pk"/>
                         <linkParam dataRef="/data/odf_view/@value" dataSource="input" paramCode="odf_view"/>
                         <availableView viewCode="obj_sistemaProperties" viewType="property"/>
+                    </action>
+                    <action action="test_action" code="test_action" component="odf" isActive="true" isCustom="false" isGeneric="false" isInstance="true" isSingleSelect="false" jobDefinitionCode="NONE" navigateTo="MNP" needUserConfirmation="false" needUserInput="false" needsBridge="false" needsSelection="false" objectCode="obj_sub_sistema" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" processCode="NONE" rendering="cviewAction" targetWidget="none" type="internalaction">
+                        <nls description="Copiar la instància Sub sistema" languageCode="ca" name="Copiar"/>
+                        <nls description="Kopírovat instanci Sub sistema" languageCode="cs" name="Kopírovat"/>
+                        <nls description="Kopier forekomsten Sub sistema" languageCode="da" name="Kopier"/>
+                        <nls description="Instanz Sub sistema kopieren" languageCode="de" name="Kopieren"/>
+                        <nls description="Copy the Sub sistema instance" languageCode="en" name="Copy"/>
+                        <nls description="Copiar la instancia Sub sistema" languageCode="es" name="Copiar"/>
+                        <nls description="Kopioi kohteen Sub sistema esiintymä" languageCode="fi" name="Kopio"/>
+                        <nls description="Copier l'instance Sub sistema" languageCode="fr" name="Copier"/>
+                        <nls description="A(z) Sub sistema példány másolása" languageCode="hu" name="Másolás"/>
+                        <nls description="Copia l'istanza Sub sistema" languageCode="it" name="Copia"/>
+                        <nls description="Sub sistema インスタンスのコピー" languageCode="ja" name="コピー"/>
+                        <nls description="[ko: Copy the Sub sistema instance]" languageCode="ko" name="[ko: Copy]"/>
+                        <nls description="Kopieer de instantie van Sub sistema" languageCode="nl" name="Kopiëren"/>
+                        <nls description="Kopier Sub sistema-forekomsten" languageCode="no" name="Kopier"/>
+                        <nls description="Kopiuj wystąpienie obiektu Sub sistema" languageCode="pl" name="Kopiuj"/>
+                        <nls description="Copiar a instância do Sub sistema" languageCode="pt" name="Copiar"/>
+                        <nls description="Копировать экземпляр Sub sistema" languageCode="ru" name="Копировать"/>
+                        <nls description="Kopiera Sub sistema-instansen" languageCode="sv" name="Kopiera"/>
+                        <nls description="Sub sistema olayını kopyala" languageCode="tr" name="Kopyala"/>
+                        <nls description="复制 Sub sistema 实例" languageCode="zh" name="复制"/>
+                        <nls description="複製 Sub sistema 例項" languageCode="zh_TW" name="複製"/>
+                        <linkParam dataRef="obj_sub_sistema" dataSource="static" paramCode="odf_code"/>
+                        <linkParam dataRef="obj_sub_sistema" dataSource="static" paramCode="src_object_code"/>
+                        <linkParam dataRef="obj_sub_sistema" dataSource="static" paramCode="dest_object_code"/>
+                        <linkParam dataRef="odf_pk" dataSource="data" paramCode="id"/>
+                        <linkParam dataRef="odf_pk" dataSource="data" paramCode="odf_pk"/>
+                        <availableView viewCode="obj_sub_sistemaProperties" viewType="property"/>
                     </action>
                 </actions>
                 <autonumbering>

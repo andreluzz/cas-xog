@@ -15,7 +15,7 @@ func specificObjectTransformations(xog, aux *etree.Document, file *model.DriverF
 
 		for _, f := range file.Elements {
 			if f.Code != constant.UNDEFINED && (f.Type == constant.ELEMENT_TYPE_ACTION || f.Type == constant.ELEMENT_TYPE_LINK || f.Type == constant.ELEMENT_TYPE_ATTRIBUTE) {
-				for _, e := range xog.FindElements("//*[@code='" + f.Code + "']") {
+				for _, e := range xog.FindElements("//[@code='" + f.Code + "']") {
 					removeElementFromParent(aux, "//"+ e.Tag + "[@code='" + f.Code + "']")
 					parentTag := e.Parent().Tag
 					if parentTag == "object" {

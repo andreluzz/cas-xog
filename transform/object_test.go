@@ -32,6 +32,10 @@ func TestExecuteToReturnObjectElementAttribute(t *testing.T) {
 		Type: constant.OBJECT,
 		Elements: []model.Element{
 			{
+				Code: "test_action",
+				Type: constant.ELEMENT_TYPE_ACTION,
+			},
+			{
 				Code: "aprovador",
 				Type: constant.ELEMENT_TYPE_ATTRIBUTE,
 			},
@@ -43,7 +47,7 @@ func TestExecuteToReturnObjectElementAttribute(t *testing.T) {
 	}
 
 	xog := etree.NewDocument()
-	xog.ReadFromFile(packageMockFolder + "object_full_xog.xml")
+	xog.ReadFromFile(packageMockFolder + "object_full_xog_elements.xml")
 	aux := etree.NewDocument()
 	aux.ReadFromFile(packageMockFolder + "object_full_aux.xml")
 	err := Execute(xog, aux, &file)
