@@ -56,8 +56,8 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 | `code` | Object code. | yes | 
 | `path` | Path where the file will be saved on the file system. | yes | 
 | `partitionModel` | Used when you need to set a new partitionModel or change the current one. | no |
-| `sourcePartition` | When defined reads only elements from this partition code. | no |
-| `targetPartition` | Used to change the current partition code. Used alone without sourcePartition replaces the tag partitionCode of all xog elements with the defined value. | no |
+| `targetPartition` | Used to change elements partition code to the defined value. When uses alone without sourcePartition replaces the tag partitionCode on all elements. | no |
+| `sourcePartition` | Used to change only elements from this partition code to target partition. Define sourcePartition without targetPartition won't do anything. | no |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
