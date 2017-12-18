@@ -165,11 +165,11 @@ func (d *DriverFile) Write(folder string) {
 }
 
 func (d *DriverFile) NeedAuxXML() bool {
-	return (d.Type == constant.VIEW && d.Code != "*") || (d.Type == constant.PROCESS && d.CopyPermissions != constant.UNDEFINED) || (d.Type == constant.MENU && len(d.Sections) > 0)
+	return (d.Type == constant.OBJECT && len(d.Elements) > 0) || (d.Type == constant.VIEW && d.Code != "*") || (d.Type == constant.PROCESS && d.CopyPermissions != constant.UNDEFINED) || (d.Type == constant.MENU && len(d.Sections) > 0)
 }
 
 func (d *DriverFile) NeedPackageTransform() bool {
-	return (d.Type == constant.VIEW && d.Code != "*") || (d.Type == constant.MENU && len(d.Sections) > 0)
+	return (d.Type == constant.OBJECT && len(d.Elements) > 0) || (d.Type == constant.VIEW && d.Code != "*") || (d.Type == constant.MENU && len(d.Sections) > 0)
 }
 
 func (d *DriverFile) TagCDATA() (string, string) {
@@ -255,6 +255,12 @@ func getAuxDriverFile(d *DriverFile) *DriverFile {
 	switch d.Type {
 	case constant.PROCESS:
 		return &DriverFile{Code: d.CopyPermissions, Path: "aux_" + d.CopyPermissions + ".xml", Type: d.Type}
+	case constant.OBJECT:
+		partition := d.SourcePartition
+		if d.TargetPartition != constant.UNDEFINED {
+			partition = d.TargetPartition
+		}
+		return &DriverFile{Code: d.Code, Path: "aux_" + d.Path + ".xml", Type: d.Type, SourcePartition: partition}
 	case constant.VIEW:
 		partition := d.SourcePartition
 		if d.TargetPartition != constant.UNDEFINED {

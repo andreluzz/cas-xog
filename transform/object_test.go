@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestExecuteToReturnObjectNoPartitionNoElement(t *testing.T) {
+func TestExecuteToReturnObjectFull(t *testing.T) {
 	file := model.DriverFile{
 		Code: "obj_sistema",
 		Type: constant.OBJECT,
@@ -26,145 +26,37 @@ func TestExecuteToReturnObjectNoPartitionNoElement(t *testing.T) {
 	}
 }
 
-func TestExecuteToReturnObjectWithOneAttribute(t *testing.T) {
+func TestExecuteToReturnObjectElementAttribute(t *testing.T) {
 	file := model.DriverFile{
 		Code: "obj_sistema",
 		Type: constant.OBJECT,
 		Elements: []model.Element{
 			{
-				Type: "attribute",
+				Code: "test_action",
+				Type: constant.ELEMENT_TYPE_ACTION,
+			},
+			{
+				Code: "aprovador",
+				Type: constant.ELEMENT_TYPE_ATTRIBUTE,
+			},
+			{
 				Code: "status",
+				Type: constant.ELEMENT_TYPE_ATTRIBUTE,
 			},
 		},
 	}
 
 	xog := etree.NewDocument()
-	xog.ReadFromFile(packageMockFolder + "object_full_xog.xml")
-	err := Execute(xog, nil, &file)
+	xog.ReadFromFile(packageMockFolder + "object_full_xog_elements.xml")
+	aux := etree.NewDocument()
+	aux.ReadFromFile(packageMockFolder + "object_full_aux.xml")
+	err := Execute(xog, aux, &file)
 
 	if err != nil {
 		t.Fatalf("Error transforming object XOG file. Debug: %s", err.Error())
 	}
 
-	if xog.FindElement("//customAttribute[@code='"+file.Elements[0].Code+"']") == nil {
-		t.Errorf("Error transforming object XOG file. Attribute: %s not found.", file.Elements[0].Code)
-	}
-
-	count := len(xog.FindElements("//customAttribute"))
-	if count > 1 {
-		t.Errorf("Error transforming object XOG file. Expected 1 got %d attributes", count)
-	}
-
-	if readMockResultAndCompare(xog, "object_result_only_one_attribute.xml") == false {
-		t.Errorf("Error transforming object XOG file. Invalid result XML.")
-	}
-}
-
-func TestExecuteToReturnObjectWithOneAction(t *testing.T) {
-	file := model.DriverFile{
-		Code: "obj_sistema",
-		Type: constant.OBJECT,
-		Elements: []model.Element{
-			{
-				Type: "action",
-				Code: "action_cas_xog",
-			},
-		},
-	}
-
-	xog := etree.NewDocument()
-	xog.ReadFromFile(packageMockFolder + "object_full_xog.xml")
-	err := Execute(xog, nil, &file)
-
-	if err != nil {
-		t.Fatalf("Error transforming object XOG file. Debug: %s", err.Error())
-	}
-
-	if xog.FindElement("//action[@code='"+file.Elements[0].Code+"']") == nil {
-		t.Errorf("Error transforming object XOG file. Action: %s not found.", file.Elements[0].Code)
-	}
-
-	count := len(xog.FindElements("//customAttribute"))
-	if count > 0 {
-		t.Errorf("Error transforming object XOG file. Expected 0 got %d customAttributes", count)
-	}
-
-	count = len(xog.FindElements("//link"))
-	if count > 0 {
-		t.Errorf("Error transforming object XOG file. Expected 0 got %d links", count)
-	}
-
-	if readMockResultAndCompare(xog, "object_result_only_one_action.xml") == false {
-		t.Errorf("Error transforming object XOG file. Invalid result XML.")
-	}
-}
-
-func TestExecuteToReturnObjectWithOneLink(t *testing.T) {
-	file := model.DriverFile{
-		Code: "obj_sistema",
-		Type: constant.OBJECT,
-		Elements: []model.Element{
-			{
-				Type: "link",
-				Code: "obj_sistema.lk_teste",
-			},
-		},
-	}
-
-	xog := etree.NewDocument()
-	xog.ReadFromFile(packageMockFolder + "object_full_xog.xml")
-	err := Execute(xog, nil, &file)
-
-	if err != nil {
-		t.Fatalf("Error transforming object XOG file. Debug: %s", err.Error())
-	}
-
-	if xog.FindElement("//link[@code='"+file.Elements[0].Code+"']") == nil {
-		t.Errorf("Error transforming object XOG file. Link: %s not found.", file.Elements[0].Code)
-	}
-
-	count := len(xog.FindElements("//customAttribute"))
-	if count > 0 {
-		t.Errorf("Error transforming object XOG file. Expected 0 got %d customAttributes", count)
-	}
-
-	count = len(xog.FindElements("//action"))
-	if count > 0 {
-		t.Errorf("Error transforming object XOG file. Expected 0 got %d actions", count)
-	}
-
-	if readMockResultAndCompare(xog, "object_result_only_one_link.xml") == false {
-		t.Errorf("Error transforming object XOG file. Invalid result XML.")
-	}
-}
-
-func TestExecuteToReturnObjectSourcePartition(t *testing.T) {
-	file := model.DriverFile{
-		Code:            "obj_sistema",
-		Type:            constant.OBJECT,
-		SourcePartition: "NIKU.ROOT",
-	}
-
-	xog := etree.NewDocument()
-	xog.ReadFromFile(packageMockFolder + "object_full_xog.xml")
-	err := Execute(xog, nil, &file)
-
-	if err != nil {
-		t.Fatalf("Error transforming object XOG file. Debug: %s", err.Error())
-	}
-
-	count := 0
-	for _, e := range xog.FindElements("//*[@partitionCode]") {
-		if e.SelectAttrValue("partitionCode", constant.UNDEFINED) != file.SourcePartition {
-			count++
-		}
-	}
-
-	if count > 0 {
-		t.Errorf("Error transforming object XOG file. Expected 0 got %d elements from other partitions", count)
-	}
-
-	if readMockResultAndCompare(xog, "object_result_source_partition.xml") == false {
+	if readMockResultAndCompare(xog, "object_elements_result.xml") == false {
 		t.Errorf("Error transforming object XOG file. Invalid result XML.")
 	}
 }
@@ -222,8 +114,8 @@ func TestExecuteToReturnObjectChangeSourcePartitionToTarget(t *testing.T) {
 	}
 
 	count = len(xog.FindElements("//object[@code='" + file.Code + "']/*[@partitionCode='" + file.TargetPartition + "']"))
-	if count != 2 {
-		t.Errorf("Error transforming object XOG file. Expected 2 got %d target partition (%s) elements", count, file.TargetPartition)
+	if count != 3 {
+		t.Errorf("Error transforming object XOG file. Expected 3 got %d target partition (%s) elements", count, file.TargetPartition)
 	}
 
 	if readMockResultAndCompare(xog, "object_result_from_source_to_target_partition.xml") == false {
