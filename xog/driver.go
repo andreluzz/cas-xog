@@ -106,8 +106,7 @@ func GetDriversList(folder string) ([]model.Driver, error) {
 }
 
 func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolder string, environments *model.Environments, soapFunc util.Soap) model.Output {
-	output := model.Output{Code: constant.OUTPUT_SUCCESS, Debug: ""}
-	transformedString := ""
+	output := model.Output{Code: constant.OUTPUT_SUCCESS, Debug: constant.UNDEFINED}
 
 	if action == constant.MIGRATE && file.Type != constant.MIGRATION {
 		output.Code = constant.OUTPUT_WARNING
@@ -126,8 +125,7 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 			output.Debug = err.Error()
 			return output
 		}
-		transformedString, _ = resp.WriteToString()
-		file.SetXML(transformedString)
+		file.SetXML(resp)
 		file.Write(outputFolder)
 		return output
 	}
@@ -140,7 +138,7 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 	}
 	if action == constant.WRITE {
 		iniTagRegexpStr, endTagRegexpStr := file.TagCDATA()
-		if iniTagRegexpStr != "" && endTagRegexpStr != "" {
+		if iniTagRegexpStr != constant.UNDEFINED && endTagRegexpStr != constant.UNDEFINED {
 			transformedString := transform.IncludeCDATA(file.GetXML(), iniTagRegexpStr, endTagRegexpStr)
 			file.SetXML(transformedString)
 		}
@@ -180,9 +178,13 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 			return output
 		}
 		iniTagRegexpStr, endTagRegexpStr := file.TagCDATA()
-		if iniTagRegexpStr != "" && endTagRegexpStr != "" {
+		if iniTagRegexpStr != constant.UNDEFINED && endTagRegexpStr != constant.UNDEFINED {
 			transformedString := transform.IncludeCDATA(file.GetXML(), iniTagRegexpStr, endTagRegexpStr)
 			file.SetXML(transformedString)
+		}
+
+		if file.ExportToExcel {
+			migration.ExportInstancesToExcel(xogResponse, file, constant.FOLDER_MIGRATION)
 		}
 	}
 
@@ -191,8 +193,8 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 }
 
 func CreateFileFolder(action, fileType, path string) (string, string) {
-	sourceFolder := ""
-	outputFolder := ""
+	sourceFolder := constant.UNDEFINED
+	outputFolder := constant.UNDEFINED
 
 	switch action {
 	case constant.READ:

@@ -120,9 +120,7 @@ func TestReadDataFromExcelToReturnXMLResult(t *testing.T) {
 	expectedResult.IndentTabs()
 	expectedResultString, _ := expectedResult.WriteToString()
 
-	result.IndentTabs()
-	resultString, _ := result.WriteToString()
-	if resultString != expectedResultString {
+	if result != expectedResultString {
 		t.Errorf("Error reading data from excel to XOG file. Debug: incorrect result")
 	}
 }
@@ -155,7 +153,7 @@ func TestExportInstancesToExcelToReturnErrorExcelPath(t *testing.T) {
 	result := etree.NewDocument()
 	result.ReadFromFile(packageMockFolder + "result.xml")
 	folder := ""
-	err := ExportInstancesToExcel(result, file, folder)
+	err := ExportInstancesToExcel(result, &file, folder)
 	if err == nil {
 		t.Fatalf("Error exporting instances to excel file. Debug: not validating if ExcelFile and Folder exists")
 	}
@@ -176,7 +174,7 @@ func TestExportInstancesToExcelToReturnErrorXPath(t *testing.T) {
 	result := etree.NewDocument()
 	result.ReadFromFile(packageMockFolder + "result.xml")
 	folder := ""
-	err := ExportInstancesToExcel(result, file, folder)
+	err := ExportInstancesToExcel(result, &file, folder)
 	if err == nil {
 		t.Fatalf("Error exporting instances to excel file. Debug: not validating if XPath element")
 	}
@@ -212,7 +210,7 @@ func TestExportInstancesToExcelToReturnExcelFile(t *testing.T) {
 	result := etree.NewDocument()
 	result.ReadFromFile(packageMockFolder + "result.xml")
 	folder := "../" + constant.FOLDER_READ + file.Type + "/"
-	err := ExportInstancesToExcel(result, file, folder)
+	err := ExportInstancesToExcel(result, &file, folder)
 	if err != nil {
 		t.Fatalf("Error exporting instances to excel file. Debug: %s", err.Error())
 	}

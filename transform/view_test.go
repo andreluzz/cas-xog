@@ -93,6 +93,28 @@ func TestExecuteToReturnViewSingle(t *testing.T) {
 	}
 }
 
+func TestExecuteToReturnViewSingleList(t *testing.T) {
+	file := model.DriverFile{
+		Type:            constant.VIEW,
+		Code:            "odf.obj_sistemaList",
+		ObjCode:         "obj_sistema",
+	}
+
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "view_full_xog.xml")
+	aux := etree.NewDocument()
+	aux.ReadFromFile(packageMockFolder + "view_full_xog.xml")
+	err := Execute(xog, aux, &file)
+
+	if err != nil {
+		t.Fatalf("Error transforming view XOG file. Debug: %s", err.Error())
+	}
+
+	if readMockResultAndCompare(xog, "view_single_list_result.xml") == false {
+		t.Errorf("Error transforming view XOG file. Invalid result XML.")
+	}
+}
+
 func TestExecuteToReturnViewSingleNotInTarget(t *testing.T) {
 	file := model.DriverFile{
 		Type:            constant.VIEW,

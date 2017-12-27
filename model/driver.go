@@ -99,6 +99,7 @@ func (d *DriverFile) InitXML(action, folder string) error {
 	if action != constant.READ {
 		xml, err = parserWriteXML(d, folder)
 	}
+
 	d.xogXML = xml
 	if d.NeedAuxXML() {
 		d.auxXML, err = parserReadXML(getAuxDriverFile(d))
