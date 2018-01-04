@@ -22,6 +22,7 @@ func ProcessDriverFiles(driver *model.Driver, action string, environments *model
 	log.Info("\nProcessing driver: %s", driver.FilePath)
 	log.Info("\n------------------------------------------------------------------\n")
 
+	processingString := "processing  "
 	if action == "r" {
 		os.RemoveAll(constant.FOLDER_READ)
 		os.MkdirAll(constant.FOLDER_READ, os.ModePerm)
@@ -30,9 +31,11 @@ func ProcessDriverFiles(driver *model.Driver, action string, environments *model
 	} else if action == "w" {
 		os.RemoveAll(constant.FOLDER_DEBUG)
 		os.MkdirAll(constant.FOLDER_DEBUG, os.ModePerm)
+		processingString = "processing   "
 	} else if action == "m" {
 		os.RemoveAll(constant.FOLDER_MIGRATION)
 		os.MkdirAll(constant.FOLDER_MIGRATION, os.ModePerm)
+		processingString = "processing    "
 	}
 
 	total := len(driver.Files)
@@ -45,8 +48,11 @@ func ProcessDriverFiles(driver *model.Driver, action string, environments *model
 			outputResults[constant.OUTPUT_IGNORED] += 1
 			continue
 		}
-		log.Info("\n[CAS-XOG][blue[Processing  ]] %03d/%03d | [blue[%s]] | file: %s", i+1, total, formattedType, f.Path)
+		log.Info("\n[CAS-XOG][blue[%s]] %03d/%03d | [blue[%s]] | file: %s", processingString, i+1, total, formattedType, f.Path)
 		sourceFolder, outputFolder := xog.CreateFileFolder(action, f.Type, f.Path)
+		if f.Type == constant.MIGRATION {
+			sourceFolder = constant.FOLDER_MIGRATION
+		}
 		output := xog.ProcessDriverFile(&f, action, sourceFolder, outputFolder, environments, util.SoapCall)
 		status, color := util.GetStatusColorFromOutput(output.Code)
 		log.Info("\r[CAS-XOG][%s[%s %s]] %03d/%03d | [blue[%s]] | file: %s %s", color, util.GetActionLabel(action), status, i+1, total, formattedType, f.Path, util.GetOutputDebug(output.Code, output.Debug))

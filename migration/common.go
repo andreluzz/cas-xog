@@ -2,6 +2,7 @@ package migration
 
 import (
 	"errors"
+	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/model"
 	"github.com/andreluzz/cas-xog/util"
 	"github.com/beevik/etree"
@@ -10,16 +11,16 @@ import (
 	"strings"
 )
 
-func ReadDataFromExcel(file *model.DriverFile) (*etree.Document, error) {
+func ReadDataFromExcel(file *model.DriverFile) (string, error) {
 
-	err := errors.New("")
+	err := errors.New(constant.UNDEFINED)
 	err = nil
 
 	excelStartRowIndex := 0
-	if file.ExcelStartRow != "" {
+	if file.ExcelStartRow != constant.UNDEFINED {
 		excelStartRowIndex, err = strconv.Atoi(file.ExcelStartRow)
 		if err != nil {
-			return nil, errors.New("migration - tag 'startRow' not a number. Debug:  " + err.Error())
+			return constant.UNDEFINED, errors.New("migration - tag 'startRow' not a number. Debug:  " + err.Error())
 		}
 		excelStartRowIndex -= 1
 	}
@@ -27,16 +28,16 @@ func ReadDataFromExcel(file *model.DriverFile) (*etree.Document, error) {
 	xog := etree.NewDocument()
 	err = xog.ReadFromFile(file.Template)
 	if err != nil {
-		return nil, errors.New("migration - invalid template file. Debug: " + err.Error())
+		return constant.UNDEFINED, errors.New("migration - invalid template file. Debug: " + err.Error())
 	}
 
 	instance := "instance"
-	if file.InstanceTag != "" {
+	if file.InstanceTag != constant.UNDEFINED {
 		instance = file.InstanceTag
 	}
 	templateInstanceElement := xog.FindElement("//" + instance)
 	if templateInstanceElement == nil {
-		return nil, errors.New("migration - template invalid no instance element found")
+		return constant.UNDEFINED, errors.New("migration - template invalid no instance element found")
 	}
 
 	parent := templateInstanceElement.Parent()
@@ -45,7 +46,7 @@ func ReadDataFromExcel(file *model.DriverFile) (*etree.Document, error) {
 
 	xlFile, err := xlsx.OpenFile(file.ExcelFile)
 	if err != nil {
-		return nil, errors.New("migration - error opening excel. Debug: " + err.Error())
+		return constant.UNDEFINED, errors.New("migration - error opening excel. Debug: " + err.Error())
 	}
 
 	for index, row := range xlFile.Sheets[0].Rows {
@@ -53,24 +54,27 @@ func ReadDataFromExcel(file *model.DriverFile) (*etree.Document, error) {
 			element := instanceCopy.Copy()
 			for _, match := range file.MatchExcel {
 				var e *etree.Element
-				if match.XPath == "" {
+				if match.XPath == constant.UNDEFINED {
 					e = element
 				} else {
 					e = element.FindElement(match.XPath)
 				}
 
 				if e == nil {
-					return nil, errors.New("migration - invalid xpath element not found in template file")
+					return constant.UNDEFINED, errors.New("migration - invalid xpath element not found in template file")
 				}
 
-				value := row.Cells[match.Col-1].String()
+				value := constant.UNDEFINED
+				if match.Col-1 < len(row.Cells) {
+					value = row.Cells[match.Col-1].String()
+				}
 
-				if match.AttributeName != "" {
+				if match.AttributeName != constant.UNDEFINED {
 					e.CreateAttr(match.AttributeName, value)
 				} else {
-					if match.MultiValued && value != "" {
+					if match.MultiValued && value != constant.UNDEFINED {
 						separator := ";"
-						if match.Separator != "" {
+						if match.Separator != constant.UNDEFINED {
 							separator = match.Separator
 						}
 						for _, val := range strings.Split(value, separator) {
@@ -85,11 +89,11 @@ func ReadDataFromExcel(file *model.DriverFile) (*etree.Document, error) {
 			parent.AddChild(element)
 		}
 	}
-
-	return xog, nil
+	xog.IndentTabs()
+	return xog.WriteToString()
 }
 
-func ExportInstancesToExcel(xog *etree.Document, file model.DriverFile, folder string) error {
+func ExportInstancesToExcel(xog *etree.Document, file *model.DriverFile, folder string) error {
 	xlsxFile := xlsx.NewFile()
 	sheet, _ := xlsxFile.AddSheet("Instances")
 
@@ -98,7 +102,7 @@ func ExportInstancesToExcel(xog *etree.Document, file model.DriverFile, folder s
 
 		for _, match := range file.MatchExcel {
 			var e *etree.Element
-			if match.XPath == "" {
+			if match.XPath == constant.UNDEFINED {
 				e = instance
 			} else {
 				e = instance.FindElement(match.XPath)

@@ -55,9 +55,21 @@ func specificViewTransformations(xog, aux *etree.Document, file *model.DriverFil
 		}
 
 		updateSourceWithTargetPropertySet(xog, aux, file)
+
+		orderViewChildElements(xog, "//property")
+		orderViewChildElements(xog, "//propertySet")
+		orderViewChildElements(xog, "//filter")
+		orderViewChildElements(xog, "//list")
 	}
 
 	return nil
+}
+
+func orderViewChildElements(xog *etree.Document, sequenceElementPath string) {
+	for _, e := range xog.FindElements(sequenceElementPath) {
+		e.Parent().AddChild(e.Copy())
+		e.Parent().RemoveChild(e)
+	}
 }
 
 func processElements(xog, aux *etree.Document, file *model.DriverFile) (bool, error) {

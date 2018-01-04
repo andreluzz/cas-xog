@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"os"
 	"testing"
+	"github.com/tealeg/xlsx"
 )
 
 func deleteTestFolders() {
@@ -200,6 +201,91 @@ func TestProcessDriverFileWrite(t *testing.T) {
 		t.Errorf("Error processing driver file. Debug: %s", output.Debug)
 	}
 
+}
+
+func TestProcessDriverFileActionExportToExcel(t *testing.T) {
+	model.LoadXMLReadList("../xogRead.xml")
+
+	file := model.DriverFile{
+		Type:          constant.RESOURCE_INSTANCE,
+		Code:          "*",
+		Path:          "instances.xml",
+		InstanceTag:   "Resource",
+		ExcelFile:     "test.xlsx",
+		ExportToExcel: true,
+		MatchExcel: []model.MatchExcel{
+			{
+				AttributeName: "resourceId",
+			},
+			{
+				AttributeName: "displayName",
+				XPath:         "//PersonalInformation",
+			},
+			{
+				AttributeName: "emailAddress",
+				XPath:         "//PersonalInformation",
+			},
+			{
+				AttributeName: "firstName",
+				XPath:         "//PersonalInformation",
+			},
+			{
+				AttributeName: "lastName",
+				XPath:         "//PersonalInformation",
+			},
+			{
+				AttributeName: "unitPath",
+				XPath:         "//OBSAssoc[@id='corpLocationOBS']",
+			},
+			{
+				AttributeName: "unitPath",
+				XPath:         "//OBSAssoc[@id='resourcePool']",
+			},
+			{
+				XPath: "//ColumnValue[@name='partition_code']",
+			},
+		},
+	}
+
+	mockEnvironments := &model.Environments{
+		Source: &model.EnvType{
+			Name:    "Mock Source Env",
+			URL:     "Mock URL",
+			Session: "Mock session",
+		},
+		Target: &model.EnvType{
+			Name:    "Mock Source Env",
+			URL:     "Mock URL",
+			Session: "Mock session",
+		},
+	}
+
+	soapMock := func(request, endpoint string) (string, error) {
+		file, _ := ioutil.ReadFile("../mock/xog/soap/soap_read_resources_instance_response.xml")
+		return util.BytesToString(file), nil
+	}
+
+	sourceFolder := "../" + constant.FOLDER_READ
+	util.ValidateFolder(sourceFolder + file.Type)
+	outputFolder := "../" + constant.FOLDER_DEBUG
+	util.ValidateFolder(outputFolder + file.Type)
+
+	output := ProcessDriverFile(&file, constant.READ, sourceFolder, outputFolder, mockEnvironments, soapMock)
+	if output.Code != constant.OUTPUT_SUCCESS {
+		t.Fatalf("Error processing driver file. Action migrate with errors. Debug: %s", output.Debug)
+	}
+
+	xlFile, err := xlsx.OpenFile(constant.FOLDER_MIGRATION + file.ExcelFile)
+	if err != nil {
+		t.Fatalf("Error processing driver file. Opening output xlsx error. Debug: %s", err.Error())
+	}
+
+	value := xlFile.Sheets[0].Rows[20].Cells[5].Value
+	if value != "/New York" {
+		t.Errorf("Error processing driver file. Excel file with wrong data. Expected: '/New York' received: %s", value)
+	}
+
+	os.RemoveAll(constant.FOLDER_MIGRATION)
 }
 
 func TestProcessDriverFileActionMigrate(t *testing.T) {

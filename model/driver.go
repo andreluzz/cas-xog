@@ -99,6 +99,7 @@ func (d *DriverFile) InitXML(action, folder string) error {
 	if action != constant.READ {
 		xml, err = parserWriteXML(d, folder)
 	}
+
 	d.xogXML = xml
 	if d.NeedAuxXML() {
 		d.auxXML, err = parserReadXML(getAuxDriverFile(d))
@@ -292,8 +293,6 @@ func parserReadXML(d *DriverFile) (string, error) {
 	req := etree.NewDocument()
 	req.SetRoot(envelope)
 
-	documentLocation := false
-
 	switch d.Type {
 	case constant.LOOKUP:
 		req.FindElement("//Filter[@name='code']").SetText(strings.ToUpper(d.Code))
@@ -319,7 +318,6 @@ func parserReadXML(d *DriverFile) (string, error) {
 		}
 		req.FindElement("//Filter[@name='instanceCode']").SetText(d.Code)
 		req.FindElement("//Filter[@name='objectCode']").SetText(d.ObjCode)
-		documentLocation = true
 	case constant.RESOURCE_CLASS_INSTANCE:
 		req.FindElement("//Filter[@name='resource_class']").SetText(d.Code)
 	case constant.WIP_CLASS_INSTANCE:
@@ -334,14 +332,14 @@ func parserReadXML(d *DriverFile) (string, error) {
 		req.FindElement("//Filter[@name='userName']").SetText(d.Code)
 	case constant.PROJECT_INSTANCE:
 		req.FindElement("//Filter[@name='projectID']").SetText(d.Code)
-		documentLocation = true
 	case constant.IDEA_INSTANCE, constant.APPLICATION_INSTANCE, constant.ASSET_INSTANCE, constant.OTHER_INVESTMENT_INSTANCE, constant.PRODUCT_INSTANCE, constant.SERVICE_INSTANCE:
 		req.FindElement("//Filter[@name='objectID']").SetText(d.Code)
-		documentLocation = true
 	}
 
-	if documentLocation {
-		req.FindElement("//args[@name='documentLocation']").CreateAttr("value", "./"+constant.FOLDER_WRITE+"_"+d.Type+"/_document")
+	documentLocationElement := req.FindElement("//args[@name='documentLocation']")
+	if documentLocationElement != nil {
+		folder := "./" + constant.FOLDER_WRITE + "_" + d.Type + "/_document"
+		documentLocationElement.CreateAttr("value", folder)
 	}
 
 	req.IndentTabs()

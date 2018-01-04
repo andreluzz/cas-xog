@@ -183,6 +183,7 @@
                 <args name="include_management" value="true"/>
                 <args name="include_custom" value="true"/>
                 <args name="include_financial" value="true"/>
+                <args name="documentLocation" />
             </Header>
             <Query>
                 <Filter criteria="OR" name="resourceID"/>
@@ -210,7 +211,6 @@
                 <args name="include_actuals" value="true"/>
                 <args name="include_custom" value="true"/>
                 <args name="include_burdening" value="true"/>
-
                 <args name="documentLocation" />
             </Header>
             <Query>
@@ -224,7 +224,6 @@
                 <args name="include_resources" value="true"/>
                 <args name="include_tasks" value="true"/>
                 <args name="include_allocations" value="true"/>
-
                 <args name="documentLocation" />
             </Header>
             <Query>
@@ -238,7 +237,6 @@
                 <args name="include_resources" value="true"/>
                 <args name="include_tasks" value="true"/>
                 <args name="include_allocations" value="true"/>
-
                 <args name="documentLocation" />
             </Header>
             <Query>
@@ -252,7 +250,6 @@
                 <args name="include_resources" value="true"/>
                 <args name="include_tasks" value="true"/>
                 <args name="include_allocations" value="true"/>
-
                 <args name="documentLocation" />
             </Header>
             <Query>
@@ -266,7 +263,6 @@
                 <args name="include_resources" value="true"/>
                 <args name="include_tasks" value="true"/>
                 <args name="include_allocations" value="true"/>
-
                 <args name="documentLocation" />
             </Header>
             <Query>
@@ -280,7 +276,6 @@
                 <args name="include_resources" value="true"/>
                 <args name="include_tasks" value="true"/>
                 <args name="include_allocations" value="true"/>
-
                 <args name="documentLocation" />
             </Header>
             <Query>
