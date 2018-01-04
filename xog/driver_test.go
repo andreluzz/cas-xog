@@ -202,6 +202,81 @@ func TestProcessDriverFileWrite(t *testing.T) {
 
 }
 
+func TestProcessDriverFileActionExportToExcel(t *testing.T) {
+	model.LoadXMLReadList("../xogRead.xml")
+
+	file := model.DriverFile{
+		Type:          constant.RESOURCE_INSTANCE,
+		Code:          "*",
+		Path:          "instances.xml",
+		InstanceTag:   "Resource",
+		ExcelFile:     "test.xlsx",
+		ExportToExcel: true,
+		MatchExcel: []model.MatchExcel{
+			{
+				AttributeName: "resourceId",
+			},
+			{
+				AttributeName: "displayName",
+				XPath:         "//PersonalInformation",
+			},
+			{
+				AttributeName: "emailAddress",
+				XPath:         "//PersonalInformation",
+			},
+			{
+				AttributeName: "firstName",
+				XPath:         "//PersonalInformation",
+			},
+			{
+				AttributeName: "lastName",
+				XPath:         "//PersonalInformation",
+			},
+			{
+				AttributeName: "unitPath",
+				XPath:         "//OBSAssoc[@id='corpLocationOBS']",
+			},
+			{
+				AttributeName: "unitPath",
+				XPath:         "//OBSAssoc[@id='resourcePool']",
+			},
+			{
+				XPath: "//ColumnValue[@name='partition_code']",
+			},
+		},
+	}
+
+	mockEnvironments := &model.Environments{
+		Source: &model.EnvType{
+			Name:    "Mock Source Env",
+			URL:     "Mock URL",
+			Session: "Mock session",
+		},
+		Target: &model.EnvType{
+			Name:    "Mock Source Env",
+			URL:     "Mock URL",
+			Session: "Mock session",
+		},
+	}
+
+	soapMock := func(request, endpoint string) (string, error) {
+		file, _ := ioutil.ReadFile("../mock/xog/soap/soap_read_resources_instance_response.xml")
+		return util.BytesToString(file), nil
+	}
+
+	sourceFolder := "../" + constant.FOLDER_READ
+	util.ValidateFolder(sourceFolder + file.Type)
+	outputFolder := "../" + constant.FOLDER_DEBUG
+	util.ValidateFolder(outputFolder + file.Type)
+
+	output := ProcessDriverFile(&file, constant.READ, sourceFolder, outputFolder, mockEnvironments, soapMock)
+	if output.Code != constant.OUTPUT_SUCCESS {
+		t.Fatalf("Error processing driver file. Action migrate with errors. Debug: %s", output.Debug)
+	}
+
+	os.RemoveAll(constant.FOLDER_MIGRATION)
+}
+
 func TestProcessDriverFileActionMigrate(t *testing.T) {
 	packageMockFolder := "../" + constant.FOLDER_MOCK + "migration/"
 	file := model.DriverFile{

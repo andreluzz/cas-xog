@@ -2,13 +2,13 @@ package migration
 
 import (
 	"errors"
+	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/model"
 	"github.com/andreluzz/cas-xog/util"
 	"github.com/beevik/etree"
 	"github.com/tealeg/xlsx"
 	"strconv"
 	"strings"
-	"github.com/andreluzz/cas-xog/constant"
 )
 
 func ReadDataFromExcel(file *model.DriverFile) (string, error) {
@@ -65,7 +65,7 @@ func ReadDataFromExcel(file *model.DriverFile) (string, error) {
 				}
 
 				value := constant.UNDEFINED
-				if  match.Col-1 < len(row.Cells) {
+				if match.Col-1 < len(row.Cells) {
 					value = row.Cells[match.Col-1].String()
 				}
 

@@ -95,9 +95,9 @@ func TestExecuteToReturnViewSingle(t *testing.T) {
 
 func TestExecuteToReturnViewSingleList(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
-		Code:            "odf.obj_sistemaList",
-		ObjCode:         "obj_sistema",
+		Type:    constant.VIEW,
+		Code:    "odf.obj_sistemaList",
+		ObjCode: "obj_sistema",
 	}
 
 	xog := etree.NewDocument()
