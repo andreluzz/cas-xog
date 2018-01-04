@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"os"
 	"testing"
+	"github.com/tealeg/xlsx"
 )
 
 func deleteTestFolders() {
@@ -272,6 +273,16 @@ func TestProcessDriverFileActionExportToExcel(t *testing.T) {
 	output := ProcessDriverFile(&file, constant.READ, sourceFolder, outputFolder, mockEnvironments, soapMock)
 	if output.Code != constant.OUTPUT_SUCCESS {
 		t.Fatalf("Error processing driver file. Action migrate with errors. Debug: %s", output.Debug)
+	}
+
+	xlFile, err := xlsx.OpenFile(constant.FOLDER_MIGRATION + file.ExcelFile)
+	if err != nil {
+		t.Fatalf("Error processing driver file. Opening output xlsx error. Debug: %s", err.Error())
+	}
+
+	value := xlFile.Sheets[0].Rows[20].Cells[5].Value
+	if value != "/New York" {
+		t.Errorf("Error processing driver file. Excel file with wrong data. Expected: '/New York' received: %s", value)
 	}
 
 	os.RemoveAll(constant.FOLDER_MIGRATION)
