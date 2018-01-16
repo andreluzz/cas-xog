@@ -6,6 +6,7 @@ import (
 	"github.com/andreluzz/cas-xog/model"
 	"github.com/beevik/etree"
 	"strconv"
+	"strings"
 )
 
 func specificViewTransformations(xog, aux *etree.Document, file *model.DriverFile) error {
@@ -22,6 +23,10 @@ func specificViewTransformations(xog, aux *etree.Document, file *model.DriverFil
 		changePartition(xog, file.SourcePartition, file.TargetPartition)
 	}
 
+	if strings.Contains(file.Code, "*") {
+
+	}
+
 	if file.Code != "*" {
 		validateCodeAndRemoveElementsFromParent(xog, "//views/property", file.Code)
 		validateCodeAndRemoveElementsFromParent(xog, "//views/filter", file.Code)
@@ -31,27 +36,30 @@ func specificViewTransformations(xog, aux *etree.Document, file *model.DriverFil
 		removeElementFromParent(aux, "//lookups")
 		removeElementFromParent(aux, "//objects")
 
-		elementsTransform := false
+		//Only executes is file code is '*' (single view)
+		if strings.Contains(file.Code, "*") == false{
+			elementsTransform := false
 
-		if len(file.Elements) > 0 {
-			var err error
-			elementsTransform, err = processElements(xog, aux, file)
-			if err != nil {
-				return err
+			if len(file.Elements) > 0 {
+				var err error
+				elementsTransform, err = processElements(xog, aux, file)
+				if err != nil {
+					return err
+				}
 			}
-		}
 
-		if len(file.Sections) > 0 {
-			err := updateSections(xog, aux, file)
-			if err != nil {
-				return err
+			if len(file.Sections) > 0 {
+				err := updateSections(xog, aux, file)
+				if err != nil {
+					return err
+				}
+				return nil
 			}
-			return nil
-		}
 
-		if elementsTransform {
-			xog.SetRoot(aux.Root())
-			return nil
+			if elementsTransform {
+				xog.SetRoot(aux.Root())
+				return nil
+			}
 		}
 
 		updateSourceWithTargetPropertySet(xog, aux, file)
@@ -337,8 +345,14 @@ func processSectionByType(section model.Section, sourceView, targetView *etree.E
 func validateCodeAndRemoveElementsFromParent(xog *etree.Document, path, code string) {
 	for _, e := range xog.FindElements(path) {
 		elementCode := e.SelectAttrValue("code", "")
-		if elementCode != code {
-			e.Parent().RemoveChild(e)
+		if strings.Contains(code, "*") {
+			if strings.Contains(elementCode, code[1:]) == false {
+				e.Parent().RemoveChild(e)
+			}
+		} else {
+			if elementCode != code {
+				e.Parent().RemoveChild(e)
+			}
 		}
 	}
 }
