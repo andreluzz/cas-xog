@@ -75,23 +75,24 @@ type DriverFile struct {
 	PartitionModel    string        `xml:"partitionModel,attr"`
 	InsertBefore      string        `xml:"insertBefore,attr"`
 	InsertBeforeIndex string        `xml:"insertBeforeIndex,attr"`
-	UpdateProgram     bool          `xml:"updateProgram,attr"`
-	CopyPermissions   string        `xml:"copyPermissions,attr"`
-	Template          string        `xml:"template,attr"`
-	ExcelFile         string        `xml:"excel,attr"`
-	ExcelStartRow     string        `xml:"startRow,attr"`
-	InstanceTag       string        `xml:"instance,attr"`
-	ExportToExcel     bool          `xml:"exportToExcel,attr"`
-	OnlyStructure     bool          `xml:"onlyStructure,attr"`
-	PackageTransform  bool          `xml:"packageTransform,attr"`
-	NSQL              string        `xml:"nsql"`
-	Sections          []Section     `xml:"section"`
-	Elements          []Element     `xml:"element"`
-	Replace           []FileReplace `xml:"replace"`
-	MatchExcel        []MatchExcel  `xml:"match"`
-	ExecutionOrder    int
-	xogXML            string
-	auxXML            string
+	UpdateProgram    bool          `xml:"updateProgram,attr"`
+	CopyPermissions  string        `xml:"copyPermissions,attr"`
+	Template         string        `xml:"template,attr"`
+	ExcelFile        string        `xml:"excel,attr"`
+	ExcelStartRow    string        `xml:"startRow,attr"`
+	InstanceTag      string        `xml:"instance,attr"`
+	ExportToExcel    bool          `xml:"exportToExcel,attr"`
+	OnlyStructure    bool          `xml:"onlyStructure,attr"`
+	PackageTransform bool          `xml:"packageTransform,attr"`
+	InstancesPerFile int           `xml:"instancesPerFile,attr"`
+	NSQL             string        `xml:"nsql"`
+	Sections         []Section     `xml:"section"`
+	Elements         []Element     `xml:"element"`
+	Replace          []FileReplace `xml:"replace"`
+	MatchExcel       []MatchExcel  `xml:"match"`
+	ExecutionOrder   int
+	xogXML           string
+	auxXML           string
 }
 
 func (d *DriverFile) InitXML(action, folder string) error {
@@ -185,8 +186,57 @@ func (d *DriverFile) TagCDATA() (string, string) {
 	return constant.UNDEFINED, constant.UNDEFINED
 }
 
+func (d *DriverFile) GetSplitWriteFilesPath(folder string) ([]string, error) {
+	files, err := ioutil.ReadDir(folder + d.Type)
+	if err != nil {
+		return nil, err
+	}
+	var splitPath []string
+	matchFilename := util.GetPathWithoutExtension(d.Path)
+	for _, filename := range files {
+		if matchFilename == filename.Name()[:len(matchFilename)] {
+			splitPath = append(splitPath, filename.Name())
+		}
+	}
+	return splitPath, nil
+}
+
 func (d *DriverFile) GetDummyLookup() *etree.Element {
 	return docXogReadXML.FindElement("//xogtype[@type='DummyLookup']/NikuDataBus").Copy()
+}
+
+func (d *DriverFile) GetInstanceTag() string {
+	switch d.Type {
+	case "CustomObjectInstances":
+		return "instance"
+	case "ResourceClassInstances":
+		return "resourceClass"
+	case "WipClassInstances":
+		return "wipClass"
+	case "InvestmentClassInstances":
+		return "investmentClass"
+	case "TransactionClassInstances":
+		return "transactionClass"
+	case "ResourceInstances":
+		return "resource"
+	case "UserInstances":
+		return "user"
+	case "ProjectInstances":
+		return "project"
+	case "IdeaInstances":
+		return "idea"
+	case "ApplicationInstances":
+		return "application"
+	case "AssetInstances":
+		return "asset"
+	case "OtherInvestmentInstances":
+		return "otherInvestment"
+	case "ProductInstances":
+		return "product"
+	case "ServiceInstances":
+		return "service"
+	}
+	return constant.UNDEFINED
 }
 
 func (d *DriverFile) GetXMLType() string {

@@ -81,3 +81,8 @@ func GetPathFolder(path string) string {
 
 	return folder
 }
+
+func GetPathWithoutExtension(path string) string {
+	extIndex := strings.LastIndex(path, ".")
+	return path[:extIndex]
+}

@@ -16,6 +16,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"math"
 )
 
 var driverXOG *model.Driver
@@ -170,6 +171,33 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 			}
 		}
 		err = transform.Execute(xogResponse, auxResponse, file)
+
+		if file.GetInstanceTag() != constant.UNDEFINED {
+			instanceTagPath := "//" + file.GetInstanceTag()
+
+			splitXogResponse := xogResponse.Copy()
+			for _, e := range splitXogResponse.FindElements(instanceTagPath) {
+				e.Parent().RemoveChild(e)
+			}
+			instances := xogResponse.FindElements(instanceTagPath)
+
+			totalFiles := math.Ceil(float64(len(instances) / file.InstancesPerFile))
+			path :=  util.GetPathWithoutExtension(file.Path)
+			for i := 0; i < int(totalFiles); i++ {
+				file.Path = fmt.Sprintf("%s_%03d.xml", path, i+1)
+				xog := splitXogResponse.Copy()
+				e := xog.FindElement("//customObjectInstances")
+				for z := file.InstancesPerFile *i; z < file.InstancesPerFile*(i+1); z++ {
+					e.AddChild(instances[z].Copy())
+				}
+				xog.IndentTabs()
+				s, _ := xog.WriteToString()
+				file.SetXML(s)
+				file.Write(outputFolder)
+			}
+			file.Path = "complete_" + path + ".xml"
+		}
+
 		str, _ := xogResponse.WriteToString()
 		file.SetXML(str)
 		if err != nil {

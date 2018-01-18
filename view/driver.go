@@ -48,15 +48,30 @@ func ProcessDriverFiles(driver *model.Driver, action string, environments *model
 			outputResults[constant.OUTPUT_IGNORED] += 1
 			continue
 		}
-		log.Info("\n[CAS-XOG][blue[%s]] %03d/%03d | [blue[%s]] | file: %s", processingString, i+1, total, formattedType, f.Path)
 		sourceFolder, outputFolder := xog.CreateFileFolder(action, f.Type, f.Path)
-		if f.Type == constant.MIGRATION {
-			sourceFolder = constant.FOLDER_MIGRATION
+
+		splitFilename, _ := f.GetSplitWriteFilesPath(sourceFolder)
+		if len(splitFilename) > 0 {
+			totalSplit := len(splitFilename)
+			for j, filename := range splitFilename {
+				f.Path = filename
+				log.Info("\n[CAS-XOG][blue[%s]] %03d/%03d | [blue[%s]] | Split: %03d/%03d | file: %s", processingString, i+1, total, formattedType, j+1, totalSplit, f.Path)
+				output := xog.ProcessDriverFile(&f, action, sourceFolder, outputFolder, environments, util.SoapCall)
+				status, color := util.GetStatusColorFromOutput(output.Code)
+				log.Info("\r[CAS-XOG][%s[%s %s]] %03d/%03d | [blue[%s]] | Split: %03d/%03d | file: %s %s", color, util.GetActionLabel(action), status, i+1, total, formattedType, j+1, totalSplit, f.Path, util.GetOutputDebug(output.Code, output.Debug))
+				outputResults[output.Code] += 1
+			}
+		} else {
+			log.Info("\n[CAS-XOG][blue[%s]] %03d/%03d | [blue[%s]] | file: %s", processingString, i+1, total, formattedType, f.Path)
+			if f.Type == constant.MIGRATION {
+				sourceFolder = constant.FOLDER_MIGRATION
+			}
+
+			output := xog.ProcessDriverFile(&f, action, sourceFolder, outputFolder, environments, util.SoapCall)
+			status, color := util.GetStatusColorFromOutput(output.Code)
+			log.Info("\r[CAS-XOG][%s[%s %s]] %03d/%03d | [blue[%s]] | file: %s %s", color, util.GetActionLabel(action), status, i+1, total, formattedType, f.Path, util.GetOutputDebug(output.Code, output.Debug))
+			outputResults[output.Code] += 1
 		}
-		output := xog.ProcessDriverFile(&f, action, sourceFolder, outputFolder, environments, util.SoapCall)
-		status, color := util.GetStatusColorFromOutput(output.Code)
-		log.Info("\r[CAS-XOG][%s[%s %s]] %03d/%03d | [blue[%s]] | file: %s %s", color, util.GetActionLabel(action), status, i+1, total, formattedType, f.Path, util.GetOutputDebug(output.Code, output.Debug))
-		outputResults[output.Code] += 1
 	}
 
 	elapsed := time.Since(start)
