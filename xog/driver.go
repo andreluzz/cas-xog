@@ -172,7 +172,7 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 		}
 		err = transform.Execute(xogResponse, auxResponse, file)
 
-		if file.GetInstanceTag() != constant.UNDEFINED {
+		if file.GetInstanceTag() != constant.UNDEFINED && file.InstancesPerFile > 0 {
 			instanceTagPath := "//" + file.GetInstanceTag()
 
 			splitXogResponse := xogResponse.Copy()
@@ -181,14 +181,16 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 			}
 			instances := xogResponse.FindElements(instanceTagPath)
 
-			totalFiles := math.Ceil(float64(len(instances) / file.InstancesPerFile))
+			totalFiles := math.Ceil(float64(len(instances)) / float64(file.InstancesPerFile))
 			path :=  util.GetPathWithoutExtension(file.Path)
 			for i := 0; i < int(totalFiles); i++ {
 				file.Path = fmt.Sprintf("%s_%03d.xml", path, i+1)
 				xog := splitXogResponse.Copy()
 				e := xog.FindElement("//customObjectInstances")
 				for z := file.InstancesPerFile *i; z < file.InstancesPerFile*(i+1); z++ {
-					e.AddChild(instances[z].Copy())
+					if z < len(instances) {
+						e.AddChild(instances[z].Copy())
+					}
 				}
 				xog.IndentTabs()
 				s, _ := xog.WriteToString()

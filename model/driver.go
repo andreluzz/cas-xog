@@ -218,13 +218,13 @@ func (d *DriverFile) GetInstanceTag() string {
 	case "TransactionClassInstances":
 		return "transactionClass"
 	case "ResourceInstances":
-		return "resource"
+		return "Resource"
 	case "UserInstances":
-		return "user"
+		return "User"
 	case "ProjectInstances":
-		return "project"
+		return "Project"
 	case "IdeaInstances":
-		return "idea"
+		return "Idea"
 	case "ApplicationInstances":
 		return "application"
 	case "AssetInstances":
