@@ -208,13 +208,13 @@ func (d *DriverFile) GetInstanceTag() string {
 	case "CustomObjectInstances":
 		return "instance"
 	case "ResourceClassInstances":
-		return "resourceClass"
+		return "resourceclass"
 	case "WipClassInstances":
-		return "wipClass"
+		return "wipclass"
 	case "InvestmentClassInstances":
 		return "investmentClass"
 	case "TransactionClassInstances":
-		return "transactionClass"
+		return "transactionclass"
 	case "ResourceInstances":
 		return "Resource"
 	case "UserInstances":
@@ -224,15 +224,15 @@ func (d *DriverFile) GetInstanceTag() string {
 	case "IdeaInstances":
 		return "Idea"
 	case "ApplicationInstances":
-		return "application"
+		return "Application"
 	case "AssetInstances":
-		return "asset"
+		return "Asset"
 	case "OtherInvestmentInstances":
-		return "otherInvestment"
+		return "OtherInvestment"
 	case "ProductInstances":
-		return "product"
+		return "Product"
 	case "ServiceInstances":
-		return "service"
+		return "Service"
 	}
 	return constant.UNDEFINED
 }
