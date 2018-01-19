@@ -12,11 +12,11 @@ import (
 	"github.com/andreluzz/cas-xog/validate"
 	"github.com/beevik/etree"
 	"io/ioutil"
+	"math"
 	"reflect"
 	"sort"
 	"strconv"
 	"strings"
-	"math"
 )
 
 var driverXOG *model.Driver
@@ -182,12 +182,12 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 			instances := xogResponse.FindElements(instanceTagPath)
 
 			totalFiles := math.Ceil(float64(len(instances)) / float64(file.InstancesPerFile))
-			path :=  util.GetPathWithoutExtension(file.Path)
+			path := util.GetPathWithoutExtension(file.Path)
 			for i := 0; i < int(totalFiles); i++ {
 				file.Path = fmt.Sprintf("%s_%03d.xml", path, i+1)
 				xog := splitXogResponse.Copy()
 				e := xog.FindElement("//customObjectInstances")
-				for z := file.InstancesPerFile *i; z < file.InstancesPerFile*(i+1); z++ {
+				for z := file.InstancesPerFile * i; z < file.InstancesPerFile*(i+1); z++ {
 					if z < len(instances) {
 						e.AddChild(instances[z].Copy())
 					}

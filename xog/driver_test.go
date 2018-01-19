@@ -5,10 +5,10 @@ import (
 	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/model"
 	"github.com/andreluzz/cas-xog/util"
+	"github.com/tealeg/xlsx"
 	"io/ioutil"
 	"os"
 	"testing"
-	"github.com/tealeg/xlsx"
 )
 
 func deleteTestFolders() {

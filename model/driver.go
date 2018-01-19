@@ -75,24 +75,24 @@ type DriverFile struct {
 	PartitionModel    string        `xml:"partitionModel,attr"`
 	InsertBefore      string        `xml:"insertBefore,attr"`
 	InsertBeforeIndex string        `xml:"insertBeforeIndex,attr"`
-	UpdateProgram    bool          `xml:"updateProgram,attr"`
-	CopyPermissions  string        `xml:"copyPermissions,attr"`
-	Template         string        `xml:"template,attr"`
-	ExcelFile        string        `xml:"excel,attr"`
-	ExcelStartRow    string        `xml:"startRow,attr"`
-	InstanceTag      string        `xml:"instance,attr"`
-	ExportToExcel    bool          `xml:"exportToExcel,attr"`
-	OnlyStructure    bool          `xml:"onlyStructure,attr"`
-	PackageTransform bool          `xml:"packageTransform,attr"`
-	InstancesPerFile int           `xml:"instancesPerFile,attr"`
-	NSQL             string        `xml:"nsql"`
-	Sections         []Section     `xml:"section"`
-	Elements         []Element     `xml:"element"`
-	Replace          []FileReplace `xml:"replace"`
-	MatchExcel       []MatchExcel  `xml:"match"`
-	ExecutionOrder   int
-	xogXML           string
-	auxXML           string
+	UpdateProgram     bool          `xml:"updateProgram,attr"`
+	CopyPermissions   string        `xml:"copyPermissions,attr"`
+	Template          string        `xml:"template,attr"`
+	ExcelFile         string        `xml:"excel,attr"`
+	ExcelStartRow     string        `xml:"startRow,attr"`
+	InstanceTag       string        `xml:"instance,attr"`
+	ExportToExcel     bool          `xml:"exportToExcel,attr"`
+	OnlyStructure     bool          `xml:"onlyStructure,attr"`
+	PackageTransform  bool          `xml:"packageTransform,attr"`
+	InstancesPerFile  int           `xml:"instancesPerFile,attr"`
+	NSQL              string        `xml:"nsql"`
+	Sections          []Section     `xml:"section"`
+	Elements          []Element     `xml:"element"`
+	Replace           []FileReplace `xml:"replace"`
+	MatchExcel        []MatchExcel  `xml:"match"`
+	ExecutionOrder    int
+	xogXML            string
+	auxXML            string
 }
 
 func (d *DriverFile) InitXML(action, folder string) error {
@@ -135,10 +135,8 @@ func (d *DriverFile) RunXML(action, sourceFolder string, environments *Environme
 			err = d.RunAuxXML(auxEnv, soapFunc)
 		}
 		return err
-	} else {
-		return d.RunXogXML(environments.Target, soapFunc)
 	}
-	return nil
+	return d.RunXogXML(environments.Target, soapFunc)
 }
 
 func (d *DriverFile) RunAuxXML(env *EnvType, soapFunc util.Soap) error {

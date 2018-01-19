@@ -1,14 +1,14 @@
 <NikuDataBus>
 	<Header action="write" externalSource="NIKU" objectType="obs" version="8.0"/>
 	<obsTypes>
-		<obs code="strat_plan" isSecurity="true" name="Branch">
+		<obs code="strategic_plan" isSecurity="true" name="Branch">
 			<level depth="1" name="All"/>
 			<level depth="2" name="Division"/>
 			<level depth="3" name="Branch"/>
 			<objectAssociation associationType="Any Unit" object="strat_kpi"/>
 			<objectAssociation associationType="Any Unit" object="strategic_item"/>
-			<unit code="strat_corp" name="Corporate">
-				<unit code="strat_online_op_bu" name="Online Operations">
+			<unit code="strategic_corp" name="Corporate">
+				<unit code="strategic_online_op_bu" name="Online Operations">
 					<associatedObject objectCode="I0004" objectType="strat_kpi"/>
 					<associatedObject objectCode="I0016" objectType="strat_kpi"/>
 					<associatedObject objectCode="I0017" objectType="strat_kpi"/>
@@ -42,15 +42,15 @@
 						<GroupSecurity groupCode="strat_bu_planner" rightCode="odf_cst_strat_kpi_edit_all_strat_kpi_measure" rightMode="OBS_UNIT_AND_CHILDREN"/>
 					</Security>
 				</unit>
-				<unit code="strat_id" name="TIC">
-					<unit code="strat_it_dev" name="IT Development">
+				<unit code="strategic_id" name="TIC">
+					<unit code="strategic_it_dev" name="IT Development">
 						<rights>
 							<InstanceRights/>
 							<InstanceOBSRights/>
 						</rights>
 						<Security/>
 					</unit>
-					<unit code="strat_it_oper" name="IT Operations">
+					<unit code="strategic_it_oper" name="IT Operations">
 						<associatedObject objectCode="SI0025" objectType="strategic_item"/>
 						<associatedObject objectCode="SI0021" objectType="strategic_item"/>
 						<associatedObject objectCode="SI0022" objectType="strategic_item"/>
@@ -105,7 +105,7 @@
 					</rights>
 					<Security/>
 				</unit>
-				<unit code="strat_direct_sales" name="Direct Sales">
+				<unit code="strategic_direct_sales" name="Direct Sales">
 					<associatedObject objectCode="I0042" objectType="strat_kpi"/>
 					<rights>
 						<InstanceRights/>
