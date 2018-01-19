@@ -23,10 +23,6 @@ func specificViewTransformations(xog, aux *etree.Document, file *model.DriverFil
 		changePartition(xog, file.SourcePartition, file.TargetPartition)
 	}
 
-	if strings.Contains(file.Code, "*") {
-
-	}
-
 	if file.Code != "*" {
 		validateCodeAndRemoveElementsFromParent(xog, "//views/property", file.Code)
 		validateCodeAndRemoveElementsFromParent(xog, "//views/filter", file.Code)

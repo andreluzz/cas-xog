@@ -94,7 +94,7 @@ Used to read only the selected elements from the object.
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
-| `code` | View code. Use `*` if you want to get all views from one object or the view code if you want a single view. | yes |
+| `code` | Defines the views that should be read. Use `*` for reading all views from object; Use `*pattern_string` to choose all the views where the code contains the pattern string; Use the view code without `*` if you want a single view. | yes |
 | `objectCode` | Object code. | yes |
 | `path` | Path where the file will be saved on the file system. | yes | 
 | `sourcePartition` | When defined reads only views from this partition code. | no |
