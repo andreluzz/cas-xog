@@ -207,9 +207,9 @@ func TestProcessDriverFileActionReadSplitFiles(t *testing.T) {
 	model.LoadXMLReadList("../xogRead.xml")
 
 	file := model.DriverFile{
-		Type:          constant.RESOURCE_INSTANCE,
-		Code:          "*",
-		Path:          "instances.xml",
+		Type:             constant.RESOURCE_INSTANCE,
+		Code:             "*",
+		Path:             "instances.xml",
 		InstancesPerFile: 40,
 	}
 
@@ -231,7 +231,7 @@ func TestProcessDriverFileActionReadSplitFiles(t *testing.T) {
 		return util.BytesToString(file), nil
 	}
 
-	os.RemoveAll("../" + constant.FOLDER_DEBUG  + file.Type)
+	os.RemoveAll("../" + constant.FOLDER_DEBUG + file.Type)
 
 	sourceFolder := "../" + constant.FOLDER_READ
 	util.ValidateFolder(sourceFolder + file.Type)
@@ -253,7 +253,7 @@ func TestProcessDriverFileActionReadSplitFiles(t *testing.T) {
 		t.Fatalf("Error processing driver file. Action read splitting files with errors. Expecting 9 files split received %d", len(files))
 	}
 
-	os.RemoveAll("../" + constant.FOLDER_DEBUG  + file.Type)
+	os.RemoveAll("../" + constant.FOLDER_DEBUG + file.Type)
 }
 
 func TestProcessDriverFileActionExportToExcel(t *testing.T) {

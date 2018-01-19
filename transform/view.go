@@ -33,7 +33,7 @@ func specificViewTransformations(xog, aux *etree.Document, file *model.DriverFil
 		removeElementFromParent(aux, "//objects")
 
 		//Only executes is file code is '*' (single view)
-		if strings.Contains(file.Code, "*") == false{
+		if strings.Contains(file.Code, "*") == false {
 			elementsTransform := false
 
 			if len(file.Elements) > 0 {
