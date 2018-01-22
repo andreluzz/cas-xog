@@ -1,5 +1,6 @@
 [![codecov](https://codecov.io/gh/andreluzz/cas-xog/branch/master/graph/badge.svg)](https://codecov.io/gh/andreluzz/cas-xog)
 [![Build status](https://ci.appveyor.com/api/projects/status/4lixe3lc9c9pxoa5?svg=true)](https://ci.appveyor.com/project/andreluzz/cas-xog)
+[![Go Report Card](https://goreportcard.com/badge/github.com/andreluzz/cas-xog)](https://goreportcard.com/report/github.com/andreluzz/cas-xog)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # CAS-XOG
@@ -93,7 +94,7 @@ Used to read only the selected elements from the object.
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
-| `code` | View code. Use `*` if you want to get all views from one object or the view code if you want a single view. | yes |
+| `code` | Defines the views that should be read. Use `*` for reading all views from object; Use `*pattern_string` to choose all the views where the code contains the pattern string; Use the view code without `*` if you want a single view. | yes |
 | `objectCode` | Object code. | yes |
 | `path` | Path where the file will be saved on the file system. | yes | 
 | `sourcePartition` | When defined reads only views from this partition code. | no |
@@ -368,6 +369,7 @@ Used to read only the selected links inside a section tag from the menu.
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
 | `objectCode` | Defines the code of the custom object you want to read the instances. | yes |
 | `path` | Path where the file will be saved on the file system. | yes |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -382,6 +384,7 @@ Used to read only the selected links inside a section tag from the menu.
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
 | `path` | Path where the file will be saved on the file system. | yes |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -396,6 +399,7 @@ Used to read only the selected links inside a section tag from the menu.
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
 | `path` | Path where the file will be saved on the file system. | yes |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -410,6 +414,7 @@ Used to read only the selected links inside a section tag from the menu.
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
 | `path` | Path where the file will be saved on the file system. | yes |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -424,6 +429,7 @@ Used to read only the selected links inside a section tag from the menu.
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
 | `path` | Path where the file will be saved on the file system. | yes |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -438,6 +444,7 @@ Used to read only the selected links inside a section tag from the menu.
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
 | `path` | Path where the file will be saved on the file system. | yes |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -452,6 +459,7 @@ Used to read only the selected links inside a section tag from the menu.
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
 | `path` | Path where the file will be saved on the file system. | yes |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -466,6 +474,7 @@ Used to read only the selected links inside a section tag from the menu.
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
 | `path` | Path where the file will be saved on the file system. | yes |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -480,6 +489,7 @@ Used to read only the selected links inside a section tag from the menu.
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
 | `path` | Path where the file will be saved on the file system. | yes |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -494,6 +504,7 @@ Used to read only the selected links inside a section tag from the menu.
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
 | `path` | Path where the file will be saved on the file system. | yes |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -508,6 +519,7 @@ Used to read only the selected links inside a section tag from the menu.
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
 | `path` | Path where the file will be saved on the file system. | yes |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -522,6 +534,7 @@ Used to read only the selected links inside a section tag from the menu.
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
 | `path` | Path where the file will be saved on the file system. | yes |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -536,6 +549,7 @@ Used to read only the selected links inside a section tag from the menu.
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
 | `path` | Path where the file will be saved on the file system. | yes |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -550,6 +564,7 @@ Used to read only the selected links inside a section tag from the menu.
 | ------ | ------ | ------ |
 | `code` | Instance codes. Use code equals * to get all instances. | yes |
 | `path` | Path where the file will be saved on the file system. | yes |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>

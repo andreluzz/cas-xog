@@ -43,10 +43,9 @@ func Check(xog *etree.Document) (model.Output, error) {
 			if severityElement.Text() == "WARNING" {
 				warningOutput.Debug = desc
 				return warningOutput, nil
-			} else {
-				errorOutput.Debug = desc
-				return errorOutput, errors.New(errorOutput.Debug)
 			}
+			errorOutput.Debug = desc
+			return errorOutput, errors.New(errorOutput.Debug)
 		}
 	}
 

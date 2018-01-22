@@ -189,7 +189,7 @@ func readMockResultAndCompare(xog *etree.Document, compareXml string) bool {
 
 func TestExecuteToReturnOBS(t *testing.T) {
 	file := model.DriverFile{
-		Code: "strat_plan",
+		Code: "strategic_plan",
 		Type: constant.OBS,
 	}
 
@@ -208,7 +208,7 @@ func TestExecuteToReturnOBS(t *testing.T) {
 
 func TestExecuteToReturnOBSWithoutSecurityAndObject(t *testing.T) {
 	file := model.DriverFile{
-		Code: "strat_plan",
+		Code: "strategic_plan",
 		Type: constant.OBS,
 		Elements: []model.Element{
 			{

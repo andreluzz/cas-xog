@@ -238,7 +238,7 @@ func TestProcessPackageToReturnErrorTransformValidate(t *testing.T) {
 	output := ProcessPackageFile(&file, packageMockFolder, folder, nil)
 
 	if output.Code != constant.OUTPUT_ERROR {
-		t.Fatalf("Error processing package file. Code: %s | Debug: not validating if tranform validate without errors ", output.Code)
+		t.Fatalf("Error processing package file. Code: %s | Debug: not validating if transform validate without errors ", output.Code)
 	}
 }
 
@@ -267,7 +267,7 @@ func TestProcessPackageToReturnErrorTransformExecute(t *testing.T) {
 	output := ProcessPackageFile(&file, packageMockFolder, folder, nil)
 
 	if output.Code != constant.OUTPUT_ERROR {
-		t.Fatalf("Error processing package file, not validating if tranform executed without errors. Code: %s | Debug: %s", output.Code, output.Debug)
+		t.Fatalf("Error processing package file, not validating if transform executed without errors. Code: %s | Debug: %s", output.Code, output.Debug)
 	}
 }
 

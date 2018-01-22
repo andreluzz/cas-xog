@@ -84,6 +84,7 @@ type DriverFile struct {
 	ExportToExcel     bool          `xml:"exportToExcel,attr"`
 	OnlyStructure     bool          `xml:"onlyStructure,attr"`
 	PackageTransform  bool          `xml:"packageTransform,attr"`
+	InstancesPerFile  int           `xml:"instancesPerFile,attr"`
 	NSQL              string        `xml:"nsql"`
 	Sections          []Section     `xml:"section"`
 	Elements          []Element     `xml:"element"`
@@ -134,10 +135,8 @@ func (d *DriverFile) RunXML(action, sourceFolder string, environments *Environme
 			err = d.RunAuxXML(auxEnv, soapFunc)
 		}
 		return err
-	} else {
-		return d.RunXogXML(environments.Target, soapFunc)
 	}
-	return nil
+	return d.RunXogXML(environments.Target, soapFunc)
 }
 
 func (d *DriverFile) RunAuxXML(env *EnvType, soapFunc util.Soap) error {
@@ -185,8 +184,57 @@ func (d *DriverFile) TagCDATA() (string, string) {
 	return constant.UNDEFINED, constant.UNDEFINED
 }
 
+func (d *DriverFile) GetSplitWriteFilesPath(folder string) ([]string, error) {
+	files, err := ioutil.ReadDir(folder + d.Type)
+	if err != nil {
+		return nil, err
+	}
+	var splitPath []string
+	matchFilename := util.GetPathWithoutExtension(d.Path)
+	for _, filename := range files {
+		if matchFilename == filename.Name()[:len(matchFilename)] {
+			splitPath = append(splitPath, filename.Name())
+		}
+	}
+	return splitPath, nil
+}
+
 func (d *DriverFile) GetDummyLookup() *etree.Element {
 	return docXogReadXML.FindElement("//xogtype[@type='DummyLookup']/NikuDataBus").Copy()
+}
+
+func (d *DriverFile) GetInstanceTag() string {
+	switch d.Type {
+	case "CustomObjectInstances":
+		return "instance"
+	case "ResourceClassInstances":
+		return "resourceclass"
+	case "WipClassInstances":
+		return "wipclass"
+	case "InvestmentClassInstances":
+		return "investmentClass"
+	case "TransactionClassInstances":
+		return "transactionclass"
+	case "ResourceInstances":
+		return "Resource"
+	case "UserInstances":
+		return "User"
+	case "ProjectInstances":
+		return "Project"
+	case "IdeaInstances":
+		return "Idea"
+	case "ApplicationInstances":
+		return "Application"
+	case "AssetInstances":
+		return "Asset"
+	case "OtherInvestmentInstances":
+		return "OtherInvestment"
+	case "ProductInstances":
+		return "Product"
+	case "ServiceInstances":
+		return "Service"
+	}
+	return constant.UNDEFINED
 }
 
 func (d *DriverFile) GetXMLType() string {

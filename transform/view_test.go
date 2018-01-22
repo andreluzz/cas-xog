@@ -70,6 +70,29 @@ func TestExecuteToReturnViewSourceTargetPartition(t *testing.T) {
 	}
 }
 
+func TestExecuteToReturnViewCodePattern(t *testing.T) {
+	file := model.DriverFile{
+		Type:            constant.VIEW,
+		Code:            "*obj_sistemaCreate",
+		ObjCode:         "obj_sistema",
+		SourcePartition: "partition10",
+	}
+
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
+	aux := etree.NewDocument()
+	aux.ReadFromFile(packageMockFolder + "view_partition_full_xog.xml")
+	err := Execute(xog, aux, &file)
+
+	if err != nil {
+		t.Fatalf("Error transforming view XOG file. Debug: %s", err.Error())
+	}
+
+	if readMockResultAndCompare(xog, "view_code_pattern_result.xml") == false {
+		t.Errorf("Error transforming view XOG file. Invalid result XML.")
+	}
+}
+
 func TestExecuteToReturnViewSingle(t *testing.T) {
 	file := model.DriverFile{
 		Type:            constant.VIEW,

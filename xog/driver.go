@@ -12,6 +12,7 @@ import (
 	"github.com/andreluzz/cas-xog/validate"
 	"github.com/beevik/etree"
 	"io/ioutil"
+	"math"
 	"reflect"
 	"sort"
 	"strconv"
@@ -170,6 +171,37 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 			}
 		}
 		err = transform.Execute(xogResponse, auxResponse, file)
+
+		if file.GetInstanceTag() != constant.UNDEFINED && file.InstancesPerFile > 0 {
+			instanceTagPath := "//" + file.GetInstanceTag()
+
+			parentTagPath := "//" + xogResponse.FindElement(instanceTagPath).Parent().Tag
+
+			splitXogResponse := xogResponse.Copy()
+			for _, e := range splitXogResponse.FindElements(instanceTagPath) {
+				e.Parent().RemoveChild(e)
+			}
+			instances := xogResponse.FindElements(instanceTagPath)
+
+			totalFiles := math.Ceil(float64(len(instances)) / float64(file.InstancesPerFile))
+			path := util.GetPathWithoutExtension(file.Path)
+			for i := 0; i < int(totalFiles); i++ {
+				file.Path = fmt.Sprintf("%s_%03d.xml", path, i+1)
+				xog := splitXogResponse.Copy()
+				elementParent := xog.FindElement(parentTagPath)
+				for z := file.InstancesPerFile * i; z < file.InstancesPerFile*(i+1); z++ {
+					if z < len(instances) {
+						elementParent.AddChild(instances[z].Copy())
+					}
+				}
+				xog.IndentTabs()
+				s, _ := xog.WriteToString()
+				file.SetXML(s)
+				file.Write(outputFolder)
+			}
+			file.Path = "complete_" + path + ".xml"
+		}
+
 		str, _ := xogResponse.WriteToString()
 		file.SetXML(str)
 		if err != nil {
