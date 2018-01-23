@@ -10,7 +10,7 @@ import (
 func TestExecuteToReturnObjectFull(t *testing.T) {
 	file := model.DriverFile{
 		Code: "obj_sistema",
-		Type: constant.Object,
+		Type: constant.TypeObject,
 	}
 
 	xog := etree.NewDocument()
@@ -29,7 +29,7 @@ func TestExecuteToReturnObjectFull(t *testing.T) {
 func TestExecuteToReturnObjectElementAttribute(t *testing.T) {
 	file := model.DriverFile{
 		Code: "obj_sistema",
-		Type: constant.Object,
+		Type: constant.TypeObject,
 		Elements: []model.Element{
 			{
 				Code: "test_action",
@@ -64,7 +64,7 @@ func TestExecuteToReturnObjectElementAttribute(t *testing.T) {
 func TestExecuteToReturnObjectTargetPartition(t *testing.T) {
 	file := model.DriverFile{
 		Code:            "obj_sistema",
-		Type:            constant.Object,
+		Type:            constant.TypeObject,
 		TargetPartition: "NIKU.ROOT",
 	}
 
@@ -95,7 +95,7 @@ func TestExecuteToReturnObjectTargetPartition(t *testing.T) {
 func TestExecuteToReturnObjectChangeSourcePartitionToTarget(t *testing.T) {
 	file := model.DriverFile{
 		Code:            "obj_sistema",
-		Type:            constant.Object,
+		Type:            constant.TypeObject,
 		SourcePartition: "partition10",
 		TargetPartition: "NIKU.ROOT",
 	}
@@ -126,7 +126,7 @@ func TestExecuteToReturnObjectChangeSourcePartitionToTarget(t *testing.T) {
 func TestExecuteToReturnObjectChangePartitionModel(t *testing.T) {
 	file := model.DriverFile{
 		Code:           "obj_sistema",
-		Type:           constant.Object,
+		Type:           constant.TypeObject,
 		PartitionModel: "NEW_PARTITION_MODEL",
 	}
 
@@ -153,7 +153,7 @@ func TestExecuteToReturnObjectChangePartitionModel(t *testing.T) {
 func TestExecuteToReturnObjectRemoveAttribute(t *testing.T) {
 	file := model.DriverFile{
 		Code: "cas_environment",
-		Type: constant.Object,
+		Type: constant.TypeObject,
 		Elements: []model.Element{
 			{
 				XPath:  "//customAttribute[@code='analista']",

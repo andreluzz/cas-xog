@@ -73,6 +73,26 @@ func TestReadDataFromExcelToReturnErrorMatchElementExists(t *testing.T) {
 	}
 }
 
+func TestReadDataFromExcelToReturnErrorStartRowNotNumber(t *testing.T) {
+	file := model.DriverFile{
+		Template:      packageMockFolder + "template.xml",
+		ExcelFile:     packageMockFolder + "data.xlsx",
+		InstanceTag:   "instance",
+		ExcelStartRow: "A",
+		MatchExcel: []model.MatchExcel{
+			{
+				Col:           1,
+				XPath:         "invalid_xpath",
+				AttributeName: "name",
+			},
+		},
+	}
+	_, err := ReadDataFromExcel(&file)
+	if err == nil {
+		t.Errorf("Error reading data from excel to XOG file. Debug: not validating if Match Tag element exists")
+	}
+}
+
 func TestReadDataFromExcelToReturnXMLResult(t *testing.T) {
 	file := model.DriverFile{
 		Template:      packageMockFolder + "template.xml",
@@ -127,7 +147,7 @@ func TestReadDataFromExcelToReturnXMLResult(t *testing.T) {
 
 func TestExportInstancesToExcelToReturnErrorExcelPath(t *testing.T) {
 	file := model.DriverFile{
-		Type:          constant.CustomObjectInstances,
+		Type:          constant.TypeCustomObjectInstance,
 		ExportToExcel: true,
 		InstanceTag:   "instance",
 		MatchExcel: []model.MatchExcel{
@@ -161,7 +181,7 @@ func TestExportInstancesToExcelToReturnErrorExcelPath(t *testing.T) {
 
 func TestExportInstancesToExcelToReturnErrorXPath(t *testing.T) {
 	file := model.DriverFile{
-		Type:          constant.CustomObjectInstances,
+		Type:          constant.TypeCustomObjectInstance,
 		ExportToExcel: true,
 		InstanceTag:   "instance",
 		MatchExcel: []model.MatchExcel{
@@ -182,7 +202,7 @@ func TestExportInstancesToExcelToReturnErrorXPath(t *testing.T) {
 
 func TestExportInstancesToExcelToReturnExcelFile(t *testing.T) {
 	file := model.DriverFile{
-		Type:          constant.CustomObjectInstances,
+		Type:          constant.TypeCustomObjectInstance,
 		ExportToExcel: true,
 		ExcelFile:     "instances.xlsx",
 		InstanceTag:   "instance",

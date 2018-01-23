@@ -190,7 +190,7 @@ func readMockResultAndCompare(xog *etree.Document, compareXML string) bool {
 func TestExecuteToReturnOBS(t *testing.T) {
 	file := model.DriverFile{
 		Code: "strategic_plan",
-		Type: constant.Obs,
+		Type: constant.TypeObs,
 	}
 
 	xog := etree.NewDocument()
@@ -209,7 +209,7 @@ func TestExecuteToReturnOBS(t *testing.T) {
 func TestExecuteToReturnOBSWithoutSecurityAndObject(t *testing.T) {
 	file := model.DriverFile{
 		Code: "strategic_plan",
-		Type: constant.Obs,
+		Type: constant.TypeObs,
 		Elements: []model.Element{
 			{
 				Action: "remove",
@@ -241,7 +241,7 @@ func TestExecuteToReturnOBSWithoutSecurityAndObject(t *testing.T) {
 
 func TestExecuteToReturnInstanceCorrectHeader(t *testing.T) {
 	file := model.DriverFile{
-		Type: constant.RESOURCE_CLASS_INSTANCE,
+		Type: constant.TypeResourceClassInstance,
 	}
 	xog := etree.NewDocument()
 	xog.ReadFromString("<NikuDataBus><Header action=\"write\" externalSource=\"NIKU\" objectType=\"contentPack\" version=\"8.0\"/></NikuDataBus>")
@@ -256,7 +256,7 @@ func TestExecuteToReturnInstanceCorrectHeader(t *testing.T) {
 	}
 
 	file = model.DriverFile{
-		Type: constant.WIP_CLASS_INSTANCE,
+		Type: constant.TypeWipClassInstance,
 	}
 	xog = etree.NewDocument()
 	xog.ReadFromString("<NikuDataBus><Header action=\"write\" externalSource=\"NIKU\" objectType=\"contentPack\" version=\"8.0\"/></NikuDataBus>")
@@ -271,7 +271,7 @@ func TestExecuteToReturnInstanceCorrectHeader(t *testing.T) {
 	}
 
 	file = model.DriverFile{
-		Type: constant.TRANSACTION_CLASS_INSTANCE,
+		Type: constant.TypeTransactionClassInstance,
 	}
 	xog = etree.NewDocument()
 	xog.ReadFromString("<NikuDataBus><Header action=\"write\" externalSource=\"NIKU\" objectType=\"contentPack\" version=\"8.0\"/></NikuDataBus>")
@@ -286,7 +286,7 @@ func TestExecuteToReturnInstanceCorrectHeader(t *testing.T) {
 	}
 
 	file = model.DriverFile{
-		Type: constant.INVESTMENT_CLASS_INSTANCE,
+		Type: constant.TypeInvestmentClassInstance,
 	}
 	xog = etree.NewDocument()
 	xog.ReadFromString("<NikuDataBus><Header action=\"write\" externalSource=\"NIKU\" objectType=\"contentPack\" version=\"8.0\"/></NikuDataBus>")

@@ -12,7 +12,7 @@ import (
 
 func TestProcessPackageToReplaceTargetPartitionModel(t *testing.T) {
 	file := model.DriverFile{
-		Type: constant.Object,
+		Type: constant.TypeObject,
 		Path: "package_change_partition.xml",
 	}
 
@@ -47,7 +47,7 @@ func TestProcessPackageToReplaceTargetPartitionModel(t *testing.T) {
 
 func TestProcessPackageToDiscardObjectWithoutPartitionModel(t *testing.T) {
 	file := model.DriverFile{
-		Type: constant.Object,
+		Type: constant.TypeObject,
 		Path: "package_object_with_no_partition_model.xml",
 	}
 
@@ -80,7 +80,7 @@ func TestProcessPackageToDiscardObjectWithoutPartitionModel(t *testing.T) {
 
 func TestProcessPackageToReplaceTargetPartition(t *testing.T) {
 	file := model.DriverFile{
-		Type: constant.Object,
+		Type: constant.TypeObject,
 		Path: "package_change_partition.xml",
 	}
 
@@ -118,7 +118,7 @@ func TestProcessPackageToReplaceTargetPartition(t *testing.T) {
 
 func TestProcessPackageToProcessDefinitionReplaceString(t *testing.T) {
 	file := model.DriverFile{
-		Type: constant.Process,
+		Type: constant.TypeProcess,
 		Path: "package_replace_string.xml",
 	}
 

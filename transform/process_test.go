@@ -11,7 +11,7 @@ import (
 func TestExecuteToReturnProcess(t *testing.T) {
 	file := model.DriverFile{
 		Code: "PRC_0002",
-		Type: constant.Process,
+		Type: constant.TypeProcess,
 	}
 
 	xog := etree.NewDocument()
@@ -30,7 +30,7 @@ func TestExecuteToReturnProcess(t *testing.T) {
 func TestExecuteToReturnProcessReplace(t *testing.T) {
 	file := model.DriverFile{
 		Code: "PRC_0002",
-		Type: constant.Process,
+		Type: constant.TypeProcess,
 		Replace: []model.FileReplace{
 			{
 				From: "Test cas-xog 002",
@@ -61,7 +61,7 @@ func TestExecuteToReturnProcessReplace(t *testing.T) {
 func TestExecuteToReturnProcessCopyingPermissions(t *testing.T) {
 	file := model.DriverFile{
 		Code:            "PRC_0002",
-		Type:            constant.Process,
+		Type:            constant.TypeProcess,
 		CopyPermissions: "PRC_0001",
 	}
 
@@ -84,7 +84,7 @@ func TestExecuteToReturnProcessCopyingPermissions(t *testing.T) {
 func TestExecuteToReturnErrorProcessCopyingPermissions(t *testing.T) {
 	file := model.DriverFile{
 		Code:            "PRC_0002",
-		Type:            constant.Process,
+		Type:            constant.TypeProcess,
 		CopyPermissions: "PRC_0001",
 	}
 
@@ -103,7 +103,7 @@ func TestExecuteToReturnErrorProcessCopyingPermissions(t *testing.T) {
 func TestExecuteToReturnErrorProcessElementNotFound(t *testing.T) {
 	file := model.DriverFile{
 		Code:            "PRC_0002",
-		Type:            constant.Process,
+		Type:            constant.TypeProcess,
 		CopyPermissions: "PRC_0001",
 	}
 
