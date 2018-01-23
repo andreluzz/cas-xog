@@ -10,7 +10,7 @@ import (
 func TestExecuteToReturnStaticLookupTransformed(t *testing.T) {
 	file := model.DriverFile{
 		Code: "LOOKUP_CAS_XOG",
-		Type: constant.LOOKUP,
+		Type: constant.TypeLookup,
 	}
 
 	xog := etree.NewDocument()
@@ -29,7 +29,7 @@ func TestExecuteToReturnStaticLookupTransformed(t *testing.T) {
 func TestExecuteToReturnStaticLookupTargetPartition(t *testing.T) {
 	file := model.DriverFile{
 		Code:            "LOOKUP_CAS_XOG",
-		Type:            constant.LOOKUP,
+		Type:            constant.TypeLookup,
 		TargetPartition: "NIKU.ROOT",
 		Path:            "testTarget.xml",
 	}
@@ -50,7 +50,7 @@ func TestExecuteToReturnStaticLookupTargetPartition(t *testing.T) {
 func TestExecuteToReturnStaticLookupSourceAndTargetPartition(t *testing.T) {
 	file := model.DriverFile{
 		Code:            "LOOKUP_CAS_XOG",
-		Type:            constant.LOOKUP,
+		Type:            constant.TypeLookup,
 		SourcePartition: "NIKU.ROOT",
 		TargetPartition: "partition10",
 		Path:            "testSourceAndTarget.xml",
@@ -72,7 +72,7 @@ func TestExecuteToReturnStaticLookupSourceAndTargetPartition(t *testing.T) {
 func TestExecuteToReturnDynamicLookupPartitionsTransformed(t *testing.T) {
 	file := model.DriverFile{
 		Code: "LOOKUP_CAS_XOG",
-		Type: constant.LOOKUP,
+		Type: constant.TypeLookup,
 	}
 
 	xog := etree.NewDocument()
@@ -91,7 +91,7 @@ func TestExecuteToReturnDynamicLookupPartitionsTransformed(t *testing.T) {
 func TestExecuteToReturnDynamicLookupReplacedNSQL(t *testing.T) {
 	file := model.DriverFile{
 		Code: "LOOKUP_CAS_XOG",
-		Type: constant.LOOKUP,
+		Type: constant.TypeLookup,
 		NSQL: "select * from inv_investments",
 	}
 
@@ -111,7 +111,7 @@ func TestExecuteToReturnDynamicLookupReplacedNSQL(t *testing.T) {
 func TestExecuteToReturnDynamicLookupOnlyStructure(t *testing.T) {
 	file := model.DriverFile{
 		Code:          "LOOKUP_CAS_XOG",
-		Type:          constant.LOOKUP,
+		Type:          constant.TypeLookup,
 		OnlyStructure: true,
 	}
 

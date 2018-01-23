@@ -13,6 +13,7 @@ import (
 var startInstallingPackage int
 var environments *model.Environments
 
+//Home display the system header and initializes variables
 func Home() {
 	var err error
 
@@ -20,7 +21,7 @@ func Home() {
 
 	log.Info("\n")
 	log.Info("--------------------------------------------\n")
-	log.Info("##### CAS XOG Automation - Version %.1f #####\n", constant.VERSION)
+	log.Info("##### CAS XOG Automation - Version %.1f #####\n", constant.Version)
 	log.Info("--------------------------------------------\n")
 
 	startInstallingPackage = 0
@@ -32,9 +33,10 @@ func Home() {
 		log.Info("\n[CAS-XOG][red[Error]]: %s\n", err.Error())
 	}
 
-	Drivers()
+	renderDrivers()
 }
 
+//Interface display the main menu for user to interact and choose available actions
 func Interface() bool {
 	var inputAction string
 
@@ -59,8 +61,8 @@ func Interface() bool {
 		}
 		ProcessDriverFiles(xog.GetLoadedDriver(), action, environments)
 	case "p":
-		xog.LoadPackages(constant.FOLDER_PACKAGE, "packages/")
-		output, selectedPackage, selectedVersion := Packages()
+		xog.LoadPackages(constant.FolderPackage, "packages/")
+		output, selectedPackage, selectedVersion := renderPackages()
 		if !output {
 			return false
 		}
@@ -73,7 +75,7 @@ func Interface() bool {
 			return false
 		}
 	case "l":
-		Drivers()
+		renderDrivers()
 	case "x":
 		log.Info("\n[CAS-XOG][blue[Action exit selected]] - Press enter key to exit...\n")
 		scanExit := ""

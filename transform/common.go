@@ -9,9 +9,8 @@ import (
 	"strings"
 )
 
+//Execute runs the transformation rules over the xog xml
 func Execute(xog, aux *etree.Document, file *model.DriverFile) error {
-	err := errors.New("")
-	err = nil
 
 	headerElement := xog.FindElement("//NikuDataBus/Header")
 	if headerElement == nil {
@@ -19,38 +18,14 @@ func Execute(xog, aux *etree.Document, file *model.DriverFile) error {
 	}
 	headerElement.CreateAttr("version", "8.0")
 
-	switch file.Type {
-	case constant.LOOKUP:
-		specificLookupTransformations(xog, file)
-	case constant.PROCESS:
-		err = specificProcessTransformations(xog, aux, file)
-		if err != nil {
-			return errors.New("transform error - " + err.Error())
-		}
-	case constant.OBJECT:
-		specificObjectTransformations(xog, aux, file)
-	case constant.VIEW:
-		err = specificViewTransformations(xog, aux, file)
-		if err != nil {
-			return errors.New("transform error - " + err.Error())
-		}
-	case constant.PORTLET, constant.QUERY:
-		removeElementFromParent(xog, "//lookups")
-		removeElementFromParent(xog, "//objects")
-	case constant.MENU:
-		err = specificMenuTransformations(xog, aux, file)
-		if err != nil {
-			return errors.New("transform error - " + err.Error())
-		}
-	case constant.RESOURCE_CLASS_INSTANCE, constant.WIP_CLASS_INSTANCE, constant.TRANSACTION_CLASS_INSTANCE:
-		headerElement.CreateAttr("version", "12.0")
-	case constant.INVESTMENT_CLASS_INSTANCE:
-		headerElement.CreateAttr("version", "14.1")
+	err := transformXMLByType(headerElement, xog, aux, file)
+	if err != nil {
+		return err
 	}
 
 	if len(file.Elements) > 0 {
 		for _, e := range file.Elements {
-			if e.Action == constant.ACTION_REMOVE && e.XPath != "" && e.Type == "" && e.Code == "" {
+			if e.Action == constant.ActionRemove && e.XPath != "" && e.Type == "" && e.Code == "" {
 				if strings.HasPrefix(e.XPath, "/") {
 					e.XPath = "." + e.XPath
 				}
@@ -70,6 +45,39 @@ func Execute(xog, aux *etree.Document, file *model.DriverFile) error {
 	xog.Indent(4)
 
 	return err
+}
+
+func transformXMLByType(headerElement *etree.Element, xog, aux *etree.Document, file *model.DriverFile) error {
+	switch file.Type {
+	case constant.TypeLookup:
+		specificLookupTransformations(xog, file)
+	case constant.TypeProcess:
+		err := specificProcessTransformations(xog, aux, file)
+		if err != nil {
+			return errors.New("transform error - " + err.Error())
+		}
+	case constant.TypeObject:
+		specificObjectTransformations(xog, aux, file)
+	case constant.TypeView:
+		err := specificViewTransformations(xog, aux, file)
+		if err != nil {
+			return errors.New("transform error - " + err.Error())
+		}
+	case constant.TypePortlet, constant.TypeQuery:
+		removeElementFromParent(xog, "//lookups")
+		removeElementFromParent(xog, "//objects")
+	case constant.TypeMenu:
+		err := specificMenuTransformations(xog, aux, file)
+		if err != nil {
+			return errors.New("transform error - " + err.Error())
+		}
+	case constant.TypeResourceClassInstance, constant.TypeWipClassInstance, constant.TypeTransactionClassInstance:
+		headerElement.CreateAttr("version", "12.0")
+	case constant.TypeInvestmentClassInstance:
+		headerElement.CreateAttr("version", "14.1")
+	}
+
+	return nil
 }
 
 func removeElementFromParent(xog *etree.Document, path string) {
@@ -112,6 +120,7 @@ func changePartition(xog *etree.Document, sourcePartition, targetPartition strin
 	}
 }
 
+//IncludeCDATA transform xog xml inserting CDATA in specific places
 func IncludeCDATA(xogString string, iniTagRegexpStr string, endTagRegexpStr string) string {
 	iniTagRegexp, _ := regexp.Compile(iniTagRegexpStr)
 	endTagRegexp, _ := regexp.Compile(endTagRegexpStr)
@@ -139,15 +148,15 @@ func IncludeCDATA(xogString string, iniTagRegexpStr string, endTagRegexpStr stri
 			sqlString = sqlString + "]]>"
 		}
 
-		shiftSqlStringAfterReplace := len(sqlString)
+		shiftSQLStringAfterReplace := len(sqlString)
 
 		sqlString = replacer.Replace(sqlString)
 
-		shiftSqlStringAfterReplace -= len(sqlString)
+		shiftSQLStringAfterReplace -= len(sqlString)
 
 		xogString = xogString[:index] + sqlString + xogString[eIndex:]
 
-		shiftIndex = shiftIndex + 3 - shiftSqlStringAfterReplace
+		shiftIndex = shiftIndex + 3 - shiftSQLStringAfterReplace
 	}
 
 	return xogString

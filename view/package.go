@@ -12,14 +12,15 @@ import (
 	"time"
 )
 
+//InstallPackage display the logs from the package's driver that is being installed
 func InstallPackage(environments *model.Environments, selectedPackage *model.Package, selectedVersion *model.Version) error {
 	start := time.Now()
 
-	outputResults := map[string]int{constant.OUTPUT_SUCCESS: 0, constant.OUTPUT_WARNING: 0, constant.OUTPUT_ERROR: 0, constant.OUTPUT_IGNORED: 0}
+	outputResults := map[string]int{constant.OutputSuccess: 0, constant.OutputWarning: 0, constant.OutputError: 0, constant.OutputIgnored: 0}
 
-	driverPath := constant.FOLDER_PACKAGE + selectedPackage.Folder + selectedPackage.DriverFileName
+	driverPath := constant.FolderPackage + selectedPackage.Folder + selectedPackage.DriverFileName
 	if selectedVersion.DriverFileName != "" {
-		driverPath = constant.FOLDER_PACKAGE + selectedPackage.Folder + selectedVersion.Folder + selectedVersion.DriverFileName
+		driverPath = constant.FolderPackage + selectedPackage.Folder + selectedVersion.Folder + selectedVersion.DriverFileName
 	}
 
 	total, err := xog.LoadDriver(driverPath)
@@ -27,12 +28,12 @@ func InstallPackage(environments *model.Environments, selectedPackage *model.Pac
 		return err
 	}
 
-	os.RemoveAll(constant.FOLDER_DEBUG)
-	os.MkdirAll(constant.FOLDER_DEBUG, os.ModePerm)
-	os.RemoveAll(constant.FOLDER_WRITE)
-	os.MkdirAll(constant.FOLDER_WRITE, os.ModePerm)
-	os.RemoveAll(constant.FOLDER_READ)
-	os.MkdirAll(constant.FOLDER_READ, os.ModePerm)
+	os.RemoveAll(constant.FolderDebug)
+	os.MkdirAll(constant.FolderDebug, os.ModePerm)
+	os.RemoveAll(constant.FolderWrite)
+	os.MkdirAll(constant.FolderWrite, os.ModePerm)
+	os.RemoveAll(constant.FolderRead)
+	os.MkdirAll(constant.FolderRead, os.ModePerm)
 
 	log.Info("\n------------------------------------------------------------------")
 	log.Info("\n[blue[Initiated at]]: %s", start.Format("Mon _2 Jan 2006 - 15:04:05"))
@@ -46,26 +47,26 @@ func InstallPackage(environments *model.Environments, selectedPackage *model.Pac
 		formattedType := util.RightPad(f.GetXMLType(), " ", typePadLength)
 		if f.IgnoreReading {
 			log.Info("\n[CAS-XOG][yellow[Processed ignored]] %03d/%03d | [blue[%s]] | file: %s", i+1, total, formattedType, f.Path)
-			outputResults[constant.OUTPUT_IGNORED] += 1
+			outputResults[constant.OutputIgnored]++
 			continue
 		}
 		log.Info("\n[CAS-XOG][blue[Processing       ]] %03d/%03d | [blue[%s]] | file: %s", i+1, total, formattedType, f.Path)
-		packageFolder := constant.FOLDER_PACKAGE + selectedPackage.Folder + selectedVersion.Folder + f.Type + "/"
-		writeFolder := constant.FOLDER_WRITE + f.Type
+		packageFolder := constant.FolderPackage + selectedPackage.Folder + selectedVersion.Folder + f.Type + "/"
+		writeFolder := constant.FolderWrite + f.Type
 		output := xog.ProcessPackageFile(&f, selectedVersion, packageFolder, writeFolder, environments, util.SoapCall)
 		status, color := util.GetStatusColorFromOutput(output.Code)
 		log.Info("\r[CAS-XOG][%s[Processed %s]] %03d/%03d | [blue[%s]] | file: %s %s", color, status, i+1, total, formattedType, f.Path, util.GetOutputDebug(output.Code, output.Debug))
-		outputResults[output.Code] += 1
+		outputResults[output.Code]++
 	}
 
 	elapsed := time.Since(start)
 
 	log.Info("\n\n-----------------------------------------------------------------------------")
-	log.Info("\nStats: total = %d | failure = %d | success = %d | warning = %d | ignored = %d", total, outputResults[constant.OUTPUT_ERROR], outputResults[constant.OUTPUT_SUCCESS], outputResults[constant.OUTPUT_WARNING], outputResults[constant.OUTPUT_IGNORED])
+	log.Info("\nStats: total = %d | failure = %d | success = %d | warning = %d | ignored = %d", total, outputResults[constant.OutputError], outputResults[constant.OutputSuccess], outputResults[constant.OutputWarning], outputResults[constant.OutputIgnored])
 	log.Info("\n[blue[Concluded in]]: %.3f seconds", elapsed.Seconds())
 	log.Info("\n-----------------------------------------------------------------------------\n")
 
-	outputResults = map[string]int{constant.OUTPUT_SUCCESS: 0, constant.OUTPUT_WARNING: 0, constant.OUTPUT_ERROR: 0, constant.OUTPUT_IGNORED: 0}
+	outputResults = map[string]int{constant.OutputSuccess: 0, constant.OutputWarning: 0, constant.OutputError: 0, constant.OutputIgnored: 0}
 	start = time.Now()
 
 	log.Info("\n------------------------------------------------------------------")
@@ -94,21 +95,21 @@ func InstallPackage(environments *model.Environments, selectedPackage *model.Pac
 		output := xog.InstallPackageFile(&f, environments, util.SoapCall)
 		status, color := util.GetStatusColorFromOutput(output.Code)
 		log.Info("\r[CAS-XOG][%s[Install %s]] %03d/%03d | [blue[%s]] | file: %s %s", color, status, i+1, total, formattedType, f.Path, util.GetOutputDebug(output.Code, output.Debug))
-		outputResults[output.Code] += 1
+		outputResults[output.Code]++
 	}
 
 	environments.Logout(util.SoapCall)
 	elapsed = time.Since(start)
 
 	log.Info("\n\n------------------------------------------------------------------")
-	log.Info("\nStats: total = %d | failure = %d | success = %d | warning = %d", total, outputResults[constant.OUTPUT_ERROR], outputResults[constant.OUTPUT_SUCCESS], outputResults[constant.OUTPUT_WARNING])
+	log.Info("\nStats: total = %d | failure = %d | success = %d | warning = %d", total, outputResults[constant.OutputError], outputResults[constant.OutputSuccess], outputResults[constant.OutputWarning])
 	log.Info("\n[blue[Concluded in]]: %.3f seconds", elapsed.Seconds())
 	log.Info("\n------------------------------------------------------------------\n")
 
 	return nil
 }
 
-func Packages() (bool, *model.Package, *model.Version) {
+func renderPackages() (bool, *model.Package, *model.Version) {
 
 	availablePackages := xog.GetAvailablePackages()
 

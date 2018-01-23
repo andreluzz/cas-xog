@@ -7,9 +7,10 @@ import (
 	"github.com/beevik/etree"
 )
 
+//Check verify the xog response output looking for errors and warnings
 func Check(xog *etree.Document) (model.Output, error) {
-	errorOutput := model.Output{Code: constant.OUTPUT_ERROR, Debug: ""}
-	warningOutput := model.Output{Code: constant.OUTPUT_WARNING, Debug: ""}
+	errorOutput := model.Output{Code: constant.OutputError, Debug: ""}
+	warningOutput := model.Output{Code: constant.OutputWarning, Debug: ""}
 
 	if xog == nil {
 		errorOutput.Debug = "invalid xog"
@@ -64,12 +65,12 @@ func Check(xog *etree.Document) (model.Output, error) {
 		}
 	}
 
-	elapsedTime := statusElement.SelectAttrValue("elapsedTime", constant.UNDEFINED)
+	elapsedTime := statusElement.SelectAttrValue("elapsedTime", constant.Undefined)
 
 	debug := ""
-	if elapsedTime != constant.UNDEFINED {
+	if elapsedTime != constant.Undefined {
 		debug = "| Elapsed time: " + elapsedTime
 	}
 
-	return model.Output{Code: constant.OUTPUT_SUCCESS, Debug: debug}, nil
+	return model.Output{Code: constant.OutputSuccess, Debug: debug}, nil
 }

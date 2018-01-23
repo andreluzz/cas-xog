@@ -12,9 +12,9 @@ import (
 )
 
 func deleteTestFolders() {
-	os.RemoveAll(constant.FOLDER_DEBUG)
-	os.RemoveAll(constant.FOLDER_READ)
-	os.RemoveAll(constant.FOLDER_WRITE)
+	os.RemoveAll(constant.FolderDebug)
+	os.RemoveAll(constant.FolderRead)
+	os.RemoveAll(constant.FolderWrite)
 }
 
 func TestValidateLoadedDriver(t *testing.T) {
@@ -55,20 +55,20 @@ func TestGetDriversListInvalidFolder(t *testing.T) {
 }
 
 func TestCreateFileFolder(t *testing.T) {
-	fileType := constant.PROCESS
+	fileType := constant.TypeProcess
 
-	sourceFolder, outputFolder := CreateFileFolder(constant.READ, fileType, "filename.xml")
+	sourceFolder, outputFolder := CreateFileFolder(constant.Read, fileType, "filename.xml")
 
-	if sourceFolder != constant.FOLDER_READ {
-		t.Errorf("Error creating file folder, expected source folder %s and received %s", constant.FOLDER_READ, sourceFolder)
+	if sourceFolder != constant.FolderRead {
+		t.Errorf("Error creating file folder, expected source folder %s and received %s", constant.FolderRead, sourceFolder)
 	}
-	if outputFolder != constant.FOLDER_WRITE {
-		t.Errorf("Error creating file folder, expected output folder %s and received %s", constant.FOLDER_WRITE, outputFolder)
+	if outputFolder != constant.FolderWrite {
+		t.Errorf("Error creating file folder, expected output folder %s and received %s", constant.FolderWrite, outputFolder)
 	}
-	folder := constant.FOLDER_READ + fileType
+	folder := constant.FolderRead + fileType
 	_, dirErr := os.Stat(folder)
 	if os.IsNotExist(dirErr) {
-		t.Errorf("Error creating file folder action %s, the read folder %s was not created", constant.READ, folder)
+		t.Errorf("Error creating file folder action %s, the read folder %s was not created", constant.Read, folder)
 	}
 	os.RemoveAll(folder)
 	os.RemoveAll(sourceFolder)
@@ -76,39 +76,39 @@ func TestCreateFileFolder(t *testing.T) {
 	folder = outputFolder + fileType
 	_, dirErr = os.Stat(folder)
 	if os.IsNotExist(dirErr) {
-		t.Errorf("Error creating file folder action %s, the output folder %s was not created", constant.READ, folder)
+		t.Errorf("Error creating file folder action %s, the output folder %s was not created", constant.Read, folder)
 	}
 	os.RemoveAll(folder)
 	os.RemoveAll(outputFolder)
 
-	sourceFolder, outputFolder = CreateFileFolder(constant.WRITE, fileType, "filename.xml")
+	sourceFolder, outputFolder = CreateFileFolder(constant.Write, fileType, "filename.xml")
 
-	if sourceFolder != constant.FOLDER_WRITE {
-		t.Errorf("Error creating file folder, expected source folder %s and received %s", constant.FOLDER_READ, sourceFolder)
+	if sourceFolder != constant.FolderWrite {
+		t.Errorf("Error creating file folder, expected source folder %s and received %s", constant.FolderRead, sourceFolder)
 	}
-	if outputFolder != constant.FOLDER_DEBUG {
-		t.Errorf("Error creating file folder, expected output folder %s and received %s", constant.FOLDER_WRITE, outputFolder)
+	if outputFolder != constant.FolderDebug {
+		t.Errorf("Error creating file folder, expected output folder %s and received %s", constant.FolderWrite, outputFolder)
 	}
 	folder = outputFolder + fileType
 	_, dirErr = os.Stat(folder)
 	if os.IsNotExist(dirErr) {
-		t.Errorf("Error creating file folder action %s, the folder %s was not created", constant.WRITE, folder)
+		t.Errorf("Error creating file folder action %s, the folder %s was not created", constant.Write, folder)
 	}
 	os.RemoveAll(folder)
 	os.RemoveAll(outputFolder)
 
-	sourceFolder, outputFolder = CreateFileFolder(constant.MIGRATE, fileType, "filename.xml")
+	sourceFolder, outputFolder = CreateFileFolder(constant.Migrate, fileType, "filename.xml")
 
-	if sourceFolder != constant.FOLDER_WRITE {
-		t.Errorf("Error creating file folder, expected source folder %s and received %s", constant.FOLDER_READ, sourceFolder)
+	if sourceFolder != constant.FolderWrite {
+		t.Errorf("Error creating file folder, expected source folder %s and received %s", constant.FolderRead, sourceFolder)
 	}
-	if outputFolder != constant.FOLDER_MIGRATION {
-		t.Errorf("Error creating file folder, expected output folder %s and received %s", constant.FOLDER_WRITE, outputFolder)
+	if outputFolder != constant.FolderMigration {
+		t.Errorf("Error creating file folder, expected output folder %s and received %s", constant.FolderWrite, outputFolder)
 	}
 	folder = outputFolder + fileType
 	_, dirErr = os.Stat(folder)
 	if os.IsNotExist(dirErr) {
-		t.Errorf("Error creating file folder action %s, the folder %s was not created", constant.WRITE, folder)
+		t.Errorf("Error creating file folder action %s, the folder %s was not created", constant.Write, folder)
 	}
 	os.RemoveAll(folder)
 	os.RemoveAll(outputFolder)
@@ -126,7 +126,7 @@ func TestLoadDriver(t *testing.T) {
 	}
 
 	driver := GetLoadedDriver()
-	if driver.Files[3].Type != constant.VIEW {
+	if driver.Files[3].Type != constant.TypeView {
 		t.Errorf("Error loading driver. Incorrect execution order")
 	}
 }
@@ -193,11 +193,11 @@ func TestProcessDriverFileWrite(t *testing.T) {
 
 	sourceFolder := "../mock/xog/soap/"
 	util.ValidateFolder(sourceFolder + file.Type)
-	outputFolder := constant.FOLDER_DEBUG
+	outputFolder := constant.FolderDebug
 	util.ValidateFolder(outputFolder + file.Type)
 
-	output := ProcessDriverFile(&file, constant.WRITE, sourceFolder, outputFolder, mockEnvironments, soapMock)
-	if output.Code != constant.OUTPUT_SUCCESS {
+	output := ProcessDriverFile(&file, constant.Write, sourceFolder, outputFolder, mockEnvironments, soapMock)
+	if output.Code != constant.OutputSuccess {
 		t.Errorf("Error processing driver file. Debug: %s", output.Debug)
 	}
 
@@ -207,7 +207,7 @@ func TestProcessDriverFileActionReadSplitFiles(t *testing.T) {
 	model.LoadXMLReadList("../xogRead.xml")
 
 	file := model.DriverFile{
-		Type:             constant.RESOURCE_INSTANCE,
+		Type:             constant.TypeResourceInstance,
 		Code:             "*",
 		Path:             "instances.xml",
 		InstancesPerFile: 40,
@@ -231,15 +231,15 @@ func TestProcessDriverFileActionReadSplitFiles(t *testing.T) {
 		return util.BytesToString(file), nil
 	}
 
-	os.RemoveAll("../" + constant.FOLDER_DEBUG + file.Type)
+	os.RemoveAll("../" + constant.FolderDebug + file.Type)
 
-	sourceFolder := "../" + constant.FOLDER_READ
+	sourceFolder := "../" + constant.FolderRead
 	util.ValidateFolder(sourceFolder + file.Type)
-	outputFolder := "../" + constant.FOLDER_DEBUG
+	outputFolder := "../" + constant.FolderDebug
 	util.ValidateFolder(outputFolder + file.Type)
 
-	output := ProcessDriverFile(&file, constant.READ, sourceFolder, outputFolder, mockEnvironments, soapMock)
-	if output.Code != constant.OUTPUT_SUCCESS {
+	output := ProcessDriverFile(&file, constant.Read, sourceFolder, outputFolder, mockEnvironments, soapMock)
+	if output.Code != constant.OutputSuccess {
 		t.Fatalf("Error processing driver file. Action read splitting files with errors. Debug: %s", output.Debug)
 	}
 
@@ -253,14 +253,14 @@ func TestProcessDriverFileActionReadSplitFiles(t *testing.T) {
 		t.Fatalf("Error processing driver file. Action read splitting files with errors. Expecting 9 files split received %d", len(files))
 	}
 
-	os.RemoveAll("../" + constant.FOLDER_DEBUG + file.Type)
+	os.RemoveAll("../" + constant.FolderDebug + file.Type)
 }
 
 func TestProcessDriverFileActionExportToExcel(t *testing.T) {
 	model.LoadXMLReadList("../xogRead.xml")
 
 	file := model.DriverFile{
-		Type:          constant.RESOURCE_INSTANCE,
+		Type:          constant.TypeResourceInstance,
 		Code:          "*",
 		Path:          "instances.xml",
 		InstanceTag:   "Resource",
@@ -318,17 +318,17 @@ func TestProcessDriverFileActionExportToExcel(t *testing.T) {
 		return util.BytesToString(file), nil
 	}
 
-	sourceFolder := "../" + constant.FOLDER_READ
+	sourceFolder := "../" + constant.FolderRead
 	util.ValidateFolder(sourceFolder + file.Type)
-	outputFolder := "../" + constant.FOLDER_DEBUG
+	outputFolder := "../" + constant.FolderDebug
 	util.ValidateFolder(outputFolder + file.Type)
 
-	output := ProcessDriverFile(&file, constant.READ, sourceFolder, outputFolder, mockEnvironments, soapMock)
-	if output.Code != constant.OUTPUT_SUCCESS {
+	output := ProcessDriverFile(&file, constant.Read, sourceFolder, outputFolder, mockEnvironments, soapMock)
+	if output.Code != constant.OutputSuccess {
 		t.Fatalf("Error processing driver file. Action migrate with errors. Debug: %s", output.Debug)
 	}
 
-	xlFile, err := xlsx.OpenFile(constant.FOLDER_MIGRATION + file.ExcelFile)
+	xlFile, err := xlsx.OpenFile(constant.FolderMigration + file.ExcelFile)
 	if err != nil {
 		t.Fatalf("Error processing driver file. Opening output xlsx error. Debug: %s", err.Error())
 	}
@@ -338,13 +338,13 @@ func TestProcessDriverFileActionExportToExcel(t *testing.T) {
 		t.Errorf("Error processing driver file. Excel file with wrong data. Expected: '/New York' received: %s", value)
 	}
 
-	os.RemoveAll(constant.FOLDER_MIGRATION)
+	os.RemoveAll(constant.FolderMigration)
 }
 
 func TestProcessDriverFileActionMigrate(t *testing.T) {
-	packageMockFolder := "../" + constant.FOLDER_MOCK + "migration/"
+	packageMockFolder := "../" + constant.FolderMock + "migration/"
 	file := model.DriverFile{
-		Type:          constant.MIGRATION,
+		Type:          constant.TypeMigration,
 		Template:      packageMockFolder + "template.xml",
 		ExcelFile:     packageMockFolder + "data.xlsx",
 		InstanceTag:   "instance",
@@ -378,13 +378,13 @@ func TestProcessDriverFileActionMigrate(t *testing.T) {
 			},
 		},
 	}
-	output := ProcessDriverFile(&file, constant.MIGRATE, "", "", nil, nil)
-	if output.Code != constant.OUTPUT_SUCCESS {
+	output := ProcessDriverFile(&file, constant.Migrate, "", "", nil, nil)
+	if output.Code != constant.OutputSuccess {
 		t.Errorf("Error processing driver file. Action migrate with errors. Debug: %s", output.Debug)
 	}
 
 	file = model.DriverFile{
-		Type:          constant.MIGRATION,
+		Type:          constant.TypeMigration,
 		Template:      packageMockFolder + "template.xml",
 		ExcelFile:     packageMockFolder + "data.xlsx",
 		InstanceTag:   "instance",
@@ -397,8 +397,8 @@ func TestProcessDriverFileActionMigrate(t *testing.T) {
 			},
 		},
 	}
-	output = ProcessDriverFile(&file, constant.MIGRATE, "", "", nil, nil)
-	if output.Code != constant.OUTPUT_ERROR {
+	output = ProcessDriverFile(&file, constant.Migrate, "", "", nil, nil)
+	if output.Code != constant.OutputError {
 		t.Errorf("Error processing driver file. Action migrate with errors not being validated.")
 	}
 }
@@ -407,10 +407,10 @@ func TestProcessDriverFileReturnInitXMLError(t *testing.T) {
 	model.LoadXMLReadList("../xogRead.xml")
 
 	file := model.DriverFile{
-		Type: constant.UNDEFINED,
+		Type: constant.Undefined,
 	}
-	output := ProcessDriverFile(&file, constant.READ, "", "", nil, nil)
-	if output.Code != constant.OUTPUT_ERROR {
+	output := ProcessDriverFile(&file, constant.Read, "", "", nil, nil)
+	if output.Code != constant.OutputError {
 		t.Errorf("Error processing driver file. Not treating invalid InitXML. Debug: %s", output.Debug)
 	}
 }
@@ -419,7 +419,7 @@ func TestProcessDriverFileReturnRunXMLError(t *testing.T) {
 	model.LoadXMLReadList("../xogRead.xml")
 
 	file := model.DriverFile{
-		Type: constant.PROCESS,
+		Type: constant.TypeProcess,
 		Code: "code",
 		Path: "test.xml",
 	}
@@ -433,8 +433,8 @@ func TestProcessDriverFileReturnRunXMLError(t *testing.T) {
 		Target: &model.EnvType{},
 	}
 
-	output := ProcessDriverFile(&file, constant.READ, constant.FOLDER_DEBUG, "", &environments, soapMock)
-	if output.Code != constant.OUTPUT_ERROR {
+	output := ProcessDriverFile(&file, constant.Read, constant.FolderDebug, "", &environments, soapMock)
+	if output.Code != constant.OutputError {
 		t.Errorf("Error processing driver file. Not treating invalid RunXML. Debug: %s", output.Debug)
 	}
 }
@@ -443,7 +443,7 @@ func TestProcessDriverFileReturnValidateXMLError(t *testing.T) {
 	model.LoadXMLReadList("../xogRead.xml")
 
 	file := model.DriverFile{
-		Type: constant.PROCESS,
+		Type: constant.TypeProcess,
 		Code: "code",
 		Path: "test.xml",
 	}
@@ -457,28 +457,28 @@ func TestProcessDriverFileReturnValidateXMLError(t *testing.T) {
 		Target: &model.EnvType{},
 	}
 
-	output := ProcessDriverFile(&file, constant.READ, constant.FOLDER_DEBUG, "", &environments, soapMock)
-	if output.Code != constant.OUTPUT_ERROR {
+	output := ProcessDriverFile(&file, constant.Read, constant.FolderDebug, "", &environments, soapMock)
+	if output.Code != constant.OutputError {
 		t.Errorf("Error processing driver file. Not treating invalid validate check. Debug: %s", output.Debug)
 	}
 }
 
 func TestProcessDriverFileActionMigrateInvalidFileType(t *testing.T) {
 	file := model.DriverFile{
-		Type: constant.LOOKUP,
+		Type: constant.TypeLookup,
 	}
-	output := ProcessDriverFile(&file, constant.MIGRATE, "", "", nil, nil)
-	if output.Code != constant.OUTPUT_WARNING {
+	output := ProcessDriverFile(&file, constant.Migrate, "", "", nil, nil)
+	if output.Code != constant.OutputWarning {
 		t.Errorf("Error processing driver file. Not treating invalid action and file type. Debug: %s", output.Debug)
 	}
 }
 
 func TestProcessDriverFileActionReadInvalidFileTypeMigration(t *testing.T) {
 	file := model.DriverFile{
-		Type: constant.MIGRATION,
+		Type: constant.TypeMigration,
 	}
-	output := ProcessDriverFile(&file, constant.READ, "", "", nil, nil)
-	if output.Code != constant.OUTPUT_WARNING {
+	output := ProcessDriverFile(&file, constant.Read, "", "", nil, nil)
+	if output.Code != constant.OutputWarning {
 		t.Errorf("Error processing driver file. Not treating invalid action and file type. Debug: %s", output.Debug)
 	}
 }
@@ -504,7 +504,7 @@ func TestProcessDriverFileActionRead(t *testing.T) {
 
 	sourceFolder := "../mock/xog/soap/"
 	util.ValidateFolder(sourceFolder + file.Type)
-	outputFolder := constant.FOLDER_DEBUG
+	outputFolder := constant.FolderDebug
 	util.ValidateFolder(outputFolder + file.Type)
 
 	soapMock := func(request, endpoint string) (string, error) {
@@ -512,8 +512,8 @@ func TestProcessDriverFileActionRead(t *testing.T) {
 		return util.BytesToString(file), nil
 	}
 
-	output := ProcessDriverFile(&file, constant.READ, sourceFolder, outputFolder, mockEnvironments, soapMock)
-	if output.Code != constant.OUTPUT_SUCCESS {
+	output := ProcessDriverFile(&file, constant.Read, sourceFolder, outputFolder, mockEnvironments, soapMock)
+	if output.Code != constant.OutputSuccess {
 		t.Errorf("Error processing driver file. Debug: %s", output.Debug)
 	}
 }
@@ -522,7 +522,7 @@ func TestProcessDriverFileActionReadNeedAux(t *testing.T) {
 	model.LoadXMLReadList("../xogRead.xml")
 
 	file := model.DriverFile{
-		Type:            constant.PROCESS,
+		Type:            constant.TypeProcess,
 		CopyPermissions: "code",
 		Code:            "code",
 		Path:            "test.xml",
@@ -541,9 +541,9 @@ func TestProcessDriverFileActionReadNeedAux(t *testing.T) {
 		},
 	}
 
-	sourceFolder := constant.FOLDER_READ
+	sourceFolder := constant.FolderRead
 	util.ValidateFolder(sourceFolder + file.Type)
-	outputFolder := constant.FOLDER_DEBUG
+	outputFolder := constant.FolderDebug
 	util.ValidateFolder(outputFolder + file.Type)
 
 	soapMock := func(request, endpoint string) (string, error) {
@@ -551,8 +551,8 @@ func TestProcessDriverFileActionReadNeedAux(t *testing.T) {
 		return util.BytesToString(file), nil
 	}
 
-	output := ProcessDriverFile(&file, constant.READ, sourceFolder, outputFolder, mockEnvironments, soapMock)
-	if output.Code != constant.OUTPUT_SUCCESS {
+	output := ProcessDriverFile(&file, constant.Read, sourceFolder, outputFolder, mockEnvironments, soapMock)
+	if output.Code != constant.OutputSuccess {
 		t.Errorf("Error processing driver file. Debug: %s", output.Debug)
 	}
 }
@@ -561,7 +561,7 @@ func TestProcessDriverFileActionReadNeedAuxErrorInvalidCheck(t *testing.T) {
 	model.LoadXMLReadList("../xogRead.xml")
 
 	file := model.DriverFile{
-		Type:    constant.VIEW,
+		Type:    constant.TypeView,
 		Code:    "code",
 		ObjCode: "project",
 		Path:    "test.xml",
@@ -580,9 +580,9 @@ func TestProcessDriverFileActionReadNeedAuxErrorInvalidCheck(t *testing.T) {
 		},
 	}
 
-	sourceFolder := constant.FOLDER_READ
+	sourceFolder := constant.FolderRead
 	util.ValidateFolder(sourceFolder + file.Type)
-	outputFolder := constant.FOLDER_DEBUG
+	outputFolder := constant.FolderDebug
 	util.ValidateFolder(outputFolder + file.Type)
 
 	soapMock := func(request, endpoint string) (string, error) {
@@ -593,8 +593,8 @@ func TestProcessDriverFileActionReadNeedAuxErrorInvalidCheck(t *testing.T) {
 		return util.BytesToString(file), nil
 	}
 
-	output := ProcessDriverFile(&file, constant.READ, sourceFolder, outputFolder, mockEnvironments, soapMock)
-	if output.Code != constant.OUTPUT_ERROR {
+	output := ProcessDriverFile(&file, constant.Read, sourceFolder, outputFolder, mockEnvironments, soapMock)
+	if output.Code != constant.OutputError {
 		t.Errorf("Error processing driver file. Not validating aux response. Debug: %s", output.Debug)
 	}
 }
@@ -603,7 +603,7 @@ func TestProcessDriverFileActionReadAuxValidateError(t *testing.T) {
 	model.LoadXMLReadList("../xogRead.xml")
 
 	file := model.DriverFile{
-		Type:            constant.PROCESS,
+		Type:            constant.TypeProcess,
 		CopyPermissions: "code",
 		Code:            "code",
 		Path:            "test.xml",
@@ -622,9 +622,9 @@ func TestProcessDriverFileActionReadAuxValidateError(t *testing.T) {
 		},
 	}
 
-	sourceFolder := constant.FOLDER_READ
+	sourceFolder := constant.FolderRead
 	util.ValidateFolder(sourceFolder + file.Type)
-	outputFolder := constant.FOLDER_DEBUG
+	outputFolder := constant.FolderDebug
 	util.ValidateFolder(outputFolder + file.Type)
 
 	soapMock := func(request, endpoint string) (string, error) {
@@ -632,8 +632,8 @@ func TestProcessDriverFileActionReadAuxValidateError(t *testing.T) {
 		return util.BytesToString(file), nil
 	}
 
-	output := ProcessDriverFile(&file, constant.READ, sourceFolder, outputFolder, mockEnvironments, soapMock)
-	if output.Code != constant.OUTPUT_ERROR {
+	output := ProcessDriverFile(&file, constant.Read, sourceFolder, outputFolder, mockEnvironments, soapMock)
+	if output.Code != constant.OutputError {
 		t.Errorf("Error processing driver file. Not treating aux output validatin error. Debug: %s", output.Debug)
 	}
 }
@@ -657,9 +657,9 @@ func TestProcessDriverFileActionReadTransformError(t *testing.T) {
 		},
 	}
 
-	sourceFolder := constant.FOLDER_READ
+	sourceFolder := constant.FolderRead
 	util.ValidateFolder(sourceFolder + file.Type)
-	outputFolder := constant.FOLDER_DEBUG
+	outputFolder := constant.FolderDebug
 	util.ValidateFolder(outputFolder + file.Type)
 
 	soapMock := func(request, endpoint string) (string, error) {
@@ -671,8 +671,8 @@ func TestProcessDriverFileActionReadTransformError(t *testing.T) {
     	</XOGOutput>`, nil
 	}
 
-	output := ProcessDriverFile(&file, constant.READ, sourceFolder, outputFolder, mockEnvironments, soapMock)
-	if output.Code != constant.OUTPUT_ERROR {
+	output := ProcessDriverFile(&file, constant.Read, sourceFolder, outputFolder, mockEnvironments, soapMock)
+	if output.Code != constant.OutputError {
 		t.Errorf("Error processing driver file. Debug: %s", output.Debug)
 	}
 

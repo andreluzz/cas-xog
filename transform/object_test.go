@@ -10,7 +10,7 @@ import (
 func TestExecuteToReturnObjectFull(t *testing.T) {
 	file := model.DriverFile{
 		Code: "obj_sistema",
-		Type: constant.OBJECT,
+		Type: constant.TypeObject,
 	}
 
 	xog := etree.NewDocument()
@@ -29,19 +29,19 @@ func TestExecuteToReturnObjectFull(t *testing.T) {
 func TestExecuteToReturnObjectElementAttribute(t *testing.T) {
 	file := model.DriverFile{
 		Code: "obj_sistema",
-		Type: constant.OBJECT,
+		Type: constant.TypeObject,
 		Elements: []model.Element{
 			{
 				Code: "test_action",
-				Type: constant.ELEMENT_TYPE_ACTION,
+				Type: constant.ElementTypeAction,
 			},
 			{
 				Code: "aprovador",
-				Type: constant.ELEMENT_TYPE_ATTRIBUTE,
+				Type: constant.ElementTypeAttribute,
 			},
 			{
 				Code: "status",
-				Type: constant.ELEMENT_TYPE_ATTRIBUTE,
+				Type: constant.ElementTypeAttribute,
 			},
 		},
 	}
@@ -64,7 +64,7 @@ func TestExecuteToReturnObjectElementAttribute(t *testing.T) {
 func TestExecuteToReturnObjectTargetPartition(t *testing.T) {
 	file := model.DriverFile{
 		Code:            "obj_sistema",
-		Type:            constant.OBJECT,
+		Type:            constant.TypeObject,
 		TargetPartition: "NIKU.ROOT",
 	}
 
@@ -78,7 +78,7 @@ func TestExecuteToReturnObjectTargetPartition(t *testing.T) {
 
 	count := 0
 	for _, e := range xog.FindElements("//*[@partitionCode]") {
-		if e.SelectAttrValue("partitionCode", constant.UNDEFINED) != file.TargetPartition {
+		if e.SelectAttrValue("partitionCode", constant.Undefined) != file.TargetPartition {
 			count++
 		}
 	}
@@ -95,7 +95,7 @@ func TestExecuteToReturnObjectTargetPartition(t *testing.T) {
 func TestExecuteToReturnObjectChangeSourcePartitionToTarget(t *testing.T) {
 	file := model.DriverFile{
 		Code:            "obj_sistema",
-		Type:            constant.OBJECT,
+		Type:            constant.TypeObject,
 		SourcePartition: "partition10",
 		TargetPartition: "NIKU.ROOT",
 	}
@@ -126,7 +126,7 @@ func TestExecuteToReturnObjectChangeSourcePartitionToTarget(t *testing.T) {
 func TestExecuteToReturnObjectChangePartitionModel(t *testing.T) {
 	file := model.DriverFile{
 		Code:           "obj_sistema",
-		Type:           constant.OBJECT,
+		Type:           constant.TypeObject,
 		PartitionModel: "NEW_PARTITION_MODEL",
 	}
 
@@ -139,7 +139,7 @@ func TestExecuteToReturnObjectChangePartitionModel(t *testing.T) {
 	}
 
 	for _, e := range xog.FindElements("*[@partitionModelCode]") {
-		value := e.SelectAttrValue("partitionModelCode", constant.UNDEFINED)
+		value := e.SelectAttrValue("partitionModelCode", constant.Undefined)
 		if value != file.PartitionModel {
 			t.Fatalf("Error transforming object XOG file. Expected %s got %s partition model", file.PartitionModel, value)
 		}
@@ -153,11 +153,11 @@ func TestExecuteToReturnObjectChangePartitionModel(t *testing.T) {
 func TestExecuteToReturnObjectRemoveAttribute(t *testing.T) {
 	file := model.DriverFile{
 		Code: "cas_environment",
-		Type: constant.OBJECT,
+		Type: constant.TypeObject,
 		Elements: []model.Element{
 			{
 				XPath:  "//customAttribute[@code='analista']",
-				Action: constant.ACTION_REMOVE,
+				Action: constant.ActionRemove,
 			},
 		},
 	}

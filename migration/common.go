@@ -11,33 +11,12 @@ import (
 	"strings"
 )
 
+//ReadDataFromExcel used to create xog file from data in excel format. Only accept .xlsx extension
 func ReadDataFromExcel(file *model.DriverFile) (string, error) {
 
-	err := errors.New(constant.UNDEFINED)
-	err = nil
-
-	excelStartRowIndex := 0
-	if file.ExcelStartRow != constant.UNDEFINED {
-		excelStartRowIndex, err = strconv.Atoi(file.ExcelStartRow)
-		if err != nil {
-			return constant.UNDEFINED, errors.New("migration - tag 'startRow' not a number. Debug:  " + err.Error())
-		}
-		excelStartRowIndex -= 1
-	}
-
-	xog := etree.NewDocument()
-	err = xog.ReadFromFile(file.Template)
+	excelStartRowIndex, xog, templateInstanceElement, err := validateReadDataFromExcelDriverAttributes(file)
 	if err != nil {
-		return constant.UNDEFINED, errors.New("migration - invalid template file. Debug: " + err.Error())
-	}
-
-	instance := "instance"
-	if file.InstanceTag != constant.UNDEFINED {
-		instance = file.InstanceTag
-	}
-	templateInstanceElement := xog.FindElement("//" + instance)
-	if templateInstanceElement == nil {
-		return constant.UNDEFINED, errors.New("migration - template invalid no instance element found")
+		return constant.Undefined, err
 	}
 
 	parent := templateInstanceElement.Parent()
@@ -46,7 +25,7 @@ func ReadDataFromExcel(file *model.DriverFile) (string, error) {
 
 	xlFile, err := xlsx.OpenFile(file.ExcelFile)
 	if err != nil {
-		return constant.UNDEFINED, errors.New("migration - error opening excel. Debug: " + err.Error())
+		return constant.Undefined, errors.New("migration - error opening excel. Debug: " + err.Error())
 	}
 
 	for index, row := range xlFile.Sheets[0].Rows {
@@ -54,27 +33,27 @@ func ReadDataFromExcel(file *model.DriverFile) (string, error) {
 			element := instanceCopy.Copy()
 			for _, match := range file.MatchExcel {
 				var e *etree.Element
-				if match.XPath == constant.UNDEFINED {
+				if match.XPath == constant.Undefined {
 					e = element
 				} else {
 					e = element.FindElement(match.XPath)
 				}
 
 				if e == nil {
-					return constant.UNDEFINED, errors.New("migration - invalid xpath element not found in template file")
+					return constant.Undefined, errors.New("migration - invalid xpath element not found in template file")
 				}
 
-				value := constant.UNDEFINED
+				value := constant.Undefined
 				if match.Col-1 < len(row.Cells) {
 					value = row.Cells[match.Col-1].String()
 				}
 
-				if match.AttributeName != constant.UNDEFINED {
+				if match.AttributeName != constant.Undefined {
 					e.CreateAttr(match.AttributeName, value)
 				} else {
-					if match.MultiValued && value != constant.UNDEFINED {
+					if match.MultiValued && value != constant.Undefined {
 						separator := ";"
-						if match.Separator != constant.UNDEFINED {
+						if match.Separator != constant.Undefined {
 							separator = match.Separator
 						}
 						for _, val := range strings.Split(value, separator) {
@@ -93,6 +72,36 @@ func ReadDataFromExcel(file *model.DriverFile) (string, error) {
 	return xog.WriteToString()
 }
 
+func validateReadDataFromExcelDriverAttributes(file *model.DriverFile) (int, *etree.Document, *etree.Element, error) {
+
+	xog := etree.NewDocument()
+	err := xog.ReadFromFile(file.Template)
+	if err != nil {
+		return 0, nil, nil, errors.New("migration - invalid template file. Debug: " + err.Error())
+	}
+
+	excelStartRowIndex := 0
+	if file.ExcelStartRow != constant.Undefined {
+		excelStartRowIndex, err = strconv.Atoi(file.ExcelStartRow)
+		if err != nil {
+			return 0, nil, nil, errors.New("migration - tag 'startRow' not a number. Debug:  " + err.Error())
+		}
+		excelStartRowIndex--
+	}
+
+	instance := "instance"
+	if file.InstanceTag != constant.Undefined {
+		instance = file.InstanceTag
+	}
+	templateInstanceElement := xog.FindElement("//" + instance)
+	if templateInstanceElement == nil {
+		return 0, nil, nil, errors.New("migration - template invalid no instance element found")
+	}
+
+	return excelStartRowIndex, xog, templateInstanceElement, nil
+}
+
+//ExportInstancesToExcel used to create excel file with the data from xog file
 func ExportInstancesToExcel(xog *etree.Document, file *model.DriverFile, folder string) error {
 	xlsxFile := xlsx.NewFile()
 	sheet, _ := xlsxFile.AddSheet("Instances")
@@ -102,7 +111,7 @@ func ExportInstancesToExcel(xog *etree.Document, file *model.DriverFile, folder 
 
 		for _, match := range file.MatchExcel {
 			var e *etree.Element
-			if match.XPath == constant.UNDEFINED {
+			if match.XPath == constant.Undefined {
 				e = instance
 			} else {
 				e = instance.FindElement(match.XPath)

@@ -11,7 +11,7 @@ import (
 )
 
 func TestLoadPackages(t *testing.T) {
-	folder := "../mock/xog/" + constant.FOLDER_PACKAGE
+	folder := "../mock/xog/" + constant.FolderPackage
 	LoadPackages(folder, "../mock/xog/mock_packages/")
 
 	packages := GetAvailablePackages()
@@ -25,7 +25,7 @@ func TestLoadPackages(t *testing.T) {
 }
 
 func TestLoadPackagesInvalidUserPackageFolder(t *testing.T) {
-	folder := "../mock/xog/" + constant.FOLDER_PACKAGE
+	folder := "../mock/xog/" + constant.FolderPackage
 	LoadPackages(folder, "")
 
 	packages := GetAvailablePackages()
@@ -35,7 +35,7 @@ func TestLoadPackagesInvalidUserPackageFolder(t *testing.T) {
 }
 
 func TestLoadAvailablePackages(t *testing.T) {
-	folder := "../mock/xog/" + constant.FOLDER_PACKAGE
+	folder := "../mock/xog/" + constant.FolderPackage
 	unzipPackages(folder, "../mock/xog/mock_packages/")
 	loadAvailablePackages(folder)
 
@@ -50,12 +50,12 @@ func TestLoadAvailablePackages(t *testing.T) {
 }
 
 func TestUnzipPackages(t *testing.T) {
-	folder := "../mock/xog/" + constant.FOLDER_PACKAGE
+	folder := "../mock/xog/" + constant.FolderPackage
 	unzipPackages(folder, "../mock/xog/mock_packages/")
 
 	total := 0
 	filepath.Walk(folder+"mock-pkg/", func(path string, file os.FileInfo, err error) error {
-		total += 1
+		total++
 		return err
 	})
 
@@ -65,7 +65,7 @@ func TestUnzipPackages(t *testing.T) {
 }
 
 func TestProcessPackageFile(t *testing.T) {
-	folder := "../mock/xog/" + constant.FOLDER_PACKAGE
+	folder := "../mock/xog/" + constant.FolderPackage
 	LoadPackages(folder, "../mock/xog/mock_packages/")
 
 	selectedPackage := GetAvailablePackages()[0]
@@ -76,21 +76,21 @@ func TestProcessPackageFile(t *testing.T) {
 	file := GetLoadedDriver().Files[0]
 
 	packageFolder := folder + selectedPackage.Folder + selectedPackage.Versions[0].Folder + file.Type + "/"
-	writeFolder := constant.FOLDER_WRITE + file.Type
+	writeFolder := constant.FolderWrite + file.Type
 
 	output := ProcessPackageFile(&file, &selectedPackage.Versions[0], packageFolder, writeFolder, nil, nil)
-	if output.Code != constant.OUTPUT_SUCCESS {
+	if output.Code != constant.OutputSuccess {
 		t.Errorf("Error processing package file. Debug: %s", output.Debug)
 	}
 
 	output = ProcessPackageFile(&model.DriverFile{}, &selectedPackage.Versions[0], packageFolder, writeFolder, nil, nil)
-	if output.Code != constant.OUTPUT_ERROR {
+	if output.Code != constant.OutputError {
 		t.Errorf("Error processing package file. Not validating invalid file")
 	}
 }
 
 func TestProcessAndTransformPackageFile(t *testing.T) {
-	folder := "../mock/xog/" + constant.FOLDER_PACKAGE
+	folder := "../mock/xog/" + constant.FolderPackage
 	LoadPackages(folder, "../mock/xog/mock_packages/")
 
 	selectedPackage := GetAvailablePackages()[0]
@@ -101,7 +101,7 @@ func TestProcessAndTransformPackageFile(t *testing.T) {
 	file := GetLoadedDriver().Files[5]
 
 	packageFolder := folder + selectedPackage.Folder + selectedPackage.Versions[0].Folder + file.Type + "/"
-	writeFolder := constant.FOLDER_WRITE + file.Type
+	writeFolder := constant.FolderWrite + file.Type
 
 	soapMock := func(request, endpoint string) (string, error) {
 		file, _ := ioutil.ReadFile("../mock/xog/package_transform_view_target.xml")
@@ -120,12 +120,12 @@ func TestProcessAndTransformPackageFile(t *testing.T) {
 		},
 	}
 	output := ProcessPackageFile(&file, &selectedPackage.Versions[0], packageFolder, writeFolder, mockEnvironments, soapMock)
-	if output.Code != constant.OUTPUT_SUCCESS {
+	if output.Code != constant.OutputSuccess {
 		t.Errorf("Error processing package file. Debug: %s", output.Debug)
 	}
 
 	output = ProcessPackageFile(&model.DriverFile{}, &selectedPackage.Versions[0], packageFolder, writeFolder, nil, nil)
-	if output.Code != constant.OUTPUT_ERROR {
+	if output.Code != constant.OutputError {
 		t.Errorf("Error processing package file. Not validating invalid file")
 	}
 }
@@ -133,7 +133,7 @@ func TestProcessAndTransformPackageFile(t *testing.T) {
 func TestInstallPackageFile(t *testing.T) {
 	model.LoadXMLReadList("../xogRead.xml")
 
-	folder := "../mock/xog/" + constant.FOLDER_PACKAGE
+	folder := "../mock/xog/" + constant.FolderPackage
 	LoadPackages(folder, "../mock/xog/mock_packages/")
 
 	selectedPackage := GetAvailablePackages()[0]
@@ -144,7 +144,7 @@ func TestInstallPackageFile(t *testing.T) {
 	file := GetLoadedDriver().Files[4]
 
 	packageFolder := folder + selectedPackage.Folder + selectedPackage.Versions[0].Folder + file.Type + "/"
-	writeFolder := constant.FOLDER_WRITE + file.Type
+	writeFolder := constant.FolderWrite + file.Type
 
 	output := ProcessPackageFile(&file, &selectedPackage.Versions[0], packageFolder, writeFolder, nil, nil)
 
@@ -167,7 +167,7 @@ func TestInstallPackageFile(t *testing.T) {
 	}
 
 	output = InstallPackageFile(&file, mockEnvironments, soapMock)
-	if output.Code != constant.OUTPUT_SUCCESS {
+	if output.Code != constant.OutputSuccess {
 		t.Errorf("Error installing package file. Debug: %s", output.Debug)
 	}
 
@@ -176,7 +176,7 @@ func TestInstallPackageFile(t *testing.T) {
 	}
 
 	output = InstallPackageFile(&file, mockEnvironments, soapMock)
-	if output.Code != constant.OUTPUT_ERROR {
+	if output.Code != constant.OutputError {
 		t.Errorf("Error installing package file. Not validating soap response")
 	}
 
