@@ -21,6 +21,7 @@ import (
 
 var driverXOG *model.Driver
 
+//LoadDriver load an specific driver defined by a path
 func LoadDriver(path string) (int, error) {
 	driverXOG = &model.Driver{}
 	driverXOG.Clear()
@@ -33,12 +34,12 @@ func LoadDriver(path string) (int, error) {
 	xml.Unmarshal(xmlFile, &driverXOGTypePattern)
 
 	v, err := strconv.ParseFloat(driverXOGTypePattern.Version, 64)
-	if err != nil || v < constant.VERSION {
-		return 0, errors.New(fmt.Sprintf("invalid driver(%s) version, expected version %.1f or greater", path, constant.VERSION))
+	if err != nil || v < constant.Version {
+		return 0, fmt.Errorf("invalid driver(%s) version, expected version %.1f or greater", path, constant.Version)
 	}
 
 	if len(driverXOGTypePattern.Files) > 0 {
-		return 0, errors.New(fmt.Sprintf("invalid driver(%s) tag <file> is no longer supported", path))
+		return 0, fmt.Errorf("invalid driver(%s) tag <file> is no longer supported", path)
 	}
 
 	types := reflect.ValueOf(&driverXOGTypePattern).Elem()
@@ -59,8 +60,8 @@ func LoadDriver(path string) (int, error) {
 
 	for i, e := range doc.FindElements("//xogdriver/*") {
 		tag := e.Tag
-		path := e.SelectAttrValue("path", constant.UNDEFINED)
-		code := e.SelectAttrValue("code", constant.UNDEFINED)
+		path := e.SelectAttrValue("path", constant.Undefined)
+		code := e.SelectAttrValue("code", constant.Undefined)
 		for y, f := range driverXOG.Files {
 			if f.ExecutionOrder == -1 && (strings.ToLower(f.GetXMLType()) == strings.ToLower(tag)) && (f.Path == path) && (f.Code == code) {
 				driverXOG.Files[y].ExecutionOrder = i
@@ -77,10 +78,12 @@ func LoadDriver(path string) (int, error) {
 	return len(driverXOG.Files), nil
 }
 
+//GetLoadedDriver returns the pointer to the loaded driver
 func GetLoadedDriver() *model.Driver {
 	return driverXOG
 }
 
+//ValidateLoadedDriver verify if the driver was loaded successfully
 func ValidateLoadedDriver() bool {
 	if driverXOG == nil {
 		return false
@@ -88,6 +91,7 @@ func ValidateLoadedDriver() bool {
 	return len(driverXOG.Files) > 0
 }
 
+//GetDriversList returns a list of available drivers in the defined folder
 func GetDriversList(folder string) ([]model.Driver, error) {
 	driversFileList, err := ioutil.ReadDir(folder)
 
@@ -106,23 +110,24 @@ func GetDriversList(folder string) ([]model.Driver, error) {
 	return driversList, nil
 }
 
+//ProcessDriverFile execute a xog files and return the output
 func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolder string, environments *model.Environments, soapFunc util.Soap) model.Output {
-	output := model.Output{Code: constant.OUTPUT_SUCCESS, Debug: constant.UNDEFINED}
+	output := model.Output{Code: constant.OutputSuccess, Debug: constant.Undefined}
 
-	if action == constant.MIGRATE && file.Type != constant.MIGRATION {
-		output.Code = constant.OUTPUT_WARNING
+	if action == constant.Migrate && file.Type != constant.TypeMigration {
+		output.Code = constant.OutputWarning
 		output.Debug = "Use action 'r' to this type(" + file.Type + ") of file"
 		return output
-	} else if action == constant.READ && file.Type == constant.MIGRATION {
-		output.Code = constant.OUTPUT_WARNING
+	} else if action == constant.Read && file.Type == constant.TypeMigration {
+		output.Code = constant.OutputWarning
 		output.Debug = "Use action 'm' to this type(" + file.Type + ") of file"
 		return output
 	}
 
-	if action == constant.MIGRATE {
+	if action == constant.Migrate {
 		resp, err := migration.ReadDataFromExcel(file)
 		if err != nil {
-			output.Code = constant.OUTPUT_ERROR
+			output.Code = constant.OutputError
 			output.Debug = err.Error()
 			return output
 		}
@@ -133,20 +138,20 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 
 	err := file.InitXML(action, sourceFolder)
 	if err != nil {
-		output.Code = constant.OUTPUT_ERROR
+		output.Code = constant.OutputError
 		output.Debug = err.Error()
 		return output
 	}
-	if action == constant.WRITE {
+	if action == constant.Write {
 		iniTagRegexpStr, endTagRegexpStr := file.TagCDATA()
-		if iniTagRegexpStr != constant.UNDEFINED && endTagRegexpStr != constant.UNDEFINED {
+		if iniTagRegexpStr != constant.Undefined && endTagRegexpStr != constant.Undefined {
 			transformedString := transform.IncludeCDATA(file.GetXML(), iniTagRegexpStr, endTagRegexpStr)
 			file.SetXML(transformedString)
 		}
 	}
 	err = file.RunXML(action, sourceFolder, environments, soapFunc)
 	if err != nil {
-		output.Code = constant.OUTPUT_ERROR
+		output.Code = constant.OutputError
 		output.Debug = err.Error()
 		return output
 	}
@@ -154,25 +159,25 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 	xogResponse.ReadFromString(file.GetXML())
 	output, err = validate.Check(xogResponse)
 	if err != nil {
-		output.Code = constant.OUTPUT_ERROR
+		output.Code = constant.OutputError
 		output.Debug = err.Error()
 		return output
 	}
-	if action == constant.READ {
+	if action == constant.Read {
 		var auxResponse *etree.Document
 		if file.NeedAuxXML() {
 			auxResponse = etree.NewDocument()
 			auxResponse.ReadFromString(file.GetAuxXML())
 			output, err = validate.Check(auxResponse)
 			if err != nil {
-				output.Code = constant.OUTPUT_ERROR
+				output.Code = constant.OutputError
 				output.Debug = "aux validation - " + err.Error()
 				return output
 			}
 		}
 		err = transform.Execute(xogResponse, auxResponse, file)
 
-		if file.GetInstanceTag() != constant.UNDEFINED && file.InstancesPerFile > 0 {
+		if file.GetInstanceTag() != constant.Undefined && file.InstancesPerFile > 0 {
 			instanceTagPath := "//" + file.GetInstanceTag()
 
 			parentTagPath := "//" + xogResponse.FindElement(instanceTagPath).Parent().Tag
@@ -205,18 +210,18 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 		str, _ := xogResponse.WriteToString()
 		file.SetXML(str)
 		if err != nil {
-			output.Code = constant.OUTPUT_ERROR
+			output.Code = constant.OutputError
 			output.Debug = err.Error()
 			return output
 		}
 		iniTagRegexpStr, endTagRegexpStr := file.TagCDATA()
-		if iniTagRegexpStr != constant.UNDEFINED && endTagRegexpStr != constant.UNDEFINED {
+		if iniTagRegexpStr != constant.Undefined && endTagRegexpStr != constant.Undefined {
 			transformedString := transform.IncludeCDATA(file.GetXML(), iniTagRegexpStr, endTagRegexpStr)
 			file.SetXML(transformedString)
 		}
 
 		if file.ExportToExcel {
-			migration.ExportInstancesToExcel(xogResponse, file, constant.FOLDER_MIGRATION)
+			migration.ExportInstancesToExcel(xogResponse, file, constant.FolderMigration)
 		}
 	}
 
@@ -224,21 +229,22 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 	return output
 }
 
+//CreateFileFolder creates the folders according to the action (read, write or migrate)
 func CreateFileFolder(action, fileType, path string) (string, string) {
-	sourceFolder := constant.UNDEFINED
-	outputFolder := constant.UNDEFINED
+	sourceFolder := constant.Undefined
+	outputFolder := constant.Undefined
 
 	switch action {
-	case constant.READ:
-		sourceFolder = constant.FOLDER_READ
-		outputFolder = constant.FOLDER_WRITE
-		util.ValidateFolder(constant.FOLDER_READ + fileType + util.GetPathFolder(path))
-	case constant.WRITE:
-		sourceFolder = constant.FOLDER_WRITE
-		outputFolder = constant.FOLDER_DEBUG
-	case constant.MIGRATE:
-		sourceFolder = constant.FOLDER_WRITE
-		outputFolder = constant.FOLDER_MIGRATION
+	case constant.Read:
+		sourceFolder = constant.FolderRead
+		outputFolder = constant.FolderWrite
+		util.ValidateFolder(constant.FolderRead + fileType + util.GetPathFolder(path))
+	case constant.Write:
+		sourceFolder = constant.FolderWrite
+		outputFolder = constant.FolderDebug
+	case constant.Migrate:
+		sourceFolder = constant.FolderWrite
+		outputFolder = constant.FolderMigration
 	}
 
 	util.ValidateFolder(outputFolder + fileType + util.GetPathFolder(path))

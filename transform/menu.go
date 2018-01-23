@@ -24,7 +24,7 @@ func specificMenuTransformations(xog, aux *etree.Document, file *model.DriverFil
 
 			targetSectionElement := aux.FindElement("//section[@code='" + s.Code + "']")
 			switch s.Action {
-			case constant.ACTION_UPDATE:
+			case constant.ActionUpdate:
 				if targetSectionElement == nil {
 					return errors.New("invalid target menu section code(" + s.Code + ")")
 				}
@@ -41,12 +41,12 @@ func specificMenuTransformations(xog, aux *etree.Document, file *model.DriverFil
 				for i, e := range targetSectionElement.FindElements("//link") {
 					e.CreateAttr("position", strconv.Itoa(i))
 				}
-			case constant.ACTION_INSERT:
+			case constant.ActionInsert:
 				if targetSectionElement != nil {
 					return errors.New("cannot insert section code(" + s.Code + ") because it already exists in target")
 				}
 				position := "-1"
-				if s.TargetPosition != constant.UNDEFINED {
+				if s.TargetPosition != constant.Undefined {
 					position = s.TargetPosition
 				}
 				if len(s.Links) > 0 {

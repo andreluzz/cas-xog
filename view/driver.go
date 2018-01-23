@@ -12,10 +12,11 @@ import (
 	"time"
 )
 
+//ProcessDriverFiles displays the feedback of drivers processing
 func ProcessDriverFiles(driver *model.Driver, action string, environments *model.Environments) {
 	start := time.Now()
 
-	outputResults := map[string]int{constant.OUTPUT_SUCCESS: 0, constant.OUTPUT_WARNING: 0, constant.OUTPUT_ERROR: 0, constant.OUTPUT_IGNORED: 0}
+	outputResults := map[string]int{constant.OutputSuccess: 0, constant.OutputWarning: 0, constant.OutputError: 0, constant.OutputIgnored: 0}
 
 	log.Info("\n------------------------------------------------------------------")
 	log.Info("\n[blue[Initiated at]]: %s", start.Format("Mon _2 Jan 2006 - 15:04:05"))
@@ -24,17 +25,17 @@ func ProcessDriverFiles(driver *model.Driver, action string, environments *model
 
 	processingString := "processing  "
 	if action == "r" {
-		os.RemoveAll(constant.FOLDER_READ)
-		os.MkdirAll(constant.FOLDER_READ, os.ModePerm)
-		os.RemoveAll(constant.FOLDER_WRITE)
-		os.MkdirAll(constant.FOLDER_WRITE, os.ModePerm)
+		os.RemoveAll(constant.FolderRead)
+		os.MkdirAll(constant.FolderRead, os.ModePerm)
+		os.RemoveAll(constant.FolderWrite)
+		os.MkdirAll(constant.FolderWrite, os.ModePerm)
 	} else if action == "w" {
-		os.RemoveAll(constant.FOLDER_DEBUG)
-		os.MkdirAll(constant.FOLDER_DEBUG, os.ModePerm)
+		os.RemoveAll(constant.FolderDebug)
+		os.MkdirAll(constant.FolderDebug, os.ModePerm)
 		processingString = "processing   "
 	} else if action == "m" {
-		os.RemoveAll(constant.FOLDER_MIGRATION)
-		os.MkdirAll(constant.FOLDER_MIGRATION, os.ModePerm)
+		os.RemoveAll(constant.FolderMigration)
+		os.MkdirAll(constant.FolderMigration, os.ModePerm)
 		processingString = "processing    "
 	}
 
@@ -45,7 +46,7 @@ func ProcessDriverFiles(driver *model.Driver, action string, environments *model
 		formattedType := util.RightPad(f.GetXMLType(), " ", typePadLength)
 		if f.IgnoreReading && action == "r" {
 			log.Info("\n[CAS-XOG][yellow[Read ignored]] %03d/%03d | [blue[%s]] | file: %s", i+1, total, formattedType, f.Path)
-			outputResults[constant.OUTPUT_IGNORED] += 1
+			outputResults[constant.OutputIgnored]++
 			continue
 		}
 		sourceFolder, outputFolder := xog.CreateFileFolder(action, f.Type, f.Path)
@@ -59,18 +60,18 @@ func ProcessDriverFiles(driver *model.Driver, action string, environments *model
 				output := xog.ProcessDriverFile(&f, action, sourceFolder, outputFolder, environments, util.SoapCall)
 				status, color := util.GetStatusColorFromOutput(output.Code)
 				log.Info("\r[CAS-XOG][%s[%s %s]] %03d/%03d | [blue[%s]] | Split: %03d/%03d | file: %s %s", color, util.GetActionLabel(action), status, i+1, total, formattedType, j+1, totalSplit, f.Path, util.GetOutputDebug(output.Code, output.Debug))
-				outputResults[output.Code] += 1
+				outputResults[output.Code]++
 			}
 		} else {
 			log.Info("\n[CAS-XOG][blue[%s]] %03d/%03d | [blue[%s]] | file: %s", processingString, i+1, total, formattedType, f.Path)
-			if f.Type == constant.MIGRATION {
-				sourceFolder = constant.FOLDER_MIGRATION
+			if f.Type == constant.TypeMigration {
+				sourceFolder = constant.FolderMigration
 			}
 
 			output := xog.ProcessDriverFile(&f, action, sourceFolder, outputFolder, environments, util.SoapCall)
 			status, color := util.GetStatusColorFromOutput(output.Code)
 			log.Info("\r[CAS-XOG][%s[%s %s]] %03d/%03d | [blue[%s]] | file: %s %s", color, util.GetActionLabel(action), status, i+1, total, formattedType, f.Path, util.GetOutputDebug(output.Code, output.Debug))
-			outputResults[output.Code] += 1
+			outputResults[output.Code]++
 		}
 	}
 
@@ -79,12 +80,12 @@ func ProcessDriverFiles(driver *model.Driver, action string, environments *model
 	environments.Logout(util.SoapCall)
 
 	log.Info("\n\n-----------------------------------------------------------------------------")
-	log.Info("\nStats: total = %d | failure = %d | success = %d | warning = %d | ignored = %d", len(driver.Files), outputResults[constant.OUTPUT_ERROR], outputResults[constant.OUTPUT_SUCCESS], outputResults[constant.OUTPUT_WARNING], outputResults[constant.OUTPUT_IGNORED])
+	log.Info("\nStats: total = %d | failure = %d | success = %d | warning = %d | ignored = %d", len(driver.Files), outputResults[constant.OutputError], outputResults[constant.OutputSuccess], outputResults[constant.OutputWarning], outputResults[constant.OutputIgnored])
 	log.Info("\n[blue[Concluded in]]: %.3f seconds", elapsed.Seconds())
 	log.Info("\n-----------------------------------------------------------------------------\n")
 }
 
-func Drivers() {
+func renderDrivers() {
 	folder := "drivers/"
 	driversList, err := xog.GetDriversList(folder)
 	if err != nil {

@@ -1,5 +1,6 @@
 package model
 
+//Definition defines the attributes to load the version definitions xml tag
 type Definition struct {
 	Action         string `xml:"action,attr"`
 	Description    string `xml:"description,attr"`
@@ -10,6 +11,7 @@ type Definition struct {
 	Value          string
 }
 
+//Version defines the attributes to load the package versions xml tag
 type Version struct {
 	Name           string       `xml:"name,attr"`
 	Folder         string       `xml:"folder,attr"`
@@ -17,6 +19,7 @@ type Version struct {
 	Definitions    []Definition `xml:"definition"`
 }
 
+//Package defines the attributes to load the package xml file
 type Package struct {
 	Name           string    `xml:"name,attr"`
 	Folder         string    `xml:"folder,attr"`

@@ -11,7 +11,7 @@ func TestExecuteToReturnView(t *testing.T) {
 	file := model.DriverFile{
 		Code:    "*",
 		ObjCode: "obj_sistema",
-		Type:    constant.VIEW,
+		Type:    constant.TypeView,
 	}
 
 	xog := etree.NewDocument()
@@ -31,7 +31,7 @@ func TestExecuteToReturnViewSourcePartition(t *testing.T) {
 	file := model.DriverFile{
 		Code:            "*",
 		ObjCode:         "obj_sistema",
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		SourcePartition: "partition10",
 	}
 
@@ -52,7 +52,7 @@ func TestExecuteToReturnViewSourceTargetPartition(t *testing.T) {
 	file := model.DriverFile{
 		Code:            "*",
 		ObjCode:         "obj_sistema",
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
 	}
@@ -72,7 +72,7 @@ func TestExecuteToReturnViewSourceTargetPartition(t *testing.T) {
 
 func TestExecuteToReturnViewCodePattern(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "*obj_sistemaCreate",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
@@ -95,7 +95,7 @@ func TestExecuteToReturnViewCodePattern(t *testing.T) {
 
 func TestExecuteToReturnViewSingle(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
@@ -118,7 +118,7 @@ func TestExecuteToReturnViewSingle(t *testing.T) {
 
 func TestExecuteToReturnViewSingleList(t *testing.T) {
 	file := model.DriverFile{
-		Type:    constant.VIEW,
+		Type:    constant.TypeView,
 		Code:    "odf.obj_sistemaList",
 		ObjCode: "obj_sistema",
 	}
@@ -140,7 +140,7 @@ func TestExecuteToReturnViewSingleList(t *testing.T) {
 
 func TestExecuteToReturnViewSingleNotInTarget(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
@@ -163,7 +163,7 @@ func TestExecuteToReturnViewSingleNotInTarget(t *testing.T) {
 
 func TestExecuteToReturnViewSingleSection(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
@@ -186,13 +186,13 @@ func TestExecuteToReturnViewSingleSection(t *testing.T) {
 
 func TestExecuteToReturnViewReplaceSection(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		Sections: []model.Section{
 			{
-				Action:         constant.ACTION_REPLACE,
+				Action:         constant.ActionReplace,
 				SourcePosition: "1",
 				TargetPosition: "1",
 			},
@@ -216,13 +216,13 @@ func TestExecuteToReturnViewReplaceSection(t *testing.T) {
 
 func TestExecuteToReturnViewRemoveSection(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		Sections: []model.Section{
 			{
-				Action:         constant.ACTION_REMOVE,
+				Action:         constant.ActionRemove,
 				TargetPosition: "3",
 			},
 		},
@@ -245,30 +245,30 @@ func TestExecuteToReturnViewRemoveSection(t *testing.T) {
 
 func TestExecuteToReturnViewUpdateSection(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
 		Sections: []model.Section{
 			{
-				Action:         constant.ACTION_UPDATE,
+				Action:         constant.ActionUpdate,
 				SourcePosition: "1",
 				TargetPosition: "1",
 				Fields: []model.SectionField{
 					{
 						Code:         "analista",
-						Column:       constant.COLUMN_LEFT,
+						Column:       constant.ColumnLeft,
 						InsertBefore: "created_by",
 					},
 					{
 						Code:         "status",
-						Column:       constant.COLUMN_LEFT,
+						Column:       constant.ColumnLeft,
 						InsertBefore: "created_by",
 					},
 					{
 						Code:   "status_novo",
-						Column: constant.COLUMN_RIGHT,
+						Column: constant.ColumnRight,
 					},
 					{
 						Code:   "created_date",
@@ -296,29 +296,29 @@ func TestExecuteToReturnViewUpdateSection(t *testing.T) {
 
 func TestExecuteToReturnViewUpdateSectionColumns(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
 		Sections: []model.Section{
 			{
-				Action:         constant.ACTION_UPDATE,
+				Action:         constant.ActionUpdate,
 				SourcePosition: "1",
 				TargetPosition: "1",
 				Fields: []model.SectionField{
 					{
 						Code:   "analista",
-						Column: constant.COLUMN_LEFT,
+						Column: constant.ColumnLeft,
 					},
 					{
 						Code:         "status",
-						Column:       constant.COLUMN_LEFT,
+						Column:       constant.ColumnLeft,
 						InsertBefore: "created_by",
 					},
 					{
 						Code:         "status_novo",
-						Column:       constant.COLUMN_RIGHT,
+						Column:       constant.ColumnRight,
 						InsertBefore: "created_date",
 					},
 					{
@@ -347,29 +347,29 @@ func TestExecuteToReturnViewUpdateSectionColumns(t *testing.T) {
 
 func TestExecuteToReturnViewUpdateSectionTargetNoRightColumn(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
 		Sections: []model.Section{
 			{
-				Action:         constant.ACTION_UPDATE,
+				Action:         constant.ActionUpdate,
 				SourcePosition: "1",
 				TargetPosition: "1",
 				Fields: []model.SectionField{
 					{
 						Code:   "analista",
-						Column: constant.COLUMN_LEFT,
+						Column: constant.ColumnLeft,
 					},
 					{
 						Code:         "status",
-						Column:       constant.COLUMN_LEFT,
+						Column:       constant.ColumnLeft,
 						InsertBefore: "created_by",
 					},
 					{
 						Code:   "status_novo",
-						Column: constant.COLUMN_RIGHT,
+						Column: constant.ColumnRight,
 					},
 				},
 			},
@@ -393,32 +393,32 @@ func TestExecuteToReturnViewUpdateSectionTargetNoRightColumn(t *testing.T) {
 
 func TestExecuteToReturnViewUpdateSectionTargetNoLeftColumn(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
 		Sections: []model.Section{
 			{
-				Action:         constant.ACTION_UPDATE,
+				Action:         constant.ActionUpdate,
 				SourcePosition: "1",
 				TargetPosition: "1",
 				Fields: []model.SectionField{
 					{
 						Code:   "analista",
-						Column: constant.COLUMN_LEFT,
+						Column: constant.ColumnLeft,
 					},
 					{
 						Code:   "status",
-						Column: constant.COLUMN_LEFT,
+						Column: constant.ColumnLeft,
 					},
 					{
 						Code:   "created_by",
-						Column: constant.COLUMN_LEFT,
+						Column: constant.ColumnLeft,
 					},
 					{
 						Code:         "status_novo",
-						Column:       constant.COLUMN_RIGHT,
+						Column:       constant.ColumnRight,
 						InsertBefore: "created_date",
 					},
 					{
@@ -447,13 +447,13 @@ func TestExecuteToReturnViewUpdateSectionTargetNoLeftColumn(t *testing.T) {
 
 func TestExecuteToReturnViewInsertSection(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		Sections: []model.Section{
 			{
-				Action:         constant.ACTION_INSERT,
+				Action:         constant.ActionInsert,
 				SourcePosition: "1",
 				TargetPosition: "1",
 			},
@@ -477,13 +477,13 @@ func TestExecuteToReturnViewInsertSection(t *testing.T) {
 
 func TestExecuteToReturnErrorSectionsWithoutSingleView(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "*",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		Sections: []model.Section{
 			{
-				Action:         constant.ACTION_INSERT,
+				Action:         constant.ActionInsert,
 				SourcePosition: "1",
 				TargetPosition: "1",
 			},
@@ -503,7 +503,7 @@ func TestExecuteToReturnErrorSectionsWithoutSingleView(t *testing.T) {
 
 func TestExecuteToReturnErrorTargetWithoutSourcePartition(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "*",
 		ObjCode:         "obj_sistema",
 		TargetPartition: "partition10",
@@ -522,14 +522,14 @@ func TestExecuteToReturnErrorTargetWithoutSourcePartition(t *testing.T) {
 
 func TestExecuteToReturnErrorSingleViewNotInTarget(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "INVALID_VIEW_CODE",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition10",
 		Sections: []model.Section{
 			{
-				Action:         constant.ACTION_INSERT,
+				Action:         constant.ActionInsert,
 				TargetPosition: "1",
 				SourcePosition: "1",
 			},
@@ -549,13 +549,13 @@ func TestExecuteToReturnErrorSingleViewNotInTarget(t *testing.T) {
 
 func TestExecuteToReturnErrorSectionSourcePositionNotDefined(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		Sections: []model.Section{
 			{
-				Action:         constant.ACTION_INSERT,
+				Action:         constant.ActionInsert,
 				TargetPosition: "1",
 			},
 		},
@@ -574,13 +574,13 @@ func TestExecuteToReturnErrorSectionSourcePositionNotDefined(t *testing.T) {
 
 func TestExecuteToReturnErrorSectionSourcePositionIndexOutOfBounds(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		Sections: []model.Section{
 			{
-				Action:         constant.ACTION_INSERT,
+				Action:         constant.ActionInsert,
 				SourcePosition: "11",
 				TargetPosition: "1",
 			},
@@ -600,13 +600,13 @@ func TestExecuteToReturnErrorSectionSourcePositionIndexOutOfBounds(t *testing.T)
 
 func TestExecuteToReturnErrorSectionTargetPositionIndexOutOfBounds(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		Sections: []model.Section{
 			{
-				Action:         constant.ACTION_INSERT,
+				Action:         constant.ActionInsert,
 				SourcePosition: "1",
 				TargetPosition: "11",
 			},
@@ -626,13 +626,13 @@ func TestExecuteToReturnErrorSectionTargetPositionIndexOutOfBounds(t *testing.T)
 
 func TestExecuteToReturnErrorSectionReplaceWithoutTargetPosition(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		Sections: []model.Section{
 			{
-				Action:         constant.ACTION_REPLACE,
+				Action:         constant.ActionReplace,
 				SourcePosition: "1",
 			},
 		},
@@ -651,13 +651,13 @@ func TestExecuteToReturnErrorSectionReplaceWithoutTargetPosition(t *testing.T) {
 
 func TestExecuteToReturnErrorSectionRemoveWithoutTargetPosition(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		Sections: []model.Section{
 			{
-				Action:         constant.ACTION_REMOVE,
+				Action:         constant.ActionRemove,
 				SourcePosition: "1",
 			},
 		},
@@ -676,13 +676,13 @@ func TestExecuteToReturnErrorSectionRemoveWithoutTargetPosition(t *testing.T) {
 
 func TestExecuteToReturnErrorSectionUpdateWithoutField(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		Sections: []model.Section{
 			{
-				Action:         constant.ACTION_UPDATE,
+				Action:         constant.ActionUpdate,
 				SourcePosition: "1",
 				TargetPosition: "1",
 			},
@@ -702,14 +702,14 @@ func TestExecuteToReturnErrorSectionUpdateWithoutField(t *testing.T) {
 
 func TestExecuteToReturnErrorUpdateSectionRemoveInvalidFieldCode(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
 		Sections: []model.Section{
 			{
-				Action:         constant.ACTION_UPDATE,
+				Action:         constant.ActionUpdate,
 				SourcePosition: "1",
 				TargetPosition: "1",
 				Fields: []model.SectionField{
@@ -735,20 +735,20 @@ func TestExecuteToReturnErrorUpdateSectionRemoveInvalidFieldCode(t *testing.T) {
 
 func TestExecuteToReturnErrorUpdateSectionInsertInvalidFieldCode(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
 		Sections: []model.Section{
 			{
-				Action:         constant.ACTION_UPDATE,
+				Action:         constant.ActionUpdate,
 				SourcePosition: "1",
 				TargetPosition: "1",
 				Fields: []model.SectionField{
 					{
 						Code:   "INVALID_FIELD_CODE",
-						Column: constant.COLUMN_LEFT,
+						Column: constant.ColumnLeft,
 					},
 				},
 			},
@@ -768,20 +768,20 @@ func TestExecuteToReturnErrorUpdateSectionInsertInvalidFieldCode(t *testing.T) {
 
 func TestExecuteToReturnErrorUpdateSectionInsertInvalidTargetInsertBeforeCode(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
 		Sections: []model.Section{
 			{
-				Action:         constant.ACTION_UPDATE,
+				Action:         constant.ActionUpdate,
 				SourcePosition: "1",
 				TargetPosition: "1",
 				Fields: []model.SectionField{
 					{
 						Code:         "analista",
-						Column:       constant.COLUMN_LEFT,
+						Column:       constant.ColumnLeft,
 						InsertBefore: "INVALID_FIELD_CODE",
 					},
 				},
@@ -802,7 +802,7 @@ func TestExecuteToReturnErrorUpdateSectionInsertInvalidTargetInsertBeforeCode(t 
 
 func TestExecuteToReturnErrorUpdateSectionInvalidSectionAction(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
@@ -829,14 +829,14 @@ func TestExecuteToReturnErrorUpdateSectionInvalidSectionAction(t *testing.T) {
 
 func TestExecuteToReturnErrorUpdateSectionInvalidFieldColumn(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "obj_sistema.auditoria",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition10",
 		TargetPartition: "partition20",
 		Sections: []model.Section{
 			{
-				Action:         constant.ACTION_UPDATE,
+				Action:         constant.ActionUpdate,
 				SourcePosition: "1",
 				TargetPosition: "1",
 				Fields: []model.SectionField{
@@ -862,14 +862,14 @@ func TestExecuteToReturnErrorUpdateSectionInvalidFieldColumn(t *testing.T) {
 
 func TestExecuteToReturnErrorSingleViewNotInSource(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "obj_sistemaList",
 		ObjCode:         "obj_sistema",
 		SourcePartition: "partition20",
 		TargetPartition: "partition10",
 		Sections: []model.Section{
 			{
-				Action:         constant.ACTION_INSERT,
+				Action:         constant.ActionInsert,
 				TargetPosition: "1",
 				SourcePosition: "1",
 			},
@@ -890,15 +890,15 @@ func TestExecuteToReturnErrorSingleViewNotInSource(t *testing.T) {
 
 func TestExecuteToInsertGroupAction(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "cas_environmentProperties",
 		ObjCode:         "cas_environment",
 		SourcePartition: "NIKU.ROOT",
 		Elements: []model.Element{
 			{
-				Type:   constant.ELEMENT_TYPE_ACTIONGROUP,
+				Type:   constant.ElementTypeActionGroup,
 				Code:   "actions_group_test",
-				Action: constant.ACTION_INSERT,
+				Action: constant.ActionInsert,
 			},
 		},
 	}
@@ -921,15 +921,15 @@ func TestExecuteToInsertGroupAction(t *testing.T) {
 
 func TestExecuteToInsertBeforeGroupAction(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "cas_environmentProperties",
 		ObjCode:         "cas_environment",
 		SourcePartition: "NIKU.ROOT",
 		Elements: []model.Element{
 			{
-				Type:         constant.ELEMENT_TYPE_ACTIONGROUP,
+				Type:         constant.ElementTypeActionGroup,
 				Code:         "actions_group_test",
-				Action:       constant.ACTION_INSERT,
+				Action:       constant.ActionInsert,
 				InsertBefore: "general",
 			},
 		},
@@ -953,15 +953,15 @@ func TestExecuteToInsertBeforeGroupAction(t *testing.T) {
 
 func TestExecuteToInsertGroupActionWithExistingTarget(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "cas_environmentProperties",
 		ObjCode:         "cas_environment",
 		SourcePartition: "NIKU.ROOT",
 		Elements: []model.Element{
 			{
-				Type:   constant.ELEMENT_TYPE_ACTIONGROUP,
+				Type:   constant.ElementTypeActionGroup,
 				Code:   "actions_group_test",
-				Action: constant.ACTION_INSERT,
+				Action: constant.ActionInsert,
 			},
 		},
 	}
@@ -984,15 +984,15 @@ func TestExecuteToInsertGroupActionWithExistingTarget(t *testing.T) {
 
 func TestExecuteToRemoveGroupAction(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "cas_environmentProperties",
 		ObjCode:         "cas_environment",
 		SourcePartition: "NIKU.ROOT",
 		Elements: []model.Element{
 			{
-				Type:   constant.ELEMENT_TYPE_ACTIONGROUP,
+				Type:   constant.ElementTypeActionGroup,
 				Code:   "actions_group_test",
-				Action: constant.ACTION_REMOVE,
+				Action: constant.ActionRemove,
 			},
 		},
 	}
@@ -1015,15 +1015,15 @@ func TestExecuteToRemoveGroupAction(t *testing.T) {
 
 func TestExecuteToInsertAction(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "cas_environmentProperties",
 		ObjCode:         "cas_environment",
 		SourcePartition: "NIKU.ROOT",
 		Elements: []model.Element{
 			{
-				Type:   constant.ELEMENT_TYPE_ACTION,
+				Type:   constant.ElementTypeAction,
 				Code:   "rally_full_sync",
-				Action: constant.ACTION_INSERT,
+				Action: constant.ActionInsert,
 			},
 		},
 	}
@@ -1046,15 +1046,15 @@ func TestExecuteToInsertAction(t *testing.T) {
 
 func TestExecuteToRemoveAction(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "cas_environmentProperties",
 		ObjCode:         "cas_environment",
 		SourcePartition: "NIKU.ROOT",
 		Elements: []model.Element{
 			{
-				Type:   constant.ELEMENT_TYPE_ACTION,
+				Type:   constant.ElementTypeAction,
 				Code:   "rally_full_sync",
-				Action: constant.ACTION_REMOVE,
+				Action: constant.ActionRemove,
 			},
 		},
 	}
@@ -1077,15 +1077,15 @@ func TestExecuteToRemoveAction(t *testing.T) {
 
 func TestExecuteToInsertBeforeAction(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "cas_environmentProperties",
 		ObjCode:         "cas_environment",
 		SourcePartition: "NIKU.ROOT",
 		Elements: []model.Element{
 			{
-				Type:         constant.ELEMENT_TYPE_ACTION,
+				Type:         constant.ElementTypeAction,
 				Code:         "rally_full_sync",
-				Action:       constant.ACTION_INSERT,
+				Action:       constant.ActionInsert,
 				InsertBefore: "odf_XMLExportcas_environment",
 			},
 		},
@@ -1109,15 +1109,15 @@ func TestExecuteToInsertBeforeAction(t *testing.T) {
 
 func TestExecuteToInsertActionWithExistingTarget(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "cas_environmentProperties",
 		ObjCode:         "cas_environment",
 		SourcePartition: "NIKU.ROOT",
 		Elements: []model.Element{
 			{
-				Type:   constant.ELEMENT_TYPE_ACTION,
+				Type:   constant.ElementTypeAction,
 				Code:   "rally_full_sync",
-				Action: constant.ACTION_INSERT,
+				Action: constant.ActionInsert,
 			},
 		},
 	}
@@ -1140,15 +1140,15 @@ func TestExecuteToInsertActionWithExistingTarget(t *testing.T) {
 
 func TestExecuteToReturnErrorInvalidSourceGroupCodeInsert(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "cas_environmentProperties",
 		ObjCode:         "cas_environment",
 		SourcePartition: "NIKU.ROOT",
 		Elements: []model.Element{
 			{
-				Type:         constant.ELEMENT_TYPE_ACTIONGROUP,
+				Type:         constant.ElementTypeActionGroup,
 				Code:         "invalid_code",
-				Action:       constant.ACTION_INSERT,
+				Action:       constant.ActionInsert,
 				InsertBefore: "odf_XMLExportcas_environment",
 			},
 		},
@@ -1168,15 +1168,15 @@ func TestExecuteToReturnErrorInvalidSourceGroupCodeInsert(t *testing.T) {
 
 func TestExecuteToReturnErrorInvalidInsertBeforeGroupCode(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "cas_environmentProperties",
 		ObjCode:         "cas_environment",
 		SourcePartition: "NIKU.ROOT",
 		Elements: []model.Element{
 			{
-				Type:         constant.ELEMENT_TYPE_ACTIONGROUP,
+				Type:         constant.ElementTypeActionGroup,
 				Code:         "actions_group_test",
-				Action:       constant.ACTION_INSERT,
+				Action:       constant.ActionInsert,
 				InsertBefore: "invalid_code",
 			},
 		},
@@ -1196,15 +1196,15 @@ func TestExecuteToReturnErrorInvalidInsertBeforeGroupCode(t *testing.T) {
 
 func TestExecuteToReturnErrorInvalidTargetGroupCodeRemove(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "cas_environmentProperties",
 		ObjCode:         "cas_environment",
 		SourcePartition: "NIKU.ROOT",
 		Elements: []model.Element{
 			{
-				Type:         constant.ELEMENT_TYPE_ACTIONGROUP,
+				Type:         constant.ElementTypeActionGroup,
 				Code:         "invalid_code",
-				Action:       constant.ACTION_REMOVE,
+				Action:       constant.ActionRemove,
 				InsertBefore: "odf_XMLExportcas_environment",
 			},
 		},
@@ -1224,15 +1224,15 @@ func TestExecuteToReturnErrorInvalidTargetGroupCodeRemove(t *testing.T) {
 
 func TestExecuteToReturnErrorInvalidSourceActionCodeInsert(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "cas_environmentProperties",
 		ObjCode:         "cas_environment",
 		SourcePartition: "NIKU.ROOT",
 		Elements: []model.Element{
 			{
-				Type:         constant.ELEMENT_TYPE_ACTION,
+				Type:         constant.ElementTypeAction,
 				Code:         "invalid_code",
-				Action:       constant.ACTION_INSERT,
+				Action:       constant.ActionInsert,
 				InsertBefore: "odf_XMLExportcas_environment",
 			},
 		},
@@ -1252,15 +1252,15 @@ func TestExecuteToReturnErrorInvalidSourceActionCodeInsert(t *testing.T) {
 
 func TestExecuteToReturnErrorInvalidInsertBeforeActionCode(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "cas_environmentProperties",
 		ObjCode:         "cas_environment",
 		SourcePartition: "NIKU.ROOT",
 		Elements: []model.Element{
 			{
-				Type:         constant.ELEMENT_TYPE_ACTION,
+				Type:         constant.ElementTypeAction,
 				Code:         "rally_full_sync",
-				Action:       constant.ACTION_INSERT,
+				Action:       constant.ActionInsert,
 				InsertBefore: "invalid_code",
 			},
 		},
@@ -1280,15 +1280,15 @@ func TestExecuteToReturnErrorInvalidInsertBeforeActionCode(t *testing.T) {
 
 func TestExecuteToReturnErrorInvalidTargetActionCodeRemove(t *testing.T) {
 	file := model.DriverFile{
-		Type:            constant.VIEW,
+		Type:            constant.TypeView,
 		Code:            "cas_environmentProperties",
 		ObjCode:         "cas_environment",
 		SourcePartition: "NIKU.ROOT",
 		Elements: []model.Element{
 			{
-				Type:         constant.ELEMENT_TYPE_ACTION,
+				Type:         constant.ElementTypeAction,
 				Code:         "invalid_code",
-				Action:       constant.ACTION_REMOVE,
+				Action:       constant.ActionRemove,
 				InsertBefore: "odf_XMLExportcas_environment",
 			},
 		},

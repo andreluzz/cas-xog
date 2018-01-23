@@ -10,6 +10,7 @@ import (
 
 var environments *Environments
 
+//LoadEnvironmentsList loads the list of user-defined environments to use when executing xog
 func LoadEnvironmentsList(path string) (*Environments, error) {
 	environments = &Environments{}
 
@@ -24,6 +25,7 @@ func LoadEnvironmentsList(path string) (*Environments, error) {
 	return environments, err
 }
 
+//EnvType defines an environment attributes
 type EnvType struct {
 	Name         string `xml:"name,attr"`
 	URL          string `xml:"endpoint"`
@@ -34,6 +36,7 @@ type EnvType struct {
 	RequestLogin bool
 }
 
+//Init loads a specific environment from user environments list
 func (e *EnvType) Init(envIndex int) {
 	available := environments.Available[envIndex].copyEnv()
 
@@ -48,6 +51,7 @@ func (e *EnvType) Init(envIndex int) {
 	}
 }
 
+//Login executes an soap call to retrieve the session id from the environment
 func (e *EnvType) Login(envIndex int, soapFunc util.Soap) error {
 	var err error
 
@@ -99,16 +103,19 @@ func (e *EnvType) clear() error {
 	return nil
 }
 
+//Environments defines a list of available environments
 type Environments struct {
 	Available []*EnvType `xml:"env"`
 	Target    *EnvType
 	Source    *EnvType
 }
 
+//CopyTargetFromSource copy the data from source to target environment
 func (e *Environments) CopyTargetFromSource() {
 	e.Target = e.Source.copyEnv()
 }
 
+//Logout closes the session id in the environment
 func (e *Environments) Logout(soapFunc util.Soap) error {
 	err := e.Source.logout(soapFunc)
 	if err != nil {

@@ -12,6 +12,7 @@ import (
 
 var targetEnvInput string
 
+//Environments displays the options for the user to choose the environment for reading and writing
 func Environments(action string, environments *model.Environments) bool {
 	if action == "m" {
 		return true

@@ -23,7 +23,7 @@ func specificProcessTransformations(xog, aux *etree.Document, file *model.Driver
 		process.AddChild(securityElement)
 	}
 
-	IncludeEscapeText(xog)
+	includeEscapeText(xog)
 
 	return nil
 }
@@ -38,7 +38,7 @@ func copyProcessPermissions(xog *etree.Document) (*etree.Element, error) {
 	return element.Copy(), nil
 }
 
-func IncludeEscapeText(xog *etree.Document) {
+func includeEscapeText(xog *etree.Document) {
 	xogQueryTagString, _ := xog.WriteToString()
 	sqlQueryTagRegexp, _ := regexp.Compile(`(<[^/].*):(query|update)`)
 	sqlTags := sqlQueryTagRegexp.FindAllString(xogQueryTagString, -1)

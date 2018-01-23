@@ -11,6 +11,7 @@ import (
 
 var logger *log.Logger
 
+//Info prints text on the screen and into log file
 func Info(format string, args ...interface{}) {
 	format = fmt.Sprintf(format, args...)
 	clearLog("Info", format)
@@ -19,6 +20,7 @@ func Info(format string, args ...interface{}) {
 	fmt.Fprintf(colorable.NewColorableStdout(), format)
 }
 
+//Debug only insert text into the log file
 func Debug(msg string) {
 	clearLog("Debug", msg)
 }
@@ -28,6 +30,7 @@ func clearLog(mode, msg string) {
 	logger.Println(mode + ": " + r.Replace(msg))
 }
 
+//InitLog initialize the io.Writer with the log file
 func InitLog() {
 	folder := "_logs/"
 	util.ValidateFolder(folder)

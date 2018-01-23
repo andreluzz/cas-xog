@@ -17,6 +17,7 @@ import (
 var availablePackages []model.Package
 var packagesDriversFileInfo []model.Driver
 
+//LoadPackages load the available packages in the user's folder
 func LoadPackages(systemPackageFolder, userPackageFolder string) {
 	availablePackages = nil
 	packagesDriversFileInfo = nil
@@ -65,39 +66,42 @@ func loadAvailablePackages(folder string) {
 	})
 }
 
+//GetAvailablePackages returns a list of available packages
 func GetAvailablePackages() []model.Package {
 	return availablePackages
 }
 
+//ProcessPackageFile validates if the driver needs transformation and creates the write xog files according to the installation environment
 func ProcessPackageFile(file *model.DriverFile, selectedVersion *model.Version, packageFolder, writeFolder string, environments *model.Environments, soapFunc util.Soap) model.Output {
 	if file.PackageTransform && file.NeedPackageTransform() {
-		file.InitXML(constant.READ, constant.UNDEFINED)
+		file.InitXML(constant.Read, constant.Undefined)
 		file.RunAuxXML(environments.Target, soapFunc)
 	}
 
 	return transform.ProcessPackageFile(file, packageFolder, writeFolder, selectedVersion.Definitions)
 }
 
+//InstallPackageFile execute the soap call to install the driver and returns the output
 func InstallPackageFile(file *model.DriverFile, environments *model.Environments, soapFunc util.Soap) model.Output {
-	output := model.Output{Code: constant.OUTPUT_SUCCESS, Debug: constant.UNDEFINED}
+	output := model.Output{Code: constant.OutputSuccess, Debug: constant.Undefined}
 
-	util.ValidateFolder(constant.FOLDER_DEBUG + file.Type + util.GetPathFolder(file.Path))
+	util.ValidateFolder(constant.FolderDebug + file.Type + util.GetPathFolder(file.Path))
 
-	file.InitXML(constant.WRITE, constant.FOLDER_WRITE)
+	file.InitXML(constant.Write, constant.FolderWrite)
 
 	iniTagRegexpStr, endTagRegexpStr := file.TagCDATA()
-	if iniTagRegexpStr != constant.UNDEFINED && endTagRegexpStr != constant.UNDEFINED {
+	if iniTagRegexpStr != constant.Undefined && endTagRegexpStr != constant.Undefined {
 		responseString := transform.IncludeCDATA(file.GetXML(), iniTagRegexpStr, endTagRegexpStr)
 		file.SetXML(responseString)
 	}
 
-	err := file.RunXML(constant.WRITE, constant.FOLDER_WRITE, environments, soapFunc)
+	err := file.RunXML(constant.Write, constant.FolderWrite, environments, soapFunc)
 	xogResponse := etree.NewDocument()
 	xogResponse.ReadFromString(file.GetXML())
 	output, err = validate.Check(xogResponse)
 	if err != nil {
 		return output
 	}
-	file.Write(constant.FOLDER_DEBUG)
+	file.Write(constant.FolderDebug)
 	return output
 }

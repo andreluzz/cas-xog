@@ -11,7 +11,7 @@ import (
 var packageMockFolder string
 
 func init() {
-	packageMockFolder = "../" + constant.FOLDER_MOCK + "migration/"
+	packageMockFolder = "../" + constant.FolderMock + "migration/"
 }
 
 func TestReadDataFromExcelToReturnErrorExcelStartRow(t *testing.T) {
@@ -127,7 +127,7 @@ func TestReadDataFromExcelToReturnXMLResult(t *testing.T) {
 
 func TestExportInstancesToExcelToReturnErrorExcelPath(t *testing.T) {
 	file := model.DriverFile{
-		Type:          constant.CUSTOM_OBJECT_INSTANCE,
+		Type:          constant.CustomObjectInstances,
 		ExportToExcel: true,
 		InstanceTag:   "instance",
 		MatchExcel: []model.MatchExcel{
@@ -161,7 +161,7 @@ func TestExportInstancesToExcelToReturnErrorExcelPath(t *testing.T) {
 
 func TestExportInstancesToExcelToReturnErrorXPath(t *testing.T) {
 	file := model.DriverFile{
-		Type:          constant.CUSTOM_OBJECT_INSTANCE,
+		Type:          constant.CustomObjectInstances,
 		ExportToExcel: true,
 		InstanceTag:   "instance",
 		MatchExcel: []model.MatchExcel{
@@ -182,7 +182,7 @@ func TestExportInstancesToExcelToReturnErrorXPath(t *testing.T) {
 
 func TestExportInstancesToExcelToReturnExcelFile(t *testing.T) {
 	file := model.DriverFile{
-		Type:          constant.CUSTOM_OBJECT_INSTANCE,
+		Type:          constant.CustomObjectInstances,
 		ExportToExcel: true,
 		ExcelFile:     "instances.xlsx",
 		InstanceTag:   "instance",
@@ -209,7 +209,7 @@ func TestExportInstancesToExcelToReturnExcelFile(t *testing.T) {
 
 	result := etree.NewDocument()
 	result.ReadFromFile(packageMockFolder + "result.xml")
-	folder := "../" + constant.FOLDER_READ + file.Type + "/"
+	folder := "../" + constant.FolderRead + file.Type + "/"
 	err := ExportInstancesToExcel(result, &file, folder)
 	if err != nil {
 		t.Fatalf("Error exporting instances to excel file. Debug: %s", err.Error())

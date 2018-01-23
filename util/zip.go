@@ -8,6 +8,7 @@ import (
 	"strings"
 )
 
+//Unzip extract the files from a zip
 func Unzip(src, destinationFolder string) ([]string, error) {
 
 	var filenames []string

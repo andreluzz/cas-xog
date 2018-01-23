@@ -14,7 +14,7 @@ func specificObjectTransformations(xog, aux *etree.Document, file *model.DriverF
 		removeChildObjects(aux)
 
 		for _, f := range file.Elements {
-			if f.Code != constant.UNDEFINED && (f.Type == constant.ELEMENT_TYPE_ACTION || f.Type == constant.ELEMENT_TYPE_LINK || f.Type == constant.ELEMENT_TYPE_ATTRIBUTE) {
+			if f.Code != constant.Undefined && (f.Type == constant.ElementTypeAction || f.Type == constant.ElementTypeLink || f.Type == constant.ElementTypeAttribute) {
 				for _, e := range xog.FindElements("//[@code='" + f.Code + "']") {
 					removeElementFromParent(aux, "//"+e.Tag+"[@code='"+f.Code+"']")
 					parentTag := e.Parent().Tag
@@ -28,7 +28,7 @@ func specificObjectTransformations(xog, aux *etree.Document, file *model.DriverF
 						aux.FindElement("//" + parentTag).AddChild(e)
 					}
 				}
-				if f.Type == constant.ELEMENT_TYPE_ATTRIBUTE {
+				if f.Type == constant.ElementTypeAttribute {
 					for _, e := range xog.FindElements("//*[@attributeCode='" + f.Code + "']") {
 						removeElementFromParent(aux, "//"+e.Tag+"[@attributeCode='"+f.Code+"']")
 						aux.FindElement("//" + e.Parent().Tag).AddChild(e)
@@ -39,11 +39,11 @@ func specificObjectTransformations(xog, aux *etree.Document, file *model.DriverF
 		xog.SetRoot(aux.Root())
 	}
 
-	if file.TargetPartition != constant.UNDEFINED {
+	if file.TargetPartition != constant.Undefined {
 		changePartition(xog, file.SourcePartition, file.TargetPartition)
 	}
 
-	if file.PartitionModel != constant.UNDEFINED {
+	if file.PartitionModel != constant.Undefined {
 		element := xog.FindElement("//object[@code='" + file.Code + "']")
 		element.CreateAttr("partitionModelCode", file.PartitionModel)
 	}
@@ -51,7 +51,7 @@ func specificObjectTransformations(xog, aux *etree.Document, file *model.DriverF
 
 func hasElementsToProcess(file *model.DriverFile) bool {
 	for _, f := range file.Elements {
-		if f.Code != constant.UNDEFINED && (f.Type == constant.ELEMENT_TYPE_ACTION || f.Type == constant.ELEMENT_TYPE_LINK || f.Type == constant.ELEMENT_TYPE_ATTRIBUTE) {
+		if f.Code != constant.Undefined && (f.Type == constant.ElementTypeAction || f.Type == constant.ElementTypeLink || f.Type == constant.ElementTypeAttribute) {
 			return true
 		}
 	}

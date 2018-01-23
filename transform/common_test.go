@@ -11,7 +11,7 @@ import (
 var packageMockFolder string
 
 func init() {
-	packageMockFolder = "../" + constant.FOLDER_MOCK + "transform/"
+	packageMockFolder = "../" + constant.FolderMock + "transform/"
 }
 
 func TestExecuteToReturnErrorNoHeaderElement(t *testing.T) {
@@ -24,7 +24,7 @@ func TestExecuteToReturnErrorNoHeaderElement(t *testing.T) {
 
 func TestExecuteToReturnPage(t *testing.T) {
 	file := model.DriverFile{
-		Type: constant.PAGE,
+		Type: constant.TypePage,
 	}
 
 	xog := etree.NewDocument()
@@ -42,7 +42,7 @@ func TestExecuteToReturnPage(t *testing.T) {
 
 func TestExecuteToReturnPageWithoutElementOBSandSecurity(t *testing.T) {
 	file := model.DriverFile{
-		Type: constant.PAGE,
+		Type: constant.TypePage,
 		Elements: []model.Element{
 			{
 				Action: "remove",
@@ -71,7 +71,7 @@ func TestExecuteToReturnPageWithoutElementOBSandSecurity(t *testing.T) {
 func TestExecuteToReturnGroup(t *testing.T) {
 	file := model.DriverFile{
 		Code: "ObjectAdmin",
-		Type: constant.GROUP,
+		Type: constant.TypeGroup,
 	}
 
 	xog := etree.NewDocument()
@@ -90,7 +90,7 @@ func TestExecuteToReturnGroup(t *testing.T) {
 func TestExecuteToReturnGroupWithoutMembers(t *testing.T) {
 	file := model.DriverFile{
 		Code: "ObjectAdmin",
-		Type: constant.GROUP,
+		Type: constant.TypeGroup,
 		Elements: []model.Element{
 			{
 				Action: "remove",
@@ -115,7 +115,7 @@ func TestExecuteToReturnGroupWithoutMembers(t *testing.T) {
 func TestExecuteToReturnPortletFromQuery(t *testing.T) {
 	file := model.DriverFile{
 		Code: "apm.appByQuadrant",
-		Type: constant.PORTLET,
+		Type: constant.TypePortlet,
 	}
 
 	xog := etree.NewDocument()
@@ -134,7 +134,7 @@ func TestExecuteToReturnPortletFromQuery(t *testing.T) {
 func TestExecuteToReturnPortletFromObject(t *testing.T) {
 	file := model.DriverFile{
 		Code: "test_cas_xog",
-		Type: constant.PORTLET,
+		Type: constant.TypePortlet,
 	}
 
 	xog := etree.NewDocument()
@@ -153,7 +153,7 @@ func TestExecuteToReturnPortletFromObject(t *testing.T) {
 func TestExecuteToReturnQuery(t *testing.T) {
 	file := model.DriverFile{
 		Code: "cop.processBottlenecks",
-		Type: constant.QUERY,
+		Type: constant.TypeQuery,
 	}
 
 	xog := etree.NewDocument()
@@ -169,19 +169,19 @@ func TestExecuteToReturnQuery(t *testing.T) {
 	}
 }
 
-func readMockResultAndCompare(xog *etree.Document, compareXml string) bool {
+func readMockResultAndCompare(xog *etree.Document, compareXML string) bool {
 	xog.Indent(2)
 	xogString, _ := xog.WriteToString()
 	xogString = strings.Replace(xogString, " ", "", -1)
 
 	xogProcessedToCompare := etree.NewDocument()
-	xogProcessedToCompare.ReadFromFile(packageMockFolder + compareXml)
+	xogProcessedToCompare.ReadFromFile(packageMockFolder + compareXML)
 	xogProcessedToCompare.Indent(2)
 
 	xogProcessedToCompareString, _ := xogProcessedToCompare.WriteToString()
 	xogProcessedToCompareString = strings.Replace(xogProcessedToCompareString, " ", "", -1)
 	if xogString != xogProcessedToCompareString {
-		xog.WriteToFile("../" + constant.FOLDER_DEBUG + "go_test_debug.xml")
+		xog.WriteToFile("../" + constant.FolderDebug + "go_test_debug.xml")
 		return false
 	}
 	return true
@@ -190,7 +190,7 @@ func readMockResultAndCompare(xog *etree.Document, compareXml string) bool {
 func TestExecuteToReturnOBS(t *testing.T) {
 	file := model.DriverFile{
 		Code: "strategic_plan",
-		Type: constant.OBS,
+		Type: constant.Obs,
 	}
 
 	xog := etree.NewDocument()
@@ -209,7 +209,7 @@ func TestExecuteToReturnOBS(t *testing.T) {
 func TestExecuteToReturnOBSWithoutSecurityAndObject(t *testing.T) {
 	file := model.DriverFile{
 		Code: "strategic_plan",
-		Type: constant.OBS,
+		Type: constant.Obs,
 		Elements: []model.Element{
 			{
 				Action: "remove",

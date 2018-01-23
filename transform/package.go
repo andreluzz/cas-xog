@@ -9,11 +9,12 @@ import (
 	"strings"
 )
 
+//ProcessPackageFile transform package drivers when needed using auxiliary xog from the installation environment
 func ProcessPackageFile(file *model.DriverFile, packageFolder, writeFolder string, definitions []model.Definition) model.Output {
-	output := model.Output{Code: constant.OUTPUT_SUCCESS, Debug: constant.UNDEFINED}
+	output := model.Output{Code: constant.OutputSuccess, Debug: constant.Undefined}
 
 	if file == nil {
-		output.Code = constant.OUTPUT_ERROR
+		output.Code = constant.OutputError
 		output.Debug = "trying to process a nil DriverFile"
 		return output
 	}
@@ -21,7 +22,7 @@ func ProcessPackageFile(file *model.DriverFile, packageFolder, writeFolder strin
 	xog := etree.NewDocument()
 	err := xog.ReadFromFile(packageFolder + file.Path)
 	if err != nil {
-		output.Code = constant.OUTPUT_ERROR
+		output.Code = constant.OutputError
 		output.Debug = err.Error()
 		return output
 	}
@@ -36,12 +37,12 @@ func ProcessPackageFile(file *model.DriverFile, packageFolder, writeFolder strin
 		}
 		err = Execute(xog, auxResponse, file)
 		if err != nil {
-			output.Code = constant.OUTPUT_ERROR
+			output.Code = constant.OutputError
 			output.Debug = err.Error()
 			return output
 		}
 	} else if file.PackageTransform && !file.NeedPackageTransform() {
-		output.Code = constant.OUTPUT_WARNING
+		output.Code = constant.OutputWarning
 		output.Debug = "only single views and menu can be transformed in packages processing"
 	}
 
@@ -50,26 +51,26 @@ func ProcessPackageFile(file *model.DriverFile, packageFolder, writeFolder strin
 			continue
 		}
 		switch def.Action {
-		case constant.PACKAGE_ACTION_CHANGE_PARTITION_MODEL:
-			if file.Type == constant.OBJECT {
+		case constant.PackageActionChangePartitionModel:
+			if file.Type == constant.TypeObject {
 				e := xog.FindElement("//object[@partitionModelCode]")
 				if e != nil {
 					e.CreateAttr("partitionModelCode", def.Value)
 				}
 			}
-		case constant.PACKAGE_ACTION_CHANGE_PARTITION:
-			if file.Type == constant.OBJECT || file.Type == constant.VIEW {
-				changePartition(xog, constant.UNDEFINED, def.Value)
+		case constant.PackageActionChangePartition:
+			if file.Type == constant.TypeObject || file.Type == constant.TypeView {
+				changePartition(xog, constant.Undefined, def.Value)
 			}
-		case constant.PACKAGE_ACTION_REPLACE_STRING:
-			if def.Value == constant.UNDEFINED {
+		case constant.PackageActionReplaceString:
+			if def.Value == constant.Undefined {
 				continue
 			}
 			replaced := strings.Replace(def.To, "##DEFINITION_VALUE##", def.Value, 1)
 			if replaced == def.From {
 				continue
 			}
-			if def.TransformTypes == constant.UNDEFINED || strings.Contains(def.TransformTypes, file.Type) {
+			if def.TransformTypes == constant.Undefined || strings.Contains(def.TransformTypes, file.Type) {
 				findAndReplace(xog, []model.FileReplace{{From: def.From, To: replaced}})
 			}
 		}

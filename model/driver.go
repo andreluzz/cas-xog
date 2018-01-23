@@ -13,6 +13,7 @@ import (
 
 var docXogReadXML, soapEnvelope *etree.Document
 
+//LoadXMLReadList loads the list of different types of xog read so it can be used during execution
 func LoadXMLReadList(path string) {
 	docXogReadXML = etree.NewDocument()
 	docXogReadXML.ReadFromFile(path)
@@ -21,10 +22,12 @@ func LoadXMLReadList(path string) {
 	soapEnvelope.SetRoot(soapEnvelopeElement.Copy())
 }
 
+//SectionLink defines the fields for a link on a view section
 type SectionLink struct {
 	Code string `xml:"code,attr"`
 }
 
+//SectionField defines the fields for an attribute on a section attribute
 type SectionField struct {
 	Code         string `xml:"code,attr"`
 	Column       string `xml:"column,attr"`
@@ -32,6 +35,7 @@ type SectionField struct {
 	InsertBefore string `xml:"insertBefore,attr"`
 }
 
+//Section defines the fields to describe a section on a view
 type Section struct {
 	Code           string         `xml:"code,attr"`
 	SourcePosition string         `xml:"sourcePosition,attr"`
@@ -41,6 +45,7 @@ type Section struct {
 	Fields         []SectionField `xml:"field"`
 }
 
+//Element defines the fields to remove and insert elements from the xog xml file
 type Element struct {
 	Type         string `xml:"type,attr"`
 	XPath        string `xml:"xpath,attr"`
@@ -49,11 +54,13 @@ type Element struct {
 	InsertBefore string `xml:"insertBefore,attr"`
 }
 
+//FileReplace defines the fields to replace strings on the xog xml file
 type FileReplace struct {
 	From string `xml:"from"`
 	To   string `xml:"to"`
 }
 
+//MatchExcel defines the fields to map the cols on an excel file to attributes and data on the xog xml
 type MatchExcel struct {
 	Col           int    `xml:"col,attr"`
 	XPath         string `xml:"xpath,attr"`
@@ -62,20 +69,16 @@ type MatchExcel struct {
 	Separator     string `xml:"separator,attr"`
 }
 
+//DriverFile defines the fields to manipulate the xog xml
 type DriverFile struct {
 	Code              string        `xml:"code,attr"`
 	Path              string        `xml:"path,attr"`
 	Type              string        `xml:"type,attr"`
 	ObjCode           string        `xml:"objectCode,attr"`
-	SingleView        bool          `xml:"singleView,attr"`
-	CopyToView        string        `xml:"copyToView,attr"`
 	IgnoreReading     bool          `xml:"ignoreReading,attr"`
 	SourcePartition   string        `xml:"sourcePartition,attr"`
 	TargetPartition   string        `xml:"targetPartition,attr"`
 	PartitionModel    string        `xml:"partitionModel,attr"`
-	InsertBefore      string        `xml:"insertBefore,attr"`
-	InsertBeforeIndex string        `xml:"insertBeforeIndex,attr"`
-	UpdateProgram     bool          `xml:"updateProgram,attr"`
 	CopyPermissions   string        `xml:"copyPermissions,attr"`
 	Template          string        `xml:"template,attr"`
 	ExcelFile         string        `xml:"excel,attr"`
@@ -95,9 +98,10 @@ type DriverFile struct {
 	auxXML            string
 }
 
+//InitXML loads the properly xog xml to update the environment
 func (d *DriverFile) InitXML(action, folder string) error {
 	xml, err := parserReadXML(d)
-	if action != constant.READ {
+	if action != constant.Read {
 		xml, err = parserWriteXML(d, folder)
 	}
 
@@ -111,25 +115,29 @@ func (d *DriverFile) InitXML(action, folder string) error {
 	return err
 }
 
+//SetXML fills the variable with the xog xml
 func (d *DriverFile) SetXML(xml string) {
 	d.xogXML = xml
 }
 
+//GetXML return the xog xml
 func (d *DriverFile) GetXML() string {
 	return d.xogXML
 }
 
+//GetAuxXML return the auxiliary xog xml
 func (d *DriverFile) GetAuxXML() string {
 	return d.auxXML
 }
 
+//RunXML executes a soap call to the properly xml (principal or auxiliary) depending on the action and the driver type
 func (d *DriverFile) RunXML(action, sourceFolder string, environments *Environments, soapFunc util.Soap) error {
 	d.Write(sourceFolder)
-	if action == constant.READ {
+	if action == constant.Read {
 		err := d.RunXogXML(environments.Source, soapFunc)
 		if d.NeedAuxXML() {
 			auxEnv := environments.Target
-			if d.Type == constant.PROCESS {
+			if d.Type == constant.TypeProcess {
 				auxEnv = environments.Source
 			}
 			err = d.RunAuxXML(auxEnv, soapFunc)
@@ -139,51 +147,58 @@ func (d *DriverFile) RunXML(action, sourceFolder string, environments *Environme
 	return d.RunXogXML(environments.Target, soapFunc)
 }
 
+//RunAuxXML executes a soap call to the auxiliary xog xml
 func (d *DriverFile) RunAuxXML(env *EnvType, soapFunc util.Soap) error {
 	result, err := executeSoapCall(d.auxXML, env, soapFunc)
 	d.auxXML = result
 	return err
 }
 
+//RunXogXML executes a soap call to the principal xog xml
 func (d *DriverFile) RunXogXML(env *EnvType, soapFunc util.Soap) error {
 	result, err := executeSoapCall(d.xogXML, env, soapFunc)
 	d.xogXML = result
 	return err
 }
 
+//Write saves to the file system the content of the principal xog xml
 func (d *DriverFile) Write(folder string) {
 	tag := "NikuDataBus"
-	if folder == constant.FOLDER_DEBUG {
+	if folder == constant.FolderDebug {
 		tag = "XOGOutput"
 	}
 	r, _ := regexp.Compile("(?s)<" + tag + "(.*)</" + tag + ">")
 	str := r.FindString(d.xogXML)
-	if str == constant.UNDEFINED {
+	if str == constant.Undefined {
 		str = d.xogXML
 	}
 	ioutil.WriteFile(folder+d.Type+"/"+d.Path, []byte(str), os.ModePerm)
 }
 
+//NeedAuxXML validates if the driver needs to use an auxiliary xog xml
 func (d *DriverFile) NeedAuxXML() bool {
-	return (d.Type == constant.OBJECT && len(d.Elements) > 0) || (d.Type == constant.VIEW && d.Code != "*") || (d.Type == constant.PROCESS && d.CopyPermissions != constant.UNDEFINED) || (d.Type == constant.MENU && len(d.Sections) > 0)
+	return (d.Type == constant.TypeObject && len(d.Elements) > 0) || (d.Type == constant.TypeView && d.Code != "*") || (d.Type == constant.TypeProcess && d.CopyPermissions != constant.Undefined) || (d.Type == constant.TypeMenu && len(d.Sections) > 0)
 }
 
+//NeedPackageTransform validates if a package driver needs to be transformed before install to an environment
 func (d *DriverFile) NeedPackageTransform() bool {
-	return (d.Type == constant.OBJECT && len(d.Elements) > 0) || (d.Type == constant.VIEW && d.Code != "*") || (d.Type == constant.MENU && len(d.Sections) > 0)
+	return (d.Type == constant.TypeObject && len(d.Elements) > 0) || (d.Type == constant.TypeView && d.Code != "*") || (d.Type == constant.TypeMenu && len(d.Sections) > 0)
 }
 
+//TagCDATA returns the correct tags where should be inserted the CDATA depending on the driver type
 func (d *DriverFile) TagCDATA() (string, string) {
 	switch d.Type {
-	case constant.PROCESS:
+	case constant.TypeProcess:
 		return `<([^/].*):(query|update)(.*)"\s*>`, `</(.*):(query|update)>`
-	case constant.LOOKUP:
+	case constant.TypeLookup:
 		if !d.OnlyStructure {
 			return `<nsql(.*)"\s*>`, `</nsql>`
 		}
 	}
-	return constant.UNDEFINED, constant.UNDEFINED
+	return constant.Undefined, constant.Undefined
 }
 
+//GetSplitWriteFilesPath returns a list with write files paths when an instance xog xml is split
 func (d *DriverFile) GetSplitWriteFilesPath(folder string) ([]string, error) {
 	files, err := ioutil.ReadDir(folder + d.Type)
 	if err != nil {
@@ -199,10 +214,12 @@ func (d *DriverFile) GetSplitWriteFilesPath(folder string) ([]string, error) {
 	return splitPath, nil
 }
 
+//GetDummyLookup returns the xml that defines a simple lookup to avoid cross dependencies between objects and their attributes
 func (d *DriverFile) GetDummyLookup() *etree.Element {
 	return docXogReadXML.FindElement("//xogtype[@type='DummyLookup']/NikuDataBus").Copy()
 }
 
+//GetInstanceTag returns the instance tag according to the type of driver
 func (d *DriverFile) GetInstanceTag() string {
 	switch d.Type {
 	case "CustomObjectInstances":
@@ -234,9 +251,10 @@ func (d *DriverFile) GetInstanceTag() string {
 	case "ServiceInstances":
 		return "Service"
 	}
-	return constant.UNDEFINED
+	return constant.Undefined
 }
 
+//GetXMLType returns the constant value according to the type of driver
 func (d *DriverFile) GetXMLType() string {
 	switch d.Type {
 	case "Files":
@@ -292,7 +310,7 @@ func (d *DriverFile) GetXMLType() string {
 	case "Migrations":
 		return "migration"
 	}
-	return constant.UNDEFINED
+	return constant.Undefined
 }
 
 func executeSoapCall(body string, env *EnvType, soapFunc util.Soap) (string, error) {
@@ -302,38 +320,38 @@ func executeSoapCall(body string, env *EnvType, soapFunc util.Soap) (string, err
 
 func getAuxDriverFile(d *DriverFile) *DriverFile {
 	switch d.Type {
-	case constant.PROCESS:
+	case constant.TypeProcess:
 		return &DriverFile{Code: d.CopyPermissions, Path: "aux_" + d.CopyPermissions + ".xml", Type: d.Type}
-	case constant.OBJECT:
+	case constant.TypeObject:
 		partition := d.SourcePartition
-		if d.TargetPartition != constant.UNDEFINED {
+		if d.TargetPartition != constant.Undefined {
 			partition = d.TargetPartition
 		}
 		return &DriverFile{Code: d.Code, Path: "aux_" + d.Path + ".xml", Type: d.Type, SourcePartition: partition}
-	case constant.VIEW:
+	case constant.TypeView:
 		partition := d.SourcePartition
-		if d.TargetPartition != constant.UNDEFINED {
+		if d.TargetPartition != constant.Undefined {
 			partition = d.TargetPartition
 		}
 		return &DriverFile{Code: d.Code, ObjCode: d.ObjCode, Path: "aux_" + d.Path + ".xml", SourcePartition: partition, Type: d.Type}
-	case constant.MENU:
+	case constant.TypeMenu:
 		return &DriverFile{Code: d.Code, Path: "aux_" + d.Path + ".xml", Type: d.Type}
 	}
 	return nil
 }
 
 func parserReadXML(d *DriverFile) (string, error) {
-	if d.Code == constant.UNDEFINED {
-		return constant.UNDEFINED, errors.New("no attribute code defined")
+	if d.Code == constant.Undefined {
+		return constant.Undefined, errors.New("no attribute code defined")
 	}
 
-	if d.Path == constant.UNDEFINED {
-		return constant.UNDEFINED, errors.New("no attribute path defined")
+	if d.Path == constant.Undefined {
+		return constant.Undefined, errors.New("no attribute path defined")
 	}
 
 	nikuDataBusElement := docXogReadXML.FindElement("//xogtype[@type='" + d.Type + "']/NikuDataBus")
 	if nikuDataBusElement == nil {
-		return constant.UNDEFINED, errors.New("invalid object type")
+		return constant.Undefined, errors.New("invalid object type")
 	}
 	envelope := soapEnvelope.Root().Copy()
 	envelope.FindElement("//soapenv:Body").AddChild(nikuDataBusElement.Copy())
@@ -342,51 +360,51 @@ func parserReadXML(d *DriverFile) (string, error) {
 	req.SetRoot(envelope)
 
 	switch d.Type {
-	case constant.LOOKUP:
+	case constant.TypeLookup:
 		req.FindElement("//Filter[@name='code']").SetText(strings.ToUpper(d.Code))
-	case constant.PORTLET, constant.QUERY, constant.PROCESS, constant.PAGE, constant.GROUP, constant.MENU, constant.OBS:
+	case constant.TypePortlet, constant.TypeQuery, constant.TypeProcess, constant.TypePage, constant.TypeGroup, constant.TypeMenu, constant.TypeObs:
 		req.FindElement("//Filter[@name='code']").SetText(d.Code)
-	case constant.OBJECT:
+	case constant.TypeObject:
 		req.FindElement("//Filter[@name='object_code']").SetText(d.Code)
-	case constant.VIEW:
-		if d.ObjCode == constant.UNDEFINED {
-			return constant.UNDEFINED, errors.New("no attribute objectCode defined on tag <view>")
+	case constant.TypeView:
+		if d.ObjCode == constant.Undefined {
+			return constant.Undefined, errors.New("no attribute objectCode defined on tag <view>")
 		}
 		req.FindElement("//Filter[@name='code']").SetText(d.Code)
 		req.FindElement("//Filter[@name='object_code']").SetText(d.ObjCode)
-		if d.SourcePartition == constant.UNDEFINED {
+		if d.SourcePartition == constant.Undefined {
 			filter := req.FindElement("//Filter[@name='partition_code']")
 			filter.Parent().RemoveChild(filter)
 		} else {
 			req.FindElement("//Filter[@name='partition_code']").SetText(d.SourcePartition)
 		}
-	case constant.CUSTOM_OBJECT_INSTANCE:
-		if d.ObjCode == constant.UNDEFINED {
-			return constant.UNDEFINED, errors.New("no attribute objectCode defined on tag <customObjectInstance>")
+	case constant.TypeCustomObjectInstance:
+		if d.ObjCode == constant.Undefined {
+			return constant.Undefined, errors.New("no attribute objectCode defined on tag <customObjectInstance>")
 		}
 		req.FindElement("//Filter[@name='instanceCode']").SetText(d.Code)
 		req.FindElement("//Filter[@name='objectCode']").SetText(d.ObjCode)
-	case constant.RESOURCE_CLASS_INSTANCE:
+	case constant.TypeResourceClassInstance:
 		req.FindElement("//Filter[@name='resource_class']").SetText(d.Code)
-	case constant.WIP_CLASS_INSTANCE:
+	case constant.TypeWipClassInstance:
 		req.FindElement("//Filter[@name='wipclass']").SetText(d.Code)
-	case constant.INVESTMENT_CLASS_INSTANCE:
+	case constant.TypeInvestmentClassInstance:
 		req.FindElement("//Filter[@name='investmentclass']").SetText(d.Code)
-	case constant.TRANSACTION_CLASS_INSTANCE:
+	case constant.TypeTransactionClassInstance:
 		req.FindElement("//Filter[@name='transclass']").SetText(d.Code)
-	case constant.RESOURCE_INSTANCE:
+	case constant.TypeResourceInstance:
 		req.FindElement("//Filter[@name='resourceID']").SetText(d.Code)
-	case constant.USER_INSTANCE:
+	case constant.TypeUserInstance:
 		req.FindElement("//Filter[@name='userName']").SetText(d.Code)
-	case constant.PROJECT_INSTANCE:
+	case constant.TypeProjectInstance:
 		req.FindElement("//Filter[@name='projectID']").SetText(d.Code)
-	case constant.IDEA_INSTANCE, constant.APPLICATION_INSTANCE, constant.ASSET_INSTANCE, constant.OTHER_INVESTMENT_INSTANCE, constant.PRODUCT_INSTANCE, constant.SERVICE_INSTANCE:
+	case constant.TypeIdeaInstance, constant.TypeApplicationInstance, constant.TypeAssetInstance, constant.TypeOtherInvestmentInstance, constant.TypeProductInstance, constant.TypeServiceInstance:
 		req.FindElement("//Filter[@name='objectID']").SetText(d.Code)
 	}
 
 	documentLocationElement := req.FindElement("//args[@name='documentLocation']")
 	if documentLocationElement != nil {
-		folder := "./" + constant.FOLDER_WRITE + "_" + d.Type + "/_document"
+		folder := "./" + constant.FolderWrite + "_" + d.Type + "/_document"
 		documentLocationElement.CreateAttr("value", folder)
 	}
 
@@ -407,6 +425,7 @@ func parserWriteXML(d *DriverFile, folder string) (string, error) {
 	return req.WriteToString()
 }
 
+//Driver defines the file with a list of drivers to run
 type Driver struct {
 	Version       string
 	Files         []DriverFile
@@ -415,14 +434,16 @@ type Driver struct {
 	Info          os.FileInfo
 }
 
+//Clear reset the contents of the driver
 func (d *Driver) Clear() {
-	d.Version = constant.UNDEFINED
+	d.Version = constant.Undefined
 	d.Files = []DriverFile{}
 	d.PackageDriver = false
-	d.FilePath = constant.UNDEFINED
+	d.FilePath = constant.Undefined
 	d.Info = nil
 }
 
+//MaxTypeNameLen returns the largest size, number of characters in the type name, from the driver's list
 func (d *Driver) MaxTypeNameLen() int {
 	max := 0
 	for _, f := range d.Files {
@@ -434,12 +455,14 @@ func (d *Driver) MaxTypeNameLen() int {
 	return max
 }
 
+//ByExecutionOrder used to order the drivers according to the users defined sequence
 type ByExecutionOrder []DriverFile
 
 func (d ByExecutionOrder) Len() int           { return len(d) }
 func (d ByExecutionOrder) Swap(i, j int)      { d[i], d[j] = d[j], d[i] }
 func (d ByExecutionOrder) Less(i, j int) bool { return d[i].ExecutionOrder < d[j].ExecutionOrder }
 
+//DriverTypesPattern stores each driver type in an array to make it easier to read the xml file
 type DriverTypesPattern struct {
 	Version                   string       `xml:"version,attr"`
 	Files                     []DriverFile `xml:"file"`

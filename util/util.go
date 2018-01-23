@@ -9,12 +9,14 @@ import (
 	"unsafe"
 )
 
+//BytesToString convert an array of bytes to a string
 func BytesToString(b []byte) string {
 	bh := (*reflect.SliceHeader)(unsafe.Pointer(&b))
 	sh := reflect.StringHeader{Data: bh.Data, Len: bh.Len}
 	return *(*string)(unsafe.Pointer(&sh))
 }
 
+//ValidateFolder creates the folder structure if it do not exists
 func ValidateFolder(folder string) error {
 	_, dirErr := os.Stat(folder)
 	if os.IsNotExist(dirErr) {
@@ -26,37 +28,41 @@ func ValidateFolder(folder string) error {
 	return nil
 }
 
+//GetOutputDebug formats the string from the debug when it has errors or warnings
 func GetOutputDebug(code, debug string) string {
-	if code != constant.OUTPUT_SUCCESS {
+	if code != constant.OutputSuccess {
 		return "| Debug: " + debug
 	}
 	return debug
 }
 
+//GetStatusColorFromOutput returns the status and color from the output struct
 func GetStatusColorFromOutput(code string) (string, string) {
 	switch code {
-	case constant.OUTPUT_SUCCESS:
+	case constant.OutputSuccess:
 		return "success", "green"
-	case constant.OUTPUT_WARNING:
+	case constant.OutputWarning:
 		return "warning", "yellow"
-	case constant.OUTPUT_ERROR:
+	case constant.OutputError:
 		return "error  ", "red"
 	}
 	return "", ""
 }
 
+//GetActionLabel returns the properly formatted string according to the constant action
 func GetActionLabel(action string) string {
 	switch action {
-	case constant.READ:
+	case constant.Read:
 		return "Read"
-	case constant.WRITE:
+	case constant.Write:
 		return "Write"
-	case constant.MIGRATE:
+	case constant.Migrate:
 		return "Create"
 	}
 	return ""
 }
 
+//RightPad insert a defined number of characters on the right of the string
 func RightPad(s, padStr string, length int) string {
 	var padCountInt int
 	padCountInt = 1 + ((length - len(padStr)) / len(padStr))
@@ -64,6 +70,7 @@ func RightPad(s, padStr string, length int) string {
 	return retStr[:length]
 }
 
+//GetPathFolder returns only the folders without filename and extension of the path defined for a driver
 func GetPathFolder(path string) string {
 	folder := ""
 
@@ -82,6 +89,7 @@ func GetPathFolder(path string) string {
 	return folder
 }
 
+//GetPathWithoutExtension returns the folders and filename without the file extension of the path defined for a driver
 func GetPathWithoutExtension(path string) string {
 	extIndex := strings.LastIndex(path, ".")
 	return path[:extIndex]

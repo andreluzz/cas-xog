@@ -84,19 +84,19 @@ func processElements(xog, aux *etree.Document, file *model.DriverFile) (bool, er
 
 	validElements := false
 	for _, e := range file.Elements {
-		if e.XPath == constant.UNDEFINED && (e.Type == constant.ELEMENT_TYPE_ACTIONGROUP || e.Type == constant.ELEMENT_TYPE_ACTION) {
+		if e.XPath == constant.Undefined && (e.Type == constant.ElementTypeActionGroup || e.Type == constant.ElementTypeAction) {
 			validElements = true
 			switch e.Type {
-			case constant.ELEMENT_TYPE_ACTION:
-				if e.Action == constant.ACTION_INSERT {
+			case constant.ElementTypeAction:
+				if e.Action == constant.ActionInsert {
 					sourceAction := xog.FindElement("//actions/group/action[@code='" + e.Code + "']")
 					if sourceAction == nil {
 						return false, errors.New("invalid source view action code")
 					}
-					sourceGroupCode := sourceAction.Parent().SelectAttrValue("code", constant.UNDEFINED)
+					sourceGroupCode := sourceAction.Parent().SelectAttrValue("code", constant.Undefined)
 					targetAction := aux.FindElement("//actions/group[@code='" + sourceGroupCode + "']/action[@code='" + e.Code + "']")
 
-					if e.InsertBefore != constant.UNDEFINED {
+					if e.InsertBefore != constant.Undefined {
 						insertBeforeAction := aux.FindElement("//actions/group/action[@code='" + e.InsertBefore + "']")
 						if insertBeforeAction == nil {
 							return false, errors.New("invalid insertBefore target view action code")
@@ -114,15 +114,15 @@ func processElements(xog, aux *etree.Document, file *model.DriverFile) (bool, er
 					if targetAction != nil {
 						targetAction.Parent().RemoveChild(targetAction)
 					}
-				} else if e.Action == constant.ACTION_REMOVE {
+				} else if e.Action == constant.ActionRemove {
 					targetAction := aux.FindElement("//actions/group/action[@code='" + e.Code + "']")
 					if targetAction == nil {
 						return false, errors.New("cannot remove target view action - invalid code")
 					}
 					targetAction.Parent().RemoveChild(targetAction)
 				}
-			case constant.ELEMENT_TYPE_ACTIONGROUP:
-				if e.Action == constant.ACTION_INSERT {
+			case constant.ElementTypeActionGroup:
+				if e.Action == constant.ActionInsert {
 					sourceGroup := xog.FindElement("//actions/group[@code='" + e.Code + "']")
 					if sourceGroup == nil {
 						return false, errors.New("invalid source view action group code")
@@ -130,7 +130,7 @@ func processElements(xog, aux *etree.Document, file *model.DriverFile) (bool, er
 
 					targetGroup := aux.FindElement("//actions/group[@code='" + e.Code + "']")
 
-					if e.InsertBefore != constant.UNDEFINED {
+					if e.InsertBefore != constant.Undefined {
 						insertBeforeGroup := aux.FindElement("//actions/group[@code='" + e.InsertBefore + "']")
 						if insertBeforeGroup == nil {
 							return false, errors.New("invalid insertBefore target view action group code")
@@ -149,7 +149,7 @@ func processElements(xog, aux *etree.Document, file *model.DriverFile) (bool, er
 						targetGroup.Parent().RemoveChild(targetGroup)
 					}
 
-				} else if e.Action == constant.ACTION_REMOVE {
+				} else if e.Action == constant.ActionRemove {
 					targetGroup := aux.FindElement("//actions/group[@code='" + e.Code + "']")
 					if targetGroup == nil {
 						return false, errors.New("cannot remove target view action group - invalid code")
@@ -190,7 +190,7 @@ func updateSections(xog, aux *etree.Document, file *model.DriverFile) error {
 	}
 
 	for _, section := range file.Sections {
-		if section.Action == constant.ACTION_REPLACE {
+		if section.Action == constant.ActionReplace {
 			err := processSectionByType(section, sourceView, targetView)
 			if err != nil {
 				return err
@@ -199,7 +199,7 @@ func updateSections(xog, aux *etree.Document, file *model.DriverFile) error {
 	}
 
 	for _, section := range file.Sections {
-		if section.Action == constant.ACTION_UPDATE {
+		if section.Action == constant.ActionUpdate {
 			err := processSectionByType(section, sourceView, targetView)
 			if err != nil {
 				return err
@@ -208,7 +208,7 @@ func updateSections(xog, aux *etree.Document, file *model.DriverFile) error {
 	}
 
 	for _, section := range file.Sections {
-		if section.Action == constant.ACTION_REMOVE {
+		if section.Action == constant.ActionRemove {
 			err := processSectionByType(section, sourceView, targetView)
 			if err != nil {
 				return err
@@ -217,7 +217,7 @@ func updateSections(xog, aux *etree.Document, file *model.DriverFile) error {
 	}
 
 	for _, section := range file.Sections {
-		if section.Action == constant.ACTION_INSERT {
+		if section.Action == constant.ActionInsert {
 			err := processSectionByType(section, sourceView, targetView)
 			if err != nil {
 				return err
@@ -226,7 +226,7 @@ func updateSections(xog, aux *etree.Document, file *model.DriverFile) error {
 	}
 
 	for _, section := range file.Sections {
-		if section.Action != constant.ACTION_REMOVE && section.Action != constant.ACTION_REPLACE && section.Action != constant.ACTION_INSERT && section.Action != constant.ACTION_UPDATE {
+		if section.Action != constant.ActionRemove && section.Action != constant.ActionReplace && section.Action != constant.ActionInsert && section.Action != constant.ActionUpdate {
 			return errors.New("invalid action attribute (" + section.Action + ") on tag <section>")
 		}
 	}
@@ -242,7 +242,7 @@ func updateSections(xog, aux *etree.Document, file *model.DriverFile) error {
 
 func processSectionByType(section model.Section, sourceView, targetView *etree.Element) error {
 	var sourceSection *etree.Element
-	if section.Action != constant.ACTION_REMOVE {
+	if section.Action != constant.ActionRemove {
 		if section.SourcePosition == "" {
 			return errors.New("attribute sourcePosition from tag <section> is not defined")
 		}
@@ -262,20 +262,20 @@ func processSectionByType(section model.Section, sourceView, targetView *etree.E
 	}
 
 	switch section.Action {
-	case constant.ACTION_REPLACE:
+	case constant.ActionReplace:
 		if section.TargetPosition == "" {
 			return errors.New("cannot replace section because attribute targetPosition from tag <section> is not defined")
 		}
 		targetView.InsertChild(targetSection, sourceSection)
 		targetView.RemoveChild(targetSection)
-	case constant.ACTION_REMOVE:
+	case constant.ActionRemove:
 		if section.TargetPosition == "" {
 			return errors.New("cannot remove section because attribute targetPosition from tag <section> is not defined")
 		}
 		targetView.RemoveChild(targetSection)
-	case constant.ACTION_INSERT:
+	case constant.ActionInsert:
 		targetView.InsertChild(targetSection, sourceSection)
-	case constant.ACTION_UPDATE:
+	case constant.ActionUpdate:
 		if len(section.Fields) == 0 {
 			return errors.New("cannot update section because there is no tag <field> defined")
 		}
@@ -317,13 +317,13 @@ func processSectionByType(section model.Section, sourceView, targetView *etree.E
 				}
 			}
 			switch f.Column {
-			case constant.COLUMN_LEFT:
+			case constant.ColumnLeft:
 				if f.InsertBefore == "" {
 					columnLeft.AddChild(attributeElement)
 				} else {
 					columnLeft.InsertChild(targetAttribute, attributeElement)
 				}
-			case constant.COLUMN_RIGHT:
+			case constant.ColumnRight:
 				if f.InsertBefore == "" {
 					columnRight.AddChild(attributeElement)
 				} else {

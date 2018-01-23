@@ -16,15 +16,15 @@ func specificLookupTransformations(xog *etree.Document, file *model.DriverFile) 
 	if file.TargetPartition != "" {
 		elems := xog.FindElements("//lookupValue")
 		for _, e := range elems {
-			currentPartitionCode := e.SelectAttrValue("partitionCode", constant.UNDEFINED)
-			if file.SourcePartition == constant.UNDEFINED {
+			currentPartitionCode := e.SelectAttrValue("partitionCode", constant.Undefined)
+			if file.SourcePartition == constant.Undefined {
 				e.CreateAttr("partitionCode", file.TargetPartition)
-			} else if file.SourcePartition == currentPartitionCode || (file.SourcePartition == "NIKU.ROOT" && currentPartitionCode == constant.UNDEFINED) {
+			} else if file.SourcePartition == currentPartitionCode || (file.SourcePartition == "NIKU.ROOT" && currentPartitionCode == constant.Undefined) {
 				e.CreateAttr("partitionCode", file.TargetPartition)
 			}
 
-			currentPartitionModeCode := e.SelectAttrValue("partitionModeCode", constant.UNDEFINED)
-			if currentPartitionModeCode == constant.UNDEFINED {
+			currentPartitionModeCode := e.SelectAttrValue("partitionModeCode", constant.Undefined)
+			if currentPartitionModeCode == constant.Undefined {
 				e.CreateAttr("partitionModeCode", "PARTITION_AND_ANSTRS_DESDNTS")
 			}
 		}

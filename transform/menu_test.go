@@ -10,7 +10,7 @@ import (
 func TestExecuteToReturnErrorMenuInvalidSourceSection(t *testing.T) {
 	file := model.DriverFile{
 		Code: "application",
-		Type: constant.MENU,
+		Type: constant.Menu,
 		Sections: []model.Section{
 			{
 				Code: "invalid_code",
@@ -33,10 +33,10 @@ func TestExecuteToReturnErrorMenuInvalidSourceSection(t *testing.T) {
 func TestExecuteToReturnErrorMenuInvalidTargetSection(t *testing.T) {
 	file := model.DriverFile{
 		Code: "application",
-		Type: constant.MENU,
+		Type: constant.Menu,
 		Sections: []model.Section{
 			{
-				Action: constant.ACTION_UPDATE,
+				Action: constant.ActionUpdate,
 				Code:   "npt.personal",
 			},
 		},
@@ -57,10 +57,10 @@ func TestExecuteToReturnErrorMenuInvalidTargetSection(t *testing.T) {
 func TestExecuteToReturnErrorMenuUpdateWithoutLinks(t *testing.T) {
 	file := model.DriverFile{
 		Code: "application",
-		Type: constant.MENU,
+		Type: constant.Menu,
 		Sections: []model.Section{
 			{
-				Action: constant.ACTION_UPDATE,
+				Action: constant.ActionUpdate,
 				Code:   "npt.personal",
 			},
 		},
@@ -81,10 +81,10 @@ func TestExecuteToReturnErrorMenuUpdateWithoutLinks(t *testing.T) {
 func TestExecuteToReturnErrorMenuLinkInvalidCode(t *testing.T) {
 	file := model.DriverFile{
 		Code: "application",
-		Type: constant.MENU,
+		Type: constant.Menu,
 		Sections: []model.Section{
 			{
-				Action: constant.ACTION_UPDATE,
+				Action: constant.ActionUpdate,
 				Code:   "npt.personal",
 				Links: []model.SectionLink{
 					{
@@ -110,10 +110,10 @@ func TestExecuteToReturnErrorMenuLinkInvalidCode(t *testing.T) {
 func TestExecuteToReturnErrorMenuInsertExistentSection(t *testing.T) {
 	file := model.DriverFile{
 		Code: "application",
-		Type: constant.MENU,
+		Type: constant.Menu,
 		Sections: []model.Section{
 			{
-				Action: constant.ACTION_INSERT,
+				Action: constant.ActionInsert,
 				Code:   "npt.personal",
 			},
 		},
@@ -134,10 +134,10 @@ func TestExecuteToReturnErrorMenuInsertExistentSection(t *testing.T) {
 func TestExecuteToReturnErrorMenuTargetInvalidSectionPosition(t *testing.T) {
 	file := model.DriverFile{
 		Code: "application",
-		Type: constant.MENU,
+		Type: constant.Menu,
 		Sections: []model.Section{
 			{
-				Action:         constant.ACTION_INSERT,
+				Action:         constant.ActionInsert,
 				Code:           "menu_sec_cas_xog",
 				TargetPosition: "129",
 			},
@@ -159,7 +159,7 @@ func TestExecuteToReturnErrorMenuTargetInvalidSectionPosition(t *testing.T) {
 func TestExecuteToReturnMenu(t *testing.T) {
 	file := model.DriverFile{
 		Code: "application",
-		Type: constant.MENU,
+		Type: constant.Menu,
 	}
 
 	xog := etree.NewDocument()
@@ -179,15 +179,15 @@ func TestExecuteToReturnMenu(t *testing.T) {
 func TestExecuteToReturnMenuSectionAndLinks(t *testing.T) {
 	file := model.DriverFile{
 		Code: "application",
-		Type: constant.MENU,
+		Type: constant.Menu,
 		Sections: []model.Section{
 			{
-				Action:         constant.ACTION_INSERT,
+				Action:         constant.ActionInsert,
 				Code:           "menu_sec_cas_xog",
 				TargetPosition: "2",
 			},
 			{
-				Action: constant.ACTION_UPDATE,
+				Action: constant.ActionUpdate,
 				Code:   "npt.personal",
 				Links: []model.SectionLink{
 					{
@@ -217,10 +217,10 @@ func TestExecuteToReturnMenuSectionAndLinks(t *testing.T) {
 func TestExecuteToReturnMenuInsertSectionWithLinks(t *testing.T) {
 	file := model.DriverFile{
 		Code: "application",
-		Type: constant.MENU,
+		Type: constant.Menu,
 		Sections: []model.Section{
 			{
-				Action:         constant.ACTION_INSERT,
+				Action:         constant.ActionInsert,
 				Code:           "menu_sec_cas_xog",
 				TargetPosition: "2",
 				Links: []model.SectionLink{
