@@ -46,6 +46,16 @@ func ProcessPackageFile(file *model.DriverFile, packageFolder, writeFolder strin
 		output.Debug = "only single views and menu can be transformed in packages processing"
 	}
 
+	processPackageDefinitions(definitions, file, xog)
+
+	xog.IndentTabs()
+	util.ValidateFolder(writeFolder + util.GetPathFolder(file.Path))
+	xog.WriteToFile(writeFolder + "/" + file.Path)
+
+	return output
+}
+
+func processPackageDefinitions(definitions []model.Definition, file *model.DriverFile, xog *etree.Document) {
 	for _, def := range definitions {
 		if def.Value == def.Default {
 			continue
@@ -75,10 +85,4 @@ func ProcessPackageFile(file *model.DriverFile, packageFolder, writeFolder strin
 			}
 		}
 	}
-
-	xog.IndentTabs()
-	util.ValidateFolder(writeFolder + util.GetPathFolder(file.Path))
-	xog.WriteToFile(writeFolder + "/" + file.Path)
-
-	return output
 }

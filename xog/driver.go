@@ -164,68 +164,79 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 		return output
 	}
 	if action == constant.Read {
-		var auxResponse *etree.Document
-		if file.NeedAuxXML() {
-			auxResponse = etree.NewDocument()
-			auxResponse.ReadFromString(file.GetAuxXML())
-			output, err = validate.Check(auxResponse)
-			if err != nil {
-				output.Code = constant.OutputError
-				output.Debug = "aux validation - " + err.Error()
-				return output
-			}
-		}
-		err = transform.Execute(xogResponse, auxResponse, file)
-
-		if file.GetInstanceTag() != constant.Undefined && file.InstancesPerFile > 0 {
-			instanceTagPath := "//" + file.GetInstanceTag()
-
-			parentTagPath := "//" + xogResponse.FindElement(instanceTagPath).Parent().Tag
-
-			splitXogResponse := xogResponse.Copy()
-			for _, e := range splitXogResponse.FindElements(instanceTagPath) {
-				e.Parent().RemoveChild(e)
-			}
-			instances := xogResponse.FindElements(instanceTagPath)
-
-			totalFiles := math.Ceil(float64(len(instances)) / float64(file.InstancesPerFile))
-			path := util.GetPathWithoutExtension(file.Path)
-			for i := 0; i < int(totalFiles); i++ {
-				file.Path = fmt.Sprintf("%s_%03d.xml", path, i+1)
-				xog := splitXogResponse.Copy()
-				elementParent := xog.FindElement(parentTagPath)
-				for z := file.InstancesPerFile * i; z < file.InstancesPerFile*(i+1); z++ {
-					if z < len(instances) {
-						elementParent.AddChild(instances[z].Copy())
-					}
-				}
-				xog.IndentTabs()
-				s, _ := xog.WriteToString()
-				file.SetXML(s)
-				file.Write(outputFolder)
-			}
-			file.Path = "complete_" + path + ".xml"
-		}
-
-		str, _ := xogResponse.WriteToString()
-		file.SetXML(str)
-		if err != nil {
-			output.Code = constant.OutputError
-			output.Debug = err.Error()
+		output := processDriverFileRead(file, xogResponse, outputFolder)
+		if output.Code != constant.OutputSuccess {
 			return output
-		}
-		iniTagRegexpStr, endTagRegexpStr := file.TagCDATA()
-		if iniTagRegexpStr != constant.Undefined && endTagRegexpStr != constant.Undefined {
-			transformedString := transform.IncludeCDATA(file.GetXML(), iniTagRegexpStr, endTagRegexpStr)
-			file.SetXML(transformedString)
-		}
-
-		if file.ExportToExcel {
-			migration.ExportInstancesToExcel(xogResponse, file, constant.FolderMigration)
 		}
 	}
 
 	file.Write(outputFolder)
+	return output
+}
+
+func processDriverFileRead(file *model.DriverFile, xogResponse *etree.Document, outputFolder string) model.Output {
+	output := model.Output{Code: constant.OutputSuccess, Debug: constant.Undefined}
+
+	var auxResponse *etree.Document
+	if file.NeedAuxXML() {
+		auxResponse = etree.NewDocument()
+		auxResponse.ReadFromString(file.GetAuxXML())
+		output, err := validate.Check(auxResponse)
+		if err != nil {
+			output.Code = constant.OutputError
+			output.Debug = "aux validation - " + err.Error()
+			return output
+		}
+	}
+	err := transform.Execute(xogResponse, auxResponse, file)
+
+	if file.GetInstanceTag() != constant.Undefined && file.InstancesPerFile > 0 {
+		instanceTagPath := "//" + file.GetInstanceTag()
+
+		parentTagPath := "//" + xogResponse.FindElement(instanceTagPath).Parent().Tag
+
+		splitXogResponse := xogResponse.Copy()
+		for _, e := range splitXogResponse.FindElements(instanceTagPath) {
+			e.Parent().RemoveChild(e)
+		}
+		instances := xogResponse.FindElements(instanceTagPath)
+
+		totalFiles := math.Ceil(float64(len(instances)) / float64(file.InstancesPerFile))
+		path := util.GetPathWithoutExtension(file.Path)
+		for i := 0; i < int(totalFiles); i++ {
+			file.Path = fmt.Sprintf("%s_%03d.xml", path, i+1)
+			xog := splitXogResponse.Copy()
+			elementParent := xog.FindElement(parentTagPath)
+			for z := file.InstancesPerFile * i; z < file.InstancesPerFile*(i+1); z++ {
+				if z < len(instances) {
+					elementParent.AddChild(instances[z].Copy())
+				}
+			}
+			xog.IndentTabs()
+			s, _ := xog.WriteToString()
+			file.SetXML(s)
+			file.Write(outputFolder)
+		}
+		file.Path = "complete_" + path + ".xml"
+	}
+
+	str, _ := xogResponse.WriteToString()
+	file.SetXML(str)
+	if err != nil {
+		output.Code = constant.OutputError
+		output.Debug = err.Error()
+		return output
+	}
+	iniTagRegexpStr, endTagRegexpStr := file.TagCDATA()
+	if iniTagRegexpStr != constant.Undefined && endTagRegexpStr != constant.Undefined {
+		transformedString := transform.IncludeCDATA(file.GetXML(), iniTagRegexpStr, endTagRegexpStr)
+		file.SetXML(transformedString)
+	}
+
+	if file.ExportToExcel {
+		migration.ExportInstancesToExcel(xogResponse, file, constant.FolderMigration)
+	}
+
 	return output
 }
 

@@ -2,6 +2,7 @@ package model
 
 import (
 	"errors"
+	"fmt"
 	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/util"
 	"github.com/beevik/etree"
@@ -71,31 +72,31 @@ type MatchExcel struct {
 
 //DriverFile defines the fields to manipulate the xog xml
 type DriverFile struct {
-	Code              string        `xml:"code,attr"`
-	Path              string        `xml:"path,attr"`
-	Type              string        `xml:"type,attr"`
-	ObjCode           string        `xml:"objectCode,attr"`
-	IgnoreReading     bool          `xml:"ignoreReading,attr"`
-	SourcePartition   string        `xml:"sourcePartition,attr"`
-	TargetPartition   string        `xml:"targetPartition,attr"`
-	PartitionModel    string        `xml:"partitionModel,attr"`
-	CopyPermissions   string        `xml:"copyPermissions,attr"`
-	Template          string        `xml:"template,attr"`
-	ExcelFile         string        `xml:"excel,attr"`
-	ExcelStartRow     string        `xml:"startRow,attr"`
-	InstanceTag       string        `xml:"instance,attr"`
-	ExportToExcel     bool          `xml:"exportToExcel,attr"`
-	OnlyStructure     bool          `xml:"onlyStructure,attr"`
-	PackageTransform  bool          `xml:"packageTransform,attr"`
-	InstancesPerFile  int           `xml:"instancesPerFile,attr"`
-	NSQL              string        `xml:"nsql"`
-	Sections          []Section     `xml:"section"`
-	Elements          []Element     `xml:"element"`
-	Replace           []FileReplace `xml:"replace"`
-	MatchExcel        []MatchExcel  `xml:"match"`
-	ExecutionOrder    int
-	xogXML            string
-	auxXML            string
+	Code             string        `xml:"code,attr"`
+	Path             string        `xml:"path,attr"`
+	Type             string        `xml:"type,attr"`
+	ObjCode          string        `xml:"objectCode,attr"`
+	IgnoreReading    bool          `xml:"ignoreReading,attr"`
+	SourcePartition  string        `xml:"sourcePartition,attr"`
+	TargetPartition  string        `xml:"targetPartition,attr"`
+	PartitionModel   string        `xml:"partitionModel,attr"`
+	CopyPermissions  string        `xml:"copyPermissions,attr"`
+	Template         string        `xml:"template,attr"`
+	ExcelFile        string        `xml:"excel,attr"`
+	ExcelStartRow    string        `xml:"startRow,attr"`
+	InstanceTag      string        `xml:"instance,attr"`
+	ExportToExcel    bool          `xml:"exportToExcel,attr"`
+	OnlyStructure    bool          `xml:"onlyStructure,attr"`
+	PackageTransform bool          `xml:"packageTransform,attr"`
+	InstancesPerFile int           `xml:"instancesPerFile,attr"`
+	NSQL             string        `xml:"nsql"`
+	Sections         []Section     `xml:"section"`
+	Elements         []Element     `xml:"element"`
+	Replace          []FileReplace `xml:"replace"`
+	MatchExcel       []MatchExcel  `xml:"match"`
+	ExecutionOrder   int
+	xogXML           string
+	auxXML           string
 }
 
 //InitXML loads the properly xog xml to update the environment
@@ -257,58 +258,16 @@ func (d *DriverFile) GetInstanceTag() string {
 //GetXMLType returns the constant value according to the type of driver
 func (d *DriverFile) GetXMLType() string {
 	switch d.Type {
-	case "Files":
-		return "file"
-	case "Objects":
-		return "object"
-	case "Views":
-		return "view"
+	case "Files", "Objects", "Views", "Lookups", "Portlets", "Pages", "Menus", "Groups":
+		return strings.ToLower(d.Type[:len(d.Type)-1])
 	case "Processes":
 		return "process"
-	case "Lookups":
-		return "lookup"
-	case "Portlets":
-		return "portlet"
 	case "Queries":
 		return "query"
-	case "Pages":
-		return "page"
-	case "Menus":
-		return "menu"
 	case "Obs":
 		return "obs"
-	case "Groups":
-		return "group"
-	case "CustomObjectInstances":
-		return "customObjectInstance"
-	case "ResourceClassInstances":
-		return "resourceClassInstance"
-	case "WipClassInstances":
-		return "wipClassInstance"
-	case "InvestmentClassInstances":
-		return "investmentClassInstance"
-	case "TransactionClassInstances":
-		return "transactionClassInstance"
-	case "ResourceInstances":
-		return "resourceInstance"
-	case "UserInstances":
-		return "userInstance"
-	case "ProjectInstances":
-		return "projectInstance"
-	case "IdeaInstances":
-		return "ideaInstance"
-	case "ApplicationInstances":
-		return "applicationInstance"
-	case "AssetInstances":
-		return "assetInstance"
-	case "OtherInvestmentInstances":
-		return "otherInvestmentInstance"
-	case "ProductInstances":
-		return "productInstance"
-	case "ServiceInstances":
-		return "serviceInstance"
-	case "Migrations":
-		return "migration"
+	case "CustomObjectInstances", "ResourceClassInstances", "WipClassInstances", "InvestmentClassInstances", "TransactionClassInstances", "ResourceInstances", "UserInstances", "ProjectInstances", "IdeaInstances", "ApplicationInstances", "AssetInstances", "OtherInvestmentInstances", "ProductInstances", "ServiceInstances", "Migrations":
+		return strings.ToLower(d.Type[:1]) + d.Type[1:len(d.Type)-1]
 	}
 	return constant.Undefined
 }
@@ -359,6 +318,29 @@ func parserReadXML(d *DriverFile) (string, error) {
 	req := etree.NewDocument()
 	req.SetRoot(envelope)
 
+	err := checkObjectCodeDefined(d)
+
+	insertDefaultFiltersToReadXML(d, req)
+
+	documentLocationElement := req.FindElement("//args[@name='documentLocation']")
+	if documentLocationElement != nil {
+		folder := "./" + constant.FolderWrite + "_" + d.Type + "/_document"
+		documentLocationElement.CreateAttr("value", folder)
+	}
+
+	req.IndentTabs()
+	str, err := req.WriteToString()
+	return str, err
+}
+
+func checkObjectCodeDefined(d *DriverFile) error {
+	if (d.Type == constant.TypeView || d.Type == constant.TypeCustomObjectInstance) && d.ObjCode == constant.Undefined {
+		return fmt.Errorf("no attribute objectCode defined on tag <%s>", d.GetXMLType())
+	}
+	return nil
+}
+
+func insertDefaultFiltersToReadXML(d *DriverFile, req *etree.Document) {
 	switch d.Type {
 	case constant.TypeLookup:
 		req.FindElement("//Filter[@name='code']").SetText(strings.ToUpper(d.Code))
@@ -367,9 +349,6 @@ func parserReadXML(d *DriverFile) (string, error) {
 	case constant.TypeObject:
 		req.FindElement("//Filter[@name='object_code']").SetText(d.Code)
 	case constant.TypeView:
-		if d.ObjCode == constant.Undefined {
-			return constant.Undefined, errors.New("no attribute objectCode defined on tag <view>")
-		}
 		req.FindElement("//Filter[@name='code']").SetText(d.Code)
 		req.FindElement("//Filter[@name='object_code']").SetText(d.ObjCode)
 		if d.SourcePartition == constant.Undefined {
@@ -379,9 +358,6 @@ func parserReadXML(d *DriverFile) (string, error) {
 			req.FindElement("//Filter[@name='partition_code']").SetText(d.SourcePartition)
 		}
 	case constant.TypeCustomObjectInstance:
-		if d.ObjCode == constant.Undefined {
-			return constant.Undefined, errors.New("no attribute objectCode defined on tag <customObjectInstance>")
-		}
 		req.FindElement("//Filter[@name='instanceCode']").SetText(d.Code)
 		req.FindElement("//Filter[@name='objectCode']").SetText(d.ObjCode)
 	case constant.TypeResourceClassInstance:
@@ -401,16 +377,6 @@ func parserReadXML(d *DriverFile) (string, error) {
 	case constant.TypeIdeaInstance, constant.TypeApplicationInstance, constant.TypeAssetInstance, constant.TypeOtherInvestmentInstance, constant.TypeProductInstance, constant.TypeServiceInstance:
 		req.FindElement("//Filter[@name='objectID']").SetText(d.Code)
 	}
-
-	documentLocationElement := req.FindElement("//args[@name='documentLocation']")
-	if documentLocationElement != nil {
-		folder := "./" + constant.FolderWrite + "_" + d.Type + "/_document"
-		documentLocationElement.CreateAttr("value", folder)
-	}
-
-	req.IndentTabs()
-	str, err := req.WriteToString()
-	return str, err
 }
 
 func parserWriteXML(d *DriverFile, folder string) (string, error) {

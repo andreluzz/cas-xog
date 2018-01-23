@@ -14,31 +14,9 @@ import (
 //ReadDataFromExcel used to create xog file from data in excel format. Only accept .xlsx extension
 func ReadDataFromExcel(file *model.DriverFile) (string, error) {
 
-	err := errors.New(constant.Undefined)
-	err = nil
-
-	excelStartRowIndex := 0
-	if file.ExcelStartRow != constant.Undefined {
-		excelStartRowIndex, err = strconv.Atoi(file.ExcelStartRow)
-		if err != nil {
-			return constant.Undefined, errors.New("migration - tag 'startRow' not a number. Debug:  " + err.Error())
-		}
-		excelStartRowIndex--
-	}
-
-	xog := etree.NewDocument()
-	err = xog.ReadFromFile(file.Template)
+	excelStartRowIndex, xog, templateInstanceElement, err := validateReadDataFromExcelDriverAttributes(file)
 	if err != nil {
-		return constant.Undefined, errors.New("migration - invalid template file. Debug: " + err.Error())
-	}
-
-	instance := "instance"
-	if file.InstanceTag != constant.Undefined {
-		instance = file.InstanceTag
-	}
-	templateInstanceElement := xog.FindElement("//" + instance)
-	if templateInstanceElement == nil {
-		return constant.Undefined, errors.New("migration - template invalid no instance element found")
+		return constant.Undefined, err
 	}
 
 	parent := templateInstanceElement.Parent()
@@ -92,6 +70,35 @@ func ReadDataFromExcel(file *model.DriverFile) (string, error) {
 	}
 	xog.IndentTabs()
 	return xog.WriteToString()
+}
+
+func validateReadDataFromExcelDriverAttributes(file *model.DriverFile) (int, *etree.Document, *etree.Element, error) {
+
+	xog := etree.NewDocument()
+	err := xog.ReadFromFile(file.Template)
+	if err != nil {
+		return 0, nil, nil, errors.New("migration - invalid template file. Debug: " + err.Error())
+	}
+
+	excelStartRowIndex := 0
+	if file.ExcelStartRow != constant.Undefined {
+		excelStartRowIndex, err = strconv.Atoi(file.ExcelStartRow)
+		if err != nil {
+			return 0, nil, nil, errors.New("migration - tag 'startRow' not a number. Debug:  " + err.Error())
+		}
+		excelStartRowIndex--
+	}
+
+	instance := "instance"
+	if file.InstanceTag != constant.Undefined {
+		instance = file.InstanceTag
+	}
+	templateInstanceElement := xog.FindElement("//" + instance)
+	if templateInstanceElement == nil {
+		return 0, nil, nil, errors.New("migration - template invalid no instance element found")
+	}
+
+	return excelStartRowIndex, xog, templateInstanceElement, nil
 }
 
 //ExportInstancesToExcel used to create excel file with the data from xog file
