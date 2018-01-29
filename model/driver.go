@@ -201,14 +201,21 @@ func (d *DriverFile) TagCDATA() (string, string) {
 
 //GetSplitWriteFilesPath returns a list with write files paths when an instance xog xml is split
 func (d *DriverFile) GetSplitWriteFilesPath(folder string) ([]string, error) {
+	var splitPath []string
+	if d.InstancesPerFile <= 0 {
+		return splitPath, nil
+	}
+
 	files, err := ioutil.ReadDir(folder + d.Type)
 	if err != nil {
 		return nil, err
 	}
-	var splitPath []string
+
 	matchFilename := util.GetPathWithoutExtension(d.Path)
 	for _, filename := range files {
-		if matchFilename == filename.Name()[:len(matchFilename)] {
+		lengthMatchFilename := len(matchFilename)
+		lengthFilename := len(filename.Name())
+		if lengthFilename >= lengthMatchFilename && matchFilename == filename.Name()[:len(matchFilename)] {
 			splitPath = append(splitPath, filename.Name())
 		}
 	}

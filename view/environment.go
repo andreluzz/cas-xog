@@ -50,6 +50,10 @@ func Environments(action string, environments *model.Environments) bool {
 		return false
 	}
 
+	if action == "r" {
+		targetEnvInput = targetInput
+	}
+
 	if action == "w" && targetEnvInput != targetInput {
 		log.Info("\n[CAS-XOG][yellow[Warning]]: Trying to write files read from a different target environment!")
 		log.Info("\n[CAS-XOG]Do you want to continue anyway? (y = Yes, n = No) [n]: ")
