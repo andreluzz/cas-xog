@@ -289,7 +289,6 @@
                 <args name="include_resources" value="true"/>
                 <args name="include_tasks" value="true"/>
                 <args name="include_allocations" value="true"/>
-
                 <args name="documentLocation" />
             </Header>
             <Query>

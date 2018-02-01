@@ -79,8 +79,10 @@ func ProcessDriverFiles(driver *model.Driver, action string, environments *model
 
 	environments.Logout(util.SoapCall)
 
+	totalFilesProcessed := outputResults[constant.OutputError] + outputResults[constant.OutputSuccess] + outputResults[constant.OutputWarning] + outputResults[constant.OutputIgnored]
+
 	log.Info("\n\n-----------------------------------------------------------------------------")
-	log.Info("\nStats: total = %d | failure = %d | success = %d | warning = %d | ignored = %d", len(driver.Files), outputResults[constant.OutputError], outputResults[constant.OutputSuccess], outputResults[constant.OutputWarning], outputResults[constant.OutputIgnored])
+	log.Info("\nStats: total = %d | failure = %d | success = %d | warning = %d | ignored = %d", totalFilesProcessed, outputResults[constant.OutputError], outputResults[constant.OutputSuccess], outputResults[constant.OutputWarning], outputResults[constant.OutputIgnored])
 	log.Info("\n[blue[Concluded in]]: %.3f seconds", elapsed.Seconds())
 	log.Info("\n-----------------------------------------------------------------------------\n")
 }

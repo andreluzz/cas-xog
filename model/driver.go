@@ -8,6 +8,7 @@ import (
 	"github.com/beevik/etree"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strings"
 )
@@ -70,6 +71,19 @@ type MatchExcel struct {
 	Separator     string `xml:"separator,attr"`
 }
 
+//Filter defines the fields to filter the XOG read
+type Filter struct {
+	Criteria string `xml:"criteria,attr"`
+	Name     string `xml:"name,attr"`
+	Value    string `xml:",chardata"`
+}
+
+//HeaderArg defines the fields to include in the XOG read header
+type HeaderArg struct {
+	Name	string `xml:"name,attr"`
+	Value	string `xml:"value,attr"`
+}
+
 //DriverFile defines the fields to manipulate the xog xml
 type DriverFile struct {
 	Code             string        `xml:"code,attr"`
@@ -94,6 +108,8 @@ type DriverFile struct {
 	Elements         []Element     `xml:"element"`
 	Replace          []FileReplace `xml:"replace"`
 	MatchExcel       []MatchExcel  `xml:"match"`
+	Filters          []Filter      `xml:"filter"`
+	HeaderArgs       []HeaderArg   `xml:"args"`
 	ExecutionOrder   int
 	xogXML           string
 	auxXML           string
@@ -307,7 +323,7 @@ func getAuxDriverFile(d *DriverFile) *DriverFile {
 }
 
 func parserReadXML(d *DriverFile) (string, error) {
-	if d.Code == constant.Undefined {
+	if d.Code == constant.Undefined && len(d.Filters) <= 0 {
 		return constant.Undefined, errors.New("no attribute code defined")
 	}
 
@@ -327,11 +343,31 @@ func parserReadXML(d *DriverFile) (string, error) {
 
 	err := checkObjectCodeDefined(d)
 
-	insertDefaultFiltersToReadXML(d, req)
+	if len(d.HeaderArgs) > 0 {
+		headerElement := req.FindElement("//args").Parent()
+		for _, a := range req.FindElements("//args") {
+			a.Parent().RemoveChild(a)
+		}
+		for _, a := range d.HeaderArgs {
+			args := etree.NewElement("args")
+			args.CreateAttr("name", a.Name)
+			args.CreateAttr("value", a.Value)
+			headerElement.AddChild(args)
+		}
+	}
+
+	if len(d.Filters) > 0 {
+		insertCustomFiltersToReadXML(d, req)
+	} else {
+		insertDefaultFiltersToReadXML(d, req)
+	}
 
 	documentLocationElement := req.FindElement("//args[@name='documentLocation']")
-	if documentLocationElement != nil {
-		folder := "./" + constant.FolderWrite + "_" + d.Type + "/_document"
+	if documentLocationElement != nil && len(d.HeaderArgs) <= 0 {
+		ex, _ := os.Executable()
+		exPath := filepath.Dir(ex)
+		folder := exPath + "/" + constant.FolderWrite + d.Type + "/_document"
+		util.ValidateFolder(folder)
 		documentLocationElement.CreateAttr("value", folder)
 	}
 
@@ -345,6 +381,20 @@ func checkObjectCodeDefined(d *DriverFile) error {
 		return fmt.Errorf("no attribute objectCode defined on tag <%s>", d.GetXMLType())
 	}
 	return nil
+}
+
+func insertCustomFiltersToReadXML(d *DriverFile, req *etree.Document) {
+	filterParentElement := req.FindElement("//Filter").Parent()
+	for _, f := range req.FindElements("//Filter") {
+		f.Parent().RemoveChild(f)
+	}
+	for _, f := range d.Filters {
+		filter := etree.NewElement("Filter")
+		filter.CreateAttr("criteria", f.Criteria)
+		filter.CreateAttr("name", f.Name)
+		filter.SetText(f.Value)
+		filterParentElement.AddChild(filter)
+	}
 }
 
 func insertDefaultFiltersToReadXML(d *DriverFile, req *etree.Document) {
