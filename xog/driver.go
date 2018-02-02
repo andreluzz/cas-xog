@@ -58,6 +58,10 @@ func LoadDriver(path string) (int, error) {
 	doc := etree.NewDocument()
 	doc.ReadFromBytes(xmlFile)
 
+	if doc.Root().Tag != "xogdriver" {
+		return 0, fmt.Errorf("invalid driver(%s) tag <%s> is incorrect", path, doc.Root().Tag)
+	}
+
 	for i, e := range doc.FindElements("//xogdriver/*") {
 		tag := e.Tag
 		path := e.SelectAttrValue("path", constant.Undefined)
