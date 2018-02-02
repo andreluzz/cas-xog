@@ -26,7 +26,7 @@ install:
     go get -v -t -d ./...
 
 build_script:
-- cmd: go build -o _buildOutput\cas-xog.exe -i .
+- cmd: go build -ldflags "-X main.version=$(appveyor_build_version)" -o _buildOutput\cas-xog.exe -i .
 
 test_script:
 - ps: >-

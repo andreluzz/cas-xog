@@ -14,15 +14,15 @@ var startInstallingPackage int
 var environments *model.Environments
 
 //Home display the system header and initializes variables
-func Home() {
+func Home(version string) {
 	var err error
 
 	log.InitLog()
 
 	log.Info("\n")
-	log.Info("--------------------------------------------\n")
-	log.Info("##### CAS XOG Automation - Version %.1f #####\n", constant.Version)
-	log.Info("--------------------------------------------\n")
+	log.Info("------------------------------------------------\n")
+	log.Info("##### CAS XOG Automation - Version %s #####\n", version)
+	log.Info("------------------------------------------------\n")
 
 	startInstallingPackage = 0
 
