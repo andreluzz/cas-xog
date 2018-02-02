@@ -80,8 +80,8 @@ type Filter struct {
 
 //HeaderArg defines the fields to include in the XOG read header
 type HeaderArg struct {
-	Name	string `xml:"name,attr"`
-	Value	string `xml:"value,attr"`
+	Name  string `xml:"name,attr"`
+	Value string `xml:"value,attr"`
 }
 
 //DriverFile defines the fields to manipulate the xog xml
@@ -287,9 +287,12 @@ func (d *DriverFile) GetXMLType() string {
 		return "process"
 	case "Queries":
 		return "query"
-	case "Obs":
-		return "obs"
-	case "CustomObjectInstances", "ResourceClassInstances", "WipClassInstances", "InvestmentClassInstances", "TransactionClassInstances", "ResourceInstances", "UserInstances", "ProjectInstances", "IdeaInstances", "ApplicationInstances", "AssetInstances", "OtherInvestmentInstances", "ProductInstances", "ServiceInstances", "Migrations":
+	case "CustomObjectInstances", "ResourceClassInstances", "WipClassInstances", "InvestmentClassInstances", "TransactionClassInstances",
+		"ResourceInstances", "UserInstances", "ProjectInstances", "IdeaInstances", "ApplicationInstances", "AssetInstances", "OtherInvestmentInstances",
+		"ProductInstances", "ServiceInstances", "BenefitPlanInstances", "BudgetPlanInstances", "CategoryInstances", "ChangeInstances",
+		"ChargeCodeInstances", "CompanyClassInstances", "CostPlanInstances", "CostPlusCodeInstances", "DepartmentInstances", "EntityInstances",
+		"GroupInstances", "IncidentInstances", "IssueInstances", "OBSInstances", "PortfolioInstances", "ProgramInstances", "ReleaseInstances",
+		"ReleasePlanInstances", "RequirementInstances", "RequisitionInstances", "RiskInstances", "RoleInstances", "ThemeInstances", "VendorInstances", "Migrations":
 		return strings.ToLower(d.Type[:1]) + d.Type[1:len(d.Type)-1]
 	}
 	return constant.Undefined
@@ -401,7 +404,10 @@ func insertDefaultFiltersToReadXML(d *DriverFile, req *etree.Document) {
 	switch d.Type {
 	case constant.TypeLookup:
 		req.FindElement("//Filter[@name='code']").SetText(strings.ToUpper(d.Code))
-	case constant.TypePortlet, constant.TypeQuery, constant.TypeProcess, constant.TypePage, constant.TypeGroup, constant.TypeMenu, constant.TypeObs:
+	case constant.TypePortlet, constant.TypeQuery, constant.TypeProcess, constant.TypePage, constant.TypeGroup, constant.TypeMenu,
+		constant.TypeBenefitPlanInstance, constant.TypeBudgetPlanInstance, constant.TypeCategoryInstance, constant.TypeCostPlanInstance,
+		constant.TypeCostPlusCodeInstance, constant.TypeDepartmentInstance, constant.TypeGroupInstance, constant.TypeOBSInstance,
+		constant.TypePortfolioInstance, constant.TypeVendorInstance:
 		req.FindElement("//Filter[@name='code']").SetText(d.Code)
 	case constant.TypeObject:
 		req.FindElement("//Filter[@name='object_code']").SetText(d.Code)
@@ -425,14 +431,40 @@ func insertDefaultFiltersToReadXML(d *DriverFile, req *etree.Document) {
 		req.FindElement("//Filter[@name='investmentclass']").SetText(d.Code)
 	case constant.TypeTransactionClassInstance:
 		req.FindElement("//Filter[@name='transclass']").SetText(d.Code)
-	case constant.TypeResourceInstance:
+	case constant.TypeResourceInstance, constant.TypeRoleInstance:
 		req.FindElement("//Filter[@name='resourceID']").SetText(d.Code)
 	case constant.TypeUserInstance:
-		req.FindElement("//Filter[@name='userName']").SetText(d.Code)
-	case constant.TypeProjectInstance:
+		if d.Code != "*" {
+			req.FindElement("//Filter[@name='userName']").SetText(d.Code)
+		} else {
+			for _, f := range req.FindElements("//Filter") {
+				f.Parent().RemoveChild(f)
+			}
+		}
+	case constant.TypeProjectInstance, constant.TypeProgramInstance:
 		req.FindElement("//Filter[@name='projectID']").SetText(d.Code)
-	case constant.TypeIdeaInstance, constant.TypeApplicationInstance, constant.TypeAssetInstance, constant.TypeOtherInvestmentInstance, constant.TypeProductInstance, constant.TypeServiceInstance:
+	case constant.TypeIdeaInstance, constant.TypeApplicationInstance, constant.TypeAssetInstance, constant.TypeOtherInvestmentInstance,
+		constant.TypeProductInstance, constant.TypeServiceInstance, constant.TypeReleaseInstance, constant.TypeReleasePlanInstance,
+		constant.TypeRequirementInstance:
 		req.FindElement("//Filter[@name='objectID']").SetText(d.Code)
+	case constant.TypeChangeInstance:
+		req.FindElement("//Filter[@name='changeCode']").SetText(d.Code)
+	case constant.TypeChargeCodeInstance:
+		req.FindElement("//Filter[@name='chargeCodeID']").SetText(d.Code)
+	case constant.TypeCompanyClassInstance:
+		req.FindElement("//Filter[@name='companyclass']").SetText(d.Code)
+	case constant.TypeEntityInstance:
+		req.FindElement("//Filter[@name='entity']").SetText(d.Code)
+	case constant.TypeIncidentInstance:
+		req.FindElement("//Filter[@name='incidentCode']").SetText(d.Code)
+	case constant.TypeIssueInstance:
+		req.FindElement("//Filter[@name='issueCode']").SetText(d.Code)
+	case constant.TypeRequisitionInstance:
+		req.FindElement("//Filter[@name='requisitionCode']").SetText(d.Code)
+	case constant.TypeRiskInstance:
+		req.FindElement("//Filter[@name='riskCode']").SetText(d.Code)
+	case constant.TypeThemeInstance:
+		req.FindElement("//Filter[@name='uiThemeID']").SetText(d.Code)
 	}
 }
 
@@ -497,7 +529,6 @@ type DriverTypesPattern struct {
 	Queries                   []DriverFile `xml:"query"`
 	Pages                     []DriverFile `xml:"page"`
 	Menus                     []DriverFile `xml:"menu"`
-	Obs                       []DriverFile `xml:"obs"`
 	Groups                    []DriverFile `xml:"group"`
 	CustomObjectInstances     []DriverFile `xml:"customObjectInstance"`
 	ResourceClassInstances    []DriverFile `xml:"resourceClassInstance"`
@@ -514,4 +545,28 @@ type DriverTypesPattern struct {
 	ProductInstances          []DriverFile `xml:"productInstance"`
 	ServiceInstances          []DriverFile `xml:"serviceInstance"`
 	Migrations                []DriverFile `xml:"migration"`
+	BenefitPlanInstances      []DriverFile `xml:"benefitPlanInstance"`
+	BudgetPlanInstances       []DriverFile `xml:"budgetPlanInstance"`
+	CategoryInstances         []DriverFile `xml:"categoryInstance"`
+	ChangeInstances           []DriverFile `xml:"changeInstance"`
+	ChargeCodeInstances       []DriverFile `xml:"chargeCodeInstance"`
+	CompanyClassInstances     []DriverFile `xml:"companyClassInstance"`
+	CostPlanInstances         []DriverFile `xml:"costPlanInstance"`
+	CostPlusCodeInstances     []DriverFile `xml:"costPlusCodeInstance"`
+	DepartmentInstances       []DriverFile `xml:"departmentInstance"`
+	EntityInstances           []DriverFile `xml:"entityInstance"`
+	GroupInstances            []DriverFile `xml:"groupInstance"`
+	IncidentInstances         []DriverFile `xml:"incidentInstance"`
+	IssueInstances            []DriverFile `xml:"issueInstance"`
+	OBSInstances              []DriverFile `xml:"obsInstance"`
+	PortfolioInstances        []DriverFile `xml:"portfolioInstance"`
+	ProgramInstances          []DriverFile `xml:"programInstance"`
+	ReleaseInstances          []DriverFile `xml:"releaseInstance"`
+	ReleasePlanInstances      []DriverFile `xml:"releasePlanInstance"`
+	RequirementInstances      []DriverFile `xml:"requirementInstance"`
+	RequisitionInstances      []DriverFile `xml:"requisitionInstance"`
+	RiskInstances             []DriverFile `xml:"riskInstance"`
+	RoleInstances             []DriverFile `xml:"roleInstance"`
+	ThemeInstances            []DriverFile `xml:"themeInstance"`
+	VendorInstances           []DriverFile `xml:"vendorInstance"`
 }
