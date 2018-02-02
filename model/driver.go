@@ -274,6 +274,52 @@ func (d *DriverFile) GetInstanceTag() string {
 		return "Product"
 	case "ServiceInstances":
 		return "Service"
+	case "BenefitPlanInstances":
+		return "BenefitPlan"
+	case "BudgetPlanInstances":
+		return "BudgetPlan"
+	case "CategoryInstances":
+		return "category"
+	case "ChangeInstances":
+		return "changeRequest"
+	case "ChargeCodeInstances":
+		return "chargeCode"
+	case "CompanyClassInstances":
+		return "companyclass"
+	case "CostPlanInstances":
+		return "CostPlan"
+	case "CostPlusCodeInstances":
+		return "costPlusCode"
+	case "DepartmentInstances":
+		return "Department"
+	case "EntityInstances":
+		return "Entity"
+	case "GroupInstances":
+		return "group"
+	case "IncidentInstances":
+		return "incident"
+	case "IssueInstances":
+		return "issue"
+	case "PortfolioInstances":
+		return "pfmPortfolio"
+	case "ProgramInstances":
+		return "Project"
+	case "ReleaseInstances":
+		return "release"
+	case "ReleasePlanInstances":
+		return "releaseplan"
+	case "RequirementInstances":
+		return "requirement"
+	case "RequisitionInstances":
+		return "requisition"
+	case "RiskInstances":
+		return "risk"
+	case "RoleInstances":
+		return "Role"
+	case "ThemeInstances":
+		return "UITheme"
+	case "VendorInstances":
+		return "vendor"
 	}
 	return constant.Undefined
 }
@@ -281,7 +327,7 @@ func (d *DriverFile) GetInstanceTag() string {
 //GetXMLType returns the constant value according to the type of driver
 func (d *DriverFile) GetXMLType() string {
 	switch d.Type {
-	case "Files", "Objects", "Views", "Lookups", "Portlets", "Pages", "Menus", "Groups":
+	case "Files", "Objects", "Views", "Lookups", "Portlets", "Pages", "Menus":
 		return strings.ToLower(d.Type[:len(d.Type)-1])
 	case "Processes":
 		return "process"
@@ -404,10 +450,10 @@ func insertDefaultFiltersToReadXML(d *DriverFile, req *etree.Document) {
 	switch d.Type {
 	case constant.TypeLookup:
 		req.FindElement("//Filter[@name='code']").SetText(strings.ToUpper(d.Code))
-	case constant.TypePortlet, constant.TypeQuery, constant.TypeProcess, constant.TypePage, constant.TypeGroup, constant.TypeMenu,
-		constant.TypeBenefitPlanInstance, constant.TypeBudgetPlanInstance, constant.TypeCategoryInstance, constant.TypeCostPlanInstance,
-		constant.TypeCostPlusCodeInstance, constant.TypeDepartmentInstance, constant.TypeGroupInstance, constant.TypeOBSInstance,
-		constant.TypePortfolioInstance, constant.TypeVendorInstance:
+	case constant.TypePortlet, constant.TypeQuery, constant.TypeProcess, constant.TypePage, constant.TypeMenu, constant.TypeBenefitPlanInstance,
+		constant.TypeBudgetPlanInstance, constant.TypeCategoryInstance, constant.TypeCostPlanInstance, constant.TypeCostPlusCodeInstance,
+		constant.TypeDepartmentInstance, constant.TypeGroupInstance, constant.TypeOBSInstance, constant.TypePortfolioInstance,
+		constant.TypeVendorInstance:
 		req.FindElement("//Filter[@name='code']").SetText(d.Code)
 	case constant.TypeObject:
 		req.FindElement("//Filter[@name='object_code']").SetText(d.Code)
@@ -529,7 +575,6 @@ type DriverTypesPattern struct {
 	Queries                   []DriverFile `xml:"query"`
 	Pages                     []DriverFile `xml:"page"`
 	Menus                     []DriverFile `xml:"menu"`
-	Groups                    []DriverFile `xml:"group"`
 	CustomObjectInstances     []DriverFile `xml:"customObjectInstance"`
 	ResourceClassInstances    []DriverFile `xml:"resourceClassInstance"`
 	WipClassInstances         []DriverFile `xml:"wipClassInstance"`

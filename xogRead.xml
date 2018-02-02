@@ -105,16 +105,6 @@
             </PageQuery>
         </NikuDataBus>
     </xogtype>
-    <xogtype type="Groups">
-        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
-            <Header action="read" externalSource="NIKU" objectType="group" version="7.5">
-                <args name="no_dependencies" value="true"/>
-            </Header>
-            <Query>
-                <Filter criteria="EQUALS" name="code"/>
-            </Query>
-        </NikuDataBus>
-    </xogtype>
     <xogtype type="Menus">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
             <Header action="read" externalSource="NIKU" objectType="contentPack" version="8.0">

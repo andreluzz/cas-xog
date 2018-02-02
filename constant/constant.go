@@ -9,7 +9,6 @@ const (
 	TypeQuery     = "Queries"
 	TypeProcess   = "Processes"
 	TypePage      = "Pages"
-	TypeGroup     = "Groups"
 	TypeMenu      = "Menus"
 	TypeObject    = "Objects"
 	TypeView      = "Views"
