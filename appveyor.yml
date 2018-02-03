@@ -48,7 +48,7 @@ deploy:
 - provider: GitHub
   tag: v$(appveyor_build_version)
   release: cas-xog $(appveyor_build_version)
-  description: 'This is a release build with CI for a stable version with improved functionalities and bug corrections.'
+  description: 'This version, including new features and bug fixes, has been compiled with CI to increase stability.'
   auth_token:
     secure: eis8p27PKzPZRUHXV+2FrJ4cNkAj8DN/LCkLbktucyzmmCt2JzKA2CLqWRFH1Wkh
   artifact: binary,config
