@@ -272,7 +272,6 @@
                 <args name="include_resources" value="true"/>
                 <args name="include_tasks" value="true"/>
                 <args name="include_allocations" value="true"/>
-
                 <args name="documentLocation" />
             </Header>
             <Query>
@@ -280,8 +279,6 @@
             </Query>
         </NikuDataBus>
     </xogtype>
-
-
     <xogtype type="BenefitPlanInstances">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
             <Header action="read" externalSource="NIKU" objectType="benefitPlan" version="13.0"/>
@@ -487,8 +484,6 @@
             </Query>
         </NikuDataBus>
     </xogtype>
-
-
     <xogtype type="DummyLookup">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_contentPack.xsd">
             <Header action="write" externalSource="NIKU" objectType="contentPack" version="8.0"/>

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/andreluzz/cas-xog/view"
 	"fmt"
+	"github.com/andreluzz/cas-xog/view"
 	"os"
 	"strings"
 )
