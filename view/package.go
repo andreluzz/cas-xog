@@ -74,7 +74,7 @@ func InstallPackage(environments *model.Environments, selectedPackage *model.Pac
 	log.Info("\nInstalling Package: [blue[%s]] (%s)", selectedPackage.Name, selectedVersion.Name)
 	log.Info("\nTarget environment: [blue[%s]]", environments.Target.Name)
 	if len(selectedVersion.Definitions) > 0 {
-		log.Info("\nDefinitions:")
+		log.Info("\nDefinitions: ")
 		for _, d := range selectedVersion.Definitions {
 			log.Info("\n   %s: %s", d.Description, d.Value)
 		}
@@ -162,7 +162,7 @@ func renderPackages() (bool, *model.Package, *model.Version) {
 	if len(selectedVersion.Definitions) > 0 {
 		log.Info("\n[CAS-XOG] [blue[Package required definitions:]]\n")
 		for i, d := range selectedVersion.Definitions {
-			log.Info("%s [%s]:", d.Description, d.Default)
+			log.Info("%s [%s]: ", d.Description, d.Default)
 			input := d.Default
 			fmt.Scanln(&input)
 			if input == "" {
