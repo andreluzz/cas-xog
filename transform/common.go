@@ -75,6 +75,8 @@ func transformXMLByType(headerElement *etree.Element, xog, aux *etree.Document, 
 		headerElement.CreateAttr("version", "12.0")
 	case constant.TypeInvestmentClassInstance:
 		headerElement.CreateAttr("version", "14.1")
+	case constant.TypeThemeInstance:
+		headerElement.CreateAttr("version", "13.0")
 	}
 
 	return nil

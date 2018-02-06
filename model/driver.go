@@ -398,6 +398,8 @@ func insertDefaultFiltersToReadXML(d *DriverFile, req *etree.Document) {
 		}
 	case constant.TypeProjectInstance, constant.TypeProgramInstance:
 		req.FindElement("//Filter[@name='projectID']").SetText(d.Code)
+	case constant.TypeLookup:
+		req.FindElement("//Filter").SetText(strings.ToUpper(d.Code))
 	default:
 		req.FindElement("//Filter").SetText(d.Code)
 	}

@@ -299,6 +299,21 @@ func TestExecuteToReturnInstanceCorrectHeader(t *testing.T) {
 	if headerElement == nil {
 		t.Errorf("Error transforming instance(INVESTMENT_CLASS_INSTANCE) XOG file. Header wrong version number")
 	}
+
+	file = model.DriverFile{
+		Type: constant.TypeThemeInstance,
+	}
+	xog = etree.NewDocument()
+	xog.ReadFromString("<NikuDataBus><Header action=\"write\" externalSource=\"NIKU\" objectType=\"contentPack\" version=\"8.0\"/></NikuDataBus>")
+	err = Execute(xog, nil, &file)
+	if err != nil {
+		t.Fatalf("Error transforming (THEME_UI) XOG file. Debug: %s", err.Error())
+	}
+
+	headerElement = xog.FindElement("//Header[@version='13.0']")
+	if headerElement == nil {
+		t.Errorf("Error transforming (THEME_UI) XOG file. Header wrong version number")
+	}
 }
 
 func TestIncludeCDATAToReturnString(t *testing.T) {
