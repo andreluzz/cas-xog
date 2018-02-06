@@ -71,7 +71,7 @@ func TestExecuteToReturnPageWithoutElementOBSandSecurity(t *testing.T) {
 func TestExecuteToReturnGroup(t *testing.T) {
 	file := model.DriverFile{
 		Code: "ObjectAdmin",
-		Type: constant.TypeGroup,
+		Type: constant.TypeGroupInstance,
 	}
 
 	xog := etree.NewDocument()
@@ -90,7 +90,7 @@ func TestExecuteToReturnGroup(t *testing.T) {
 func TestExecuteToReturnGroupWithoutMembers(t *testing.T) {
 	file := model.DriverFile{
 		Code: "ObjectAdmin",
-		Type: constant.TypeGroup,
+		Type: constant.TypeGroupInstance,
 		Elements: []model.Element{
 			{
 				Action: "remove",
@@ -190,7 +190,7 @@ func readMockResultAndCompare(xog *etree.Document, compareXML string) bool {
 func TestExecuteToReturnOBS(t *testing.T) {
 	file := model.DriverFile{
 		Code: "strategic_plan",
-		Type: constant.TypeObs,
+		Type: constant.TypeOBSInstance,
 	}
 
 	xog := etree.NewDocument()
@@ -209,7 +209,7 @@ func TestExecuteToReturnOBS(t *testing.T) {
 func TestExecuteToReturnOBSWithoutSecurityAndObject(t *testing.T) {
 	file := model.DriverFile{
 		Code: "strategic_plan",
-		Type: constant.TypeObs,
+		Type: constant.TypeOBSInstance,
 		Elements: []model.Element{
 			{
 				Action: "remove",

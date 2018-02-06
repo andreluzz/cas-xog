@@ -35,12 +35,12 @@
         </section>
     </menu>
     
-    <obs code="strat_plan" path="obs_result.xml" />
-    <obs code="strat_plan" path="obs_no_object_and_security_result.xml">
+    <obsInstance code="strat_plan" path="obs_result.xml" />
+    <obsInstance code="strat_plan" path="obs_no_object_and_security_result.xml">
         <element action="remove" xpath="//associatedObject" />
         <element action="remove" xpath="//Security" />
         <element action="remove" xpath="//rights" />
-    </obs>
+    </obsInstance>
     
     <query code="cop.processBottlenecks" path="processBottlenecks.xml" />
 
@@ -50,9 +50,9 @@
         <element action="remove" xpath="//Security" />
     </page>
     
-    <group code="ObjectAdmin" path="ObjectAdmin.xml">
+    <groupInstance code="ObjectAdmin" path="ObjectAdmin.xml">
         <element action="remove" xpath="/NikuDataBus/groups/group/members" />
-    </group>
+    </groupInstance>
 
     <lookup code="LOOKUP_CAS_XOG_1" path="lookup_cas_xog_1.xml" />
     <lookup code="LOOKUP_CAS_XOG" path="LOOKUP_CAS_XOG_PARTITION.xml" sourcePartition="NIKU.ROOT" targetPartition="partition10" />
