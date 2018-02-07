@@ -10,6 +10,7 @@ clone_folder: c:\gopath\src\github.com\andreluzz\cas-xog
 
 environment:
   GOPATH: c:\gopath
+  APPVERSION: $(appveyor_build_version)
 
 install:
 - cmd: >-
@@ -26,7 +27,7 @@ install:
     go get -v -t -d ./...
 
 build_script:
-- cmd: go build -ldflags "-X main.version=$(appveyor_build_version)" -o _buildOutput\cas-xog.exe -i .
+- cmd: go build -ldflags "-X main.version=%APPVERSION%" -o _buildOutput\cas-xog.exe -i .
 
 test_script:
 - ps: >-
