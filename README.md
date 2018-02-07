@@ -18,6 +18,12 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 3. Create a folder called "drivers" with all driver files (.driver) you need to defining the objects you want to read and write;
 4. Execute the cas-xog.exe and follow the instructions in the screen.
 
+### Other contents
+* [Global attributes](#global-attributes) 
+* [Global Sub Tags](#global-sub-tags) 
+* [Package creation and deploy](#package-creation-and-deploy)
+* [Data migration](#data-migration)
+
 ### Description of structure Driver tags
 
 | Tag | Description |
@@ -60,7 +66,7 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 | `path` | Path where the file will be saved on the file system. | yes | 
 | `partitionModel` | Used when you need to set a new partitionModel or change the current one. | no |
 | `targetPartition` | Used to change elements partition code to the defined value. When uses alone without sourcePartition replaces the tag partitionCode on all elements. | no |
-| `sourcePartition` | Used to change only elements from this partition code to target partition. Define sourcePartition without targetPartition won't do anything. | no |
+| `sourcePartition` | Used to read only elements from this partition code. | no |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -572,6 +578,19 @@ Used to read only the selected links inside a section tag from the menu.
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
     <serviceInstance code="*" path="instances.xml" />
+</xogdriver>
+```
+
+# Global Attributes
+Attributes that can be used in any [structure](#description-of-structure-driver-tags) and [instance](#description-of-instance-driver-tags) tags.
+
+### Attribute `ignoreReading`
+Used to ignore the reading from source environment. Use it to avoid reading more than once the same structure. Intended to be used when you need to write the same structure more than once to resolve cross dependencies issues.
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <object code="idea" path="idea.xml" ignoreReading="true" />
 </xogdriver>
 ```
 
