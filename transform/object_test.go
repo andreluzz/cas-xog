@@ -92,6 +92,26 @@ func TestExecuteToReturnObjectTargetPartition(t *testing.T) {
 	}
 }
 
+func TestExecuteToReturnObjectSourcePartitionOnly(t *testing.T) {
+	file := model.DriverFile{
+		Code:            "obj_sistema",
+		Type:            constant.TypeObject,
+		SourcePartition: "partition20",
+	}
+
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "object_full_xog.xml")
+	err := Execute(xog, nil, &file)
+
+	if err != nil {
+		t.Fatalf("Error transforming object XOG file. Debug: %s", err.Error())
+	}
+
+	if readMockResultAndCompare(xog, "object_result_only_source_partition.xml") == false {
+		t.Errorf("Error transforming object XOG file. Invalid result XML.")
+	}
+}
+
 func TestExecuteToReturnObjectChangeSourcePartitionToTarget(t *testing.T) {
 	file := model.DriverFile{
 		Code:            "obj_sistema",
@@ -114,7 +134,7 @@ func TestExecuteToReturnObjectChangeSourcePartitionToTarget(t *testing.T) {
 	}
 
 	count = len(xog.FindElements("//object[@code='" + file.Code + "']/*[@partitionCode='" + file.TargetPartition + "']"))
-	if count != 3 {
+	if count != 2 {
 		t.Errorf("Error transforming object XOG file. Expected 3 got %d target partition (%s) elements", count, file.TargetPartition)
 	}
 
