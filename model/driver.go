@@ -76,6 +76,7 @@ type MatchExcel struct {
 type Filter struct {
 	Criteria string `xml:"criteria,attr"`
 	Name     string `xml:"name,attr"`
+	Custom 	 bool	`xml:"customAttribute,attr"`
 	Value    string `xml:",chardata"`
 }
 
@@ -366,7 +367,12 @@ func insertCustomFiltersToReadXML(d *DriverFile, req *etree.Document) {
 		f.Parent().RemoveChild(f)
 	}
 	for _, f := range d.Filters {
-		filter := etree.NewElement("Filter")
+		tag := "filter"
+		if f.Custom {
+			tag = "FilterByCustomInfo"
+		}
+
+		filter := etree.NewElement(tag)
 		filter.CreateAttr("criteria", f.Criteria)
 		filter.CreateAttr("name", f.Name)
 		filter.SetText(f.Value)

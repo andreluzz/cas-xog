@@ -647,6 +647,42 @@ Used to do a remove elements in the xog result using xpath.
 </xogdriver>
 ```
 
+### Sub Tag `filter`
+Used to read instances using custom filter values. When defined all standard filters will be removed and only the defined ones will be used.
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `name` | Name of the object attribute used to filter. | yes | 
+| `criteria` | How the filter should be used. Can be used: OR, EQUALS, BETWEEN, BEFORE, AFTER.  | yes | 
+| `customAttribute` | Defines if this is a custom attribute filter or not. | no | 
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <projectInstance path="prj_filtered.xml">
+        <filter name="start" criteria="BETWEEN">2015-01-07,2017-01-15</filter>
+        <filter name="custom_status" customAttribute="true" criteria="EQUALS">1</filter>
+    </projectInstance>
+</xogdriver>
+```
+
+### Sub Tag `args`
+Used to read instances using custom header args values. When defined all standard header args will be removed and only the defined ones will be used.
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `name` | Name of the header arg. | yes | 
+| `value` | Value to the header arg.  | yes | 
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <projectInstance path="prj_filtered.xml">
+        <args name="include_tasks" value="false" />
+    </projectInstance>
+</xogdriver>
+```
+
 # Package creation and deploy
 This feature should be used to deploy structures and instances in a more consolidated and organized way. You need to create a zip containing: a package file (.package), one or more driver files (.driver) and folders for versions and the XOG xml files.
 
