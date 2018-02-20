@@ -24,51 +24,28 @@
                 <nls languageCode="tr" name="Sistema"/>
                 <nls languageCode="zh" name="Sistema"/>
                 <nls languageCode="zh_TW" name="Sistema"/>
-                <customAttribute active="true" code="status" column="status" constant="false" currencyConnected="false" custom="true" dataSize="30" dataType="string" editable="true" extendedType="lookup" lookupType="CAL_ACTIONITEM_STATUS" multiValued="false" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" presenceRequired="false" private="false" required="false" unique="false" virtual="false">
-                    <nls languageCode="ca" name="Status"/>
-                    <nls languageCode="cs" name="Status"/>
-                    <nls languageCode="da" name="Status"/>
-                    <nls languageCode="de" name="Status"/>
-                    <nls languageCode="en" name="Status"/>
-                    <nls languageCode="es" name="Status"/>
-                    <nls languageCode="fi" name="Status"/>
-                    <nls languageCode="fr" name="Status"/>
-                    <nls languageCode="hu" name="Status"/>
-                    <nls languageCode="it" name="Status"/>
-                    <nls languageCode="ja" name="Status"/>
-                    <nls languageCode="ko" name="Status"/>
-                    <nls languageCode="nl" name="Status"/>
-                    <nls languageCode="no" name="Status"/>
-                    <nls languageCode="pl" name="Status"/>
-                    <nls languageCode="pt" name="Status"/>
-                    <nls languageCode="ru" name="Status"/>
-                    <nls languageCode="sv" name="Status"/>
-                    <nls languageCode="tr" name="Status"/>
-                    <nls languageCode="zh" name="Status"/>
-                    <nls languageCode="zh_TW" name="Status"/>
-                </customAttribute>
-                <customAttribute active="true" code="status_novo" column="status_novo" constant="false" currencyConnected="false" custom="true" dataSize="20" dataType="string" editable="true" multiValued="false" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" presenceRequired="false" private="false" required="false" unique="false" virtual="false">
-                    <nls languageCode="ca" name="Status novo 2"/>
-                    <nls languageCode="cs" name="Status novo 2"/>
-                    <nls languageCode="da" name="Status novo 2"/>
-                    <nls languageCode="de" name="Status novo 2"/>
-                    <nls languageCode="en" name="Status novo 2"/>
-                    <nls languageCode="es" name="Status novo 2"/>
-                    <nls languageCode="fi" name="Status novo 2"/>
-                    <nls languageCode="fr" name="Status novo 2"/>
-                    <nls languageCode="hu" name="Status novo 2"/>
-                    <nls languageCode="it" name="Status novo 2"/>
-                    <nls languageCode="ja" name="Status novo 2"/>
-                    <nls languageCode="ko" name="Status novo 2"/>
-                    <nls languageCode="nl" name="Status novo 2"/>
-                    <nls languageCode="no" name="Status novo 2"/>
-                    <nls languageCode="pl" name="Status novo 2"/>
-                    <nls languageCode="pt" name="Status novo 2"/>
-                    <nls languageCode="ru" name="Status novo 2"/>
-                    <nls languageCode="sv" name="Status novo 2"/>
-                    <nls languageCode="tr" name="Status novo 2"/>
-                    <nls languageCode="zh" name="Status novo 2"/>
-                    <nls languageCode="zh_TW" name="Status novo 2"/>
+                <customAttribute active="true" code="multivalue_status" column="multivalue_status" constant="false" currencyConnected="false" custom="true" dataSize="2000" dataType="string" editable="true" extendedType="lookup" lookupType="CAL_ACTIONITEM_STATUS" multiValued="true" partitionCode="partition20" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" presenceRequired="false" private="false" required="false" unique="false" virtual="false">
+                    <nls languageCode="ca" name="Available Status"/>
+                    <nls languageCode="cs" name="Available Status"/>
+                    <nls languageCode="da" name="Available Status"/>
+                    <nls languageCode="de" name="Available Status"/>
+                    <nls languageCode="en" name="Available Status"/>
+                    <nls languageCode="es" name="Available Status"/>
+                    <nls languageCode="fi" name="Available Status"/>
+                    <nls languageCode="fr" name="Available Status"/>
+                    <nls languageCode="hu" name="Available Status"/>
+                    <nls languageCode="it" name="Available Status"/>
+                    <nls languageCode="ja" name="Available Status"/>
+                    <nls languageCode="ko" name="Available Status"/>
+                    <nls languageCode="nl" name="Available Status"/>
+                    <nls languageCode="no" name="Available Status"/>
+                    <nls languageCode="pl" name="Available Status"/>
+                    <nls languageCode="pt" name="Available Status"/>
+                    <nls languageCode="ru" name="Available Status"/>
+                    <nls languageCode="sv" name="Available Status"/>
+                    <nls languageCode="tr" name="Available Status"/>
+                    <nls languageCode="zh" name="Available Status"/>
+                    <nls languageCode="zh_TW" name="Available Status"/>
                 </customAttribute>
                 <attributeDefault code="page_layout" value="odf.obj_sistemaFrame"/>
                 <links objectCode="obj_sistema">
@@ -226,79 +203,7 @@
                         <linkParam dataRef="odf_pk" dataSource="data" paramCode="id"/>
                     </link>
                 </links>
-                <displayMappings>
-                    <displayMapping attributeCode="status" defaultTypeCode="" type="color">
-                        <mapping hi="0" lo="0" mappingCode="range-0-0-null" typeCode="red" value="">
-                            <nls description="Error" languageCode="ca" name="Error"/>
-                            <nls description="Error" languageCode="cs" name="Error"/>
-                            <nls description="Error" languageCode="da" name="Error"/>
-                            <nls description="Error" languageCode="de" name="Error"/>
-                            <nls description="Error" languageCode="en" name="Error"/>
-                            <nls description="Error" languageCode="es" name="Error"/>
-                            <nls description="Error" languageCode="fi" name="Error"/>
-                            <nls description="Error" languageCode="fr" name="Error"/>
-                            <nls description="Error" languageCode="hu" name="Error"/>
-                            <nls description="Error" languageCode="it" name="Error"/>
-                            <nls description="Error" languageCode="ja" name="Error"/>
-                            <nls description="Error" languageCode="ko" name="Error"/>
-                            <nls description="Error" languageCode="nl" name="Error"/>
-                            <nls description="Error" languageCode="no" name="Error"/>
-                            <nls description="Error" languageCode="pl" name="Error"/>
-                            <nls description="Error" languageCode="pt" name="Error"/>
-                            <nls description="Error" languageCode="ru" name="Error"/>
-                            <nls description="Error" languageCode="sv" name="Error"/>
-                            <nls description="Error" languageCode="tr" name="Error"/>
-                            <nls description="Error" languageCode="zh" name="Error"/>
-                            <nls description="Error" languageCode="zh_TW" name="Error"/>
-                        </mapping>
-                        <mapping hi="1" lo="1" mappingCode="range-1-1-null" typeCode="yellow" value="">
-                            <nls description="Warning" languageCode="ca" name="Warning"/>
-                            <nls description="Warning" languageCode="cs" name="Warning"/>
-                            <nls description="Warning" languageCode="da" name="Warning"/>
-                            <nls description="Warning" languageCode="de" name="Warning"/>
-                            <nls description="Warning" languageCode="en" name="Warning"/>
-                            <nls description="Warning" languageCode="es" name="Warning"/>
-                            <nls description="Warning" languageCode="fi" name="Warning"/>
-                            <nls description="Warning" languageCode="fr" name="Warning"/>
-                            <nls description="Warning" languageCode="hu" name="Warning"/>
-                            <nls description="Warning" languageCode="it" name="Warning"/>
-                            <nls description="Warning" languageCode="ja" name="Warning"/>
-                            <nls description="Warning" languageCode="ko" name="Warning"/>
-                            <nls description="Warning" languageCode="nl" name="Warning"/>
-                            <nls description="Warning" languageCode="no" name="Warning"/>
-                            <nls description="Warning" languageCode="pl" name="Warning"/>
-                            <nls description="Warning" languageCode="pt" name="Warning"/>
-                            <nls description="Warning" languageCode="ru" name="Warning"/>
-                            <nls description="Warning" languageCode="sv" name="Warning"/>
-                            <nls description="Warning" languageCode="tr" name="Warning"/>
-                            <nls description="Warning" languageCode="zh" name="Warning"/>
-                            <nls description="Warning" languageCode="zh_TW" name="Warning"/>
-                        </mapping>
-                        <mapping hi="2" lo="2" mappingCode="range-2-2-null" typeCode="green" value="">
-                            <nls description="Success" languageCode="ca" name="Success"/>
-                            <nls description="Success" languageCode="cs" name="Success"/>
-                            <nls description="Success" languageCode="da" name="Success"/>
-                            <nls description="Success" languageCode="de" name="Success"/>
-                            <nls description="Success" languageCode="en" name="Success"/>
-                            <nls description="Success" languageCode="es" name="Success"/>
-                            <nls description="Success" languageCode="fi" name="Success"/>
-                            <nls description="Success" languageCode="fr" name="Success"/>
-                            <nls description="Success" languageCode="hu" name="Success"/>
-                            <nls description="Success" languageCode="it" name="Success"/>
-                            <nls description="Success" languageCode="ja" name="Success"/>
-                            <nls description="Success" languageCode="ko" name="Success"/>
-                            <nls description="Success" languageCode="nl" name="Success"/>
-                            <nls description="Success" languageCode="no" name="Success"/>
-                            <nls description="Success" languageCode="pl" name="Success"/>
-                            <nls description="Success" languageCode="pt" name="Success"/>
-                            <nls description="Success" languageCode="ru" name="Success"/>
-                            <nls description="Success" languageCode="sv" name="Success"/>
-                            <nls description="Success" languageCode="tr" name="Success"/>
-                            <nls description="Success" languageCode="zh" name="Success"/>
-                            <nls description="Success" languageCode="zh_TW" name="Success"/>
-                        </mapping>
-                    </displayMapping>
-                </displayMappings>
+                <displayMappings/>
                 <scoreContributions/>
                 <actions>
                     <action action="odf.objectCopySourceInstances" code="odf_copy_srcobj_sistema" component="odf" isActive="true" isCustom="false" isGeneric="false" isInstance="true" isSingleSelect="false" jobDefinitionCode="NONE" navigateTo="MNP" needUserConfirmation="false" needUserInput="false" needsBridge="false" needsSelection="false" objectCode="obj_sistema" partitionCode="NIKU.ROOT" partitionMode="PARTITION_AND_ANSTRS_DESDNTS" processCode="NONE" rendering="cviewAction" targetWidget="none" type="internalaction">

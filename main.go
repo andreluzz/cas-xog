@@ -1,11 +1,24 @@
 package main
 
 import (
+	"fmt"
 	"github.com/andreluzz/cas-xog/view"
+	"os"
+	"strings"
 )
 
+var version = "Development"
+
 func main() {
-	view.Home()
+	if len(os.Args) > 1 {
+		arg := strings.ToLower(os.Args[1])
+		if strings.Contains(arg, "version") {
+			fmt.Printf("CAS-XOG version: %s\n", version)
+			return
+		}
+	}
+
+	view.Home(version)
 	var exit = false
 	for {
 		exit = view.Interface()

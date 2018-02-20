@@ -8,6 +8,7 @@ import (
 	"github.com/beevik/etree"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strings"
 )
@@ -21,6 +22,7 @@ func LoadXMLReadList(path string) {
 	soapEnvelope = etree.NewDocument()
 	soapEnvelopeElement := docXogReadXML.FindElement("//xogtype[@type='envelope']/soapenv:Envelope")
 	soapEnvelope.SetRoot(soapEnvelopeElement.Copy())
+	initInstancesTagByType()
 }
 
 //SectionLink defines the fields for a link on a view section
@@ -70,6 +72,20 @@ type MatchExcel struct {
 	Separator     string `xml:"separator,attr"`
 }
 
+//Filter defines the fields to filter the XOG read
+type Filter struct {
+	Criteria string `xml:"criteria,attr"`
+	Name     string `xml:"name,attr"`
+	Custom 	 bool	`xml:"customAttribute,attr"`
+	Value    string `xml:",chardata"`
+}
+
+//HeaderArg defines the fields to include in the XOG read header
+type HeaderArg struct {
+	Name  string `xml:"name,attr"`
+	Value string `xml:"value,attr"`
+}
+
 //DriverFile defines the fields to manipulate the xog xml
 type DriverFile struct {
 	Code             string        `xml:"code,attr"`
@@ -94,6 +110,8 @@ type DriverFile struct {
 	Elements         []Element     `xml:"element"`
 	Replace          []FileReplace `xml:"replace"`
 	MatchExcel       []MatchExcel  `xml:"match"`
+	Filters          []Filter      `xml:"filter"`
+	HeaderArgs       []HeaderArg   `xml:"args"`
 	ExecutionOrder   int
 	xogXML           string
 	auxXML           string
@@ -229,35 +247,8 @@ func (d *DriverFile) GetDummyLookup() *etree.Element {
 
 //GetInstanceTag returns the instance tag according to the type of driver
 func (d *DriverFile) GetInstanceTag() string {
-	switch d.Type {
-	case "CustomObjectInstances":
-		return "instance"
-	case "ResourceClassInstances":
-		return "resourceclass"
-	case "WipClassInstances":
-		return "wipclass"
-	case "InvestmentClassInstances":
-		return "investmentClass"
-	case "TransactionClassInstances":
-		return "transactionclass"
-	case "ResourceInstances":
-		return "Resource"
-	case "UserInstances":
-		return "User"
-	case "ProjectInstances":
-		return "Project"
-	case "IdeaInstances":
-		return "Idea"
-	case "ApplicationInstances":
-		return "Application"
-	case "AssetInstances":
-		return "Asset"
-	case "OtherInvestmentInstances":
-		return "OtherInvestment"
-	case "ProductInstances":
-		return "Product"
-	case "ServiceInstances":
-		return "Service"
+	if value, ok := instancesTag[d.Type]; ok {
+		return value
 	}
 	return constant.Undefined
 }
@@ -265,15 +256,18 @@ func (d *DriverFile) GetInstanceTag() string {
 //GetXMLType returns the constant value according to the type of driver
 func (d *DriverFile) GetXMLType() string {
 	switch d.Type {
-	case "Files", "Objects", "Views", "Lookups", "Portlets", "Pages", "Menus", "Groups":
+	case "Files", "Objects", "Views", "Lookups", "Portlets", "Pages", "Menus":
 		return strings.ToLower(d.Type[:len(d.Type)-1])
 	case "Processes":
 		return "process"
 	case "Queries":
 		return "query"
-	case "Obs":
-		return "obs"
-	case "CustomObjectInstances", "ResourceClassInstances", "WipClassInstances", "InvestmentClassInstances", "TransactionClassInstances", "ResourceInstances", "UserInstances", "ProjectInstances", "IdeaInstances", "ApplicationInstances", "AssetInstances", "OtherInvestmentInstances", "ProductInstances", "ServiceInstances", "Migrations":
+	case "CustomObjectInstances", "ResourceClassInstances", "WipClassInstances", "InvestmentClassInstances", "TransactionClassInstances",
+		"ResourceInstances", "UserInstances", "ProjectInstances", "IdeaInstances", "ApplicationInstances", "AssetInstances", "OtherInvestmentInstances",
+		"ProductInstances", "ServiceInstances", "BenefitPlanInstances", "BudgetPlanInstances", "CategoryInstances", "ChangeInstances",
+		"ChargeCodeInstances", "CompanyClassInstances", "CostPlanInstances", "CostPlusCodeInstances", "DepartmentInstances", "EntityInstances",
+		"GroupInstances", "IncidentInstances", "IssueInstances", "OBSInstances", "PortfolioInstances", "ProgramInstances", "ReleaseInstances",
+		"ReleasePlanInstances", "RequirementInstances", "RequisitionInstances", "RiskInstances", "RoleInstances", "ThemeInstances", "VendorInstances", "Migrations":
 		return strings.ToLower(d.Type[:1]) + d.Type[1:len(d.Type)-1]
 	}
 	return constant.Undefined
@@ -307,7 +301,7 @@ func getAuxDriverFile(d *DriverFile) *DriverFile {
 }
 
 func parserReadXML(d *DriverFile) (string, error) {
-	if d.Code == constant.Undefined {
+	if d.Code == constant.Undefined && len(d.Filters) <= 0 {
 		return constant.Undefined, errors.New("no attribute code defined")
 	}
 
@@ -327,11 +321,31 @@ func parserReadXML(d *DriverFile) (string, error) {
 
 	err := checkObjectCodeDefined(d)
 
-	insertDefaultFiltersToReadXML(d, req)
+	if len(d.HeaderArgs) > 0 {
+		headerElement := req.FindElement("//args").Parent()
+		for _, a := range req.FindElements("//args") {
+			a.Parent().RemoveChild(a)
+		}
+		for _, a := range d.HeaderArgs {
+			args := etree.NewElement("args")
+			args.CreateAttr("name", a.Name)
+			args.CreateAttr("value", a.Value)
+			headerElement.AddChild(args)
+		}
+	}
+
+	if len(d.Filters) > 0 {
+		insertCustomFiltersToReadXML(d, req)
+	} else {
+		insertDefaultFiltersToReadXML(d, req)
+	}
 
 	documentLocationElement := req.FindElement("//args[@name='documentLocation']")
-	if documentLocationElement != nil {
-		folder := "./" + constant.FolderWrite + "_" + d.Type + "/_document"
+	if documentLocationElement != nil && len(d.HeaderArgs) <= 0 {
+		ex, _ := os.Executable()
+		exPath := filepath.Dir(ex)
+		folder := exPath + "/" + constant.FolderWrite + d.Type + "/_document"
+		util.ValidateFolder(folder)
 		documentLocationElement.CreateAttr("value", folder)
 	}
 
@@ -347,14 +361,27 @@ func checkObjectCodeDefined(d *DriverFile) error {
 	return nil
 }
 
+func insertCustomFiltersToReadXML(d *DriverFile, req *etree.Document) {
+	filterParentElement := req.FindElement("//Filter").Parent()
+	for _, f := range req.FindElements("//Filter") {
+		f.Parent().RemoveChild(f)
+	}
+	for _, f := range d.Filters {
+		tag := "filter"
+		if f.Custom {
+			tag = "FilterByCustomInfo"
+		}
+
+		filter := etree.NewElement(tag)
+		filter.CreateAttr("criteria", f.Criteria)
+		filter.CreateAttr("name", f.Name)
+		filter.SetText(f.Value)
+		filterParentElement.AddChild(filter)
+	}
+}
+
 func insertDefaultFiltersToReadXML(d *DriverFile, req *etree.Document) {
 	switch d.Type {
-	case constant.TypeLookup:
-		req.FindElement("//Filter[@name='code']").SetText(strings.ToUpper(d.Code))
-	case constant.TypePortlet, constant.TypeQuery, constant.TypeProcess, constant.TypePage, constant.TypeGroup, constant.TypeMenu, constant.TypeObs:
-		req.FindElement("//Filter[@name='code']").SetText(d.Code)
-	case constant.TypeObject:
-		req.FindElement("//Filter[@name='object_code']").SetText(d.Code)
 	case constant.TypeView:
 		req.FindElement("//Filter[@name='code']").SetText(d.Code)
 		req.FindElement("//Filter[@name='object_code']").SetText(d.ObjCode)
@@ -367,22 +394,20 @@ func insertDefaultFiltersToReadXML(d *DriverFile, req *etree.Document) {
 	case constant.TypeCustomObjectInstance:
 		req.FindElement("//Filter[@name='instanceCode']").SetText(d.Code)
 		req.FindElement("//Filter[@name='objectCode']").SetText(d.ObjCode)
-	case constant.TypeResourceClassInstance:
-		req.FindElement("//Filter[@name='resource_class']").SetText(d.Code)
-	case constant.TypeWipClassInstance:
-		req.FindElement("//Filter[@name='wipclass']").SetText(d.Code)
-	case constant.TypeInvestmentClassInstance:
-		req.FindElement("//Filter[@name='investmentclass']").SetText(d.Code)
-	case constant.TypeTransactionClassInstance:
-		req.FindElement("//Filter[@name='transclass']").SetText(d.Code)
-	case constant.TypeResourceInstance:
-		req.FindElement("//Filter[@name='resourceID']").SetText(d.Code)
 	case constant.TypeUserInstance:
-		req.FindElement("//Filter[@name='userName']").SetText(d.Code)
-	case constant.TypeProjectInstance:
+		if d.Code != "*" {
+			req.FindElement("//Filter[@name='userName']").SetText(d.Code)
+		} else {
+			for _, f := range req.FindElements("//Filter") {
+				f.Parent().RemoveChild(f)
+			}
+		}
+	case constant.TypeProjectInstance, constant.TypeProgramInstance:
 		req.FindElement("//Filter[@name='projectID']").SetText(d.Code)
-	case constant.TypeIdeaInstance, constant.TypeApplicationInstance, constant.TypeAssetInstance, constant.TypeOtherInvestmentInstance, constant.TypeProductInstance, constant.TypeServiceInstance:
-		req.FindElement("//Filter[@name='objectID']").SetText(d.Code)
+	case constant.TypeLookup:
+		req.FindElement("//Filter").SetText(strings.ToUpper(d.Code))
+	default:
+		req.FindElement("//Filter").SetText(d.Code)
 	}
 }
 
@@ -396,6 +421,49 @@ func parserWriteXML(d *DriverFile, folder string) (string, error) {
 	req.FindElement("//soapenv:Body").AddChild(nikuDataBusXML.Root())
 	req.IndentTabs()
 	return req.WriteToString()
+}
+
+var instancesTag map[string]string
+
+func initInstancesTagByType() {
+	instancesTag = make(map[string]string)
+	instancesTag["CustomObjectInstances"] = "instance"
+	instancesTag["ResourceClassInstances"] = "resourceclass"
+	instancesTag["WipClassInstances"] = "wipclass"
+	instancesTag["InvestmentClassInstances"] = "investmentClass"
+	instancesTag["TransactionClassInstances"] = "transactionclass"
+	instancesTag["ResourceInstances"] = "Resource"
+	instancesTag["UserInstances"] = "User"
+	instancesTag["ProjectInstances"] = "Project"
+	instancesTag["IdeaInstances"] = "Idea"
+	instancesTag["ApplicationInstances"] = "Application"
+	instancesTag["AssetInstances"] = "Asset"
+	instancesTag["OtherInvestmentInstances"] = "OtherInvestment"
+	instancesTag["ProductInstances"] = "Product"
+	instancesTag["ServiceInstances"] = "Service"
+	instancesTag["BenefitPlanInstances"] = "BenefitPlan"
+	instancesTag["BudgetPlanInstances"] = "BudgetPlan"
+	instancesTag["CategoryInstances"] = "category"
+	instancesTag["ChangeInstances"] = "changeRequest"
+	instancesTag["ChargeCodeInstances"] = "chargeCode"
+	instancesTag["CompanyClassInstances"] = "companyclass"
+	instancesTag["CostPlanInstances"] = "CostPlan"
+	instancesTag["CostPlusCodeInstances"] = "costPlusCode"
+	instancesTag["DepartmentInstances"] = "Department"
+	instancesTag["EntityInstances"] = "Entity"
+	instancesTag["GroupInstances"] = "group"
+	instancesTag["IncidentInstances"] = "incident"
+	instancesTag["IssueInstances"] = "issue"
+	instancesTag["PortfolioInstances"] = "pfmPortfolio"
+	instancesTag["ProgramInstances"] = "Project"
+	instancesTag["ReleaseInstances"] = "release"
+	instancesTag["ReleasePlanInstances"] = "releaseplan"
+	instancesTag["RequirementInstances"] = "requirement"
+	instancesTag["RequisitionInstances"] = "requisition"
+	instancesTag["RiskInstances"] = "risk"
+	instancesTag["RoleInstances"] = "Role"
+	instancesTag["ThemeInstances"] = "UITheme"
+	instancesTag["VendorInstances"] = "vendor"
 }
 
 //Driver defines the file with a list of drivers to run
@@ -447,8 +515,6 @@ type DriverTypesPattern struct {
 	Queries                   []DriverFile `xml:"query"`
 	Pages                     []DriverFile `xml:"page"`
 	Menus                     []DriverFile `xml:"menu"`
-	Obs                       []DriverFile `xml:"obs"`
-	Groups                    []DriverFile `xml:"group"`
 	CustomObjectInstances     []DriverFile `xml:"customObjectInstance"`
 	ResourceClassInstances    []DriverFile `xml:"resourceClassInstance"`
 	WipClassInstances         []DriverFile `xml:"wipClassInstance"`
@@ -464,4 +530,28 @@ type DriverTypesPattern struct {
 	ProductInstances          []DriverFile `xml:"productInstance"`
 	ServiceInstances          []DriverFile `xml:"serviceInstance"`
 	Migrations                []DriverFile `xml:"migration"`
+	BenefitPlanInstances      []DriverFile `xml:"benefitPlanInstance"`
+	BudgetPlanInstances       []DriverFile `xml:"budgetPlanInstance"`
+	CategoryInstances         []DriverFile `xml:"categoryInstance"`
+	ChangeInstances           []DriverFile `xml:"changeInstance"`
+	ChargeCodeInstances       []DriverFile `xml:"chargeCodeInstance"`
+	CompanyClassInstances     []DriverFile `xml:"companyClassInstance"`
+	CostPlanInstances         []DriverFile `xml:"costPlanInstance"`
+	CostPlusCodeInstances     []DriverFile `xml:"costPlusCodeInstance"`
+	DepartmentInstances       []DriverFile `xml:"departmentInstance"`
+	EntityInstances           []DriverFile `xml:"entityInstance"`
+	GroupInstances            []DriverFile `xml:"groupInstance"`
+	IncidentInstances         []DriverFile `xml:"incidentInstance"`
+	IssueInstances            []DriverFile `xml:"issueInstance"`
+	OBSInstances              []DriverFile `xml:"obsInstance"`
+	PortfolioInstances        []DriverFile `xml:"portfolioInstance"`
+	ProgramInstances          []DriverFile `xml:"programInstance"`
+	ReleaseInstances          []DriverFile `xml:"releaseInstance"`
+	ReleasePlanInstances      []DriverFile `xml:"releasePlanInstance"`
+	RequirementInstances      []DriverFile `xml:"requirementInstance"`
+	RequisitionInstances      []DriverFile `xml:"requisitionInstance"`
+	RiskInstances             []DriverFile `xml:"riskInstance"`
+	RoleInstances             []DriverFile `xml:"roleInstance"`
+	ThemeInstances            []DriverFile `xml:"themeInstance"`
+	VendorInstances           []DriverFile `xml:"vendorInstance"`
 }

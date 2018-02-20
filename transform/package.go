@@ -73,16 +73,14 @@ func processPackageDefinitions(definitions []model.Definition, file *model.Drive
 				changePartition(xog, constant.Undefined, def.Value)
 			}
 		case constant.PackageActionReplaceString:
-			if def.Value == constant.Undefined {
+			if def.Value == constant.Undefined || (def.TransformTypes != constant.Undefined && strings.Contains(strings.ToLower(def.TransformTypes), strings.ToLower(file.Type)) == false) {
 				continue
 			}
 			replaced := strings.Replace(def.To, "##DEFINITION_VALUE##", def.Value, 1)
 			if replaced == def.From {
 				continue
 			}
-			if def.TransformTypes == constant.Undefined || strings.Contains(def.TransformTypes, file.Type) {
-				findAndReplace(xog, []model.FileReplace{{From: def.From, To: replaced}})
-			}
+			findAndReplace(xog, []model.FileReplace{{From: def.From, To: replaced}})
 		}
 	}
 }

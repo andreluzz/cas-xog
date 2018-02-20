@@ -71,7 +71,7 @@ func TestExecuteToReturnPageWithoutElementOBSandSecurity(t *testing.T) {
 func TestExecuteToReturnGroup(t *testing.T) {
 	file := model.DriverFile{
 		Code: "ObjectAdmin",
-		Type: constant.TypeGroup,
+		Type: constant.TypeGroupInstance,
 	}
 
 	xog := etree.NewDocument()
@@ -90,7 +90,7 @@ func TestExecuteToReturnGroup(t *testing.T) {
 func TestExecuteToReturnGroupWithoutMembers(t *testing.T) {
 	file := model.DriverFile{
 		Code: "ObjectAdmin",
-		Type: constant.TypeGroup,
+		Type: constant.TypeGroupInstance,
 		Elements: []model.Element{
 			{
 				Action: "remove",
@@ -190,7 +190,7 @@ func readMockResultAndCompare(xog *etree.Document, compareXML string) bool {
 func TestExecuteToReturnOBS(t *testing.T) {
 	file := model.DriverFile{
 		Code: "strategic_plan",
-		Type: constant.TypeObs,
+		Type: constant.TypeOBSInstance,
 	}
 
 	xog := etree.NewDocument()
@@ -209,7 +209,7 @@ func TestExecuteToReturnOBS(t *testing.T) {
 func TestExecuteToReturnOBSWithoutSecurityAndObject(t *testing.T) {
 	file := model.DriverFile{
 		Code: "strategic_plan",
-		Type: constant.TypeObs,
+		Type: constant.TypeOBSInstance,
 		Elements: []model.Element{
 			{
 				Action: "remove",
@@ -298,6 +298,21 @@ func TestExecuteToReturnInstanceCorrectHeader(t *testing.T) {
 	headerElement = xog.FindElement("//Header[@version='14.1']")
 	if headerElement == nil {
 		t.Errorf("Error transforming instance(INVESTMENT_CLASS_INSTANCE) XOG file. Header wrong version number")
+	}
+
+	file = model.DriverFile{
+		Type: constant.TypeThemeInstance,
+	}
+	xog = etree.NewDocument()
+	xog.ReadFromString("<NikuDataBus><Header action=\"write\" externalSource=\"NIKU\" objectType=\"contentPack\" version=\"8.0\"/></NikuDataBus>")
+	err = Execute(xog, nil, &file)
+	if err != nil {
+		t.Fatalf("Error transforming (THEME_UI) XOG file. Debug: %s", err.Error())
+	}
+
+	headerElement = xog.FindElement("//Header[@version='13.0']")
+	if headerElement == nil {
+		t.Errorf("Error transforming (THEME_UI) XOG file. Header wrong version number")
 	}
 }
 

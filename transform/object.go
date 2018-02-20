@@ -39,6 +39,27 @@ func specificObjectTransformations(xog, aux *etree.Document, file *model.DriverF
 		xog.SetRoot(aux.Root())
 	}
 
+	if file.SourcePartition != constant.Undefined {
+		var codesToRemove []string
+
+		for _, e := range xog.FindElements("//customAttribute") {
+			partition := e.SelectAttrValue("partitionCode", constant.Undefined)
+			if partition != file.SourcePartition {
+				codesToRemove = append(codesToRemove, e.SelectAttrValue("code", constant.Undefined))
+
+			}
+		}
+
+		for _, code := range codesToRemove {
+			for _, e := range xog.FindElements("//*[@code='" + code + "']") {
+				e.Parent().RemoveChild(e)
+			}
+			for _, e := range xog.FindElements("//*[@attributeCode='" + code + "']") {
+				e.Parent().RemoveChild(e)
+			}
+		}
+	}
+
 	if file.TargetPartition != constant.Undefined {
 		changePartition(xog, file.SourcePartition, file.TargetPartition)
 	}

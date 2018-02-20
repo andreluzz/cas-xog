@@ -143,6 +143,18 @@ func TestLoadDriverInvalidVersion(t *testing.T) {
 	}
 }
 
+func TestLoadDriverInvalidTagXogDriver(t *testing.T) {
+	total, err := LoadDriver("../mock/xog/invalidTagXogDriver.driver")
+
+	if total != 0 {
+		t.Errorf("Error loading driver expected %d and received %d", 0, total)
+	}
+
+	if err == nil {
+		t.Errorf("Error loading driver. Not catching error with invalid driver root tag")
+	}
+}
+
 func TestLoadDriverInvalidTagFile(t *testing.T) {
 	total, err := LoadDriver("../mock/xog/invalidTagFile.driver")
 

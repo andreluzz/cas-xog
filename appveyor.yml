@@ -10,6 +10,7 @@ clone_folder: c:\gopath\src\github.com\andreluzz\cas-xog
 
 environment:
   GOPATH: c:\gopath
+  APPVERSION: $(appveyor_build_version)
 
 install:
 - cmd: >-
@@ -26,7 +27,7 @@ install:
     go get -v -t -d ./...
 
 build_script:
-- cmd: go build -o _buildOutput\cas-xog.exe -i .
+- cmd: go build -ldflags "-X main.version=%APPVERSION%" -o _buildOutput\cas-xog.exe -i .
 
 test_script:
 - ps: >-
@@ -48,7 +49,7 @@ deploy:
 - provider: GitHub
   tag: v$(appveyor_build_version)
   release: cas-xog $(appveyor_build_version)
-  description: 'This is a release build with CI for a stable version with improved functionalities and bug corrections.'
+  description: 'This version, including new features and bug fixes, has been compiled with CI to increase stability.'
   auth_token:
     secure: eis8p27PKzPZRUHXV+2FrJ4cNkAj8DN/LCkLbktucyzmmCt2JzKA2CLqWRFH1Wkh
   artifact: binary,config

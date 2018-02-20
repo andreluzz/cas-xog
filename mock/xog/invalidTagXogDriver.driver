@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<driverXog version="2.0">
+    <view code="*" objectCode="obj_sistema" path="view_result.xml" />
+    <view code="*" objectCode="obj_sistema" path="view_source_partition_result.xml" sourcePartition="partition10" />
+    <view code="*" objectCode="obj_sistema" path="view_source_target_partition_result.xml" sourcePartition="partition10" targetPartition="partition20" />
+    <view code="obj_sistema.auditoria" objectCode="obj_sistema" path="view_single_result.xml" sourcePartition="partition10" />
+</driverXog>
