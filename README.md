@@ -36,7 +36,6 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 | [`query`](#tag-query) | Used to read and write queries. |
 | [`page`](#tag-page) | Used to read and write pages. |
 | [`menu`](#tag-menu) | Used to read and write menus. |
-| [`obs`](#tag-obs) | Used to read and write OBS. |
 | [`group`](#tag-group) | Used to read and write groups. |
 
 ### Description of instance Driver tags
@@ -57,6 +56,7 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 | [`otherInvestmentInstance`](#tag-otherinvestmentinstance) | Used to read and write otherInvestment instances. |
 | [`productInstance`](#tag-productinstance) | Used to read and write product instances. |
 | [`serviceInstance`](#tag-serviceinstance) | Used to read and write service instances. |
+| [`obsInstance`](#tag-obsinstance) | Used to read and write OBS instances. |
 
 ## Tag `object`
 
@@ -114,6 +114,7 @@ Used to read only the selected elements from the object.
     <view code="*" objectCode="obj_system" path="view_0.xml" />
     <view code="*" objectCode="obj_system" path="view_1.xml" sourcePartition="IT" />
     <view code="*" objectCode="obj_system" path="view_2.xml" sourcePartition="IT" targetPartition="HR" />
+    <view code="*project" objectCode="project" path="project.xml" sourcePartition="IT" />
     <view code="obj_system.audit" objectCode="obj_system" path="view_3.xml" sourcePartition="HR" />
     <view code="obj_system.audit" objectCode="obj_system" path="view_4.xml" sourcePartition="HR" targetPartition="IT" />
 </xogdriver>
@@ -342,20 +343,6 @@ Used to read only the selected links inside a section tag from the menu.
 </xogdriver>
 ```
 
-## Tag `obs`
-
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | OBS code. | yes | 
-| `path` | Path where the file will be saved on the file system. | yes | 
-
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<xogdriver version="2.0">
-    <obs code="department" path="obs_department.xml" />
-</xogdriver>
-```
-
 ## Tag `group`
 
 | Attribute | Description | Required |
@@ -578,6 +565,20 @@ Used to read only the selected links inside a section tag from the menu.
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
     <serviceInstance code="*" path="instances.xml" />
+</xogdriver>
+```
+
+## Tag `obsInstance`
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | OBS code. | yes | 
+| `path` | Path where the file will be saved on the file system. | yes | 
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <obsInstance code="department" path="obs_department.xml" />
 </xogdriver>
 ```
 

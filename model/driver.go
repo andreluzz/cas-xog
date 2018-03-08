@@ -76,7 +76,7 @@ type MatchExcel struct {
 type Filter struct {
 	Criteria string `xml:"criteria,attr"`
 	Name     string `xml:"name,attr"`
-	Custom 	 bool	`xml:"customAttribute,attr"`
+	Custom   bool   `xml:"customAttribute,attr"`
 	Value    string `xml:",chardata"`
 }
 
@@ -262,11 +262,13 @@ func (d *DriverFile) GetXMLType() string {
 		return "process"
 	case "Queries":
 		return "query"
+	case "OBSInstances":
+		return "obsInstance"
 	case "CustomObjectInstances", "ResourceClassInstances", "WipClassInstances", "InvestmentClassInstances", "TransactionClassInstances",
 		"ResourceInstances", "UserInstances", "ProjectInstances", "IdeaInstances", "ApplicationInstances", "AssetInstances", "OtherInvestmentInstances",
 		"ProductInstances", "ServiceInstances", "BenefitPlanInstances", "BudgetPlanInstances", "CategoryInstances", "ChangeInstances",
 		"ChargeCodeInstances", "CompanyClassInstances", "CostPlanInstances", "CostPlusCodeInstances", "DepartmentInstances", "EntityInstances",
-		"GroupInstances", "IncidentInstances", "IssueInstances", "OBSInstances", "PortfolioInstances", "ProgramInstances", "ReleaseInstances",
+		"GroupInstances", "IncidentInstances", "IssueInstances", "PortfolioInstances", "ProgramInstances", "ReleaseInstances",
 		"ReleasePlanInstances", "RequirementInstances", "RequisitionInstances", "RiskInstances", "RoleInstances", "ThemeInstances", "VendorInstances", "Migrations":
 		return strings.ToLower(d.Type[:1]) + d.Type[1:len(d.Type)-1]
 	}
