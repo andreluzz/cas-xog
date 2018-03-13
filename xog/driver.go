@@ -165,6 +165,7 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 	if err != nil {
 		output.Code = constant.OutputError
 		output.Debug = err.Error()
+		file.Write(outputFolder)
 		return output
 	}
 	if action == constant.Read {

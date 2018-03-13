@@ -57,6 +57,7 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 | [`productInstance`](#tag-productinstance) | Used to read and write product instances. |
 | [`serviceInstance`](#tag-serviceinstance) | Used to read and write service instances. |
 | [`obsInstance`](#tag-obsinstance) | Used to read and write OBS instances. |
+| [`themeInstance`](#tag-themeinstance) | Used to read and write UI Theme instances. |
 
 ## Tag `object`
 
@@ -579,6 +580,20 @@ Used to read only the selected links inside a section tag from the menu.
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
     <obsInstance code="department" path="obs_department.xml" />
+</xogdriver>
+```
+
+## Tag `themeInstance`
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | UI Theme code. | yes | 
+| `path` | Path where the file will be saved on the file system. | yes | 
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <themeInstance code="tealgrey" path="tealgrey.xml" />
 </xogdriver>
 ```
 
