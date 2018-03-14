@@ -370,7 +370,7 @@ func insertCustomFiltersToReadXML(d *DriverFile, req *etree.Document) {
 		f.Parent().RemoveChild(f)
 	}
 	for _, f := range d.Filters {
-		tag := "filter"
+		tag := "Filter"
 		if f.Custom {
 			tag = "FilterByCustomInfo"
 		}
