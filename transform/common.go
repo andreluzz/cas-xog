@@ -29,7 +29,11 @@ func Execute(xog, aux *etree.Document, file *model.DriverFile) error {
 				if strings.HasPrefix(e.XPath, "/") {
 					e.XPath = "." + e.XPath
 				}
-				removeElementsFromParent(xog, e.XPath)
+				if e.Attribute != constant.Undefined {
+					removeElementsAttribute(xog, e.XPath, e.Attribute)
+				} else {
+					removeElementsFromParent(xog, e.XPath)
+				}
 			}
 		}
 	}
@@ -92,6 +96,12 @@ func removeElementFromParent(xog *etree.Document, path string) {
 func removeElementsFromParent(xog *etree.Document, path string) {
 	for _, e := range xog.FindElements(path) {
 		e.Parent().RemoveChild(e)
+	}
+}
+
+func removeElementsAttribute(xog *etree.Document, path, attribute string) {
+	for _, e := range xog.FindElements(path) {
+		e.RemoveAttr(attribute)
 	}
 }
 

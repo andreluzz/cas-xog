@@ -36,7 +36,6 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 | [`query`](#tag-query) | Used to read and write queries. |
 | [`page`](#tag-page) | Used to read and write pages. |
 | [`menu`](#tag-menu) | Used to read and write menus. |
-| [`group`](#tag-group) | Used to read and write groups. |
 
 ### Description of instance Driver tags
 
@@ -58,6 +57,7 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 | [`serviceInstance`](#tag-serviceinstance) | Used to read and write service instances. |
 | [`obsInstance`](#tag-obsinstance) | Used to read and write OBS instances. |
 | [`themeInstance`](#tag-themeinstance) | Used to read and write UI Theme instances. |
+| [`groupInstance`](#tag-groupinstance) | Used to read and write groups. |
 
 ## Tag `object`
 
@@ -344,20 +344,6 @@ Used to read only the selected links inside a section tag from the menu.
 </xogdriver>
 ```
 
-## Tag `group`
-
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Group code. | yes | 
-| `path` | Path where the file will be saved on the file system. | yes | 
-
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<xogdriver version="2.0">
-    <group code="cop.systemAdministrator" path="systemAdministrator.xml" />
-</xogdriver>
-```
-
 ## Tag `customObjectInstance`
 
 | Attribute | Description | Required |
@@ -597,6 +583,20 @@ Used to read only the selected links inside a section tag from the menu.
 </xogdriver>
 ```
 
+## Tag `groupInstance`
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | Group code. | yes | 
+| `path` | Path where the file will be saved on the file system. | yes | 
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <groupInstance code="cop.systemAdministrator" path="systemAdministrator.xml" />
+</xogdriver>
+```
+
 # Global Attributes
 Attributes that can be used in any [structure](#description-of-structure-driver-tags) and [instance](#description-of-instance-driver-tags) tags.
 
@@ -638,12 +638,13 @@ Used to do a replace one string with another one in the xog result.
 ```
 
 ### Sub Tag `element`
-Used to do a remove elements in the xog result using xpath.
+Used to do a remove elements or element attribute from the xog result using xpath.
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
 | `action` | Used to remove entire path in the element tag. Only action `remove` is available. | yes | 
 | `xpath` | String that defines the path in the XML to the element you want to remove. | yes | 
+| `attribute` | String that defines the attribute from the element define in the xpath, that should be removed. | no | 
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -657,9 +658,12 @@ Used to do a remove elements in the xog result using xpath.
         <element action="remove" xpath="//Security" />
         <element action="remove" xpath="//rights" />
     </obs>
-    <group code="ObjectAdmin" path="ObjectAdmin.xml">
+    <groupInstance code="ObjectAdmin" path="ObjectAdmin.xml">
         <element action="remove" xpath="/NikuDataBus/groups/group/members" />
-    </group>
+    </groupInstance>
+    <projectInstance code="PR1126" path="projects.xml">
+        <element action="remove" xpath="//Resource" attribute="projectRoleID" />
+    </projectInstance>
 </xogdriver>
 ```
 

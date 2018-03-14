@@ -351,3 +351,30 @@ func TestIncludeCDATAWithoutQueryToReturnXML(t *testing.T) {
 		t.Errorf("Error including escapeText attribute to process XOG file. Invalid result XML.")
 	}
 }
+
+func TestExecuteToRemoveAttributeFromElement(t *testing.T) {
+	file := model.DriverFile{
+		Code: "obj_sistema",
+		Type: constant.TypeObject,
+		Elements: []model.Element{
+			{
+				Action: "remove",
+				XPath:  "//customAttribute",
+				Attribute: "column",
+			},
+		},
+	}
+
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "object_full_xog.xml")
+	err := Execute(xog, nil, &file)
+
+	if err != nil {
+		t.Fatalf("Error transforming object XOG file. Debug: %s", err.Error())
+	}
+
+	if readMockResultAndCompare(xog, "object_element_remove_attribute_result.xml") == false {
+		t.Errorf("Error transforming object XOG file. Invalid result XML.")
+	}
+
+}
