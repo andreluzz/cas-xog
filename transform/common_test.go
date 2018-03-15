@@ -358,8 +358,8 @@ func TestExecuteToRemoveAttributeFromElement(t *testing.T) {
 		Type: constant.TypeObject,
 		Elements: []model.Element{
 			{
-				Action: "remove",
-				XPath:  "//customAttribute",
+				Action:    "remove",
+				XPath:     "//customAttribute",
 				Attribute: "column",
 			},
 		},

@@ -55,7 +55,7 @@ type Element struct {
 	Code         string `xml:"code,attr"`
 	Action       string `xml:"action,attr"`
 	InsertBefore string `xml:"insertBefore,attr"`
-	Attribute 	 string `xml:"attribute,attr"`
+	Attribute    string `xml:"attribute,attr"`
 }
 
 //FileReplace defines the fields to replace strings on the xog xml file
@@ -93,6 +93,7 @@ type DriverFile struct {
 	Path             string        `xml:"path,attr"`
 	Type             string        `xml:"type,attr"`
 	ObjCode          string        `xml:"objectCode,attr"`
+	ObjType          string        `xml:"objectType,attr"`
 	IgnoreReading    bool          `xml:"ignoreReading,attr"`
 	SourcePartition  string        `xml:"sourcePartition,attr"`
 	TargetPartition  string        `xml:"targetPartition,attr"`
@@ -270,7 +271,7 @@ func (d *DriverFile) GetXMLType() string {
 		"ProductInstances", "ServiceInstances", "BenefitPlanInstances", "BudgetPlanInstances", "CategoryInstances", "ChangeInstances",
 		"ChargeCodeInstances", "CompanyClassInstances", "CostPlanInstances", "CostPlusCodeInstances", "DepartmentInstances", "EntityInstances",
 		"GroupInstances", "IncidentInstances", "IssueInstances", "PortfolioInstances", "ProgramInstances", "ReleaseInstances",
-		"ReleasePlanInstances", "RequirementInstances", "RequisitionInstances", "RiskInstances", "RoleInstances", "ThemeInstances", "VendorInstances", "Migrations":
+		"ReleasePlanInstances", "RequirementInstances", "RequisitionInstances", "RiskInstances", "RoleInstances", "ThemeInstances", "VendorInstances", "DocumentInstances", "Migrations":
 		return strings.ToLower(d.Type[:1]) + d.Type[1:len(d.Type)-1]
 	}
 	return constant.Undefined
@@ -409,6 +410,9 @@ func insertDefaultFiltersToReadXML(d *DriverFile, req *etree.Document) {
 		req.FindElement("//Filter[@name='projectID']").SetText(d.Code)
 	case constant.TypeLookup:
 		req.FindElement("//Filter").SetText(strings.ToUpper(d.Code))
+	case constant.TypeDocumentInstance:
+		req.FindElement("//Filter[@name='parentObjectID']").SetText(d.Code)
+		req.FindElement("//Filter[@name='parentObjectType']").SetText(d.ObjType)
 	default:
 		req.FindElement("//Filter").SetText(d.Code)
 	}
@@ -467,6 +471,7 @@ func initInstancesTagByType() {
 	instancesTag["RoleInstances"] = "Role"
 	instancesTag["ThemeInstances"] = "UITheme"
 	instancesTag["VendorInstances"] = "vendor"
+	instancesTag["DocumentInstances"] = "document"
 }
 
 //Driver defines the file with a list of drivers to run
@@ -557,4 +562,5 @@ type DriverTypesPattern struct {
 	RoleInstances             []DriverFile `xml:"roleInstance"`
 	ThemeInstances            []DriverFile `xml:"themeInstance"`
 	VendorInstances           []DriverFile `xml:"vendorInstance"`
+	DocumentInstances         []DriverFile `xml:"documentInstance"`
 }

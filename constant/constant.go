@@ -52,6 +52,7 @@ const (
 	TypeRoleInstance             = "RoleInstances"
 	TypeThemeInstance            = "ThemeInstances"
 	TypeVendorInstance           = "VendorInstances"
+	TypeDocumentInstance         = "DocumentInstances"
 
 	ActionReplace = "replace"
 	ActionUpdate  = "update"
