@@ -420,7 +420,10 @@ func insertDefaultFiltersToReadXML(d *DriverFile, req *etree.Document) {
 
 func parserWriteXML(d *DriverFile, folder string) (string, error) {
 	nikuDataBusXML := etree.NewDocument()
-	nikuDataBusXML.ReadFromFile(folder + d.Type + "/" + d.Path)
+	err := nikuDataBusXML.ReadFromFile(folder + d.Type + "/" + d.Path)
+	if err != nil {
+		return "", fmt.Errorf("File not found")
+	}
 
 	req := etree.NewDocument()
 	req.SetRoot(soapEnvelope.Root().Copy())
