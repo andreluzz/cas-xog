@@ -855,6 +855,7 @@ This tag is required for export to excel data.
 | `col` | Defines from which column of excel we'll get the data to include in the XOG xml file. | yes |
 | `attribute` | Defines which attribute in the element will receive the data. If no xpath is defined then we set this attribute in the main element instance. | no |
 | `xpath` | A string representing the path to the element you want to set the data. If no attribute value is defined then we set the value as a tag text. | no |
+| `removeIfNull` | If set to true and the value in excel is null, the element associated with xpath is removed. | no |
 | `multiValued` | If set to true this element will be treated as multi-valued. | no |
 | `separator` | Defines what character is being used to separate the options in the multi-valued data. Default value is ';'. | no |
 

@@ -48,20 +48,24 @@ func ReadDataFromExcel(file *model.DriverFile) (string, error) {
 					value = row.Cells[match.Col-1].String()
 				}
 
-				if match.AttributeName != constant.Undefined {
-					e.CreateAttr(match.AttributeName, value)
+				if match.RemoveIfNull && match.XPath != constant.Undefined && value == constant.Undefined {
+					e.Parent().RemoveChild(e)
 				} else {
-					if match.MultiValued && value != constant.Undefined {
-						separator := ";"
-						if match.Separator != constant.Undefined {
-							separator = match.Separator
-						}
-						for _, val := range strings.Split(value, separator) {
-							v := e.CreateElement("Value")
-							v.SetText(strings.TrimSpace(val))
-						}
+					if match.AttributeName != constant.Undefined {
+						e.CreateAttr(match.AttributeName, value)
 					} else {
-						e.SetText(value)
+						if match.MultiValued && value != constant.Undefined {
+							separator := ";"
+							if match.Separator != constant.Undefined {
+								separator = match.Separator
+							}
+							for _, val := range strings.Split(value, separator) {
+								v := e.CreateElement("Value")
+								v.SetText(strings.TrimSpace(val))
+							}
+						} else {
+							e.SetText(value)
+						}
 					}
 				}
 			}

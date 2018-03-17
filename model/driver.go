@@ -70,6 +70,7 @@ type MatchExcel struct {
 	XPath         string `xml:"xpath,attr"`
 	AttributeName string `xml:"attribute,attr"`
 	MultiValued   bool   `xml:"multiValued,attr"`
+	RemoveIfNull  bool   `xml:"removeIfNull,attr"`
 	Separator     string `xml:"separator,attr"`
 }
 
@@ -422,7 +423,7 @@ func parserWriteXML(d *DriverFile, folder string) (string, error) {
 	nikuDataBusXML := etree.NewDocument()
 	err := nikuDataBusXML.ReadFromFile(folder + d.Type + "/" + d.Path)
 	if err != nil {
-		return "", fmt.Errorf("File not found")
+		return constant.Undefined, fmt.Errorf("File not found")
 	}
 
 	req := etree.NewDocument()
