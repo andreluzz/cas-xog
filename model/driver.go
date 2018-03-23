@@ -250,6 +250,12 @@ func (d *DriverFile) GetDummyLookup() *etree.Element {
 
 //GetInstanceTag returns the instance tag according to the type of driver
 func (d *DriverFile) GetInstanceTag() string {
+	if d.Type == constant.TypeMigration {
+		if d.InstanceTag == constant.Undefined {
+			return constant.DefaultInstanceTag
+		}
+		return d.InstanceTag
+	}
 	if value, ok := instancesTag[d.Type]; ok {
 		return value
 	}

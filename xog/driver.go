@@ -135,6 +135,11 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 			output.Debug = err.Error()
 			return output
 		}
+		if file.GetInstanceTag() != constant.Undefined && file.InstancesPerFile > 0 {
+			xogResponse := etree.NewDocument()
+			xogResponse.ReadFromString(resp)
+			splitInstancesIntoMultipleFiles(file, xogResponse, outputFolder)
+		}
 		file.SetXML(resp)
 		file.Write(outputFolder)
 		return output
@@ -165,12 +170,13 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 	if err != nil {
 		output.Code = constant.OutputError
 		output.Debug = err.Error()
-		file.Write(outputFolder)
+		file.Write(constant.FolderDebug)
 		return output
 	}
 	if action == constant.Read {
 		output := processDriverFileRead(file, xogResponse, outputFolder)
 		if output.Code != constant.OutputSuccess {
+			file.Write(constant.FolderDebug)
 			return output
 		}
 	}
@@ -196,33 +202,7 @@ func processDriverFileRead(file *model.DriverFile, xogResponse *etree.Document, 
 	err := transform.Execute(xogResponse, auxResponse, file)
 
 	if file.GetInstanceTag() != constant.Undefined && file.InstancesPerFile > 0 {
-		instanceTagPath := "//" + file.GetInstanceTag()
-
-		parentTagPath := "//" + xogResponse.FindElement(instanceTagPath).Parent().Tag
-
-		splitXogResponse := xogResponse.Copy()
-		for _, e := range splitXogResponse.FindElements(instanceTagPath) {
-			e.Parent().RemoveChild(e)
-		}
-		instances := xogResponse.FindElements(instanceTagPath)
-
-		totalFiles := math.Ceil(float64(len(instances)) / float64(file.InstancesPerFile))
-		path := util.GetPathWithoutExtension(file.Path)
-		for i := 0; i < int(totalFiles); i++ {
-			file.Path = fmt.Sprintf("%s_%03d.xml", path, i+1)
-			xog := splitXogResponse.Copy()
-			elementParent := xog.FindElement(parentTagPath)
-			for z := file.InstancesPerFile * i; z < file.InstancesPerFile*(i+1); z++ {
-				if z < len(instances) {
-					elementParent.AddChild(instances[z].Copy())
-				}
-			}
-			xog.IndentTabs()
-			s, _ := xog.WriteToString()
-			file.SetXML(s)
-			file.Write(outputFolder)
-		}
-		file.Path = "complete_" + path + ".xml"
+		splitInstancesIntoMultipleFiles(file, xogResponse, outputFolder)
 	}
 
 	str, _ := xogResponse.WriteToString()
@@ -243,6 +223,37 @@ func processDriverFileRead(file *model.DriverFile, xogResponse *etree.Document, 
 	}
 
 	return output
+}
+
+func splitInstancesIntoMultipleFiles(file *model.DriverFile, xogResponse *etree.Document, outputFolder string) {
+
+	instanceTagPath := "//" + file.GetInstanceTag()
+
+	parentTagPath := "//" + xogResponse.FindElement(instanceTagPath).Parent().Tag
+
+	splitXogResponse := xogResponse.Copy()
+	for _, e := range splitXogResponse.FindElements(instanceTagPath) {
+		e.Parent().RemoveChild(e)
+	}
+	instances := xogResponse.FindElements(instanceTagPath)
+
+	totalFiles := math.Ceil(float64(len(instances)) / float64(file.InstancesPerFile))
+	path := util.GetPathWithoutExtension(file.Path)
+	for i := 0; i < int(totalFiles); i++ {
+		file.Path = fmt.Sprintf("%s_%03d.xml", path, i+1)
+		xog := splitXogResponse.Copy()
+		elementParent := xog.FindElement(parentTagPath)
+		for z := file.InstancesPerFile * i; z < file.InstancesPerFile*(i+1); z++ {
+			if z < len(instances) {
+				elementParent.AddChild(instances[z].Copy())
+			}
+		}
+		xog.IndentTabs()
+		s, _ := xog.WriteToString()
+		file.SetXML(s)
+		file.Write(outputFolder)
+	}
+	file.Path = "complete_" + path + ".xml"
 }
 
 //CreateFileFolder creates the folders according to the action (read, write or migrate)

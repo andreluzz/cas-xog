@@ -846,6 +846,7 @@ Should be used with to create an XOG xml file with an instance for each line in 
 | `instance` | The name of the main tag that represents the instance object that should be created. | yes |
 | `excel` | Path to the excel file with the data. | yes |
 | `startRow` | The line number in the excel file that we will start reading to create the instances. Default value is 1. | no |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
 
 ### Sub tag `match`
 This tag is required for export to excel data.

@@ -93,7 +93,7 @@ func validateReadDataFromExcelDriverAttributes(file *model.DriverFile) (int, *et
 		excelStartRowIndex--
 	}
 
-	instance := "instance"
+	instance := constant.DefaultInstanceTag
 	if file.InstanceTag != constant.Undefined {
 		instance = file.InstanceTag
 	}

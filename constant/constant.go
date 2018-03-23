@@ -90,4 +90,6 @@ const (
 
 	Source = "source"
 	Target = "target"
+
+	DefaultInstanceTag = "instance"
 )
