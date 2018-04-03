@@ -17,6 +17,8 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"path/filepath"
+	"os"
 )
 
 var driverXOG *model.Driver
@@ -97,18 +99,20 @@ func ValidateLoadedDriver() bool {
 
 //GetDriversList returns a list of available drivers in the defined folder
 func GetDriversList(folder string) ([]model.Driver, error) {
-	driversFileList, err := ioutil.ReadDir(folder)
-
-	if err != nil || len(driversFileList) == 0 {
-		return nil, errors.New("driver folder not found or empty")
-	}
-
 	var driversList []model.Driver
-	for _, f := range driversFileList {
-		driver := new(model.Driver)
-		driver.Info = f
-		driver.FilePath = folder + f.Name()
-		driversList = append(driversList, *driver)
+
+	err := filepath.Walk(folder, func(path string, f os.FileInfo, err error) error {
+		if !f.IsDir() {
+			driver := new(model.Driver)
+			driver.Info = f
+			driver.FilePath = path
+			driversList = append(driversList, *driver)
+		}
+		return nil
+	})
+
+	if err != nil || len(driversList) == 0 {
+		return nil, errors.New("driver folder not found or empty")
 	}
 
 	return driversList, nil

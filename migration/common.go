@@ -40,7 +40,7 @@ func ReadDataFromExcel(file *model.DriverFile) (string, error) {
 				}
 
 				if e == nil {
-					return constant.Undefined, errors.New("migration - invalid xpath element not found in template file")
+					return constant.Undefined, errors.New("migration - invalid xpath (" + match.XPath + "), element not found in template file")
 				}
 
 				value := constant.Undefined
