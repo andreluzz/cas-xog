@@ -5,6 +5,7 @@ import (
 	"os"
 	"reflect"
 	"regexp"
+	"runtime"
 	"strings"
 	"unsafe"
 )
@@ -103,8 +104,19 @@ func GetExtension(path string) string {
 
 //GetDirectFolder returns the file closest folder
 func GetDirectFolder(path string) string {
-	extIndex := strings.LastIndex(path, "\\")
+	extIndex := strings.LastIndex(path, GetPathSeparator())
 	folder := path[:extIndex]
-	extIndex = strings.LastIndex(folder , "\\")
+	extIndex = strings.LastIndex(folder, GetPathSeparator())
 	return folder[extIndex+1:]
+}
+
+//GetPathSeparator returns the folder separator by OS
+func GetPathSeparator() string {
+	var separator string
+	if runtime.GOOS == "windows" {
+		separator = "\\"
+	} else {
+		separator = "/"
+	}
+	return separator
 }
