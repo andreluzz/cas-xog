@@ -112,11 +112,16 @@ func GetDirectFolder(path string) string {
 
 //GetPathSeparator returns the folder separator by OS
 func GetPathSeparator() string {
-	var separator string
+	return string(os.PathSeparator)
+}
+
+//ReplacePathSeparatorByOS returns path with right folder separator by OS
+func ReplacePathSeparatorByOS(path string) string {
+	var result string
 	if runtime.GOOS == "windows" {
-		separator = "\\"
+		result = strings.Replace(path, "/", GetPathSeparator(), -1)
 	} else {
-		separator = "/"
+		result = strings.Replace(path, "\\", GetPathSeparator(), -1)
 	}
-	return separator
+	return result
 }

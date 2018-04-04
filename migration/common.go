@@ -23,7 +23,7 @@ func ReadDataFromExcel(file *model.DriverFile) (string, error) {
 	instanceCopy := templateInstanceElement.Copy()
 	templateInstanceElement.Parent().RemoveChild(templateInstanceElement)
 
-	xlFile, err := xlsx.OpenFile(file.ExcelFile)
+	xlFile, err := xlsx.OpenFile(util.ReplacePathSeparatorByOS(file.ExcelFile))
 	if err != nil {
 		return constant.Undefined, errors.New("migration - error opening excel. Debug: " + err.Error())
 	}
@@ -79,7 +79,7 @@ func ReadDataFromExcel(file *model.DriverFile) (string, error) {
 func validateReadDataFromExcelDriverAttributes(file *model.DriverFile) (int, *etree.Document, *etree.Element, error) {
 
 	xog := etree.NewDocument()
-	err := xog.ReadFromFile(file.Template)
+	err := xog.ReadFromFile(util.ReplacePathSeparatorByOS(file.Template))
 	if err != nil {
 		return 0, nil, nil, errors.New("migration - invalid template file. Debug: " + err.Error())
 	}
@@ -149,8 +149,8 @@ func ExportInstancesToExcel(xog *etree.Document, file *model.DriverFile, folder 
 		}
 	}
 
-	util.ValidateFolder(folder + util.GetPathFolder(file.ExcelFile))
-	err := xlsxFile.Save(folder + file.ExcelFile)
+	util.ValidateFolder(folder + util.GetPathFolder(util.ReplacePathSeparatorByOS(file.ExcelFile)))
+	err := xlsxFile.Save(folder + util.ReplacePathSeparatorByOS(file.ExcelFile))
 	if err != nil {
 		return errors.New("migration - ExportInstancesToExcel saving excel error. Debug: " + err.Error())
 	}
