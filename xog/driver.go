@@ -102,10 +102,14 @@ func GetDriversList(folder string) ([]model.Driver, error) {
 	var driversList []model.Driver
 
 	err := filepath.Walk(folder, func(path string, f os.FileInfo, err error) error {
-		if !f.IsDir() {
+		if !f.IsDir() && util.GetExtension(path) == ".driver" {
 			driver := new(model.Driver)
 			driver.Info = f
 			driver.FilePath = path
+			folder := util.GetDirectFolder(path)
+			if folder != "drivers" {
+				driver.Folder = folder
+			}
 			driversList = append(driversList, *driver)
 		}
 		return nil
@@ -115,7 +119,18 @@ func GetDriversList(folder string) ([]model.Driver, error) {
 		return nil, errors.New("driver folder not found or empty")
 	}
 
-	return driversList, nil
+	var driversListSorted []model.Driver
+	for  _, d := range driversList {
+		if d.Folder == constant.Undefined {
+			driversListSorted = append(driversListSorted, d)
+		}
+	}
+	for  _, d := range driversList {
+		if d.Folder != constant.Undefined {
+			driversListSorted = append(driversListSorted, d)
+		}
+	}
+	return driversListSorted, nil
 }
 
 //ProcessDriverFile execute a xog files and return the output

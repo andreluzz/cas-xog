@@ -70,7 +70,7 @@ func RightPad(s, padStr string, length int) string {
 	return retStr[:length]
 }
 
-//GetPathFolder returns only the folders without filename and extension of the path defined for a driver
+//GetPathFolder returns only the folders without filename and extension
 func GetPathFolder(path string) string {
 	folder := ""
 
@@ -89,8 +89,22 @@ func GetPathFolder(path string) string {
 	return folder
 }
 
-//GetPathWithoutExtension returns the folders and filename without the file extension of the path defined for a driver
+//GetPathWithoutExtension returns the folders and filename without the file extension
 func GetPathWithoutExtension(path string) string {
 	extIndex := strings.LastIndex(path, ".")
 	return path[:extIndex]
+}
+
+//GetExtension returns the file extension
+func GetExtension(path string) string {
+	extIndex := strings.LastIndex(path, ".")
+	return path[extIndex:]
+}
+
+//GetDirectFolder returns the file closest folder
+func GetDirectFolder(path string) string {
+	extIndex := strings.LastIndex(path, "\\")
+	folder := path[:extIndex]
+	extIndex = strings.LastIndex(folder , "\\")
+	return folder[extIndex+1:]
 }

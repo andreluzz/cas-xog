@@ -491,6 +491,7 @@ type Driver struct {
 	PackageDriver bool
 	FilePath      string
 	Info          os.FileInfo
+	Folder		  string
 }
 
 //Clear reset the contents of the driver
