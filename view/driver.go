@@ -51,6 +51,10 @@ func ProcessDriverFiles(driver *model.Driver, action string, environments *model
 		}
 		sourceFolder, outputFolder := xog.CreateFileFolder(action, f.Type, f.Path)
 
+		if f.Type == constant.TypeMigration {
+			sourceFolder = constant.FolderMigration
+		}
+
 		splitFilename, _ := f.GetSplitWriteFilesPath(sourceFolder)
 		if len(splitFilename) > 0 {
 			totalSplit := len(splitFilename)
@@ -64,9 +68,6 @@ func ProcessDriverFiles(driver *model.Driver, action string, environments *model
 			}
 		} else {
 			log.Info("\n[CAS-XOG][blue[%s]] %03d/%03d | [blue[%s]] | file: %s", processingString, i+1, total, formattedType, f.Path)
-			if f.Type == constant.TypeMigration {
-				sourceFolder = constant.FolderMigration
-			}
 
 			output := xog.ProcessDriverFile(&f, action, sourceFolder, outputFolder, environments, util.SoapCall)
 			status, color := util.GetStatusColorFromOutput(output.Code)
