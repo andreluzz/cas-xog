@@ -642,9 +642,10 @@ Used to do a remove elements or element attribute from the xog result using xpat
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
-| `action` | Used to remove entire path in the element tag. Only action `remove` is available. | yes | 
-| `xpath` | String that defines the path in the XML to the element you want to remove. | yes | 
-| `attribute` | String that defines the attribute from the element define in the xpath, that should be removed. | no | 
+| `action` | Define what action should be done. `insert` and `remove` are available. `insert` may be used to create or replace. | yes | 
+| `xpath` | String that defines the path in the XML to the element you want to transform. | yes | 
+| `attribute` | String that defines the attribute from the element define in the xpath. | no |
+| `value` | String that defines the value to insert or replace in the attribute from the element define in the xpath. | no |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -664,6 +665,18 @@ Used to do a remove elements or element attribute from the xog result using xpat
     <projectInstance code="PR1126" path="projects.xml">
         <element action="remove" xpath="//Resource" attribute="projectRoleID" />
     </projectInstance>
+    <ideaInstance code="ID1062" path="ID1062.xml">
+        <element action="remove" xpath="//Idea" attribute="entityCode" />
+        <element action="insert" xpath="//Idea" attribute="financialLocation" value="br" />
+        <element action="insert" xpath="//OBSAssocs">
+            <xml>
+                <![CDATA[
+                    <OBSAssoc id="teste_1" name="OBS 1" unitPath="/br/rj"/>
+                    <OBSAssoc id="teste_2" name="OBS 2" unitPath="/pres/dir/ger/coord"/>
+                ]]>
+            </xml>
+        </element>
+    </ideaInstance>
 </xogdriver>
 ```
 

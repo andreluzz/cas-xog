@@ -25,15 +25,8 @@ func Execute(xog, aux *etree.Document, file *model.DriverFile) error {
 
 	if len(file.Elements) > 0 {
 		for _, e := range file.Elements {
-			if e.Action == constant.ActionRemove && e.XPath != "" && e.Type == "" && e.Code == "" {
-				if strings.HasPrefix(e.XPath, "/") {
-					e.XPath = "." + e.XPath
-				}
-				if e.Attribute != constant.Undefined {
-					removeElementsAttribute(xog, e.XPath, e.Attribute)
-				} else {
-					removeElementsFromParent(xog, e.XPath)
-				}
+			if e.Action != constant.Undefined && e.XPath != "" && e.Type == "" && e.Code == "" {
+				transformElement(e, xog)
 			}
 		}
 	}
@@ -49,6 +42,32 @@ func Execute(xog, aux *etree.Document, file *model.DriverFile) error {
 	xog.Indent(4)
 
 	return err
+}
+
+func transformElement(element model.Element, xog *etree.Document) {
+	if strings.HasPrefix(element.XPath, "/") {
+		element.XPath = "." + element.XPath
+	}
+
+	switch element.Action {
+	case constant.ActionInsert:
+		e := xog.FindElement(element.XPath)
+		if element.Attribute != constant.Undefined {
+			e.CreateAttr(element.Attribute, element.Value)
+		} else {
+			nd := etree.NewDocument()
+			nd.ReadFromString(element.XMLString)
+			for _, t := range nd.ChildElements() {
+				e.AddChild(t)
+			}
+		}
+	case constant.ActionRemove:
+		if element.Attribute != constant.Undefined {
+			removeElementsAttribute(xog, element.XPath, element.Attribute)
+		} else {
+			removeElementsFromParent(xog, element.XPath)
+		}
+	}
 }
 
 func transformXMLByType(headerElement *etree.Element, xog, aux *etree.Document, file *model.DriverFile) error {

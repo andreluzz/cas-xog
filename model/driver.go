@@ -56,6 +56,8 @@ type Element struct {
 	Action       string `xml:"action,attr"`
 	InsertBefore string `xml:"insertBefore,attr"`
 	Attribute    string `xml:"attribute,attr"`
+	Value        string `xml:"value,attr"`
+	XMLString    string `xml:"xml"`
 }
 
 //FileReplace defines the fields to replace strings on the xog xml file
