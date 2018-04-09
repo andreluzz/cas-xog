@@ -13,12 +13,12 @@ import (
 	"github.com/beevik/etree"
 	"io/ioutil"
 	"math"
+	"os"
+	"path/filepath"
 	"reflect"
 	"sort"
 	"strconv"
 	"strings"
-	"path/filepath"
-	"os"
 )
 
 var driverXOG *model.Driver
@@ -102,6 +102,9 @@ func GetDriversList(folder string) ([]model.Driver, error) {
 	var driversList []model.Driver
 
 	err := filepath.Walk(folder, func(path string, f os.FileInfo, err error) error {
+		if err != nil {
+			return errors.New("invalid driver folder")
+		}
 		if !f.IsDir() && util.GetExtension(path) == ".driver" {
 			driver := new(model.Driver)
 			driver.Info = f
@@ -120,12 +123,12 @@ func GetDriversList(folder string) ([]model.Driver, error) {
 	}
 
 	var driversListSorted []model.Driver
-	for  _, d := range driversList {
+	for _, d := range driversList {
 		if d.Folder == constant.Undefined {
 			driversListSorted = append(driversListSorted, d)
 		}
 	}
-	for  _, d := range driversList {
+	for _, d := range driversList {
 		if d.Folder != constant.Undefined {
 			driversListSorted = append(driversListSorted, d)
 		}
@@ -148,20 +151,7 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 	}
 
 	if action == constant.Migrate {
-		resp, err := migration.ReadDataFromExcel(file)
-		if err != nil {
-			output.Code = constant.OutputError
-			output.Debug = err.Error()
-			return output
-		}
-		if file.GetInstanceTag() != constant.Undefined && file.InstancesPerFile > 0 {
-			xogResponse := etree.NewDocument()
-			xogResponse.ReadFromString(resp)
-			splitInstancesIntoMultipleFiles(file, xogResponse, outputFolder)
-		}
-		file.SetXML(resp)
-		file.Write(outputFolder)
-		return output
+		return processMigrate(file, outputFolder)
 	}
 
 	err := file.InitXML(action, sourceFolder)
@@ -200,6 +190,24 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 		}
 	}
 
+	file.Write(outputFolder)
+	return output
+}
+
+func processMigrate(file *model.DriverFile, outputFolder string) model.Output {
+	output := model.Output{Code: constant.OutputSuccess, Debug: constant.Undefined}
+	resp, err := migration.ReadDataFromExcel(file)
+	if err != nil {
+		output.Code = constant.OutputError
+		output.Debug = err.Error()
+		return output
+	}
+	if file.GetInstanceTag() != constant.Undefined && file.InstancesPerFile > 0 {
+		xogResponse := etree.NewDocument()
+		xogResponse.ReadFromString(resp)
+		splitInstancesIntoMultipleFiles(file, xogResponse, outputFolder)
+	}
+	file.SetXML(resp)
 	file.Write(outputFolder)
 	return output
 }

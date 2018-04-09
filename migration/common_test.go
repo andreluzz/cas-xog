@@ -113,8 +113,9 @@ func TestReadDataFromExcelToReturnXMLResult(t *testing.T) {
 				XPath: "//ColumnValue[@name='name']",
 			},
 			{
-				Col:   3,
-				XPath: "//ColumnValue[@name='status_novo']",
+				Col:          3,
+				XPath:        "//ColumnValue[@name='status_novo']",
+				RemoveIfNull: true,
 			},
 			{
 				Col:         4,
@@ -141,6 +142,9 @@ func TestReadDataFromExcelToReturnXMLResult(t *testing.T) {
 	expectedResultString, _ := expectedResult.WriteToString()
 
 	if result != expectedResultString {
+		xog := etree.NewDocument()
+		xog.ReadFromString(result)
+		xog.WriteToFile("../" + constant.FolderDebug + "go_test_debug.xml")
 		t.Errorf("Error reading data from excel to XOG file. Debug: incorrect result")
 	}
 }

@@ -55,14 +55,7 @@ func ReadDataFromExcel(file *model.DriverFile) (string, error) {
 						e.CreateAttr(match.AttributeName, value)
 					} else {
 						if match.MultiValued && value != constant.Undefined {
-							separator := ";"
-							if match.Separator != constant.Undefined {
-								separator = match.Separator
-							}
-							for _, val := range strings.Split(value, separator) {
-								v := e.CreateElement("Value")
-								v.SetText(strings.TrimSpace(val))
-							}
+							fillMultiValued(match, value, e)
 						} else {
 							e.SetText(value)
 						}
@@ -74,6 +67,17 @@ func ReadDataFromExcel(file *model.DriverFile) (string, error) {
 	}
 	xog.IndentTabs()
 	return xog.WriteToString()
+}
+
+func fillMultiValued(match model.MatchExcel, value string, e *etree.Element) {
+	separator := ";"
+	if match.Separator != constant.Undefined {
+		separator = match.Separator
+	}
+	for _, val := range strings.Split(value, separator) {
+		v := e.CreateElement("Value")
+		v.SetText(strings.TrimSpace(val))
+	}
 }
 
 func validateReadDataFromExcelDriverAttributes(file *model.DriverFile) (int, *etree.Document, *etree.Element, error) {

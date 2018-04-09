@@ -14,5 +14,27 @@
                                 </ColumnValue>
                         </CustomInformation>
                 </instance>
+                <instance instanceCode="S0000002" objectCode="obj_sistema">
+                        <CustomInformation>
+                                <ColumnValue name="code">S0000002</ColumnValue>
+                                <ColumnValue name="name">Nome sistema</ColumnValue>
+                                <ColumnValue name="analista">Username</ColumnValue>
+                                <ColumnValue name="multivalue_status">
+                                        <Value>CAL_CLOSED</Value>
+                                        <Value>CAL_DONE</Value>
+                                </ColumnValue>
+                        </CustomInformation>
+                </instance>
+                <instance instanceCode="S0000003" objectCode="obj_sistema">
+                        <CustomInformation>
+                                <ColumnValue name="code">S0000003</ColumnValue>
+                                <ColumnValue name="name">Nome sistema</ColumnValue>
+                                <ColumnValue name="status_novo">CAL_DONE</ColumnValue>
+                                <ColumnValue name="analista">Username</ColumnValue>
+                                <ColumnValue name="multivalue_status">
+                                        <Value>CAL_IN_PROGRESS</Value>
+                                </ColumnValue>
+                        </CustomInformation>
+                </instance>
         </customObjectInstances>
 </NikuDataBus>

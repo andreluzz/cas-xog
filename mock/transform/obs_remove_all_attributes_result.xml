@@ -1,0 +1,173 @@
+<NikuDataBus>
+    <Header action="write" externalSource="NIKU" objectType="obs" version="8.0"/>
+    <obsTypes>
+        <obs code="strategic_plan" name="Branch">
+            <level depth="1" name="All"/>
+            <level depth="2" name="Division"/>
+            <level depth="3" name="Branch"/>
+            <objectAssociation associationType="Any Unit" object="strat_kpi"/>
+            <objectAssociation associationType="Any Unit" object="strategic_item"/>
+            <unit code="strategic_corp" name="Corporate">
+                <unit code="strategic_online_op_bu" name="Online Operations">
+                    <associatedObject objectCode="I0004" objectType="strat_kpi"/>
+                    <associatedObject objectCode="I0016" objectType="strat_kpi"/>
+                    <associatedObject objectCode="I0017" objectType="strat_kpi"/>
+                    <associatedObject objectCode="I0018" objectType="strat_kpi"/>
+                    <associatedObject objectCode="I0019" objectType="strat_kpi"/>
+                    <associatedObject objectCode="I0041" objectType="strat_kpi"/>
+                    <associatedObject objectCode="I0044" objectType="strat_kpi"/>
+                    <associatedObject objectCode="SI0027" objectType="strategic_item"/>
+                    <associatedObject objectCode="SI0017" objectType="strategic_item"/>
+                    <associatedObject objectCode="SI0020" objectType="strategic_item"/>
+                    <associatedObject objectCode="SI0018" objectType="strategic_item"/>
+                    <associatedObject objectCode="SI0019" objectType="strategic_item"/>
+                    <associatedObject objectCode="SI0035" objectType="strategic_item"/>
+                    <rights>
+                        <InstanceRights/>
+                        <InstanceOBSRights/>
+                    </rights>
+                    <Security>
+                        <GroupSecurity groupCode="strat_bu_planner" rightCode="odf_cst_strat_kpi_create_strat_issue" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                        <GroupSecurity groupCode="strat_bu_planner" rightCode="odf_cst_strat_kpi_edit" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                        <GroupSecurity groupCode="strat_bu_planner" rightCode="odf_cst_strat_kpi_edit_all_strat_item_scale" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                        <GroupSecurity groupCode="strat_bu_planner" rightCode="odf_cst_strategic_item_edit" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                        <GroupSecurity groupCode="strat_bu_planner" rightCode="odf_cst_strat_kpi_create_strat_kpi_target" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                        <GroupSecurity groupCode="strat_bu_planner" rightCode="odf_cst_strat_kpi_create_strat_item_scale" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                        <GroupSecurity groupCode="strat_bu_planner" rightCode="odf_cst_strat_kpi_view_all_strat_kpi_measure" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                        <GroupSecurity groupCode="strat_bu_planner" rightCode="odf_cst_strat_kpi_create_strat_kpi_measure" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                        <GroupSecurity groupCode="strat_bu_planner" rightCode="odf_cst_strat_kpi_edit_all_strat_issue" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                        <GroupSecurity groupCode="strat_bu_planner" rightCode="odf_cst_strat_kpi_view_all_strat_item_scale" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                        <GroupSecurity groupCode="strat_bu_planner" rightCode="odf_cst_strat_kpi_edit_all_strat_kpi_target" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                        <GroupSecurity groupCode="strat_bu_planner" rightCode="odf_cst_strat_kpi_view_all_strat_kpi_target" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                        <GroupSecurity groupCode="strat_bu_planner" rightCode="odf_cst_strat_kpi_edit_all_strat_kpi_measure" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                    </Security>
+                </unit>
+                <unit code="strategic_id" name="TIC">
+                    <unit code="strategic_it_dev" name="IT Development">
+                        <rights>
+                            <InstanceRights/>
+                            <InstanceOBSRights/>
+                        </rights>
+                        <Security/>
+                    </unit>
+                    <unit code="strategic_it_oper" name="IT Operations">
+                        <associatedObject objectCode="SI0025" objectType="strategic_item"/>
+                        <associatedObject objectCode="SI0021" objectType="strategic_item"/>
+                        <associatedObject objectCode="SI0022" objectType="strategic_item"/>
+                        <associatedObject objectCode="SI0024" objectType="strategic_item"/>
+                        <associatedObject objectCode="SI0023" objectType="strategic_item"/>
+                        <rights>
+                            <InstanceRights/>
+                            <InstanceOBSRights/>
+                        </rights>
+                        <Security>
+                            <GroupSecurity groupCode="strat_local_planner" rightCode="odf_cst_strat_kpi_view_all_strat_kpi_target" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                            <GroupSecurity groupCode="strat_local_planner" rightCode="odf_cst_strat_kpi_create_strat_issue" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                            <GroupSecurity groupCode="strat_local_planner" rightCode="odf_cst_strat_kpi_view_all_strat_kpi_measure" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                            <GroupSecurity groupCode="strat_local_planner" rightCode="odf_cst_strategic_item_edit" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                            <GroupSecurity groupCode="strat_local_planner" rightCode="odf_cst_strat_kpi_view_all_strat_item_scale" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                            <GroupSecurity groupCode="strat_local_planner" rightCode="odf_cst_strat_kpi_edit_all_strat_kpi_target" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                            <GroupSecurity groupCode="strat_local_planner" rightCode="odf_cst_strat_kpi_edit_all_strat_kpi_measure" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                            <GroupSecurity groupCode="strat_local_planner" rightCode="odf_cst_strat_kpi_edit" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                            <GroupSecurity groupCode="strat_local_planner" rightCode="odf_cst_strat_kpi_edit_all_strat_item_scale" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                            <GroupSecurity groupCode="strat_local_planner" rightCode="odf_cst_strat_kpi_create_strat_kpi_target" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                            <GroupSecurity groupCode="strat_local_planner" rightCode="odf_cst_strategic_item_edit_all_strat_risk" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                            <GroupSecurity groupCode="strat_local_planner" rightCode="odf_cst_strat_kpi_create_strat_kpi_measure" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                            <GroupSecurity groupCode="strat_local_planner" rightCode="odf_cst_strategic_item_create_strat_risk" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                            <GroupSecurity groupCode="strat_local_planner" rightCode="odf_cst_strat_kpi_create_strat_item_scale" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                            <GroupSecurity groupCode="strat_local_planner" rightCode="odf_cst_strat_kpi_edit_all_strat_issue" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                        </Security>
+                    </unit>
+                    <associatedObject objectCode="I0020" objectType="strat_kpi"/>
+                    <associatedObject objectCode="I0021" objectType="strat_kpi"/>
+                    <associatedObject objectCode="I0022" objectType="strat_kpi"/>
+                    <associatedObject objectCode="I0024" objectType="strat_kpi"/>
+                    <associatedObject objectCode="I0025" objectType="strat_kpi"/>
+                    <associatedObject objectCode="I0023" objectType="strat_kpi"/>
+                    <associatedObject objectCode="I0026" objectType="strat_kpi"/>
+                    <associatedObject objectCode="I0027" objectType="strat_kpi"/>
+                    <associatedObject objectCode="I0028" objectType="strat_kpi"/>
+                    <associatedObject objectCode="I0030" objectType="strat_kpi"/>
+                    <associatedObject objectCode="I0031" objectType="strat_kpi"/>
+                    <associatedObject objectCode="I0051" objectType="strat_kpi"/>
+                    <associatedObject objectCode="I0047" objectType="strat_kpi"/>
+                    <associatedObject objectCode="I0048" objectType="strat_kpi"/>
+                    <associatedObject objectCode="I0046" objectType="strat_kpi"/>
+                    <associatedObject objectCode="I0050" objectType="strat_kpi"/>
+                    <associatedObject objectCode="I0029" objectType="strat_kpi"/>
+                    <associatedObject objectCode="SI0026" objectType="strategic_item"/>
+                    <associatedObject objectCode="SI0038" objectType="strategic_item"/>
+                    <associatedObject objectCode="SI0036" objectType="strategic_item"/>
+                    <associatedObject objectCode="SI0037" objectType="strategic_item"/>
+                    <rights>
+                        <InstanceRights/>
+                        <InstanceOBSRights/>
+                    </rights>
+                    <Security/>
+                </unit>
+                <unit code="strategic_direct_sales" name="Direct Sales">
+                    <associatedObject objectCode="I0042" objectType="strat_kpi"/>
+                    <rights>
+                        <InstanceRights/>
+                        <InstanceOBSRights/>
+                    </rights>
+                    <Security/>
+                </unit>
+                <associatedObject objectCode="I0002" objectType="strat_kpi"/>
+                <associatedObject objectCode="I0003" objectType="strat_kpi"/>
+                <associatedObject objectCode="I0005" objectType="strat_kpi"/>
+                <associatedObject objectCode="I0001" objectType="strat_kpi"/>
+                <associatedObject objectCode="I0007" objectType="strat_kpi"/>
+                <associatedObject objectCode="I0006" objectType="strat_kpi"/>
+                <associatedObject objectCode="I0008" objectType="strat_kpi"/>
+                <associatedObject objectCode="I0009" objectType="strat_kpi"/>
+                <associatedObject objectCode="I0010" objectType="strat_kpi"/>
+                <associatedObject objectCode="I0011" objectType="strat_kpi"/>
+                <associatedObject objectCode="I0012" objectType="strat_kpi"/>
+                <associatedObject objectCode="I0013" objectType="strat_kpi"/>
+                <associatedObject objectCode="I0014" objectType="strat_kpi"/>
+                <associatedObject objectCode="I0043" objectType="strat_kpi"/>
+                <associatedObject objectCode="I0052" objectType="strat_kpi"/>
+                <associatedObject objectCode="I0015" objectType="strat_kpi"/>
+                <associatedObject objectCode="I0045" objectType="strat_kpi"/>
+                <associatedObject objectCode="SI0001" objectType="strategic_item"/>
+                <associatedObject objectCode="SI0003" objectType="strategic_item"/>
+                <associatedObject objectCode="SI0004" objectType="strategic_item"/>
+                <associatedObject objectCode="SI0002" objectType="strategic_item"/>
+                <associatedObject objectCode="SI0005" objectType="strategic_item"/>
+                <associatedObject objectCode="SI0016" objectType="strategic_item"/>
+                <associatedObject objectCode="SI0010" objectType="strategic_item"/>
+                <associatedObject objectCode="SI0007" objectType="strategic_item"/>
+                <associatedObject objectCode="SI0006" objectType="strategic_item"/>
+                <associatedObject objectCode="SI0008" objectType="strategic_item"/>
+                <associatedObject objectCode="SI0011" objectType="strategic_item"/>
+                <associatedObject objectCode="SI0012" objectType="strategic_item"/>
+                <associatedObject objectCode="SI0009" objectType="strategic_item"/>
+                <associatedObject objectCode="SI0014" objectType="strategic_item"/>
+                <associatedObject objectCode="SI0013" objectType="strategic_item"/>
+                <associatedObject objectCode="SI0015" objectType="strategic_item"/>
+                <rights>
+                    <InstanceRights/>
+                    <InstanceOBSRights/>
+                </rights>
+                <Security>
+                    <GroupSecurity groupCode="strat_corp_planner" rightCode="odf_cst_strat_kpi_create_strat_issue" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                    <GroupSecurity groupCode="strat_corp_planner" rightCode="odf_cst_strat_kpi_edit_all_strat_item_scale" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                    <GroupSecurity groupCode="strat_corp_planner" rightCode="odf_cst_strategic_item_edit" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                    <GroupSecurity groupCode="strat_corp_planner" rightCode="odf_cst_strat_kpi_create_strat_kpi_measure" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                    <GroupSecurity groupCode="strat_corp_planner" rightCode="odf_cst_strat_kpi_edit_all_strat_issue" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                    <GroupSecurity groupCode="strat_corp_planner" rightCode="odf_cst_strat_kpi_edit_all_strat_kpi_measure" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                    <GroupSecurity groupCode="strat_corp_planner" rightCode="odf_cst_strat_kpi_view_all_strat_kpi_target" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                    <GroupSecurity groupCode="strat_corp_planner" rightCode="odf_cst_strat_kpi_create_strat_item_scale" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                    <GroupSecurity groupCode="strat_corp_planner" rightCode="odf_cst_strat_kpi_view_all_strat_item_scale" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                    <GroupSecurity groupCode="strat_corp_planner" rightCode="odf_cst_strategic_item_create_strat_risk" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                    <GroupSecurity groupCode="strat_corp_planner" rightCode="odf_cst_strategic_item_edit_all_strat_risk" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                    <GroupSecurity groupCode="strat_corp_planner" rightCode="odf_cst_strat_kpi_view_all_strat_kpi_measure" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                    <GroupSecurity groupCode="strat_corp_planner" rightCode="odf_cst_strat_kpi_edit" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                    <GroupSecurity groupCode="strat_corp_planner" rightCode="odf_cst_strat_kpi_create_strat_kpi_target" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                    <GroupSecurity groupCode="strat_corp_planner" rightCode="odf_cst_strat_kpi_edit_all_strat_kpi_target" rightMode="OBS_UNIT_AND_CHILDREN"/>
+                </Security>
+            </unit>
+        </obs>
+    </obsTypes>
+</NikuDataBus>

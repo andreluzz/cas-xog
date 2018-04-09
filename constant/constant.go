@@ -28,10 +28,10 @@ const (
 	TypeThemeInstance            = "ThemeInstances"
 	TypeDocumentInstance         = "DocumentInstances"
 
-	ActionReplace 		  = "replace"
-	ActionUpdate  		  = "update"
-	ActionRemove  		  = "remove"
-	ActionInsert  		  = "insert"
+	ActionReplace         = "replace"
+	ActionUpdate          = "update"
+	ActionRemove          = "remove"
+	ActionInsert          = "insert"
 	ActionRemoveAllButNot = "removeAllButNot"
 
 	Read    = "r"

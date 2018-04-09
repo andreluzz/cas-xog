@@ -642,7 +642,7 @@ Used to do a remove elements or element attribute from the xog result using xpat
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
-| `action` | Define what action should be done. `insert` and `remove` are available. `insert` may be used to create or replace. | yes | 
+| `action` | Define what action should be done. `insert`, `remove` and `removeAllButNot` are available. `insert` may be used to create or replace. `removeAllButNot` should be used when it is necessary to remove most attributes of a tag and keep only a few, use commas to separate the attributes that should remain in the tag. | yes | 
 | `xpath` | String that defines the path in the XML to the element you want to transform. | yes | 
 | `attribute` | String that defines the attribute from the element define in the xpath. | no |
 | `value` | String that defines the value to insert or replace in the attribute from the element define in the xpath. | no |
@@ -654,15 +654,11 @@ Used to do a remove elements or element attribute from the xog result using xpat
         <element action="remove" xpath="//OBSAssocs" />
         <element action="remove" xpath="//Security" />
     </page>
-    <obs code="department" path="obs_department.xml">
-        <element action="remove" xpath="//associatedObject" />
-        <element action="remove" xpath="//Security" />
-        <element action="remove" xpath="//rights" />
-    </obs>
     <groupInstance code="ObjectAdmin" path="ObjectAdmin.xml">
         <element action="remove" xpath="/NikuDataBus/groups/group/members" />
     </groupInstance>
     <projectInstance code="PR1126" path="projects.xml">
+         <element action="removeAllButNot" xpath="//Project" attribute="projectID,name" />
         <element action="remove" xpath="//Resource" attribute="projectRoleID" />
     </projectInstance>
     <ideaInstance code="ID1062" path="ID1062.xml">
@@ -671,8 +667,8 @@ Used to do a remove elements or element attribute from the xog result using xpat
         <element action="insert" xpath="//OBSAssocs">
             <xml>
                 <![CDATA[
-                    <OBSAssoc id="teste_1" name="OBS 1" unitPath="/br/rj"/>
-                    <OBSAssoc id="teste_2" name="OBS 2" unitPath="/pres/dir/ger/coord"/>
+                    <OBSAssoc id="test1" name="OBS 1" unitPath="/br/rj"/>
+                    <OBSAssoc id="test2" name="OBS 2" unitPath="/pres/dir/ger/coord"/>
                 ]]>
             </xml>
         </element>
