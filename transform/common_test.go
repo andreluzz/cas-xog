@@ -40,6 +40,62 @@ func TestExecuteToReturnPage(t *testing.T) {
 	}
 }
 
+func TestExecuteToInsertElement(t *testing.T) {
+	file := model.DriverFile{
+		Type: constant.TypePage,
+		Elements: []model.Element{
+			{
+				Action:    constant.ActionInsert,
+				XPath:     "//tabbedPage",
+				Attribute: "testAttribute",
+				Value:     "test12345",
+			},
+			{
+				Action:    constant.ActionInsert,
+				XPath:     "//tab/OBSAssocs",
+				XMLString: `<OBSAssoc id="test_obs" name="Test OBS" unitPath="/All/New/Node"/>`,
+			},
+		},
+	}
+
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "page_full_xog.xml")
+	err := Execute(xog, nil, &file)
+
+	if err != nil {
+		t.Fatalf("Error transforming page XOG file. Debug: %s", err.Error())
+	}
+
+	if readMockResultAndCompare(xog, "page_insert_element_result.xml") == false {
+		t.Errorf("Error transforming page XOG file. Invalid result XML.")
+	}
+}
+
+func TestExecuteToRemoveAllAttributesBut(t *testing.T) {
+	file := model.DriverFile{
+		Type: constant.TypePage,
+		Elements: []model.Element{
+			{
+				Action:    constant.ActionRemoveAllButNot,
+				XPath:     "//obs",
+				Attribute: "name,code",
+			},
+		},
+	}
+
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "obs_full_xog.xml")
+	err := Execute(xog, nil, &file)
+
+	if err != nil {
+		t.Fatalf("Error transforming page XOG file. Debug: %s", err.Error())
+	}
+
+	if readMockResultAndCompare(xog, "obs_remove_all_attributes_result.xml") == false {
+		t.Errorf("Error transforming page XOG file. Invalid result XML.")
+	}
+}
+
 func TestExecuteToReturnPageWithoutElementOBSandSecurity(t *testing.T) {
 	file := model.DriverFile{
 		Type: constant.TypePage,
@@ -350,4 +406,31 @@ func TestIncludeCDATAWithoutQueryToReturnXML(t *testing.T) {
 	if readMockResultAndCompare(result, "process_full_xog.xml") == false {
 		t.Errorf("Error including escapeText attribute to process XOG file. Invalid result XML.")
 	}
+}
+
+func TestExecuteToRemoveAttributeFromElement(t *testing.T) {
+	file := model.DriverFile{
+		Code: "obj_sistema",
+		Type: constant.TypeObject,
+		Elements: []model.Element{
+			{
+				Action:    "remove",
+				XPath:     "//customAttribute",
+				Attribute: "column",
+			},
+		},
+	}
+
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "object_full_xog.xml")
+	err := Execute(xog, nil, &file)
+
+	if err != nil {
+		t.Fatalf("Error transforming object XOG file. Debug: %s", err.Error())
+	}
+
+	if readMockResultAndCompare(xog, "object_element_remove_attribute_result.xml") == false {
+		t.Errorf("Error transforming object XOG file. Invalid result XML.")
+	}
+
 }

@@ -5,6 +5,7 @@ import (
 	"os"
 	"reflect"
 	"regexp"
+	"runtime"
 	"strings"
 	"unsafe"
 )
@@ -70,7 +71,7 @@ func RightPad(s, padStr string, length int) string {
 	return retStr[:length]
 }
 
-//GetPathFolder returns only the folders without filename and extension of the path defined for a driver
+//GetPathFolder returns only the folders without filename and extension
 func GetPathFolder(path string) string {
 	folder := ""
 
@@ -89,8 +90,38 @@ func GetPathFolder(path string) string {
 	return folder
 }
 
-//GetPathWithoutExtension returns the folders and filename without the file extension of the path defined for a driver
+//GetPathWithoutExtension returns the folders and filename without the file extension
 func GetPathWithoutExtension(path string) string {
 	extIndex := strings.LastIndex(path, ".")
 	return path[:extIndex]
+}
+
+//GetExtension returns the file extension
+func GetExtension(path string) string {
+	extIndex := strings.LastIndex(path, ".")
+	return path[extIndex:]
+}
+
+//GetDirectFolder returns the file closest folder
+func GetDirectFolder(path string) string {
+	extIndex := strings.LastIndex(path, GetPathSeparator())
+	folder := path[:extIndex]
+	extIndex = strings.LastIndex(folder, GetPathSeparator())
+	return folder[extIndex+1:]
+}
+
+//GetPathSeparator returns the folder separator by OS
+func GetPathSeparator() string {
+	return string(os.PathSeparator)
+}
+
+//ReplacePathSeparatorByOS returns path with right folder separator by OS
+func ReplacePathSeparatorByOS(path string) string {
+	var result string
+	if runtime.GOOS == "windows" {
+		result = strings.Replace(path, "/", GetPathSeparator(), -1)
+	} else {
+		result = strings.Replace(path, "\\", GetPathSeparator(), -1)
+	}
+	return result
 }

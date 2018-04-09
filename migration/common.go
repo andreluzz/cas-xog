@@ -23,7 +23,7 @@ func ReadDataFromExcel(file *model.DriverFile) (string, error) {
 	instanceCopy := templateInstanceElement.Copy()
 	templateInstanceElement.Parent().RemoveChild(templateInstanceElement)
 
-	xlFile, err := xlsx.OpenFile(file.ExcelFile)
+	xlFile, err := xlsx.OpenFile(util.ReplacePathSeparatorByOS(file.ExcelFile))
 	if err != nil {
 		return constant.Undefined, errors.New("migration - error opening excel. Debug: " + err.Error())
 	}
@@ -40,7 +40,7 @@ func ReadDataFromExcel(file *model.DriverFile) (string, error) {
 				}
 
 				if e == nil {
-					return constant.Undefined, errors.New("migration - invalid xpath element not found in template file")
+					return constant.Undefined, errors.New("migration - invalid xpath (" + match.XPath + "), element not found in template file")
 				}
 
 				value := constant.Undefined
@@ -48,20 +48,17 @@ func ReadDataFromExcel(file *model.DriverFile) (string, error) {
 					value = row.Cells[match.Col-1].String()
 				}
 
-				if match.AttributeName != constant.Undefined {
-					e.CreateAttr(match.AttributeName, value)
+				if match.RemoveIfNull && match.XPath != constant.Undefined && value == constant.Undefined {
+					e.Parent().RemoveChild(e)
 				} else {
-					if match.MultiValued && value != constant.Undefined {
-						separator := ";"
-						if match.Separator != constant.Undefined {
-							separator = match.Separator
-						}
-						for _, val := range strings.Split(value, separator) {
-							v := e.CreateElement("Value")
-							v.SetText(strings.TrimSpace(val))
-						}
+					if match.AttributeName != constant.Undefined {
+						e.CreateAttr(match.AttributeName, value)
 					} else {
-						e.SetText(value)
+						if match.MultiValued && value != constant.Undefined {
+							fillMultiValued(match, value, e)
+						} else {
+							e.SetText(value)
+						}
 					}
 				}
 			}
@@ -72,10 +69,21 @@ func ReadDataFromExcel(file *model.DriverFile) (string, error) {
 	return xog.WriteToString()
 }
 
+func fillMultiValued(match model.MatchExcel, value string, e *etree.Element) {
+	separator := ";"
+	if match.Separator != constant.Undefined {
+		separator = match.Separator
+	}
+	for _, val := range strings.Split(value, separator) {
+		v := e.CreateElement("Value")
+		v.SetText(strings.TrimSpace(val))
+	}
+}
+
 func validateReadDataFromExcelDriverAttributes(file *model.DriverFile) (int, *etree.Document, *etree.Element, error) {
 
 	xog := etree.NewDocument()
-	err := xog.ReadFromFile(file.Template)
+	err := xog.ReadFromFile(util.ReplacePathSeparatorByOS(file.Template))
 	if err != nil {
 		return 0, nil, nil, errors.New("migration - invalid template file. Debug: " + err.Error())
 	}
@@ -89,7 +97,7 @@ func validateReadDataFromExcelDriverAttributes(file *model.DriverFile) (int, *et
 		excelStartRowIndex--
 	}
 
-	instance := "instance"
+	instance := constant.DefaultInstanceTag
 	if file.InstanceTag != constant.Undefined {
 		instance = file.InstanceTag
 	}
@@ -145,8 +153,8 @@ func ExportInstancesToExcel(xog *etree.Document, file *model.DriverFile, folder 
 		}
 	}
 
-	util.ValidateFolder(folder + util.GetPathFolder(file.ExcelFile))
-	err := xlsxFile.Save(folder + file.ExcelFile)
+	util.ValidateFolder(folder + util.GetPathFolder(util.ReplacePathSeparatorByOS(file.ExcelFile)))
+	err := xlsxFile.Save(folder + util.ReplacePathSeparatorByOS(file.ExcelFile))
 	if err != nil {
 		return errors.New("migration - ExportInstancesToExcel saving excel error. Debug: " + err.Error())
 	}

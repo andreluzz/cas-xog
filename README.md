@@ -36,8 +36,6 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 | [`query`](#tag-query) | Used to read and write queries. |
 | [`page`](#tag-page) | Used to read and write pages. |
 | [`menu`](#tag-menu) | Used to read and write menus. |
-| [`obs`](#tag-obs) | Used to read and write OBS. |
-| [`group`](#tag-group) | Used to read and write groups. |
 
 ### Description of instance Driver tags
 
@@ -57,6 +55,9 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 | [`otherInvestmentInstance`](#tag-otherinvestmentinstance) | Used to read and write otherInvestment instances. |
 | [`productInstance`](#tag-productinstance) | Used to read and write product instances. |
 | [`serviceInstance`](#tag-serviceinstance) | Used to read and write service instances. |
+| [`obsInstance`](#tag-obsinstance) | Used to read and write OBS instances. |
+| [`themeInstance`](#tag-themeinstance) | Used to read and write UI Theme instances. |
+| [`groupInstance`](#tag-groupinstance) | Used to read and write groups. |
 
 ## Tag `object`
 
@@ -114,6 +115,7 @@ Used to read only the selected elements from the object.
     <view code="*" objectCode="obj_system" path="view_0.xml" />
     <view code="*" objectCode="obj_system" path="view_1.xml" sourcePartition="IT" />
     <view code="*" objectCode="obj_system" path="view_2.xml" sourcePartition="IT" targetPartition="HR" />
+    <view code="*project" objectCode="project" path="project.xml" sourcePartition="IT" />
     <view code="obj_system.audit" objectCode="obj_system" path="view_3.xml" sourcePartition="HR" />
     <view code="obj_system.audit" objectCode="obj_system" path="view_4.xml" sourcePartition="HR" targetPartition="IT" />
 </xogdriver>
@@ -342,34 +344,6 @@ Used to read only the selected links inside a section tag from the menu.
 </xogdriver>
 ```
 
-## Tag `obs`
-
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | OBS code. | yes | 
-| `path` | Path where the file will be saved on the file system. | yes | 
-
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<xogdriver version="2.0">
-    <obs code="department" path="obs_department.xml" />
-</xogdriver>
-```
-
-## Tag `group`
-
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Group code. | yes | 
-| `path` | Path where the file will be saved on the file system. | yes | 
-
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<xogdriver version="2.0">
-    <group code="cop.systemAdministrator" path="systemAdministrator.xml" />
-</xogdriver>
-```
-
 ## Tag `customObjectInstance`
 
 | Attribute | Description | Required |
@@ -581,6 +555,48 @@ Used to read only the selected links inside a section tag from the menu.
 </xogdriver>
 ```
 
+## Tag `obsInstance`
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | OBS code. | yes | 
+| `path` | Path where the file will be saved on the file system. | yes | 
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <obsInstance code="department" path="obs_department.xml" />
+</xogdriver>
+```
+
+## Tag `themeInstance`
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | UI Theme code. | yes | 
+| `path` | Path where the file will be saved on the file system. | yes | 
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <themeInstance code="tealgrey" path="tealgrey.xml" />
+</xogdriver>
+```
+
+## Tag `groupInstance`
+
+| Attribute | Description | Required |
+| ------ | ------ | ------ |
+| `code` | Group code. | yes | 
+| `path` | Path where the file will be saved on the file system. | yes | 
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <groupInstance code="cop.systemAdministrator" path="systemAdministrator.xml" />
+</xogdriver>
+```
+
 # Global Attributes
 Attributes that can be used in any [structure](#description-of-structure-driver-tags) and [instance](#description-of-instance-driver-tags) tags.
 
@@ -622,12 +638,14 @@ Used to do a replace one string with another one in the xog result.
 ```
 
 ### Sub Tag `element`
-Used to do a remove elements in the xog result using xpath.
+Used to do a remove elements or element attribute from the xog result using xpath.
 
 | Attribute | Description | Required |
 | ------ | ------ | ------ |
-| `action` | Used to remove entire path in the element tag. Only action `remove` is available. | yes | 
-| `xpath` | String that defines the path in the XML to the element you want to remove. | yes | 
+| `action` | Define what action should be done. `insert`, `remove` and `removeAllButNot` are available. `insert` may be used to create or replace. `removeAllButNot` should be used when it is necessary to remove most attributes of a tag and keep only a few, use commas to separate the attributes that should remain in the tag. | yes | 
+| `xpath` | String that defines the path in the XML to the element you want to transform. | yes | 
+| `attribute` | String that defines the attribute from the element define in the xpath. | no |
+| `value` | String that defines the value to insert or replace in the attribute from the element define in the xpath. | no |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -636,14 +654,25 @@ Used to do a remove elements in the xog result using xpath.
         <element action="remove" xpath="//OBSAssocs" />
         <element action="remove" xpath="//Security" />
     </page>
-    <obs code="department" path="obs_department.xml">
-        <element action="remove" xpath="//associatedObject" />
-        <element action="remove" xpath="//Security" />
-        <element action="remove" xpath="//rights" />
-    </obs>
-    <group code="ObjectAdmin" path="ObjectAdmin.xml">
+    <groupInstance code="ObjectAdmin" path="ObjectAdmin.xml">
         <element action="remove" xpath="/NikuDataBus/groups/group/members" />
-    </group>
+    </groupInstance>
+    <projectInstance code="PR1126" path="projects.xml">
+         <element action="removeAllButNot" xpath="//Project" attribute="projectID,name" />
+        <element action="remove" xpath="//Resource" attribute="projectRoleID" />
+    </projectInstance>
+    <ideaInstance code="ID1062" path="ID1062.xml">
+        <element action="remove" xpath="//Idea" attribute="entityCode" />
+        <element action="insert" xpath="//Idea" attribute="financialLocation" value="br" />
+        <element action="insert" xpath="//OBSAssocs">
+            <xml>
+                <![CDATA[
+                    <OBSAssoc id="test1" name="OBS 1" unitPath="/br/rj"/>
+                    <OBSAssoc id="test2" name="OBS 2" unitPath="/pres/dir/ger/coord"/>
+                ]]>
+            </xml>
+        </element>
+    </ideaInstance>
 </xogdriver>
 ```
 
@@ -826,6 +855,7 @@ Should be used with to create an XOG xml file with an instance for each line in 
 | `instance` | The name of the main tag that represents the instance object that should be created. | yes |
 | `excel` | Path to the excel file with the data. | yes |
 | `startRow` | The line number in the excel file that we will start reading to create the instances. Default value is 1. | no |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
 
 ### Sub tag `match`
 This tag is required for export to excel data.
@@ -835,6 +865,7 @@ This tag is required for export to excel data.
 | `col` | Defines from which column of excel we'll get the data to include in the XOG xml file. | yes |
 | `attribute` | Defines which attribute in the element will receive the data. If no xpath is defined then we set this attribute in the main element instance. | no |
 | `xpath` | A string representing the path to the element you want to set the data. If no attribute value is defined then we set the value as a tag text. | no |
+| `removeIfNull` | If set to true and the value in excel is null, the element associated with xpath is removed. | no |
 | `multiValued` | If set to true this element will be treated as multi-valued. | no |
 | `separator` | Defines what character is being used to separate the options in the multi-valued data. Default value is ';'. | no |
 

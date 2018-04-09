@@ -55,6 +55,9 @@ type Element struct {
 	Code         string `xml:"code,attr"`
 	Action       string `xml:"action,attr"`
 	InsertBefore string `xml:"insertBefore,attr"`
+	Attribute    string `xml:"attribute,attr"`
+	Value        string `xml:"value,attr"`
+	XMLString    string `xml:"xml"`
 }
 
 //FileReplace defines the fields to replace strings on the xog xml file
@@ -69,6 +72,7 @@ type MatchExcel struct {
 	XPath         string `xml:"xpath,attr"`
 	AttributeName string `xml:"attribute,attr"`
 	MultiValued   bool   `xml:"multiValued,attr"`
+	RemoveIfNull  bool   `xml:"removeIfNull,attr"`
 	Separator     string `xml:"separator,attr"`
 }
 
@@ -76,7 +80,7 @@ type MatchExcel struct {
 type Filter struct {
 	Criteria string `xml:"criteria,attr"`
 	Name     string `xml:"name,attr"`
-	Custom 	 bool	`xml:"customAttribute,attr"`
+	Custom   bool   `xml:"customAttribute,attr"`
 	Value    string `xml:",chardata"`
 }
 
@@ -92,6 +96,7 @@ type DriverFile struct {
 	Path             string        `xml:"path,attr"`
 	Type             string        `xml:"type,attr"`
 	ObjCode          string        `xml:"objectCode,attr"`
+	ObjType          string        `xml:"objectType,attr"`
 	IgnoreReading    bool          `xml:"ignoreReading,attr"`
 	SourcePartition  string        `xml:"sourcePartition,attr"`
 	TargetPartition  string        `xml:"targetPartition,attr"`
@@ -247,6 +252,12 @@ func (d *DriverFile) GetDummyLookup() *etree.Element {
 
 //GetInstanceTag returns the instance tag according to the type of driver
 func (d *DriverFile) GetInstanceTag() string {
+	if d.Type == constant.TypeMigration {
+		if d.InstanceTag == constant.Undefined {
+			return constant.DefaultInstanceTag
+		}
+		return d.InstanceTag
+	}
 	if value, ok := instancesTag[d.Type]; ok {
 		return value
 	}
@@ -262,12 +273,14 @@ func (d *DriverFile) GetXMLType() string {
 		return "process"
 	case "Queries":
 		return "query"
+	case "OBSInstances":
+		return "obsInstance"
 	case "CustomObjectInstances", "ResourceClassInstances", "WipClassInstances", "InvestmentClassInstances", "TransactionClassInstances",
 		"ResourceInstances", "UserInstances", "ProjectInstances", "IdeaInstances", "ApplicationInstances", "AssetInstances", "OtherInvestmentInstances",
 		"ProductInstances", "ServiceInstances", "BenefitPlanInstances", "BudgetPlanInstances", "CategoryInstances", "ChangeInstances",
 		"ChargeCodeInstances", "CompanyClassInstances", "CostPlanInstances", "CostPlusCodeInstances", "DepartmentInstances", "EntityInstances",
-		"GroupInstances", "IncidentInstances", "IssueInstances", "OBSInstances", "PortfolioInstances", "ProgramInstances", "ReleaseInstances",
-		"ReleasePlanInstances", "RequirementInstances", "RequisitionInstances", "RiskInstances", "RoleInstances", "ThemeInstances", "VendorInstances", "Migrations":
+		"GroupInstances", "IncidentInstances", "IssueInstances", "PortfolioInstances", "ProgramInstances", "ReleaseInstances",
+		"ReleasePlanInstances", "RequirementInstances", "RequisitionInstances", "RiskInstances", "RoleInstances", "ThemeInstances", "VendorInstances", "DocumentInstances", "Migrations":
 		return strings.ToLower(d.Type[:1]) + d.Type[1:len(d.Type)-1]
 	}
 	return constant.Undefined
@@ -367,7 +380,7 @@ func insertCustomFiltersToReadXML(d *DriverFile, req *etree.Document) {
 		f.Parent().RemoveChild(f)
 	}
 	for _, f := range d.Filters {
-		tag := "filter"
+		tag := "Filter"
 		if f.Custom {
 			tag = "FilterByCustomInfo"
 		}
@@ -406,6 +419,9 @@ func insertDefaultFiltersToReadXML(d *DriverFile, req *etree.Document) {
 		req.FindElement("//Filter[@name='projectID']").SetText(d.Code)
 	case constant.TypeLookup:
 		req.FindElement("//Filter").SetText(strings.ToUpper(d.Code))
+	case constant.TypeDocumentInstance:
+		req.FindElement("//Filter[@name='parentObjectID']").SetText(d.Code)
+		req.FindElement("//Filter[@name='parentObjectType']").SetText(d.ObjType)
 	default:
 		req.FindElement("//Filter").SetText(d.Code)
 	}
@@ -413,7 +429,10 @@ func insertDefaultFiltersToReadXML(d *DriverFile, req *etree.Document) {
 
 func parserWriteXML(d *DriverFile, folder string) (string, error) {
 	nikuDataBusXML := etree.NewDocument()
-	nikuDataBusXML.ReadFromFile(folder + d.Type + "/" + d.Path)
+	err := nikuDataBusXML.ReadFromFile(folder + d.Type + "/" + d.Path)
+	if err != nil {
+		return constant.Undefined, fmt.Errorf("File not found")
+	}
 
 	req := etree.NewDocument()
 	req.SetRoot(soapEnvelope.Root().Copy())
@@ -464,6 +483,7 @@ func initInstancesTagByType() {
 	instancesTag["RoleInstances"] = "Role"
 	instancesTag["ThemeInstances"] = "UITheme"
 	instancesTag["VendorInstances"] = "vendor"
+	instancesTag["DocumentInstances"] = "document"
 }
 
 //Driver defines the file with a list of drivers to run
@@ -473,6 +493,7 @@ type Driver struct {
 	PackageDriver bool
 	FilePath      string
 	Info          os.FileInfo
+	Folder        string
 }
 
 //Clear reset the contents of the driver
@@ -554,4 +575,5 @@ type DriverTypesPattern struct {
 	RoleInstances             []DriverFile `xml:"roleInstance"`
 	ThemeInstances            []DriverFile `xml:"themeInstance"`
 	VendorInstances           []DriverFile `xml:"vendorInstance"`
+	DocumentInstances         []DriverFile `xml:"documentInstance"`
 }

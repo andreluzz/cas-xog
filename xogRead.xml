@@ -279,6 +279,17 @@
             </Query>
         </NikuDataBus>
     </xogtype>
+    <xogtype type="DocumentInstances">
+        <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
+            <Header action="read" externalSource="NIKU" objectType="document" version="7.5">
+                <args name="documentLocation" />
+            </Header>
+            <DocumentQuery>
+                <Filter name="parentObjectID" criteria="EQUALS" />
+                <Filter name="parentObjectType" criteria="EQUALS" />
+            </DocumentQuery>
+        </NikuDataBus>
+    </xogtype>
     <xogtype type="BenefitPlanInstances">
         <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_read.xsd">
             <Header action="read" externalSource="NIKU" objectType="benefitPlan" version="13.0"/>

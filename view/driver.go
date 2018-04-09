@@ -51,6 +51,10 @@ func ProcessDriverFiles(driver *model.Driver, action string, environments *model
 		}
 		sourceFolder, outputFolder := xog.CreateFileFolder(action, f.Type, f.Path)
 
+		if f.Type == constant.TypeMigration {
+			sourceFolder = constant.FolderMigration
+		}
+
 		splitFilename, _ := f.GetSplitWriteFilesPath(sourceFolder)
 		if len(splitFilename) > 0 {
 			totalSplit := len(splitFilename)
@@ -64,9 +68,6 @@ func ProcessDriverFiles(driver *model.Driver, action string, environments *model
 			}
 		} else {
 			log.Info("\n[CAS-XOG][blue[%s]] %03d/%03d | [blue[%s]] | file: %s", processingString, i+1, total, formattedType, f.Path)
-			if f.Type == constant.TypeMigration {
-				sourceFolder = constant.FolderMigration
-			}
 
 			output := xog.ProcessDriverFile(&f, action, sourceFolder, outputFolder, environments, util.SoapCall)
 			status, color := util.GetStatusColorFromOutput(output.Code)
@@ -89,6 +90,7 @@ func ProcessDriverFiles(driver *model.Driver, action string, environments *model
 
 func renderDrivers() {
 	folder := "drivers/"
+	currentFolder := constant.Undefined
 	driversList, err := xog.GetDriversList(folder)
 	if err != nil {
 		log.Info("\n[CAS-XOG][red[ERROR]] - %s\n", err.Error())
@@ -101,8 +103,16 @@ func renderDrivers() {
 		if d.PackageDriver {
 			log.Info("%d - [blue[Package driver:]] %s\n", k+1, d.Info.Name())
 		} else {
-			log.Info("%d - %s\n", k+1, d.Info.Name())
+			if d.Folder != constant.Undefined && currentFolder != d.Folder {
+				log.Info("[blue[Folder %s:]]\n", d.Folder)
+			}
+			if d.Folder != constant.Undefined {
+				log.Info("    %d - %s\n", k+1, d.Info.Name())
+			} else {
+				log.Info("%d - %s\n", k+1, d.Info.Name())
+			}
 		}
+		currentFolder = d.Folder
 	}
 	if startInstallingPackage == 0 {
 		fmt.Print("Choose driver [1] or p = Install Package: ")

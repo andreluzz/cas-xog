@@ -40,7 +40,7 @@ func Unzip(src, destinationFolder string) ([]string, error) {
 
 			// Make File
 			var fdir string
-			if lastIndex := strings.LastIndex(fpath, string(os.PathSeparator)); lastIndex > -1 {
+			if lastIndex := strings.LastIndex(fpath, GetPathSeparator()); lastIndex > -1 {
 				fdir = fpath[:lastIndex]
 			}
 

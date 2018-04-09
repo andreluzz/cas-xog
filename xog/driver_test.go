@@ -35,7 +35,7 @@ func TestValidateLoadedDriver(t *testing.T) {
 }
 
 func TestGetDriversList(t *testing.T) {
-	driverList, err := GetDriversList("../mock/xog/")
+	driverList, err := GetDriversList("../mock/xog/drivers")
 	if err != nil {
 		t.Errorf("Error getting drivers list from folder. Debug: %s", err.Error())
 	}
@@ -356,11 +356,13 @@ func TestProcessDriverFileActionExportToExcel(t *testing.T) {
 func TestProcessDriverFileActionMigrate(t *testing.T) {
 	packageMockFolder := "../" + constant.FolderMock + "migration/"
 	file := model.DriverFile{
-		Type:          constant.TypeMigration,
-		Template:      packageMockFolder + "template.xml",
-		ExcelFile:     packageMockFolder + "data.xlsx",
-		InstanceTag:   "instance",
-		ExcelStartRow: "1",
+		Type:             constant.TypeMigration,
+		Path:             "migrate_test.xml",
+		Template:         packageMockFolder + "template.xml",
+		ExcelFile:        packageMockFolder + "data.xlsx",
+		InstanceTag:      "instance",
+		ExcelStartRow:    "1",
+		InstancesPerFile: 1,
 		MatchExcel: []model.MatchExcel{
 			{
 				Col:           1,

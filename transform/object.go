@@ -11,32 +11,7 @@ func specificObjectTransformations(xog, aux *etree.Document, file *model.DriverF
 	removeChildObjects(xog)
 
 	if hasElementsToProcess(file) {
-		removeChildObjects(aux)
-
-		for _, f := range file.Elements {
-			if f.Code != constant.Undefined && (f.Type == constant.ElementTypeAction || f.Type == constant.ElementTypeLink || f.Type == constant.ElementTypeAttribute) {
-				for _, e := range xog.FindElements("//[@code='" + f.Code + "']") {
-					removeElementFromParent(aux, "//"+e.Tag+"[@code='"+f.Code+"']")
-					parentTag := e.Parent().Tag
-					if parentTag == "object" {
-						targetElement := aux.FindElement("//customAttribute")
-						if e.Tag == "attributeDefault" {
-							targetElement = aux.FindElement("//links")
-						}
-						targetElement.Parent().InsertChild(targetElement, e)
-					} else {
-						aux.FindElement("//" + parentTag).AddChild(e)
-					}
-				}
-				if f.Type == constant.ElementTypeAttribute {
-					for _, e := range xog.FindElements("//*[@attributeCode='" + f.Code + "']") {
-						removeElementFromParent(aux, "//"+e.Tag+"[@attributeCode='"+f.Code+"']")
-						aux.FindElement("//" + e.Parent().Tag).AddChild(e)
-					}
-				}
-			}
-		}
-		xog.SetRoot(aux.Root())
+		objectProcessElements(xog, aux, file)
 	}
 
 	if file.SourcePartition != constant.Undefined {
@@ -77,6 +52,35 @@ func hasElementsToProcess(file *model.DriverFile) bool {
 		}
 	}
 	return false
+}
+
+func objectProcessElements(xog, aux *etree.Document, file *model.DriverFile) {
+	removeChildObjects(aux)
+
+	for _, f := range file.Elements {
+		if f.Code != constant.Undefined && (f.Type == constant.ElementTypeAction || f.Type == constant.ElementTypeLink || f.Type == constant.ElementTypeAttribute) {
+			for _, e := range xog.FindElements("//[@code='" + f.Code + "']") {
+				removeElementFromParent(aux, "//"+e.Tag+"[@code='"+f.Code+"']")
+				parentTag := e.Parent().Tag
+				if parentTag == "object" {
+					targetElement := aux.FindElement("//customAttribute")
+					if e.Tag == "attributeDefault" {
+						targetElement = aux.FindElement("//links")
+					}
+					targetElement.Parent().InsertChild(targetElement, e)
+				} else {
+					aux.FindElement("//" + parentTag).AddChild(e)
+				}
+			}
+			if f.Type == constant.ElementTypeAttribute {
+				for _, e := range xog.FindElements("//*[@attributeCode='" + f.Code + "']") {
+					removeElementFromParent(aux, "//"+e.Tag+"[@attributeCode='"+f.Code+"']")
+					aux.FindElement("//" + e.Parent().Tag).AddChild(e)
+				}
+			}
+		}
+	}
+	xog.SetRoot(aux.Root())
 }
 
 func removeChildObjects(doc *etree.Document) {

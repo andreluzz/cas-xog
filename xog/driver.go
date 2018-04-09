@@ -13,6 +13,8 @@ import (
 	"github.com/beevik/etree"
 	"io/ioutil"
 	"math"
+	"os"
+	"path/filepath"
 	"reflect"
 	"sort"
 	"strconv"
@@ -97,21 +99,41 @@ func ValidateLoadedDriver() bool {
 
 //GetDriversList returns a list of available drivers in the defined folder
 func GetDriversList(folder string) ([]model.Driver, error) {
-	driversFileList, err := ioutil.ReadDir(folder)
+	var driversList []model.Driver
 
-	if err != nil || len(driversFileList) == 0 {
+	err := filepath.Walk(folder, func(path string, f os.FileInfo, err error) error {
+		if err != nil {
+			return errors.New("invalid driver folder")
+		}
+		if !f.IsDir() && util.GetExtension(path) == ".driver" {
+			driver := new(model.Driver)
+			driver.Info = f
+			driver.FilePath = path
+			folder := util.GetDirectFolder(path)
+			if folder != "drivers" {
+				driver.Folder = folder
+			}
+			driversList = append(driversList, *driver)
+		}
+		return nil
+	})
+
+	if err != nil || len(driversList) == 0 {
 		return nil, errors.New("driver folder not found or empty")
 	}
 
-	var driversList []model.Driver
-	for _, f := range driversFileList {
-		driver := new(model.Driver)
-		driver.Info = f
-		driver.FilePath = folder + f.Name()
-		driversList = append(driversList, *driver)
+	var driversListSorted []model.Driver
+	for _, d := range driversList {
+		if d.Folder == constant.Undefined {
+			driversListSorted = append(driversListSorted, d)
+		}
 	}
-
-	return driversList, nil
+	for _, d := range driversList {
+		if d.Folder != constant.Undefined {
+			driversListSorted = append(driversListSorted, d)
+		}
+	}
+	return driversListSorted, nil
 }
 
 //ProcessDriverFile execute a xog files and return the output
@@ -129,15 +151,7 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 	}
 
 	if action == constant.Migrate {
-		resp, err := migration.ReadDataFromExcel(file)
-		if err != nil {
-			output.Code = constant.OutputError
-			output.Debug = err.Error()
-			return output
-		}
-		file.SetXML(resp)
-		file.Write(outputFolder)
-		return output
+		return processMigrate(file, outputFolder)
 	}
 
 	err := file.InitXML(action, sourceFolder)
@@ -165,15 +179,35 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 	if err != nil {
 		output.Code = constant.OutputError
 		output.Debug = err.Error()
+		file.Write(constant.FolderDebug)
 		return output
 	}
 	if action == constant.Read {
 		output := processDriverFileRead(file, xogResponse, outputFolder)
 		if output.Code != constant.OutputSuccess {
+			file.Write(constant.FolderDebug)
 			return output
 		}
 	}
 
+	file.Write(outputFolder)
+	return output
+}
+
+func processMigrate(file *model.DriverFile, outputFolder string) model.Output {
+	output := model.Output{Code: constant.OutputSuccess, Debug: constant.Undefined}
+	resp, err := migration.ReadDataFromExcel(file)
+	if err != nil {
+		output.Code = constant.OutputError
+		output.Debug = err.Error()
+		return output
+	}
+	if file.GetInstanceTag() != constant.Undefined && file.InstancesPerFile > 0 {
+		xogResponse := etree.NewDocument()
+		xogResponse.ReadFromString(resp)
+		splitInstancesIntoMultipleFiles(file, xogResponse, outputFolder)
+	}
+	file.SetXML(resp)
 	file.Write(outputFolder)
 	return output
 }
@@ -195,33 +229,7 @@ func processDriverFileRead(file *model.DriverFile, xogResponse *etree.Document, 
 	err := transform.Execute(xogResponse, auxResponse, file)
 
 	if file.GetInstanceTag() != constant.Undefined && file.InstancesPerFile > 0 {
-		instanceTagPath := "//" + file.GetInstanceTag()
-
-		parentTagPath := "//" + xogResponse.FindElement(instanceTagPath).Parent().Tag
-
-		splitXogResponse := xogResponse.Copy()
-		for _, e := range splitXogResponse.FindElements(instanceTagPath) {
-			e.Parent().RemoveChild(e)
-		}
-		instances := xogResponse.FindElements(instanceTagPath)
-
-		totalFiles := math.Ceil(float64(len(instances)) / float64(file.InstancesPerFile))
-		path := util.GetPathWithoutExtension(file.Path)
-		for i := 0; i < int(totalFiles); i++ {
-			file.Path = fmt.Sprintf("%s_%03d.xml", path, i+1)
-			xog := splitXogResponse.Copy()
-			elementParent := xog.FindElement(parentTagPath)
-			for z := file.InstancesPerFile * i; z < file.InstancesPerFile*(i+1); z++ {
-				if z < len(instances) {
-					elementParent.AddChild(instances[z].Copy())
-				}
-			}
-			xog.IndentTabs()
-			s, _ := xog.WriteToString()
-			file.SetXML(s)
-			file.Write(outputFolder)
-		}
-		file.Path = "complete_" + path + ".xml"
+		splitInstancesIntoMultipleFiles(file, xogResponse, outputFolder)
 	}
 
 	str, _ := xogResponse.WriteToString()
@@ -242,6 +250,37 @@ func processDriverFileRead(file *model.DriverFile, xogResponse *etree.Document, 
 	}
 
 	return output
+}
+
+func splitInstancesIntoMultipleFiles(file *model.DriverFile, xogResponse *etree.Document, outputFolder string) {
+
+	instanceTagPath := "//" + file.GetInstanceTag()
+
+	parentTagPath := "//" + xogResponse.FindElement(instanceTagPath).Parent().Tag
+
+	splitXogResponse := xogResponse.Copy()
+	for _, e := range splitXogResponse.FindElements(instanceTagPath) {
+		e.Parent().RemoveChild(e)
+	}
+	instances := xogResponse.FindElements(instanceTagPath)
+
+	totalFiles := math.Ceil(float64(len(instances)) / float64(file.InstancesPerFile))
+	path := util.GetPathWithoutExtension(file.Path)
+	for i := 0; i < int(totalFiles); i++ {
+		file.Path = fmt.Sprintf("%s_%03d.xml", path, i+1)
+		xog := splitXogResponse.Copy()
+		elementParent := xog.FindElement(parentTagPath)
+		for z := file.InstancesPerFile * i; z < file.InstancesPerFile*(i+1); z++ {
+			if z < len(instances) {
+				elementParent.AddChild(instances[z].Copy())
+			}
+		}
+		xog.IndentTabs()
+		s, _ := xog.WriteToString()
+		file.SetXML(s)
+		file.Write(outputFolder)
+	}
+	file.Path = "complete_" + path + ".xml"
 }
 
 //CreateFileFolder creates the folders according to the action (read, write or migrate)

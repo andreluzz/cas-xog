@@ -25,11 +25,8 @@ func Execute(xog, aux *etree.Document, file *model.DriverFile) error {
 
 	if len(file.Elements) > 0 {
 		for _, e := range file.Elements {
-			if e.Action == constant.ActionRemove && e.XPath != "" && e.Type == "" && e.Code == "" {
-				if strings.HasPrefix(e.XPath, "/") {
-					e.XPath = "." + e.XPath
-				}
-				removeElementsFromParent(xog, e.XPath)
+			if e.Action != constant.Undefined && e.XPath != "" && e.Type == "" && e.Code == "" {
+				transformElement(e, xog)
 			}
 		}
 	}
@@ -45,6 +42,45 @@ func Execute(xog, aux *etree.Document, file *model.DriverFile) error {
 	xog.Indent(4)
 
 	return err
+}
+
+func transformElement(element model.Element, xog *etree.Document) {
+	if strings.HasPrefix(element.XPath, "/") {
+		element.XPath = "." + element.XPath
+	}
+
+	switch element.Action {
+	case constant.ActionInsert:
+		for _, e := range xog.FindElements(element.XPath) {
+			if element.Attribute != constant.Undefined {
+				e.CreateAttr(element.Attribute, element.Value)
+			} else {
+				nd := etree.NewDocument()
+				nd.ReadFromString(element.XMLString)
+				for _, t := range nd.ChildElements() {
+					e.AddChild(t)
+				}
+			}
+		}
+	case constant.ActionRemoveAllButNot:
+		for _, e := range xog.FindElements(element.XPath) {
+			attrRemoveList := make([]string, 1)
+			for i := 0; i < len(e.Attr); i++ {
+				if !strings.Contains(element.Attribute, e.Attr[i].Key) {
+					attrRemoveList = append(attrRemoveList, e.Attr[i].Key)
+				}
+			}
+			for _, k := range attrRemoveList {
+				e.RemoveAttr(k)
+			}
+		}
+	case constant.ActionRemove:
+		if element.Attribute != constant.Undefined {
+			removeElementsAttribute(xog, element.XPath, element.Attribute)
+		} else {
+			removeElementsFromParent(xog, element.XPath)
+		}
+	}
 }
 
 func transformXMLByType(headerElement *etree.Element, xog, aux *etree.Document, file *model.DriverFile) error {
@@ -92,6 +128,12 @@ func removeElementFromParent(xog *etree.Document, path string) {
 func removeElementsFromParent(xog *etree.Document, path string) {
 	for _, e := range xog.FindElements(path) {
 		e.Parent().RemoveChild(e)
+	}
+}
+
+func removeElementsAttribute(xog *etree.Document, path, attribute string) {
+	for _, e := range xog.FindElements(path) {
+		e.RemoveAttr(attribute)
 	}
 }
 
