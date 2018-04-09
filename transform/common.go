@@ -51,14 +51,27 @@ func transformElement(element model.Element, xog *etree.Document) {
 
 	switch element.Action {
 	case constant.ActionInsert:
-		e := xog.FindElement(element.XPath)
-		if element.Attribute != constant.Undefined {
-			e.CreateAttr(element.Attribute, element.Value)
-		} else {
-			nd := etree.NewDocument()
-			nd.ReadFromString(element.XMLString)
-			for _, t := range nd.ChildElements() {
-				e.AddChild(t)
+		for _, e := range xog.FindElements(element.XPath) {
+			if element.Attribute != constant.Undefined {
+				e.CreateAttr(element.Attribute, element.Value)
+			} else {
+				nd := etree.NewDocument()
+				nd.ReadFromString(element.XMLString)
+				for _, t := range nd.ChildElements() {
+					e.AddChild(t)
+				}
+			}
+		}
+	case constant.ActionRemoveAllBut:
+		for _, e := range xog.FindElements(element.XPath) {
+			attrRemoveList := make([]string, 1)
+			for i := 0; i < len(e.Attr); i++ {
+				if !strings.Contains(element.Attribute, e.Attr[i].Key) {
+					attrRemoveList = append(attrRemoveList, e.Attr[i].Key)
+				}
+			}
+			for _, k := range attrRemoveList {
+				e.RemoveAttr(k)
 			}
 		}
 	case constant.ActionRemove:

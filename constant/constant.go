@@ -32,6 +32,7 @@ const (
 	ActionUpdate  		  = "update"
 	ActionRemove  		  = "remove"
 	ActionInsert  		  = "insert"
+	ActionRemoveAllBut	  = "removeAllBut"
 
 	Read    = "r"
 	Write   = "w"
