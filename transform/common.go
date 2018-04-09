@@ -62,7 +62,7 @@ func transformElement(element model.Element, xog *etree.Document) {
 				}
 			}
 		}
-	case constant.ActionRemoveAllBut:
+	case constant.ActionRemoveAllButNot:
 		for _, e := range xog.FindElements(element.XPath) {
 			attrRemoveList := make([]string, 1)
 			for i := 0; i < len(e.Attr); i++ {
