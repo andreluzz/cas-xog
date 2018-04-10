@@ -5,6 +5,7 @@ import (
 	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/log"
 	"github.com/andreluzz/cas-xog/model"
+	"github.com/andreluzz/cas-xog/util"
 	"github.com/andreluzz/cas-xog/xog"
 	"os"
 	"strings"
@@ -51,7 +52,7 @@ func Interface() bool {
 
 	action := strings.ToLower(inputAction)
 	switch action {
-	case "w", "r", "m":
+	case constant.Write, constant.Read, constant.Migrate:
 		if xog.ValidateLoadedDriver() == false {
 			log.Info("\n[CAS-XOG][red[ERROR]] - XOG driver not loaded. Try action 'l' to load a valid driver.\n")
 			return false
@@ -59,8 +60,27 @@ func Interface() bool {
 		if !Environments(action, environments) {
 			return false
 		}
-		ProcessDriverFiles(xog.GetLoadedDriver(), action, environments)
-	case "p":
+		driver := xog.GetLoadedDriver()
+
+		if action == constant.Read && driver.AutomaticWrite {
+			log.Info("\n[CAS-XOG][yellow[Warning]]: This driver is configured to write automatically!")
+			log.Info("\n[CAS-XOG]Do you want to proceed? (y = Yes, n = No) [n]: ")
+			input := "n"
+			fmt.Scanln(&input)
+			if input != "y" {
+				environments.Logout(util.SoapCall)
+				return false
+			}
+		}
+
+		ProcessDriverFiles(driver, action, environments)
+
+		if action == constant.Read && driver.AutomaticWrite {
+			ProcessDriverFiles(driver, constant.Write, environments)
+		}
+
+		environments.Logout(util.SoapCall)
+	case constant.Package:
 		xog.LoadPackages(constant.FolderPackage, "packages/")
 		output, selectedPackage, selectedVersion := renderPackages()
 		if !output {
@@ -74,9 +94,9 @@ func Interface() bool {
 			log.Info("\n[CAS-XOG][red[PACKAGE]]: %s\n", err.Error())
 			return false
 		}
-	case "l":
+	case constant.Load:
 		renderDrivers()
-	case "x":
+	case constant.Exit:
 		log.Info("\n[CAS-XOG][blue[Action exit selected]] - Press enter key to exit...\n")
 		scanExit := ""
 		fmt.Scanln(&scanExit)

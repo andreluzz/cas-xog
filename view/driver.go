@@ -78,8 +78,6 @@ func ProcessDriverFiles(driver *model.Driver, action string, environments *model
 
 	elapsed := time.Since(start)
 
-	environments.Logout(util.SoapCall)
-
 	totalFilesProcessed := outputResults[constant.OutputError] + outputResults[constant.OutputSuccess] + outputResults[constant.OutputWarning] + outputResults[constant.OutputIgnored]
 
 	log.Info("\n\n-----------------------------------------------------------------------------")

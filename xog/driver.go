@@ -79,6 +79,7 @@ func LoadDriver(path string) (int, error) {
 	sort.Sort(model.ByExecutionOrder(driverXOG.Files))
 
 	driverXOG.Version = driverXOGTypePattern.Version
+	driverXOG.AutomaticWrite = driverXOGTypePattern.AutomaticWrite
 	driverXOG.FilePath = path
 
 	return len(driverXOG.Files), nil
