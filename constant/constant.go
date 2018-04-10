@@ -37,6 +37,9 @@ const (
 	Read    = "r"
 	Write   = "w"
 	Migrate = "m"
+	Package = "p"
+	Load    = "l"
+	Exit    = "x"
 
 	FolderRead      = "_read/"
 	FolderWrite     = "_write/"

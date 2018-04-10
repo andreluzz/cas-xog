@@ -488,12 +488,13 @@ func initInstancesTagByType() {
 
 //Driver defines the file with a list of drivers to run
 type Driver struct {
-	Version       string
-	Files         []DriverFile
-	PackageDriver bool
-	FilePath      string
-	Info          os.FileInfo
-	Folder        string
+	Version        string
+	Files          []DriverFile
+	PackageDriver  bool
+	FilePath       string
+	Info           os.FileInfo
+	Folder         string
+	AutomaticWrite bool
 }
 
 //Clear reset the contents of the driver
@@ -527,6 +528,7 @@ func (d ByExecutionOrder) Less(i, j int) bool { return d[i].ExecutionOrder < d[j
 //DriverTypesPattern stores each driver type in an array to make it easier to read the xml file
 type DriverTypesPattern struct {
 	Version                   string       `xml:"version,attr"`
+	AutomaticWrite            bool         `xml:"autoWrite,attr"`
 	Files                     []DriverFile `xml:"file"`
 	Objects                   []DriverFile `xml:"object"`
 	Views                     []DriverFile `xml:"view"`
