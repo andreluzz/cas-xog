@@ -18,6 +18,15 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 3. Create a folder called "drivers" with all driver files (.driver) you need to defining the objects you want to read and write;
 4. Execute the cas-xog.exe and follow the instructions in the screen.
 
+### General information
+If you like to read and write at once just put the attribute `autoWrite="true"` in your driver.
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0" autoWrite="true">
+    <object code="idea" path="idea.xml" />
+</xogdriver>
+```
+
 ### Other contents
 * [Global attributes](#global-attributes) 
 * [Global Sub Tags](#global-sub-tags) 
