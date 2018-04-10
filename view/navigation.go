@@ -68,6 +68,7 @@ func Interface() bool {
 			input := "n"
 			fmt.Scanln(&input)
 			if input != "y" {
+				ProcessDriverFiles(driver, action, environments)
 				environments.Logout(util.SoapCall)
 				return false
 			}
