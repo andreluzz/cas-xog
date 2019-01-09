@@ -31,3 +31,4 @@ packages/
 .idea/
 xogEnv.xml
 /template.xml
+.vscode/

@@ -2,14 +2,16 @@ package view
 
 import (
 	"fmt"
+	"os"
+	"strconv"
+	"time"
+
 	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/log"
 	"github.com/andreluzz/cas-xog/model"
 	"github.com/andreluzz/cas-xog/util"
 	"github.com/andreluzz/cas-xog/xog"
-	"os"
-	"strconv"
-	"time"
+	"github.com/andreluzz/cas-xog/api"
 )
 
 //ProcessDriverFiles displays the feedback of drivers processing
@@ -55,24 +57,32 @@ func ProcessDriverFiles(driver *model.Driver, action string, environments *model
 			sourceFolder = constant.FolderMigration
 		}
 
-		splitFilename, _ := f.GetSplitWriteFilesPath(sourceFolder)
-		if len(splitFilename) > 0 {
-			totalSplit := len(splitFilename)
-			for j, filename := range splitFilename {
-				f.Path = filename
-				log.Info("\n[CAS-XOG][blue[%s]] %03d/%03d | [blue[%s]] | Split: %03d/%03d | file: %s", processingString, i+1, total, formattedType, j+1, totalSplit, f.Path)
-				output := xog.ProcessDriverFile(&f, action, sourceFolder, outputFolder, environments, util.SoapCall)
-				status, color := util.GetStatusColorFromOutput(output.Code)
-				log.Info("\r[CAS-XOG][%s[%s %s]] %03d/%03d | [blue[%s]] | Split: %03d/%03d | file: %s %s", color, util.GetActionLabel(action), status, i+1, total, formattedType, j+1, totalSplit, f.Path, util.GetOutputDebug(output.Code, output.Debug))
-				outputResults[output.Code]++
-			}
-		} else {
+		if f.RestAPI() {
 			log.Info("\n[CAS-XOG][blue[%s]] %03d/%03d | [blue[%s]] | file: %s", processingString, i+1, total, formattedType, f.Path)
-
-			output := xog.ProcessDriverFile(&f, action, sourceFolder, outputFolder, environments, util.SoapCall)
+			output := api.ProcessDriverFile(&f, action, sourceFolder, outputFolder, environments, util.RestCall)
 			status, color := util.GetStatusColorFromOutput(output.Code)
 			log.Info("\r[CAS-XOG][%s[%s %s]] %03d/%03d | [blue[%s]] | file: %s %s", color, util.GetActionLabel(action), status, i+1, total, formattedType, f.Path, util.GetOutputDebug(output.Code, output.Debug))
 			outputResults[output.Code]++
+		} else {
+			splitFilename, _ := f.GetSplitWriteFilesPath(sourceFolder)
+			if len(splitFilename) > 0 {
+				totalSplit := len(splitFilename)
+				for j, filename := range splitFilename {
+					f.Path = filename
+					log.Info("\n[CAS-XOG][blue[%s]] %03d/%03d | [blue[%s]] | Split: %03d/%03d | file: %s", processingString, i+1, total, formattedType, j+1, totalSplit, f.Path)
+					output := xog.ProcessDriverFile(&f, action, sourceFolder, outputFolder, environments, util.SoapCall)
+					status, color := util.GetStatusColorFromOutput(output.Code)
+					log.Info("\r[CAS-XOG][%s[%s %s]] %03d/%03d | [blue[%s]] | Split: %03d/%03d | file: %s %s", color, util.GetActionLabel(action), status, i+1, total, formattedType, j+1, totalSplit, f.Path, util.GetOutputDebug(output.Code, output.Debug))
+					outputResults[output.Code]++
+				}
+			} else {
+				log.Info("\n[CAS-XOG][blue[%s]] %03d/%03d | [blue[%s]] | file: %s", processingString, i+1, total, formattedType, f.Path)
+	
+				output := xog.ProcessDriverFile(&f, action, sourceFolder, outputFolder, environments, util.SoapCall)
+				status, color := util.GetStatusColorFromOutput(output.Code)
+				log.Info("\r[CAS-XOG][%s[%s %s]] %03d/%03d | [blue[%s]] | file: %s %s", color, util.GetActionLabel(action), status, i+1, total, formattedType, f.Path, util.GetOutputDebug(output.Code, output.Debug))
+				outputResults[output.Code]++
+			}
 		}
 	}
 
