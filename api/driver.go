@@ -17,7 +17,7 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 	} else {
 		switch file.Type {
 		case constant.APITypeBlueprint:
-			//err = readBlueprint(file, sourceFolder, outputFolder, environments, restFunc)
+			err = writeBlueprint(file, sourceFolder, outputFolder, environments, restFunc)
 		}
 	}
 

@@ -1,13 +1,15 @@
 package util
 
 import (
-	"github.com/andreluzz/cas-xog/constant"
+	"bytes"
 	"os"
 	"reflect"
 	"regexp"
 	"runtime"
 	"strings"
 	"unsafe"
+
+	"github.com/andreluzz/cas-xog/constant"
 )
 
 //BytesToString convert an array of bytes to a string
@@ -124,4 +126,12 @@ func ReplacePathSeparatorByOS(path string) string {
 		result = strings.Replace(path, "\\", GetPathSeparator(), -1)
 	}
 	return result
+}
+
+//JSONEscapeText avoid escaping caracters like <, > and & from json byte array
+func JSONAvoidEscapeText(data []byte) []byte {
+	data = bytes.Replace(data, []byte("\\u003c"), []byte("<"), -1)
+	data = bytes.Replace(data, []byte("\\u003e"), []byte(">"), -1)
+	data = bytes.Replace(data, []byte("\\u0026"), []byte("&"), -1)
+	return data
 }
