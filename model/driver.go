@@ -97,7 +97,7 @@ type DriverFile struct {
 	Path             string        `xml:"path,attr"`
 	Type             string        `xml:"type,attr"`
 	ID               string        `xml:"id,attr"`
-	APIAction        string        `xml:"action,attr"`
+	TargetID         string        `xml:"targetId,attr"`
 	ObjCode          string        `xml:"objectCode,attr"`
 	ObjType          string        `xml:"objectType,attr"`
 	IgnoreReading    bool          `xml:"ignoreReading,attr"`
