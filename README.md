@@ -1,13 +1,8 @@
 [![codecov](https://codecov.io/gh/andreluzz/cas-xog/branch/master/graph/badge.svg)](https://codecov.io/gh/andreluzz/cas-xog)
-
 [![Build status](https://ci.appveyor.com/api/projects/status/4lixe3lc9c9pxoa5?svg=true)](https://ci.appveyor.com/project/andreluzz/cas-xog)
-
 [![Go Report Card](https://goreportcard.com/badge/github.com/andreluzz/cas-xog)](https://goreportcard.com/report/github.com/andreluzz/cas-xog)
-
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-
 [![Github All Releases](https://img.shields.io/github/downloads/andreluzz/cas-xog/total.svg)](https://github.com/andreluzz/cas-xog/releases/latest)
-
 [![GitHub release](https://img.shields.io/github/release/andreluzz/cas-xog.svg)](https://github.com/andreluzz/cas-xog/releases/latest)
 
 # CAS-XOG
