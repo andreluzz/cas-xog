@@ -248,12 +248,7 @@ func processDriverFileRead(file *model.DriverFile, xogResponse *etree.Document, 
 	}
 
 	if file.ExportToExcel {
-		err := migration.ExportInstancesToExcel(xogResponse, file, constant.FolderMigration)
-		if err != nil {
-			output.Code = constant.OutputError
-			output.Debug = err.Error()
-			return output
-		}
+		migration.ExportInstancesToExcel(xogResponse, file, constant.FolderMigration)
 	}
 
 	return output
