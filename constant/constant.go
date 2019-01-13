@@ -4,6 +4,8 @@ package constant
 const (
 	Version = 2.0
 
+	APITypeBlueprint = "Blueprints"
+
 	TypeLookup    = "Lookups"
 	TypePortlet   = "Portlets"
 	TypeQuery     = "Queries"

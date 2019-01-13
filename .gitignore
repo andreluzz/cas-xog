@@ -31,3 +31,5 @@ packages/
 .idea/
 xogEnv.xml
 /template.xml
+.vscode/
+!mock/xog/drivers

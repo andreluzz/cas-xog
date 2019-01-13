@@ -2,13 +2,14 @@ package view
 
 import (
 	"fmt"
+	"os"
+	"strconv"
+
 	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/log"
 	"github.com/andreluzz/cas-xog/model"
 	"github.com/andreluzz/cas-xog/util"
 	"github.com/howeyc/gopass"
-	"os"
-	"strconv"
 )
 
 var targetEnvInput string
@@ -97,7 +98,7 @@ func processingChooseEnvironment(environments *model.Environments, envType, labe
 		requestLogin(env)
 	}
 	log.Info("[CAS-XOG]Processing environment login")
-	err = env.Login(envIndex, util.SoapCall)
+	err = env.Login(envIndex, util.SoapCall, util.RestCall)
 
 	if err != nil {
 		log.Info("\n[CAS-XOG][red[ERROR]] - %s", err.Error())

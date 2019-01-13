@@ -2,13 +2,14 @@ package view
 
 import (
 	"fmt"
+	"os"
+	"strings"
+
 	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/log"
 	"github.com/andreluzz/cas-xog/model"
 	"github.com/andreluzz/cas-xog/util"
 	"github.com/andreluzz/cas-xog/xog"
-	"os"
-	"strings"
 )
 
 var startInstallingPackage int
@@ -46,7 +47,7 @@ func Interface() bool {
 		inputAction = "p"
 	} else {
 		log.Info("\nChoose action")
-		log.Info("\n(l = Load XOG Driver, r = Read XOGs, w = Write XOGs, m = Create Migration, p = Install Package or x = eXit): ")
+		log.Info("\n(l = Load Driver, r = Read, w = Write, m = Create Migration, p = Install Package or x = eXit): ")
 		fmt.Scanln(&inputAction)
 	}
 
@@ -54,7 +55,7 @@ func Interface() bool {
 	switch action {
 	case constant.Write, constant.Read, constant.Migrate:
 		if xog.ValidateLoadedDriver() == false {
-			log.Info("\n[CAS-XOG][red[ERROR]] - XOG driver not loaded. Try action 'l' to load a valid driver.\n")
+			log.Info("\n[CAS-XOG][red[ERROR]] - Driver not loaded. Try action 'l' to load a valid driver.\n")
 			return false
 		}
 		if !Environments(action, environments) {

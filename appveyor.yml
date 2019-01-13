@@ -1,8 +1,8 @@
-version: 2.1.{build}
+version: 2.5.{build}
 
 branches:
   only:
-  - master
+    - master
 
 skip_tags: true
 
@@ -13,44 +13,44 @@ environment:
   APPVERSION: $(appveyor_build_version)
 
 install:
-- cmd: >-
-    echo %PATH%
+  - cmd: >-
+      echo %PATH%
 
-    echo %GOPATH%
+      echo %GOPATH%
 
-    set PATH=%GOPATH%\bin;c:\go\bin;%PATH%
+      set PATH=%GOPATH%\bin;c:\go\bin;c:\msys64\mingw64\bin;%PATH%
 
-    go version
+      go version
 
-    go env
+      go env
 
-    go get -v -t -d ./...
+      go get -v -t -d ./...
 
 build_script:
-- cmd: go build -ldflags "-X main.version=%APPVERSION%" -o _buildOutput\cas-xog.exe -i .
+  - cmd: go build -ldflags "-X main.version=%APPVERSION%" -o _buildOutput\cas-xog.exe -i .
 
 test_script:
-- ps: >-
-    bash testCoverage.sh
+  - ps: >-
+      bash testCoverage.sh
 
-    $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
+      $env:PATH = 'C:\msys64\usr\bin;' + $env:PATH
 
-    Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
+      Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
 
-    bash codecov.sh -f "coverage.txt" -t 331bd826-0c46-49c9-925e-b6418fbceeb9
+      bash codecov.sh -f "coverage.txt" -t 331bd826-0c46-49c9-925e-b6418fbceeb9
 
 artifacts:
-- path: _buildOutput\cas-xog.exe
-  name: binary
-- path: xogRead.xml
-  name: config
+  - path: _buildOutput\cas-xog.exe
+    name: binary
+  - path: xogRead.xml
+    name: config
 
 deploy:
-- provider: GitHub
-  tag: v$(appveyor_build_version)
-  release: cas-xog $(appveyor_build_version)
-  description: 'This version, including new features and bug fixes, has been compiled with CI to increase stability.'
-  auth_token:
-    secure: eis8p27PKzPZRUHXV+2FrJ4cNkAj8DN/LCkLbktucyzmmCt2JzKA2CLqWRFH1Wkh
-  artifact: binary,config
-  force_update: true
+  - provider: GitHub
+    tag: v$(appveyor_build_version)
+    release: cas-xog $(appveyor_build_version)
+    description: 'This version, including new features and bug fixes, has been compiled with CI to increase stability.'
+    auth_token:
+      secure: eis8p27PKzPZRUHXV+2FrJ4cNkAj8DN/LCkLbktucyzmmCt2JzKA2CLqWRFH1Wkh
+    artifact: binary,config
+    force_update: true

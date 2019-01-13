@@ -1,11 +1,13 @@
 package model
 
 import (
+	"encoding/json"
 	"encoding/xml"
 	"errors"
+	"io/ioutil"
+
 	"github.com/andreluzz/cas-xog/util"
 	"github.com/beevik/etree"
-	"io/ioutil"
 )
 
 var environments *Environments
@@ -32,6 +34,7 @@ type EnvType struct {
 	Username     string `xml:"username"`
 	Password     string `xml:"password"`
 	Session      string
+	AuthToken    string
 	Copy         bool
 	RequestLogin bool
 }
@@ -52,13 +55,18 @@ func (e *EnvType) Init(envIndex int) {
 }
 
 //Login executes an soap call to retrieve the session id from the environment
-func (e *EnvType) Login(envIndex int, soapFunc util.Soap) error {
+func (e *EnvType) Login(envIndex int, soapFunc util.Soap, restFunc util.Rest) error {
 	var err error
 
 	environments.Available[envIndex].Username = e.Username
 	environments.Available[envIndex].Password = e.Password
 
 	e.Session, err = login(e, soapFunc)
+	if err != nil {
+		return err
+	}
+
+	e.AuthToken, err = loginAPI(e)
 	if err != nil {
 		return err
 	}
@@ -126,6 +134,22 @@ func (e *Environments) Logout(soapFunc util.Soap) error {
 		return err
 	}
 	return nil
+}
+
+type apiLogin struct {
+	Token string `json:"authToken"`
+}
+
+func loginAPI(env *EnvType) (string, error) {
+	response, err := util.APIPostLogin(env.URL+"/ppm/rest/v1/auth/login", env.Username, env.Password)
+	if err != nil {
+		return "", errors.New("Problems trying to get API Token from environment: " + env.Name + " | Debug: " + err.Error())
+	}
+
+	api := &apiLogin{}
+	json.Unmarshal(response, api)
+
+	return api.Token, nil
 }
 
 func login(env *EnvType, soapFunc util.Soap) (string, error) {

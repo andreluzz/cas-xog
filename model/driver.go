@@ -3,14 +3,15 @@ package model
 import (
 	"errors"
 	"fmt"
-	"github.com/andreluzz/cas-xog/constant"
-	"github.com/andreluzz/cas-xog/util"
-	"github.com/beevik/etree"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
+
+	"github.com/andreluzz/cas-xog/constant"
+	"github.com/andreluzz/cas-xog/util"
+	"github.com/beevik/etree"
 )
 
 var docXogReadXML, soapEnvelope *etree.Document
@@ -95,6 +96,8 @@ type DriverFile struct {
 	Code             string        `xml:"code,attr"`
 	Path             string        `xml:"path,attr"`
 	Type             string        `xml:"type,attr"`
+	ID               string        `xml:"id,attr"`
+	TargetID         string        `xml:"targetId,attr"`
 	ObjCode          string        `xml:"objectCode,attr"`
 	ObjType          string        `xml:"objectType,attr"`
 	IgnoreReading    bool          `xml:"ignoreReading,attr"`
@@ -199,6 +202,11 @@ func (d *DriverFile) Write(folder string) {
 	ioutil.WriteFile(folder+d.Type+"/"+d.Path, []byte(str), os.ModePerm)
 }
 
+//RestAPI validates if the driver uses the rest api
+func (d *DriverFile) RestAPI() bool {
+	return (d.Type == constant.APITypeBlueprint)
+}
+
 //NeedAuxXML validates if the driver needs to use an auxiliary xog xml
 func (d *DriverFile) NeedAuxXML() bool {
 	return (d.Type == constant.TypeObject && len(d.Elements) > 0) || (d.Type == constant.TypeView && d.Code != "*") || (d.Type == constant.TypeProcess && d.CopyPermissions != constant.Undefined) || (d.Type == constant.TypeMenu && len(d.Sections) > 0)
@@ -267,7 +275,7 @@ func (d *DriverFile) GetInstanceTag() string {
 //GetXMLType returns the constant value according to the type of driver
 func (d *DriverFile) GetXMLType() string {
 	switch d.Type {
-	case "Files", "Objects", "Views", "Lookups", "Portlets", "Pages", "Menus":
+	case "Files", "Objects", "Views", "Lookups", "Portlets", "Pages", "Menus", "Blueprints":
 		return strings.ToLower(d.Type[:len(d.Type)-1])
 	case "Processes":
 		return "process"
@@ -578,4 +586,5 @@ type DriverTypesPattern struct {
 	ThemeInstances            []DriverFile `xml:"themeInstance"`
 	VendorInstances           []DriverFile `xml:"vendorInstance"`
 	DocumentInstances         []DriverFile `xml:"documentInstance"`
+	Blueprints                []DriverFile `xml:"blueprint"`
 }

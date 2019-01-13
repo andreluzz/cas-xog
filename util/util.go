@@ -1,13 +1,15 @@
 package util
 
 import (
-	"github.com/andreluzz/cas-xog/constant"
+	"bytes"
 	"os"
 	"reflect"
 	"regexp"
 	"runtime"
 	"strings"
 	"unsafe"
+
+	"github.com/andreluzz/cas-xog/constant"
 )
 
 //BytesToString convert an array of bytes to a string
@@ -19,6 +21,9 @@ func BytesToString(b []byte) string {
 
 //ValidateFolder creates the folder structure if it do not exists
 func ValidateFolder(folder string) error {
+	if folder != "" && folder[len(folder)-1:] == "/" {
+		folder = folder[0 : len(folder)-1]
+	}
 	_, dirErr := os.Stat(folder)
 	if os.IsNotExist(dirErr) {
 		err := os.MkdirAll(folder, os.ModePerm)
@@ -124,4 +129,12 @@ func ReplacePathSeparatorByOS(path string) string {
 		result = strings.Replace(path, "\\", GetPathSeparator(), -1)
 	}
 	return result
+}
+
+//JSONAvoidEscapeText avoid escaping caracters like <, > and & from json byte array
+func JSONAvoidEscapeText(data []byte) []byte {
+	data = bytes.Replace(data, []byte("\\u003c"), []byte("<"), -1)
+	data = bytes.Replace(data, []byte("\\u003e"), []byte(">"), -1)
+	data = bytes.Replace(data, []byte("\\u0026"), []byte("&"), -1)
+	return data
 }

@@ -4,13 +4,6 @@ import (
 	"encoding/xml"
 	"errors"
 	"fmt"
-	"github.com/andreluzz/cas-xog/constant"
-	"github.com/andreluzz/cas-xog/migration"
-	"github.com/andreluzz/cas-xog/model"
-	"github.com/andreluzz/cas-xog/transform"
-	"github.com/andreluzz/cas-xog/util"
-	"github.com/andreluzz/cas-xog/validate"
-	"github.com/beevik/etree"
 	"io/ioutil"
 	"math"
 	"os"
@@ -19,6 +12,14 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+
+	"github.com/andreluzz/cas-xog/constant"
+	"github.com/andreluzz/cas-xog/migration"
+	"github.com/andreluzz/cas-xog/model"
+	"github.com/andreluzz/cas-xog/transform"
+	"github.com/andreluzz/cas-xog/util"
+	"github.com/andreluzz/cas-xog/validate"
+	"github.com/beevik/etree"
 )
 
 var driverXOG *model.Driver
