@@ -135,7 +135,8 @@ type blueprintResults struct {
 }
 
 type blueprintResponse struct {
-	ID int `json:"_internalId"`
+	ID   int    `json:"_internalId"`
+	Code string `json:"code"`
 }
 
 func writeBlueprint(file *model.DriverFile, sourceFolder, outputFolder string, environments *model.Environments, restFunc util.Rest) error {
@@ -150,15 +151,56 @@ func writeBlueprint(file *model.DriverFile, sourceFolder, outputFolder string, e
 	bp := &blueprint{}
 	json.Unmarshal(jsonFile, bp)
 
-	response, status, err := restFunc(bp.getNewBlueprintBody(), endpoint+"blueprints", http.MethodPost, environments.Target.AuthToken, nil)
-	if err != nil {
-		return err
-	}
-	if status != 200 {
-		return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
-	}
+	if file.TargetID != constant.Undefined {
+		//Get target blueprint code
+		response, status, err := restFunc(nil, endpoint+"blueprints/"+file.TargetID, http.MethodGet, environments.Target.AuthToken, nil)
+		if err != nil {
+			return err
+		}
+		if status != 200 {
+			return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+		}
+		resp := &blueprintResponse{}
+		json.Unmarshal(response, resp)
+		//Make blueprint editable
+		body := `{
+			"source": "` + resp.Code + `",
+			"action": "edit"
+		}`
+		response, status, err = restFunc([]byte(body), endpoint+"private/copyBlueprint", http.MethodPost, environments.Target.AuthToken, nil)
+		if err != nil {
+			return err
+		}
+		if status != 200 {
+			return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+		}
+		resp = &blueprintResponse{}
+		json.Unmarshal(response, resp)
+		bp.ID = resp.ID
+		//Update blueprint
+		response, status, err = restFunc(bp.getNewBlueprintBody(), endpoint+"blueprints"+"/"+strconv.Itoa(bp.ID), http.MethodPatch, environments.Target.AuthToken, nil)
+		if err != nil {
+			return err
+		}
+		if status != 200 {
+			return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+		}
+		//Delete editable blueprint content
+		err = deleteBlueprintContent(endpoint, strconv.Itoa(bp.ID), environments.Target.AuthToken, restFunc)
+		if err != nil {
+			return err
+		}
+	} else {
+		response, status, err := restFunc(bp.getNewBlueprintBody(), endpoint+"blueprints", http.MethodPost, environments.Target.AuthToken, nil)
+		if err != nil {
+			return err
+		}
+		if status != 200 {
+			return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+		}
 
-	json.Unmarshal(response, bp)
+		json.Unmarshal(response, bp)
+	}
 
 	//post sections
 	url := endpoint + "blueprints/" + strconv.Itoa(bp.ID) + "/sections"
@@ -200,6 +242,18 @@ func writeBlueprint(file *model.DriverFile, sourceFolder, outputFolder string, e
 	url = endpoint + "externalApps"
 	for _, e := range bp.ExternalApps {
 		response, status, err := restFunc(e.getNewExternalApp(bp.ID), url, http.MethodPost, environments.Target.AuthToken, nil)
+		if err != nil {
+			return err
+		}
+		if status != 200 {
+			return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+		}
+	}
+
+	if file.TargetID != constant.Undefined {
+		//publish edited blueprint
+		body := `{"mode": "PUBLISHED"}`
+		response, status, err := restFunc([]byte(body), endpoint+"blueprints/"+strconv.Itoa(bp.ID), http.MethodPut, environments.Target.AuthToken, nil)
 		if err != nil {
 			return err
 		}
@@ -325,5 +379,69 @@ func readBlueprint(file *model.DriverFile, outputFolder string, environments *mo
 	bpPath := outputFolder + file.Type + "/" + file.Path
 	ioutil.WriteFile(bpPath, util.JSONAvoidEscapeText(data), 0644)
 
+	return nil
+}
+
+func deleteBlueprintContent(endpoint, bpID, token string, restFunc util.Rest) error {
+	//delete sections
+	response, status, err := restFunc(nil, endpoint+"blueprints/"+bpID+"/sections", http.MethodGet, token, nil)
+	if err != nil {
+		return err
+	}
+	if status != 200 {
+		return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+	}
+	sections := &blueprintResults{}
+	json.Unmarshal(response, sections)
+	for _, s := range sections.Results {
+		response, status, err := restFunc(nil, s.URL, http.MethodDelete, token, nil)
+		if err != nil {
+			return err
+		}
+		if status != 200 {
+			return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+		}
+	}
+	//delete visuals
+	response, status, err = restFunc(nil, endpoint+"blueprints/"+bpID+"/visuals", http.MethodGet, token, nil)
+	if err != nil {
+		return err
+	}
+	if status != 200 {
+		return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+	}
+	visuals := &blueprintResults{}
+	json.Unmarshal(response, visuals)
+	for _, v := range visuals.Results {
+		response, status, err := restFunc(nil, v.URL, http.MethodDelete, token, nil)
+		if err != nil {
+			return err
+		}
+		if status != 200 {
+			return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+		}
+	}
+	//delete externalApps
+	param := make(map[string]string)
+	param["filter"] = "(blueprintId = " + bpID + ")"
+	response, status, err = restFunc(nil, endpoint+"externalApps", http.MethodGet, token, param)
+	if err != nil {
+		return err
+	}
+	if status != 200 {
+		return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+	}
+	externalApps := &blueprintResults{}
+	json.Unmarshal(response, externalApps)
+
+	for _, e := range externalApps.Results {
+		response, status, err := restFunc(nil, e.URL, http.MethodDelete, token, nil)
+		if err != nil {
+			return err
+		}
+		if status != 200 {
+			return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+		}
+	}
 	return nil
 }

@@ -1,15 +1,20 @@
 [![codecov](https://codecov.io/gh/andreluzz/cas-xog/branch/master/graph/badge.svg)](https://codecov.io/gh/andreluzz/cas-xog)
+
 [![Build status](https://ci.appveyor.com/api/projects/status/4lixe3lc9c9pxoa5?svg=true)](https://ci.appveyor.com/project/andreluzz/cas-xog)
+
 [![Go Report Card](https://goreportcard.com/badge/github.com/andreluzz/cas-xog)](https://goreportcard.com/report/github.com/andreluzz/cas-xog)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+
 [![Github All Releases](https://img.shields.io/github/downloads/andreluzz/cas-xog/total.svg)](https://github.com/andreluzz/cas-xog/releases/latest)
+
 [![GitHub release](https://img.shields.io/github/release/andreluzz/cas-xog.svg)](https://github.com/andreluzz/cas-xog/releases/latest)
 
 # CAS-XOG
+
 Execute XOG files reading and writing in a more easy way
 
 This is a new method of creating XOG files. Using a Driver XML file, you can define with objects you would like to read, write and migrate.
-
 
 ### How to use
 
@@ -19,7 +24,9 @@ This is a new method of creating XOG files. Using a Driver XML file, you can def
 4. Execute the cas-xog.exe and follow the instructions in the screen.
 
 ### General information
+
 If you like to read and write at once just put the attribute `autoWrite="true"` in your driver.
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0" autoWrite="true">
@@ -28,55 +35,57 @@ If you like to read and write at once just put the attribute `autoWrite="true"` 
 ```
 
 ### Other contents
-* [Global attributes](#global-attributes) 
-* [Global Sub Tags](#global-sub-tags) 
-* [Package creation and deploy](#package-creation-and-deploy)
-* [Data migration](#data-migration)
+
+- [Global attributes](#global-attributes)
+- [Global Sub Tags](#global-sub-tags)
+- [Package creation and deploy](#package-creation-and-deploy)
+- [Data migration](#data-migration)
 
 ### Description of structure Driver tags
 
-| Tag | Description |
-| ------ | ------ |
-| [`object`](#tag-object) | Used to read and write objects attributes, actions and links. |
-| [`view`](#tag-view) | Used to read and write views. |
-| [`process`](#tag-process) | Used to read and write processes. |
-| [`lookup`](#tag-lookup) | Used to read and write lookups. |
-| [`portlet`](#tag-portlet) | Used to read and write portlets. |
-| [`query`](#tag-query) | Used to read and write queries. |
-| [`page`](#tag-page) | Used to read and write pages. |
-| [`menu`](#tag-menu) | Used to read and write menus. |
+| Tag                           | Description                                                   |
+| ----------------------------- | ------------------------------------------------------------- |
+| [`object`](#tag-object)       | Used to read and write objects attributes, actions and links. |
+| [`view`](#tag-view)           | Used to read and write views.                                 |
+| [`process`](#tag-process)     | Used to read and write processes.                             |
+| [`lookup`](#tag-lookup)       | Used to read and write lookups.                               |
+| [`portlet`](#tag-portlet)     | Used to read and write portlets.                              |
+| [`query`](#tag-query)         | Used to read and write queries.                               |
+| [`page`](#tag-page)           | Used to read and write pages.                                 |
+| [`menu`](#tag-menu)           | Used to read and write menus.                                 |
+| [`blueprint`](#tag-blueprint) | Used to read and write new UX blueprints.                     |
 
 ### Description of instance Driver tags
 
-| Tag | Description |
-| ------ | ------ |
-| [`customObjectInstance`](#tag-customobjectinstance) | Used to read and write customObject instances. |
-| [`resourceClassInstance`](#tag-resourceclassinstance) | Used to read and write resourceClass instances. |
-| [`wipClassInstance`](#tag-wipclassinstance) | Used to read and write wipClass instances. |
-| [`investmentClassInstance`](#tag-investmentclassinstance) | Used to read and write investmentClass instances. |
+| Tag                                                         | Description                                        |
+| ----------------------------------------------------------- | -------------------------------------------------- |
+| [`customObjectInstance`](#tag-customobjectinstance)         | Used to read and write customObject instances.     |
+| [`resourceClassInstance`](#tag-resourceclassinstance)       | Used to read and write resourceClass instances.    |
+| [`wipClassInstance`](#tag-wipclassinstance)                 | Used to read and write wipClass instances.         |
+| [`investmentClassInstance`](#tag-investmentclassinstance)   | Used to read and write investmentClass instances.  |
 | [`transactionClassInstance`](#tag-transactionclassinstance) | Used to read and write transactionClass instances. |
-| [`resourceInstance`](#tag-resourceinstance) | Used to read and write resource instances. |
-| [`userInstance`](#tag-userinstance) | Used to read and write user instances. |
-| [`projectInstance`](#tag-projectinstance) | Used to read and write project instances. |
-| [`ideaInstance`](#tag-ideainstance) | Used to read and write idea instances. |
-| [`applicationInstance`](#tag-applicationinstance) | Used to read and write application instances. |
-| [`assetInstance`](#tag-assetinstance) | Used to read and write asset instances. |
-| [`otherInvestmentInstance`](#tag-otherinvestmentinstance) | Used to read and write otherInvestment instances. |
-| [`productInstance`](#tag-productinstance) | Used to read and write product instances. |
-| [`serviceInstance`](#tag-serviceinstance) | Used to read and write service instances. |
-| [`obsInstance`](#tag-obsinstance) | Used to read and write OBS instances. |
-| [`themeInstance`](#tag-themeinstance) | Used to read and write UI Theme instances. |
-| [`groupInstance`](#tag-groupinstance) | Used to read and write groups. |
+| [`resourceInstance`](#tag-resourceinstance)                 | Used to read and write resource instances.         |
+| [`userInstance`](#tag-userinstance)                         | Used to read and write user instances.             |
+| [`projectInstance`](#tag-projectinstance)                   | Used to read and write project instances.          |
+| [`ideaInstance`](#tag-ideainstance)                         | Used to read and write idea instances.             |
+| [`applicationInstance`](#tag-applicationinstance)           | Used to read and write application instances.      |
+| [`assetInstance`](#tag-assetinstance)                       | Used to read and write asset instances.            |
+| [`otherInvestmentInstance`](#tag-otherinvestmentinstance)   | Used to read and write otherInvestment instances.  |
+| [`productInstance`](#tag-productinstance)                   | Used to read and write product instances.          |
+| [`serviceInstance`](#tag-serviceinstance)                   | Used to read and write service instances.          |
+| [`obsInstance`](#tag-obsinstance)                           | Used to read and write OBS instances.              |
+| [`themeInstance`](#tag-themeinstance)                       | Used to read and write UI Theme instances.         |
+| [`groupInstance`](#tag-groupinstance)                       | Used to read and write groups.                     |
 
 ## Tag `object`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Object code. | yes | 
-| `path` | Path where the file will be saved on the file system. | yes | 
-| `partitionModel` | Used when you need to set a new partitionModel or change the current one. | no |
-| `targetPartition` | Used to change elements partition code to the defined value. When uses alone without sourcePartition replaces the tag partitionCode on all elements. | no |
-| `sourcePartition` | Used to read only elements from this partition code. | no |
+| Attribute         | Description                                                                                                                                          | Required |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`            | Object code.                                                                                                                                         | yes      |
+| `path`            | Path where the file will be saved on the file system.                                                                                                | yes      |
+| `partitionModel`  | Used when you need to set a new partitionModel or change the current one.                                                                            | no       |
+| `targetPartition` | Used to change elements partition code to the defined value. When uses alone without sourcePartition replaces the tag partitionCode on all elements. | no       |
+| `sourcePartition` | Used to read only elements from this partition code.                                                                                                 | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -89,12 +98,13 @@ If you like to read and write at once just put the attribute `autoWrite="true"` 
 ```
 
 ### Sub tag `element`
+
 Used to read only the selected elements from the object.
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `type` | Defines what element to read. Availables types: `attribute`, `action` and `link`. | yes | 
-| `code` | Code of the element that you want to include. | yes | 
+| Attribute | Description                                                                       | Required |
+| --------- | --------------------------------------------------------------------------------- | -------- |
+| `type`    | Defines what element to read. Availables types: `attribute`, `action` and `link`. | yes      |
+| `code`    | Code of the element that you want to include.                                     | yes      |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -110,13 +120,13 @@ Used to read only the selected elements from the object.
 
 ## Tag `view`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Defines the views that should be read. Use `*` for reading all views from object; Use `*pattern_string` to choose all the views where the code contains the pattern string; Use the view code without `*` if you want a single view. | yes |
-| `objectCode` | Object code. | yes |
-| `path` | Path where the file will be saved on the file system. | yes | 
-| `sourcePartition` | When defined reads only views from this partition code. | no |
-| `targetPartition` | Used to replaces the source value tag partitionCode of elements with the defined value. If you want to use this feature, the `sourcePartition` tag is required. | no |
+| Attribute         | Description                                                                                                                                                                                                                          | Required |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| `code`            | Defines the views that should be read. Use `*` for reading all views from object; Use `*pattern_string` to choose all the views where the code contains the pattern string; Use the view code without `*` if you want a single view. | yes      |
+| `objectCode`      | Object code.                                                                                                                                                                                                                         | yes      |
+| `path`            | Path where the file will be saved on the file system.                                                                                                                                                                                | yes      |
+| `sourcePartition` | When defined reads only views from this partition code.                                                                                                                                                                              | no       |
+| `targetPartition` | Used to replaces the source value tag partitionCode of elements with the defined value. If you want to use this feature, the `sourcePartition` tag is required.                                                                      | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -131,13 +141,14 @@ Used to read only the selected elements from the object.
 ```
 
 ### Sub tag `section`
+
 Used to read and transform only the selected section from the view. Only single views can use the sub tag `section`, cant be used with `code='*'`.
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `action` | Defines what to do in the section. Available: `remove`, `replace`, `insert` and `update`. To use action `update` is required to include the sub tag `field`. | yes | 
-| `sourcePosition` | Position of the view in the source. Required for actions: `replace`, `insert` and `update`. | no | 
-| `targetPosition` | Position where you want to insert the section in the target view. Required for action `remove`. | no | 
+| Attribute        | Description                                                                                                                                                  | Required |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| `action`         | Defines what to do in the section. Available: `remove`, `replace`, `insert` and `update`. To use action `update` is required to include the sub tag `field`. | yes      |
+| `sourcePosition` | Position of the view in the source. Required for actions: `replace`, `insert` and `update`.                                                                  | no       |
+| `targetPosition` | Position where you want to insert the section in the target view. Required for action `remove`.                                                              | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -151,14 +162,15 @@ Used to read and transform only the selected section from the view. Only single 
 ```
 
 ### Sub tag `field`
+
 Used to read and transform only the selected fields from the section. Only sections with action `update` can use sub tag `field`.
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Code of the field to transform. | yes | 
-| `remove` | Use `true` if the field should be removed from the target view. Default value is considered `false`. | no |
-| `column` | The section's column where the field will be inserted in the target view. Required if `remove` tag is not defined as `true`. | no |
-| `insertBefore` | If an attribute code is defined in this tag, the new field will be positioned before this attributte in the target view. If not, will insert the field as in the last position of the column. | no | 
+| Attribute      | Description                                                                                                                                                                                   | Required |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`         | Code of the field to transform.                                                                                                                                                               | yes      |
+| `remove`       | Use `true` if the field should be removed from the target view. Default value is considered `false`.                                                                                          | no       |
+| `column`       | The section's column where the field will be inserted in the target view. Required if `remove` tag is not defined as `true`.                                                                  | no       |
+| `insertBefore` | If an attribute code is defined in this tag, the new field will be positioned before this attributte in the target view. If not, will insert the field as in the last position of the column. | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -175,14 +187,15 @@ Used to read and transform only the selected fields from the section. Only secti
 ```
 
 ### Sub tag `element`
+
 Used to read view actions and actions group.
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Code of the element that you want to include or remove. | yes | 
-| `type` | Defines what element to read. Availables types: `actionGroup` and `action`. | yes | 
-| `action` | Defines what to do with the element in the target environment. Availables actions: `insert` and `remove`. | yes |
-| `insertBefore` | When a code is defined in this tag, the action or group will be positioned before this element in the target view. If not, it will be inserted as the last element. | no | 
+| Attribute      | Description                                                                                                                                                         | Required |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`         | Code of the element that you want to include or remove.                                                                                                             | yes      |
+| `type`         | Defines what element to read. Availables types: `actionGroup` and `action`.                                                                                         | yes      |
+| `action`       | Defines what to do with the element in the target environment. Availables actions: `insert` and `remove`.                                                           | yes      |
+| `insertBefore` | When a code is defined in this tag, the action or group will be positioned before this element in the target view. If not, it will be inserted as the last element. | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -199,11 +212,11 @@ Used to read view actions and actions group.
 
 ## Tag `process`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Process code. | yes | 
-| `path` | Path where the file will be saved on the file system. | yes |
-| `copyPermissions` | The code of the process you want to copy the permissions from. | yes |
+| Attribute         | Description                                                    | Required |
+| ----------------- | -------------------------------------------------------------- | -------- |
+| `code`            | Process code.                                                  | yes      |
+| `path`            | Path where the file will be saved on the file system.          | yes      |
+| `copyPermissions` | The code of the process you want to copy the permissions from. | yes      |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -215,13 +228,13 @@ Used to read view actions and actions group.
 
 ## Tag `lookup`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Lookup code. | yes | 
-| `path` | Path where the file will be saved on the file system. | yes | 
-| `onlyStructure` | Used to create a lookup with a fake query to prevent error of attributes that have not yet been imported. Only available for dynamic lookups. | no | 
-| `sourcePartition` | When defined changes only elements from this partition code. Should be used together with targetPartition tag. Only available for static lookups. | no |
-| `targetPartition` | Used to change the partition code. Used alone without sourcePartition replaces the tag partitionCode of all lookup values with the defined value. Only available for static lookups. | no |
+| Attribute         | Description                                                                                                                                                                          | Required |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| `code`            | Lookup code.                                                                                                                                                                         | yes      |
+| `path`            | Path where the file will be saved on the file system.                                                                                                                                | yes      |
+| `onlyStructure`   | Used to create a lookup with a fake query to prevent error of attributes that have not yet been imported. Only available for dynamic lookups.                                        | no       |
+| `sourcePartition` | When defined changes only elements from this partition code. Should be used together with targetPartition tag. Only available for static lookups.                                    | no       |
+| `targetPartition` | Used to change the partition code. Used alone without sourcePartition replaces the tag partitionCode of all lookup values with the defined value. Only available for static lookups. | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -234,6 +247,7 @@ Used to read view actions and actions group.
 ```
 
 ### Sub tag `nsql`
+
 Used to replace the nsql query inside an dynamic lookup.
 
 ```xml
@@ -260,10 +274,10 @@ Used to replace the nsql query inside an dynamic lookup.
 
 ## Tag `portlet`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Portlet code. | yes | 
-| `path` | Path where the file will be saved on the file system. | yes | 
+| Attribute | Description                                           | Required |
+| --------- | ----------------------------------------------------- | -------- |
+| `code`    | Portlet code.                                         | yes      |
+| `path`    | Path where the file will be saved on the file system. | yes      |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -274,10 +288,10 @@ Used to replace the nsql query inside an dynamic lookup.
 
 ## Tag `query`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Query code. | yes | 
-| `path` | Path where the file will be saved on the file system. | yes | 
+| Attribute | Description                                           | Required |
+| --------- | ----------------------------------------------------- | -------- |
+| `code`    | Query code.                                           | yes      |
+| `path`    | Path where the file will be saved on the file system. | yes      |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -288,10 +302,10 @@ Used to replace the nsql query inside an dynamic lookup.
 
 ## Tag `page`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Page code. | yes | 
-| `path` | Path where the file will be saved on the file system. | yes | 
+| Attribute | Description                                           | Required |
+| --------- | ----------------------------------------------------- | -------- |
+| `code`    | Page code.                                            | yes      |
+| `path`    | Path where the file will be saved on the file system. | yes      |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -302,10 +316,10 @@ Used to replace the nsql query inside an dynamic lookup.
 
 ## Tag `menu`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Menu code. | yes | 
-| `path` | Path where the file will be saved on the file system. | yes | 
+| Attribute | Description                                           | Required |
+| --------- | ----------------------------------------------------- | -------- |
+| `code`    | Menu code.                                            | yes      |
+| `path`    | Path where the file will be saved on the file system. | yes      |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -315,13 +329,14 @@ Used to replace the nsql query inside an dynamic lookup.
 ```
 
 ### Sub tag `section`
+
 Used to read only the selected section from the menu.
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Code of the attribute that you want to include. | yes | 
-| `action` | Defines what to do in the target menu. Available actions: `insert` and `update`. To use the update action, you need to include the sub tag [`link`](#sub-tag-link). | yes | 
-| `targetPosition` | Position where you want to insert the section in the target menu. | no | 
+| Attribute        | Description                                                                                                                                                         | Required |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`           | Code of the attribute that you want to include.                                                                                                                     | yes      |
+| `action`         | Defines what to do in the target menu. Available actions: `insert` and `update`. To use the update action, you need to include the sub tag [`link`](#sub-tag-link). | yes      |
+| `targetPosition` | Position where you want to insert the section in the target menu.                                                                                                   | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -333,11 +348,12 @@ Used to read only the selected section from the menu.
 ```
 
 ### Sub tag `link`
+
 Used to read only the selected links inside a section tag from the menu.
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Code of the link that you want to include. | yes |
+| Attribute | Description                                | Required |
+| --------- | ------------------------------------------ | -------- |
+| `code`    | Code of the link that you want to include. | yes      |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -353,14 +369,29 @@ Used to read only the selected links inside a section tag from the menu.
 </xogdriver>
 ```
 
+## Tag `blueprint`
+
+| Attribute  | Description                                                                         | Required |
+| ---------- | ----------------------------------------------------------------------------------- | -------- |
+| `id`       | Source blueprint database id.                                                       | yes      |
+| `targetId` | Target blueprint database id. Use this attribute to update a Blueprint.             | no       |
+| `path`     | Path where the file will be saved on the file system. The extension should be .json | yes      |
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+	<blueprint id="5000016" targetId="5023028" path="modern_business_management.json" />
+</xogdriver>
+```
+
 ## Tag `customObjectInstance`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `objectCode` | Defines the code of the custom object you want to read the instances. | yes |
-| `path` | Path where the file will be saved on the file system. | yes |
-| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
+| Attribute          | Description                                                                                                               | Required |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`             | Instance codes. Use code equals \* to get all instances.                                                                  | yes      |
+| `objectCode`       | Defines the code of the custom object you want to read the instances.                                                     | yes      |
+| `path`             | Path where the file will be saved on the file system.                                                                     | yes      |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -371,11 +402,11 @@ Used to read only the selected links inside a section tag from the menu.
 
 ## Tag `resourceClassInstance`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path where the file will be saved on the file system. | yes |
-| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
+| Attribute          | Description                                                                                                               | Required |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`             | Instance codes. Use code equals \* to get all instances.                                                                  | yes      |
+| `path`             | Path where the file will be saved on the file system.                                                                     | yes      |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -386,11 +417,11 @@ Used to read only the selected links inside a section tag from the menu.
 
 ## Tag `wipClassInstance`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path where the file will be saved on the file system. | yes |
-| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
+| Attribute          | Description                                                                                                               | Required |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`             | Instance codes. Use code equals \* to get all instances.                                                                  | yes      |
+| `path`             | Path where the file will be saved on the file system.                                                                     | yes      |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -401,11 +432,11 @@ Used to read only the selected links inside a section tag from the menu.
 
 ## Tag `investmentClassInstance`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path where the file will be saved on the file system. | yes |
-| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
+| Attribute          | Description                                                                                                               | Required |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`             | Instance codes. Use code equals \* to get all instances.                                                                  | yes      |
+| `path`             | Path where the file will be saved on the file system.                                                                     | yes      |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -416,11 +447,11 @@ Used to read only the selected links inside a section tag from the menu.
 
 ## Tag `transactionClassInstance`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path where the file will be saved on the file system. | yes |
-| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
+| Attribute          | Description                                                                                                               | Required |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`             | Instance codes. Use code equals \* to get all instances.                                                                  | yes      |
+| `path`             | Path where the file will be saved on the file system.                                                                     | yes      |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -431,11 +462,11 @@ Used to read only the selected links inside a section tag from the menu.
 
 ## Tag `resourceInstance`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path where the file will be saved on the file system. | yes |
-| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
+| Attribute          | Description                                                                                                               | Required |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`             | Instance codes. Use code equals \* to get all instances.                                                                  | yes      |
+| `path`             | Path where the file will be saved on the file system.                                                                     | yes      |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -446,11 +477,11 @@ Used to read only the selected links inside a section tag from the menu.
 
 ## Tag `userInstance`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path where the file will be saved on the file system. | yes |
-| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
+| Attribute          | Description                                                                                                               | Required |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`             | Instance codes. Use code equals \* to get all instances.                                                                  | yes      |
+| `path`             | Path where the file will be saved on the file system.                                                                     | yes      |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -461,11 +492,11 @@ Used to read only the selected links inside a section tag from the menu.
 
 ## Tag `projectInstance`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path where the file will be saved on the file system. | yes |
-| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
+| Attribute          | Description                                                                                                               | Required |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`             | Instance codes. Use code equals \* to get all instances.                                                                  | yes      |
+| `path`             | Path where the file will be saved on the file system.                                                                     | yes      |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -476,11 +507,11 @@ Used to read only the selected links inside a section tag from the menu.
 
 ## Tag `ideaInstance`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path where the file will be saved on the file system. | yes |
-| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
+| Attribute          | Description                                                                                                               | Required |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`             | Instance codes. Use code equals \* to get all instances.                                                                  | yes      |
+| `path`             | Path where the file will be saved on the file system.                                                                     | yes      |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -491,11 +522,11 @@ Used to read only the selected links inside a section tag from the menu.
 
 ## Tag `applicationInstance`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path where the file will be saved on the file system. | yes |
-| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
+| Attribute          | Description                                                                                                               | Required |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`             | Instance codes. Use code equals \* to get all instances.                                                                  | yes      |
+| `path`             | Path where the file will be saved on the file system.                                                                     | yes      |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -506,11 +537,11 @@ Used to read only the selected links inside a section tag from the menu.
 
 ## Tag `assetInstance`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path where the file will be saved on the file system. | yes |
-| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
+| Attribute          | Description                                                                                                               | Required |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`             | Instance codes. Use code equals \* to get all instances.                                                                  | yes      |
+| `path`             | Path where the file will be saved on the file system.                                                                     | yes      |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -521,11 +552,11 @@ Used to read only the selected links inside a section tag from the menu.
 
 ## Tag `otherInvestmentInstance`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path where the file will be saved on the file system. | yes |
-| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
+| Attribute          | Description                                                                                                               | Required |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`             | Instance codes. Use code equals \* to get all instances.                                                                  | yes      |
+| `path`             | Path where the file will be saved on the file system.                                                                     | yes      |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -536,11 +567,11 @@ Used to read only the selected links inside a section tag from the menu.
 
 ## Tag `productInstance`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path where the file will be saved on the file system. | yes |
-| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
+| Attribute          | Description                                                                                                               | Required |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`             | Instance codes. Use code equals \* to get all instances.                                                                  | yes      |
+| `path`             | Path where the file will be saved on the file system.                                                                     | yes      |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -551,11 +582,11 @@ Used to read only the selected links inside a section tag from the menu.
 
 ## Tag `serviceInstance`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Instance codes. Use code equals * to get all instances. | yes |
-| `path` | Path where the file will be saved on the file system. | yes |
-| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
+| Attribute          | Description                                                                                                               | Required |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`             | Instance codes. Use code equals \* to get all instances.                                                                  | yes      |
+| `path`             | Path where the file will be saved on the file system.                                                                     | yes      |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -566,10 +597,10 @@ Used to read only the selected links inside a section tag from the menu.
 
 ## Tag `obsInstance`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | OBS code. | yes | 
-| `path` | Path where the file will be saved on the file system. | yes | 
+| Attribute | Description                                           | Required |
+| --------- | ----------------------------------------------------- | -------- |
+| `code`    | OBS code.                                             | yes      |
+| `path`    | Path where the file will be saved on the file system. | yes      |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -580,10 +611,10 @@ Used to read only the selected links inside a section tag from the menu.
 
 ## Tag `themeInstance`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | UI Theme code. | yes | 
-| `path` | Path where the file will be saved on the file system. | yes | 
+| Attribute | Description                                           | Required |
+| --------- | ----------------------------------------------------- | -------- |
+| `code`    | UI Theme code.                                        | yes      |
+| `path`    | Path where the file will be saved on the file system. | yes      |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -594,10 +625,10 @@ Used to read only the selected links inside a section tag from the menu.
 
 ## Tag `groupInstance`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Group code. | yes | 
-| `path` | Path where the file will be saved on the file system. | yes | 
+| Attribute | Description                                           | Required |
+| --------- | ----------------------------------------------------- | -------- |
+| `code`    | Group code.                                           | yes      |
+| `path`    | Path where the file will be saved on the file system. | yes      |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -607,9 +638,11 @@ Used to read only the selected links inside a section tag from the menu.
 ```
 
 # Global Attributes
+
 Attributes that can be used in any [structure](#description-of-structure-driver-tags) and [instance](#description-of-instance-driver-tags) tags.
 
 ### Attribute `ignoreReading`
+
 Used to ignore the reading from source environment. Use it to avoid reading more than once the same structure. Intended to be used when you need to write the same structure more than once to resolve cross dependencies issues.
 
 ```xml
@@ -620,15 +653,17 @@ Used to ignore the reading from source environment. Use it to avoid reading more
 ```
 
 # Global Sub Tags
+
 Sub tags that can be used in any [structure](#description-of-structure-driver-tags) and [instance](#description-of-instance-driver-tags) tags.
 
 ### Sub Tag `replace`
+
 Used to do a replace one string with another one in the xog result.
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `from` | Defines which string should be replaced. | yes | 
-| `to` | String that will replace the one defined in the `from` tag. | yes | 
+| Attribute | Description                                                 | Required |
+| --------- | ----------------------------------------------------------- | -------- |
+| `from`    | Defines which string should be replaced.                    | yes      |
+| `to`      | String that will replace the one defined in the `from` tag. | yes      |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -647,14 +682,15 @@ Used to do a replace one string with another one in the xog result.
 ```
 
 ### Sub Tag `element`
+
 Used to do a remove elements or element attribute from the xog result using xpath.
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `action` | Define what action should be done. `insert`, `remove` and `removeAllButNot` are available. `insert` may be used to create or replace. `removeAllButNot` should be used when it is necessary to remove most attributes of a tag and keep only a few, use commas to separate the attributes that should remain in the tag. | yes | 
-| `xpath` | String that defines the path in the XML to the element you want to transform. | yes | 
-| `attribute` | String that defines the attribute from the element define in the xpath. | no |
-| `value` | String that defines the value to insert or replace in the attribute from the element define in the xpath. | no |
+| Attribute   | Description                                                                                                                                                                                                                                                                                                              | Required |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| `action`    | Define what action should be done. `insert`, `remove` and `removeAllButNot` are available. `insert` may be used to create or replace. `removeAllButNot` should be used when it is necessary to remove most attributes of a tag and keep only a few, use commas to separate the attributes that should remain in the tag. | yes      |
+| `xpath`     | String that defines the path in the XML to the element you want to transform.                                                                                                                                                                                                                                            | yes      |
+| `attribute` | String that defines the attribute from the element define in the xpath.                                                                                                                                                                                                                                                  | no       |
+| `value`     | String that defines the value to insert or replace in the attribute from the element define in the xpath.                                                                                                                                                                                                                | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -686,13 +722,14 @@ Used to do a remove elements or element attribute from the xog result using xpat
 ```
 
 ### Sub Tag `filter`
+
 Used to read instances using custom filter values. When defined all standard filters will be removed and only the defined ones will be used.
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `name` | Name of the object attribute used to filter. | yes | 
-| `criteria` | How the filter should be used. Can be used: OR, EQUALS, BETWEEN, BEFORE, AFTER.  | yes | 
-| `customAttribute` | Defines if this is a custom attribute filter or not. | no | 
+| Attribute         | Description                                                                     | Required |
+| ----------------- | ------------------------------------------------------------------------------- | -------- |
+| `name`            | Name of the object attribute used to filter.                                    | yes      |
+| `criteria`        | How the filter should be used. Can be used: OR, EQUALS, BETWEEN, BEFORE, AFTER. | yes      |
+| `customAttribute` | Defines if this is a custom attribute filter or not.                            | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -705,12 +742,13 @@ Used to read instances using custom filter values. When defined all standard fil
 ```
 
 ### Sub Tag `args`
+
 Used to read instances using custom header args values. When defined all standard header args will be removed and only the defined ones will be used.
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `name` | Name of the header arg. | yes | 
-| `value` | Value to the header arg.  | yes | 
+| Attribute | Description              | Required |
+| --------- | ------------------------ | -------- |
+| `name`    | Name of the header arg.  | yes      |
+| `value`   | Value to the header arg. | yes      |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -722,38 +760,42 @@ Used to read instances using custom header args values. When defined all standar
 ```
 
 # Package creation and deploy
+
 This feature should be used to deploy structures and instances in a more consolidated and organized way. You need to create a zip containing: a package file (.package), one or more driver files (.driver) and folders for versions and the XOG xml files.
 
 ### Tag `package`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `name` | Defines what will be displayed to the user as the package name. | yes | 
-| `folder` | The first level folder inside the zip file that represents the package. | yes |
-| `driver` | The default driver for all package versions. If the version has no driver this one will be used.  | yes |
+| Attribute | Description                                                                                      | Required |
+| --------- | ------------------------------------------------------------------------------------------------ | -------- |
+| `name`    | Defines what will be displayed to the user as the package name.                                  | yes      |
+| `folder`  | The first level folder inside the zip file that represents the package.                          | yes      |
+| `driver`  | The default driver for all package versions. If the version has no driver this one will be used. | yes      |
 
 ### Sub tag `version`
+
 This tag is required, as every package should have at least one version. If there is only one version, it will be chosen automatically.
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `name` | Defines what will be displayed to the user as the version name. | yes |
-| `folder` | The folder that represents the files for this version. | yes |
-| `driver` | Defines the driver for this version. Can be used to define a version with demo data and other with only structure for example. | no |
+| Attribute | Description                                                                                                                    | Required |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| `name`    | Defines what will be displayed to the user as the version name.                                                                | yes      |
+| `folder`  | The folder that represents the files for this version.                                                                         | yes      |
+| `driver`  | Defines the driver for this version. Can be used to define a version with demo data and other with only structure for example. | no       |
 
 ### Sub tag `definition`
+
 This tag is not required and should be used to define questions to the user to answer. The answers will be used to change specific definitions withih XOG xml files of the package.
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `action` | Defines the desired action. Available actions: `changePartitionModel`, `changePartition` and `replaceString`.  | yes | 
-| `description` | The question text that is asked to the user when installing the package. | yes |
-| `default` | The default value for this definition.  | no |
-| `transformTypes` | Define in what types of files this action should be performed, separated by single commas. If not defined the action will be performed in all XOG xml files. Use the same types defined in [`driver types`](#description-of-driver-types)  | no |
-| `from` | Defines which string should be replaced in the XOG xml files. Required when action is `replaceString`.  | no |
-| `to` | String that will replace the one defined in the `from` tag. Use the special string `"##DEFINITION_VALUE##` to set the position for the value defined by the user. Required when action is `replaceString`.  | no |
+| Attribute        | Description                                                                                                                                                                                                                               | Required |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `action`         | Defines the desired action. Available actions: `changePartitionModel`, `changePartition` and `replaceString`.                                                                                                                             | yes      |
+| `description`    | The question text that is asked to the user when installing the package.                                                                                                                                                                  | yes      |
+| `default`        | The default value for this definition.                                                                                                                                                                                                    | no       |
+| `transformTypes` | Define in what types of files this action should be performed, separated by single commas. If not defined the action will be performed in all XOG xml files. Use the same types defined in [`driver types`](#description-of-driver-types) | no       |
+| `from`           | Defines which string should be replaced in the XOG xml files. Required when action is `replaceString`.                                                                                                                                    | no       |
+| `to`             | String that will replace the one defined in the `from` tag. Use the special string `"##DEFINITION_VALUE##` to set the position for the value defined by the user. Required when action is `replaceString`.                                | no       |
 
 ### Package file example
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <package name="CAS-FIN" folder="cas-fin/" driver="cas_fin.driver">
@@ -779,6 +821,7 @@ This tag is not required and should be used to define questions to the user to a
 ```
 
 ### ZIP folders and files structure
+
 ```
 └── cas-fin
     ├── oracle
@@ -816,27 +859,30 @@ This tag is not required and should be used to define questions to the user to a
 
 To install the package the user should save the zip file inside a folder named `packages` in the same directory of the `cas-xog.exe` file.
 
-# Data migration 
+# Data migration
+
 This feature is used to export instances to an excel file and read data from excel file to a XOG template creating an xml to import data to the environment.
 
 ## Export data to excel
+
 Should be used with a [driver instance type](#description-of-instance-driver-types) to read data from the environment and save the match attributes to an excel file.
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `code` | Defines the name that will be displayed to the user. | yes | 
-| `path` | Path where the file will be saved on the file system. | yes |
-| `exportToExcel` | If set to true creates an excel file with the matched data. | yes |
-| `excel` | The name of the file to export the data.  | yes |
-| `instance` | The name of the main tag that represents the instance object that is being read.  | yes |
+| Attribute       | Description                                                                      | Required |
+| --------------- | -------------------------------------------------------------------------------- | -------- |
+| `code`          | Defines the name that will be displayed to the user.                             | yes      |
+| `path`          | Path where the file will be saved on the file system.                            | yes      |
+| `exportToExcel` | If set to true creates an excel file with the matched data.                      | yes      |
+| `excel`         | The name of the file to export the data.                                         | yes      |
+| `instance`      | The name of the main tag that represents the instance object that is being read. | yes      |
 
 ### Sub tag `match`
+
 This tag is required for export to excel data.
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `attribute` | Defines the attribute in the element where you want to get the data from. If no xpath is defined then we get the value from the main instance element defined. | no | 
-| `xpath` | A string representing the path to the element you want to get the data from. If no attribute value is defined then we get the value from the tag text. | no |
+| Attribute   | Description                                                                                                                                                    | Required |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `attribute` | Defines the attribute in the element where you want to get the data from. If no xpath is defined then we get the value from the main instance element defined. | no       |
+| `xpath`     | A string representing the path to the element you want to get the data from. If no attribute value is defined then we get the value from the tag text.         | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -854,29 +900,31 @@ This tag is required for export to excel data.
 </xogdriver>
 ```
 
-## Read data from excel to create XOG instances xml 
+## Read data from excel to create XOG instances xml
+
 Should be used with to create an XOG xml file with an instance for each line in the excel file.
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `path` | Path where the file will be saved on the file system. | yes |
-| `template` | Path to the template that should be used to create the XOG xml file. | yes |
-| `instance` | The name of the main tag that represents the instance object that should be created. | yes |
-| `excel` | Path to the excel file with the data. | yes |
-| `startRow` | The line number in the excel file that we will start reading to create the instances. Default value is 1. | no |
-| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no |
+| Attribute          | Description                                                                                                               | Required |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `path`             | Path where the file will be saved on the file system.                                                                     | yes      |
+| `template`         | Path to the template that should be used to create the XOG xml file.                                                      | yes      |
+| `instance`         | The name of the main tag that represents the instance object that should be created.                                      | yes      |
+| `excel`            | Path to the excel file with the data.                                                                                     | yes      |
+| `startRow`         | The line number in the excel file that we will start reading to create the instances. Default value is 1.                 | no       |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no       |
 
 ### Sub tag `match`
+
 This tag is required for export to excel data.
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `col` | Defines from which column of excel we'll get the data to include in the XOG xml file. | yes |
-| `attribute` | Defines which attribute in the element will receive the data. If no xpath is defined then we set this attribute in the main element instance. | no |
-| `xpath` | A string representing the path to the element you want to set the data. If no attribute value is defined then we set the value as a tag text. | no |
-| `removeIfNull` | If set to true and the value in excel is null, the element associated with xpath is removed. | no |
-| `multiValued` | If set to true this element will be treated as multi-valued. | no |
-| `separator` | Defines what character is being used to separate the options in the multi-valued data. Default value is ';'. | no |
+| Attribute      | Description                                                                                                                                   | Required |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `col`          | Defines from which column of excel we'll get the data to include in the XOG xml file.                                                         | yes      |
+| `attribute`    | Defines which attribute in the element will receive the data. If no xpath is defined then we set this attribute in the main element instance. | no       |
+| `xpath`        | A string representing the path to the element you want to set the data. If no attribute value is defined then we set the value as a tag text. | no       |
+| `removeIfNull` | If set to true and the value in excel is null, the element associated with xpath is removed.                                                  | no       |
+| `multiValued`  | If set to true this element will be treated as multi-valued.                                                                                  | no       |
+| `separator`    | Defines what character is being used to separate the options in the multi-valued data. Default value is ';'.                                  | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -893,6 +941,7 @@ This tag is required for export to excel data.
 ```
 
 ### Template file example
+
 ```xml
 <NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_customObjectInstance.xsd">
     <Header action="write" externalSource="NIKU" objectType="customObjectInstance" version="8.0" />
@@ -911,6 +960,7 @@ This tag is required for export to excel data.
 ```
 
 # XOG Environment example:
+
 This is an example of configuring the environments file.
 
 If the user does not have XOG access to an environment, simply remove the username and password tags. In this case, the system will prompt you to login at run time. Allowing someone else to enter with the necessary credentials.
@@ -919,12 +969,12 @@ This information is stored in memory and will be requested again only if the sys
 
 If the URL has a non-default port (80/443) it should be informed as follows: `http://development.server.com:8888`
 
-| Attribute | Description | Required |
-| ------ | ------ | ------ |
-| `name` | Defines an unique identifier that will be displayed in the application for choice of actions. | yes |
-| `username` | Username with permission to execute XOG in the environment. | no |
-| `password` | Password associated with username. | no |
-| `endpoint` | Defines the environment's URL. | yes |
+| Attribute  | Description                                                                                   | Required |
+| ---------- | --------------------------------------------------------------------------------------------- | -------- |
+| `name`     | Defines an unique identifier that will be displayed in the application for choice of actions. | yes      |
+| `username` | Username with permission to execute XOG in the environment.                                   | no       |
+| `password` | Password associated with username.                                                            | no       |
+| `endpoint` | Defines the environment's URL.                                                                | yes      |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>

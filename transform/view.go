@@ -2,11 +2,12 @@ package transform
 
 import (
 	"errors"
+	"strconv"
+	"strings"
+
 	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/model"
 	"github.com/beevik/etree"
-	"strconv"
-	"strings"
 )
 
 func specificViewTransformations(xog, aux *etree.Document, file *model.DriverFile) error {
@@ -283,15 +284,16 @@ func processViewSectionActionUpdate(section model.Section, sourceSection, target
 	if len(section.Fields) == 0 {
 		return errors.New("cannot update section because there is no tag <field> defined")
 	}
-	columnRight := targetSection.FindElement("//column[@sequence='2']")
+
+	columnRight := targetSection.FindElement("column[@sequence='2']")
 	if columnRight == nil {
 		//Create column if it does not exists
 		columnRight = etree.NewElement("column")
 		columnRight.CreateAttr("sequence", "2")
-		nlsElement := targetSection.FindElement("//nls[1]")
+		nlsElement := targetSection.FindElement("nls[1]")
 		targetSection.InsertChild(nlsElement, columnRight)
 	}
-	columnLeft := targetSection.FindElement("//column[@sequence='1']")
+	columnLeft := targetSection.FindElement("column[@sequence='1']")
 	if columnLeft == nil {
 		//Create column if it does not exists
 		columnLeft = etree.NewElement("column")
@@ -395,7 +397,8 @@ func updateSourceWithTargetPropertySet(xog, aux *etree.Document, file *model.Dri
 		} else {
 			propertySetUpdate := aux.FindElement("//propertySet/update")
 			if propertySetUpdate != nil {
-				propertySetUpdate.InsertChild(propertySetUpdate.FindElement("//nls[1]"), sourcePropertySetView)
+				auxpropertySetFirstNLS := aux.FindElement("//propertySet/update/nls[1]")
+				propertySetUpdate.InsertChild(auxpropertySetFirstNLS, sourcePropertySetView)
 			}
 		}
 	}

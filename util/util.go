@@ -21,6 +21,9 @@ func BytesToString(b []byte) string {
 
 //ValidateFolder creates the folder structure if it do not exists
 func ValidateFolder(folder string) error {
+	if folder != "" && folder[len(folder)-1:] == "/" {
+		folder = folder[0 : len(folder)-1]
+	}
 	_, dirErr := os.Stat(folder)
 	if os.IsNotExist(dirErr) {
 		err := os.MkdirAll(folder, os.ModePerm)

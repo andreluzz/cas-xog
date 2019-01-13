@@ -2,13 +2,14 @@ package xog
 
 import (
 	"errors"
+	"io/ioutil"
+	"os"
+	"testing"
+
 	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/model"
 	"github.com/andreluzz/cas-xog/util"
 	"github.com/tealeg/xlsx"
-	"io/ioutil"
-	"os"
-	"testing"
 )
 
 func deleteTestFolders() {
@@ -35,7 +36,7 @@ func TestValidateLoadedDriver(t *testing.T) {
 }
 
 func TestGetDriversList(t *testing.T) {
-	driverList, err := GetDriversList("../mock/xog/drivers")
+	driverList, err := GetDriversList("../mock/xog")
 	if err != nil {
 		t.Errorf("Error getting drivers list from folder. Debug: %s", err.Error())
 	}

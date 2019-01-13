@@ -2,13 +2,14 @@ package migration
 
 import (
 	"errors"
+	"strconv"
+	"strings"
+
 	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/model"
 	"github.com/andreluzz/cas-xog/util"
 	"github.com/beevik/etree"
 	"github.com/tealeg/xlsx"
-	"strconv"
-	"strings"
 )
 
 //ReadDataFromExcel used to create xog file from data in excel format. Only accept .xlsx extension
@@ -111,16 +112,21 @@ func validateReadDataFromExcelDriverAttributes(file *model.DriverFile) (int, *et
 
 //ExportInstancesToExcel used to create excel file with the data from xog file
 func ExportInstancesToExcel(xog *etree.Document, file *model.DriverFile, folder string) error {
+	util.ValidateFolder(folder)
 	xlsxFile := xlsx.NewFile()
 	sheet, _ := xlsxFile.AddSheet("Instances")
 
-	for _, instance := range xog.FindElements("//" + file.InstanceTag) {
+	for _, i := range xog.FindElements("//" + file.InstanceTag) {
+		instance := etree.NewDocument()
+		instance.AddChild(i)
+
 		row := sheet.AddRow()
 
 		for _, match := range file.MatchExcel {
 			var e *etree.Element
+
 			if match.XPath == constant.Undefined {
-				e = instance
+				e = instance.ChildElements()[0]
 			} else {
 				e = instance.FindElement(match.XPath)
 			}

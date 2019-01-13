@@ -6,12 +6,12 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/andreluzz/cas-xog/api"
 	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/log"
 	"github.com/andreluzz/cas-xog/model"
 	"github.com/andreluzz/cas-xog/util"
 	"github.com/andreluzz/cas-xog/xog"
-	"github.com/andreluzz/cas-xog/api"
 )
 
 //ProcessDriverFiles displays the feedback of drivers processing
@@ -77,7 +77,7 @@ func ProcessDriverFiles(driver *model.Driver, action string, environments *model
 				}
 			} else {
 				log.Info("\n[CAS-XOG][blue[%s]] %03d/%03d | [blue[%s]] | file: %s", processingString, i+1, total, formattedType, f.Path)
-	
+
 				output := xog.ProcessDriverFile(&f, action, sourceFolder, outputFolder, environments, util.SoapCall)
 				status, color := util.GetStatusColorFromOutput(output.Code)
 				log.Info("\r[CAS-XOG][%s[%s %s]] %03d/%03d | [blue[%s]] | file: %s %s", color, util.GetActionLabel(action), status, i+1, total, formattedType, f.Path, util.GetOutputDebug(output.Code, output.Debug))
@@ -140,7 +140,7 @@ func renderDrivers() {
 	driverIndex, err := strconv.Atoi(input)
 
 	if err != nil || driverIndex-1 < 0 || driverIndex > len(driversList) {
-		log.Info("\n[CAS-XOG][red[ERROR]] - Invalid XOG driver!\n")
+		log.Info("\n[CAS-XOG][red[ERROR]] - Invalid driver!\n")
 		return
 	}
 
@@ -150,5 +150,5 @@ func renderDrivers() {
 		return
 	}
 
-	log.Info("\n[CAS-XOG][blue[Loaded XOG Driver file]]: %s | Total files: [green[%d]]\n", driversList[driverIndex-1].FilePath, total)
+	log.Info("\n[CAS-XOG][blue[Loaded driver file]]: %s | Total files: [green[%d]]\n", driversList[driverIndex-1].FilePath, total)
 }
