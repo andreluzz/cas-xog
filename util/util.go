@@ -131,7 +131,7 @@ func ReplacePathSeparatorByOS(path string) string {
 	return result
 }
 
-//JSONEscapeText avoid escaping caracters like <, > and & from json byte array
+//JSONAvoidEscapeText avoid escaping caracters like <, > and & from json byte array
 func JSONAvoidEscapeText(data []byte) []byte {
 	data = bytes.Replace(data, []byte("\\u003c"), []byte("<"), -1)
 	data = bytes.Replace(data, []byte("\\u003e"), []byte(">"), -1)
