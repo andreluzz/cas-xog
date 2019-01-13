@@ -18,7 +18,7 @@ install:
 
       echo %GOPATH%
 
-      set PATH=%GOPATH%\bin;c:\go\bin;%PATH%
+      set PATH=%GOPATH%\bin;c:\go\bin;c:\msys64\mingw64\bin;%PATH%
 
       go version
 
