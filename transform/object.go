@@ -64,7 +64,7 @@ func objectProcessElements(xog, aux *etree.Document, file *model.DriverFile) {
 				parentTag := e.Parent().Tag
 				if parentTag == "object" {
 					targetElement := aux.FindElement("//customAttribute")
-					if e.Tag == "attributeDefault" {
+					if e.Tag == "attributeDefault" || targetElement == nil {
 						targetElement = aux.FindElement("//links")
 					}
 					targetElement.Parent().InsertChild(targetElement, e)
