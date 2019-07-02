@@ -10,14 +10,18 @@ import (
 func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolder string, environments *model.Environments, restFunc util.Rest) model.Output {
 	var err error
 	if action == "r" {
-		switch file.Type {
+		switch file.APIType() {
 		case constant.APITypeBlueprint:
 			err = readBlueprint(file, outputFolder, environments, restFunc)
+		case constant.APITypeTeam:
+			err = readTeam(file, outputFolder, environments, restFunc)
 		}
 	} else {
-		switch file.Type {
+		switch file.APIType() {
 		case constant.APITypeBlueprint:
 			err = writeBlueprint(file, sourceFolder, outputFolder, environments, restFunc)
+		case constant.APITypeTeam:
+			err = writeTeam(file, sourceFolder, outputFolder, environments, restFunc)
 		}
 	}
 

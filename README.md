@@ -375,7 +375,7 @@ Used to read only the selected links inside a section tag from the menu.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-	<blueprint id="5000016" targetId="5023028" path="modern_business_management.json" />
+	<api.blueprint id="5000016" targetId="5023028" path="modern_business_management.json" />
 </xogdriver>
 ```
 

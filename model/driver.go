@@ -204,7 +204,12 @@ func (d *DriverFile) Write(folder string) {
 
 //RestAPI validates if the driver uses the rest api
 func (d *DriverFile) RestAPI() bool {
-	return (d.Type == constant.APITypeBlueprint)
+	return strings.HasPrefix(d.Type, "API")
+}
+
+//APIType returns the type without api prefix
+func (d *DriverFile) APIType() string {
+	return d.Type[3:]
 }
 
 //NeedAuxXML validates if the driver needs to use an auxiliary xog xml
@@ -275,7 +280,9 @@ func (d *DriverFile) GetInstanceTag() string {
 //GetXMLType returns the constant value according to the type of driver
 func (d *DriverFile) GetXMLType() string {
 	switch d.Type {
-	case "Files", "Objects", "Views", "Lookups", "Portlets", "Pages", "Menus", "Blueprints":
+	case "APIBlueprints", "APITeams":
+		return "api." + strings.ToLower(d.Type[3:len(d.Type)-1])
+	case "Files", "Objects", "Views", "Lookups", "Portlets", "Pages", "Menus":
 		return strings.ToLower(d.Type[:len(d.Type)-1])
 	case "Processes":
 		return "process"
@@ -586,5 +593,6 @@ type DriverTypesPattern struct {
 	ThemeInstances            []DriverFile `xml:"themeInstance"`
 	VendorInstances           []DriverFile `xml:"vendorInstance"`
 	DocumentInstances         []DriverFile `xml:"documentInstance"`
-	Blueprints                []DriverFile `xml:"blueprint"`
+	APIBlueprints             []DriverFile `xml:"api.blueprint"`
+	APITeams                  []DriverFile `xml:"api.team"`
 }

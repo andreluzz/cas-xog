@@ -146,7 +146,7 @@ func writeBlueprint(file *model.DriverFile, sourceFolder, outputFolder string, e
 		return err
 	}
 
-	endpoint := environments.Target.URL + "/ppm/rest/v1/"
+	endpoint := environments.Target.URL + constant.APIEndpoint
 
 	bp := &blueprint{}
 	json.Unmarshal(jsonFile, bp)
@@ -268,7 +268,7 @@ func readBlueprint(file *model.DriverFile, outputFolder string, environments *mo
 	if file.ID == constant.Undefined {
 		return errors.New("Required attribute id not found")
 	}
-	endpoint := environments.Source.URL + "/ppm/rest/v1/"
+	endpoint := environments.Source.URL + constant.APIEndpoint
 	response, status, err := restFunc(nil, endpoint+"blueprints/"+file.ID, http.MethodGet, environments.Source.AuthToken, nil)
 	if err != nil {
 		return err
