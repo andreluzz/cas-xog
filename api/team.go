@@ -53,7 +53,7 @@ func readTeam(file *model.DriverFile, outputFolder string, environments *model.E
 	}
 
 	url := fmt.Sprintf("%steamdefinitions%s", endpoint, filter)
-	response, status, err := restFunc(nil, url, http.MethodGet, environments.Source.AuthToken, nil)
+	response, status, err := restFunc(nil, url, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
 	if err != nil {
 		return err
 	}
@@ -68,7 +68,7 @@ func readTeam(file *model.DriverFile, outputFolder string, environments *model.E
 
 	for _, t := range tr.Results {
 		// GET Team details
-		response, status, err = restFunc(nil, t.URL, http.MethodGet, environments.Source.AuthToken, nil)
+		response, status, err = restFunc(nil, t.URL, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
 		if err != nil {
 			return err
 		}
@@ -80,12 +80,12 @@ func readTeam(file *model.DriverFile, outputFolder string, environments *model.E
 		json.Unmarshal(response, &team)
 
 		// GET Allocations
-		response, status, err = restFunc(nil, t.URL+"/teamdefallocations", http.MethodGet, environments.Source.AuthToken, nil)
+		response, status, err = restFunc(nil, t.URL+"/teamdefallocations", http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
 		ar := &teamDefAllocationsResults{}
 		json.Unmarshal(response, ar)
 
 		for _, a := range ar.Results {
-			response, status, err = restFunc(nil, a.URL, http.MethodGet, environments.Source.AuthToken, nil)
+			response, status, err = restFunc(nil, a.URL, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
 			teamAllocation := &teamDefAllocations{}
 			json.Unmarshal(response, teamAllocation)
 			team.TeamAllocations = append(team.TeamAllocations, teamAllocation)

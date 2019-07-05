@@ -5,13 +5,15 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"net/url"
+	"time"
 )
 
 //Rest defines a rest interface to simplify the unit tests
-type Rest func(jsonString []byte, endpoint, method, token string, params map[string]string) ([]byte, int, error)
+type Rest func(jsonString []byte, endpoint, method, token, proxy string, params map[string]string) ([]byte, int, error)
 
 //RestCall executes a rest call to the defined environment executing a json
-func RestCall(jsonString []byte, endpoint, method, token string, params map[string]string) ([]byte, int, error) {
+func RestCall(jsonString []byte, endpoint, method, token, proxy string, params map[string]string) ([]byte, int, error) {
 	var body io.Reader
 	if jsonString != nil {
 		body = bytes.NewBuffer(jsonString)
@@ -33,7 +35,20 @@ func RestCall(jsonString []byte, endpoint, method, token string, params map[stri
 
 	req.URL.RawQuery = q.Encode()
 
-	client := &http.Client{}
+	client := &http.Client{
+		Timeout: time.Second * 60,
+	}
+
+	if proxy != "" {
+		proxyURL, err := url.Parse(proxy)
+		if err != nil {
+			return nil, -1, err
+		}
+		client.Transport = &http.Transport{
+			Proxy: http.ProxyURL(proxyURL),
+		}
+	}
+
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, -1, err
@@ -44,14 +59,27 @@ func RestCall(jsonString []byte, endpoint, method, token string, params map[stri
 }
 
 //APIPostLogin send a post to get the auth token
-func APIPostLogin(endpoint, username, password string) ([]byte, error) {
+func APIPostLogin(endpoint, username, password, proxy string) ([]byte, error) {
 	req, err := http.NewRequest(http.MethodPost, endpoint, nil)
 	if err != nil {
 		return nil, err
 	}
 	req.SetBasicAuth(username, password)
 
-	client := &http.Client{}
+	client := &http.Client{
+		Timeout: time.Second * 60,
+	}
+
+	if proxy != "" {
+		proxyURL, err := url.Parse(proxy)
+		if err != nil {
+			return nil, err
+		}
+		client.Transport = &http.Transport{
+			Proxy: http.ProxyURL(proxyURL),
+		}
+	}
+
 	resp, err := client.Do(req)
 
 	return ioutil.ReadAll(resp.Body)

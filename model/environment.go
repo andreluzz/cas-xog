@@ -33,6 +33,7 @@ type EnvType struct {
 	URL          string `xml:"endpoint"`
 	Username     string `xml:"username"`
 	Password     string `xml:"password"`
+	Proxy        string `xml:"proxy"`
 	Session      string
 	AuthToken    string
 	Copy         bool
@@ -47,6 +48,7 @@ func (e *EnvType) Init(envIndex int) {
 	e.Username = available.Username
 	e.Password = available.Password
 	e.URL = available.URL
+	e.Proxy = available.Proxy
 	e.RequestLogin = false
 
 	if e.Username == "" || e.Password == "" {
@@ -97,6 +99,7 @@ func (e *EnvType) copyEnv() *EnvType {
 		Password: e.Password,
 		URL:      e.URL,
 		Session:  e.Session,
+		Proxy:    e.Proxy,
 		Copy:     true,
 	}
 	return ne
@@ -141,7 +144,7 @@ type apiLogin struct {
 }
 
 func loginAPI(env *EnvType) (string, error) {
-	response, err := util.APIPostLogin(env.URL+"/ppm/rest/v1/auth/login", env.Username, env.Password)
+	response, err := util.APIPostLogin(env.URL+"/ppm/rest/v1/auth/login", env.Username, env.Password, env.Proxy)
 	if err != nil {
 		return "", errors.New("Problems trying to get API Token from environment: " + env.Name + " | Debug: " + err.Error())
 	}
@@ -166,7 +169,7 @@ func login(env *EnvType, soapFunc util.Soap) (string, error) {
 		return "", errors.New("Problems getting login xml: " + err.Error())
 	}
 
-	response, err := soapFunc(body, env.URL)
+	response, err := soapFunc(body, env.URL, env.Proxy)
 	resp := etree.NewDocument()
 	resp.ReadFromString(response)
 
@@ -196,7 +199,7 @@ func logout(env *EnvType, soapFunc util.Soap) error {
 		return errors.New("Problems getting logout xml: " + err.Error())
 	}
 
-	_, err = soapFunc(body, env.URL)
+	_, err = soapFunc(body, env.URL, env.Proxy)
 
 	if err != nil {
 		return errors.New("Problems trying to logout from environment: " + env.Name + " | Debug: " + err.Error())
