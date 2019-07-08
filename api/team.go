@@ -14,17 +14,14 @@ import (
 )
 
 type teamResults struct {
-	Results []struct {
-		ID  int    `json:"_internalId"`
-		URL string `json:"_self"`
-	} `json:"_results"`
+	Results []result `json:"_results"`
 }
 
 type team struct {
 	ID              int                   `json:"_internalId"`
 	Code            string                `json:"code"`
 	Name            string                `json:"name"`
-	Active          string                `json:"isActive"`
+	Active          bool                  `json:"isActive"`
 	TeamAllocations []*teamDefAllocations `json:"teamdefallocations"`
 }
 
@@ -35,10 +32,12 @@ type teamDefAllocations struct {
 }
 
 type teamDefAllocationsResults struct {
-	Results []struct {
-		ID  int    `json:"_internalId"`
-		URL string `json:"_self"`
-	} `json:"_results"`
+	Results []result `json:"_results"`
+}
+
+type result struct {
+	ID  int    `json:"_internalId"`
+	URL string `json:"_self"`
 }
 
 func readTeam(file *model.DriverFile, outputFolder string, environments *model.Environments, restFunc util.Rest) error {
@@ -101,5 +100,63 @@ func readTeam(file *model.DriverFile, outputFolder string, environments *model.E
 }
 
 func writeTeam(file *model.DriverFile, sourceFolder, outputFolder string, environments *model.Environments, restFunc util.Rest) error {
+	tmPath := sourceFolder + file.Type + "/" + file.Path
+	jsonFile, err := ioutil.ReadFile(tmPath)
+	if err != nil {
+		return err
+	}
+
+	endpoint := environments.Target.URL + constant.APIEndpoint
+
+	tm := []team{}
+	json.Unmarshal(jsonFile, &tm)
+
+	for _, t := range tm {
+		url := fmt.Sprintf("%steamdefinitions", endpoint)
+		body := fmt.Sprintf(`{
+			"code": "%s",
+			"name": "%s",
+			"isActive": %t
+		}`, t.Code, t.Name, t.Active)
+		response, status, err := restFunc([]byte(body), url, http.MethodPost, environments.Target.AuthToken, environments.Target.Proxy, nil)
+		if err != nil {
+			return err
+		}
+		if status != 200 {
+			return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+		}
+
+		newTeam := &team{}
+		json.Unmarshal(response, newTeam)
+
+		for _, a := range t.TeamAllocations {
+			url := fmt.Sprintf("%steamdefinitions/%d/teamdefallocations", endpoint, newTeam.ID)
+			body := fmt.Sprintf(`{
+				"resourceId": %d,
+				"totalAllocation": %f,
+				"teamId": %d
+			  }`, a.ResourceID, a.Allocation, newTeam.ID)
+
+			response, status, err := restFunc([]byte(body), url, http.MethodPost, environments.Target.AuthToken, environments.Target.Proxy, nil)
+			if err != nil {
+				return err
+			}
+			if status != 200 {
+				return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+			}
+
+			res := &result{}
+			json.Unmarshal(response, res)
+			body = fmt.Sprintf(`{"allocation": %f}`, a.Allocation)
+			response, status, err = restFunc([]byte(body), res.URL, http.MethodPut, environments.Target.AuthToken, environments.Target.Proxy, nil)
+			if err != nil {
+				return err
+			}
+			if status != 200 {
+				return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+			}
+		}
+	}
+
 	return nil
 }
