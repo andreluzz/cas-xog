@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -86,13 +87,11 @@ func (visual *blueprintVisual) getNewVisualBody() []byte {
 }
 
 type blueprintSection struct {
-	ID         int    `json:"_internalId"`
-	Name       string `json:"name"`
-	Sequence   int    `json:"sequence"`
-	FieldsAddr struct {
-		URL string `json:"_self"`
-	} `json:"fields"`
-	Fields []*blueprintField `json:"fieldsData"`
+	ID         int               `json:"_internalId"`
+	Name       string            `json:"name"`
+	Sequence   int               `json:"sequence"`
+	FieldsAddr result            `json:"fields"`
+	Fields     []*blueprintField `json:"fieldsData"`
 }
 
 func (section *blueprintSection) getNewSectionBody(bpID int) []byte {
@@ -128,10 +127,7 @@ func (field *blueprintField) getNewFieldBody(sectionID int) []byte {
 }
 
 type blueprintResults struct {
-	Results []struct {
-		ID  int    `json:"_internalId"`
-		URL string `json:"_self"`
-	} `json:"_results"`
+	Results []result `json:"_results"`
 }
 
 type blueprintResponse struct {
@@ -153,12 +149,12 @@ func writeBlueprint(file *model.DriverFile, sourceFolder, outputFolder string, e
 
 	if file.TargetID != constant.Undefined {
 		//Get target blueprint code
-		response, status, err := restFunc(nil, endpoint+"blueprints/"+file.TargetID, http.MethodGet, environments.Target.AuthToken, environments.Target.Proxy, nil)
+		response, status, err := restFunc(nil, endpoint+"private/blueprints/"+file.TargetID, http.MethodGet, environments.Target.AuthToken, environments.Target.Proxy, nil)
 		if err != nil {
 			return err
 		}
 		if status != 200 {
-			return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), endpoint+"private/blueprints/"+file.TargetID)
 		}
 		resp := &blueprintResponse{}
 		json.Unmarshal(response, resp)
@@ -172,45 +168,45 @@ func writeBlueprint(file *model.DriverFile, sourceFolder, outputFolder string, e
 			return err
 		}
 		if status != 200 {
-			return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), endpoint+"private/copyBlueprint")
 		}
 		resp = &blueprintResponse{}
 		json.Unmarshal(response, resp)
 		bp.ID = resp.ID
 		//Update blueprint
-		response, status, err = restFunc(bp.getNewBlueprintBody(), endpoint+"blueprints"+"/"+strconv.Itoa(bp.ID), http.MethodPatch, environments.Target.AuthToken, environments.Target.Proxy, nil)
+		response, status, err = restFunc(bp.getNewBlueprintBody(), endpoint+"private/blueprints/"+strconv.Itoa(bp.ID), http.MethodPatch, environments.Target.AuthToken, environments.Target.Proxy, nil)
 		if err != nil {
 			return err
 		}
 		if status != 200 {
-			return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), endpoint+"private/blueprints/"+strconv.Itoa(bp.ID))
 		}
 		//Delete editable blueprint content
-		err = deleteBlueprintContent(endpoint, strconv.Itoa(bp.ID), environments.Target.AuthToken, environments.Target.Proxy, restFunc)
+		err = deleteBlueprintContent(endpoint, strconv.Itoa(bp.ID), environments.Target.AuthToken, environments.Target.Proxy, environments.Target.URL, restFunc)
 		if err != nil {
 			return err
 		}
 	} else {
-		response, status, err := restFunc(bp.getNewBlueprintBody(), endpoint+"blueprints", http.MethodPost, environments.Target.AuthToken, environments.Target.Proxy, nil)
+		response, status, err := restFunc(bp.getNewBlueprintBody(), endpoint+"private/blueprints", http.MethodPost, environments.Target.AuthToken, environments.Target.Proxy, nil)
 		if err != nil {
 			return err
 		}
 		if status != 200 {
-			return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), endpoint+"private/blueprints")
 		}
 
 		json.Unmarshal(response, bp)
 	}
 
 	//post sections
-	url := endpoint + "blueprints/" + strconv.Itoa(bp.ID) + "/sections"
+	url := endpoint + "private/blueprints/" + strconv.Itoa(bp.ID) + "/sections"
 	for _, s := range bp.Sections {
 		response, status, err := restFunc(s.getNewSectionBody(bp.ID), url, http.MethodPost, environments.Target.AuthToken, environments.Target.Proxy, nil)
 		if err != nil {
 			return err
 		}
 		if status != 200 {
-			return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), url)
 		}
 		resp := &blueprintResponse{}
 		json.Unmarshal(response, resp)
@@ -221,20 +217,20 @@ func writeBlueprint(file *model.DriverFile, sourceFolder, outputFolder string, e
 				return err
 			}
 			if status != 200 {
-				return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+				return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), url+"/"+strconv.Itoa(resp.ID)+"/fields")
 			}
 		}
 	}
 
 	//post visuals
-	url = endpoint + "blueprints/" + strconv.Itoa(bp.ID) + "/visuals"
+	url = endpoint + "private/blueprints/" + strconv.Itoa(bp.ID) + "/visuals"
 	for _, v := range bp.Visuals {
 		response, status, err := restFunc(v.getNewVisualBody(), url, http.MethodPost, environments.Target.AuthToken, environments.Target.Proxy, nil)
 		if err != nil {
 			return err
 		}
 		if status != 200 {
-			return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), url)
 		}
 	}
 
@@ -246,21 +242,20 @@ func writeBlueprint(file *model.DriverFile, sourceFolder, outputFolder string, e
 			return err
 		}
 		if status != 200 {
-			return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), url)
 		}
 	}
 
-	if file.TargetID != constant.Undefined {
-		//publish edited blueprint
-		body := `{"mode": "PUBLISHED"}`
-		response, status, err := restFunc([]byte(body), endpoint+"blueprints/"+strconv.Itoa(bp.ID), http.MethodPut, environments.Target.AuthToken, environments.Target.Proxy, nil)
-		if err != nil {
-			return err
-		}
-		if status != 200 {
-			return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
-		}
+	//publish edited blueprint
+	body := `{"mode": "PUBLISHED"}`
+	response, status, err := restFunc([]byte(body), endpoint+"private/blueprints/"+strconv.Itoa(bp.ID), http.MethodPut, environments.Target.AuthToken, environments.Target.Proxy, nil)
+	if err != nil {
+		return err
 	}
+	if status != 200 {
+		return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), endpoint+"private/blueprints/"+strconv.Itoa(bp.ID))
+	}
+
 	return nil
 }
 
@@ -268,57 +263,71 @@ func readBlueprint(file *model.DriverFile, outputFolder string, environments *mo
 	if file.ID == constant.Undefined {
 		return errors.New("Required attribute id not found")
 	}
+
 	endpoint := environments.Source.URL + constant.APIEndpoint
-	response, status, err := restFunc(nil, endpoint+"blueprints/"+file.ID, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
+
+	response, status, err := restFunc(nil, endpoint+"private/blueprints/"+file.ID, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
 	if err != nil {
 		return err
 	}
 	if status != 200 {
-		return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+		return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), endpoint+"private/blueprints/"+file.ID)
 	}
 
 	bp := &blueprint{}
 	json.Unmarshal(response, bp)
 
 	//read bp sections
-	response, status, err = restFunc(nil, endpoint+"blueprints/"+file.ID+"/sections", http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
+	response, status, err = restFunc(nil, endpoint+"private/blueprints/"+file.ID+"/sections", http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
 	if err != nil {
 		return err
 	}
 	if status != 200 {
-		return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+		return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), endpoint+"private/blueprints/"+file.ID+"/sections")
 	}
 	sections := &blueprintResults{}
 	json.Unmarshal(response, sections)
 	for sectionIndex, s := range sections.Results {
-		response, status, err = restFunc(nil, s.URL, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
+		urlString, err := s.getURL(environments.Source.URL)
+		if err != nil {
+			return err
+		}
+		response, status, err = restFunc(nil, urlString, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
 		if err != nil {
 			return err
 		}
 		if status != 200 {
-			return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), urlString)
 		}
 		section := &blueprintSection{}
 		json.Unmarshal(response, section)
 		bp.Sections = append(bp.Sections, section)
 
 		// read bp section fields
-		response, status, err = restFunc(nil, section.FieldsAddr.URL, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
+		urlString, err = section.FieldsAddr.getURL(environments.Source.URL)
+		if err != nil {
+			return err
+		}
+		response, status, err = restFunc(nil, urlString, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
 		if err != nil {
 			return err
 		}
 		if status != 200 {
-			return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), urlString)
 		}
 		fields := &blueprintResults{}
 		json.Unmarshal(response, fields)
 		for _, f := range fields.Results {
-			response, status, err = restFunc(nil, f.URL, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
+			urlString, err = f.getURL(environments.Source.URL)
+			if err != nil {
+				return err
+			}
+			response, status, err = restFunc(nil, urlString, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
 			if err != nil {
 				return err
 			}
 			if status != 200 {
-				return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+				return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), urlString)
 			}
 			field := &blueprintField{}
 			json.Unmarshal(response, field)
@@ -327,22 +336,26 @@ func readBlueprint(file *model.DriverFile, outputFolder string, environments *mo
 	}
 
 	//read bp visuals
-	response, status, err = restFunc(nil, endpoint+"blueprints/"+file.ID+"/visuals", http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
+	response, status, err = restFunc(nil, endpoint+"private/blueprints/"+file.ID+"/visuals", http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
 	if err != nil {
 		return err
 	}
 	if status != 200 {
-		return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+		return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), endpoint+"private/blueprints/"+file.ID+"/visuals")
 	}
 	visuals := &blueprintResults{}
 	json.Unmarshal(response, visuals)
 	for _, v := range visuals.Results {
-		response, status, err = restFunc(nil, v.URL, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
+		urlString, err := v.getURL(environments.Source.URL)
+		if err != nil {
+			return err
+		}
+		response, status, err = restFunc(nil, urlString, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
 		if err != nil {
 			return err
 		}
 		if status != 200 {
-			return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), urlString)
 		}
 		visual := &blueprintVisual{}
 		json.Unmarshal(response, visual)
@@ -357,18 +370,22 @@ func readBlueprint(file *model.DriverFile, outputFolder string, environments *mo
 		return err
 	}
 	if status != 200 {
-		return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+		return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), endpoint+"externalApps")
 	}
 	externalApps := &blueprintResults{}
 	json.Unmarshal(response, externalApps)
 
 	for _, e := range externalApps.Results {
-		response, status, err = restFunc(nil, e.URL, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
+		urlString, err := e.getURL(environments.Source.URL)
+		if err != nil {
+			return err
+		}
+		response, status, err = restFunc(nil, urlString, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
 		if err != nil {
 			return err
 		}
 		if status != 200 {
-			return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), urlString)
 		}
 		externalApp := &blueprintExternalApp{}
 		json.Unmarshal(response, externalApp)
@@ -382,9 +399,9 @@ func readBlueprint(file *model.DriverFile, outputFolder string, environments *mo
 	return nil
 }
 
-func deleteBlueprintContent(endpoint, bpID, token, proxy string, restFunc util.Rest) error {
+func deleteBlueprintContent(endpoint, bpID, token, proxy, envURL string, restFunc util.Rest) error {
 	//delete sections
-	response, status, err := restFunc(nil, endpoint+"blueprints/"+bpID+"/sections", http.MethodGet, token, proxy, nil)
+	response, status, err := restFunc(nil, endpoint+"private/blueprints/"+bpID+"/sections", http.MethodGet, token, proxy, nil)
 	if err != nil {
 		return err
 	}
@@ -394,7 +411,11 @@ func deleteBlueprintContent(endpoint, bpID, token, proxy string, restFunc util.R
 	sections := &blueprintResults{}
 	json.Unmarshal(response, sections)
 	for _, s := range sections.Results {
-		response, status, err := restFunc(nil, s.URL, http.MethodDelete, token, proxy, nil)
+		urlString, err := s.getURL(envURL)
+		if err != nil {
+			return err
+		}
+		response, status, err := restFunc(nil, urlString, http.MethodDelete, token, proxy, nil)
 		if err != nil {
 			return err
 		}
@@ -403,7 +424,7 @@ func deleteBlueprintContent(endpoint, bpID, token, proxy string, restFunc util.R
 		}
 	}
 	//delete visuals
-	response, status, err = restFunc(nil, endpoint+"blueprints/"+bpID+"/visuals", http.MethodGet, token, proxy, nil)
+	response, status, err = restFunc(nil, endpoint+"private/blueprints/"+bpID+"/visuals", http.MethodGet, token, proxy, nil)
 	if err != nil {
 		return err
 	}
@@ -413,7 +434,11 @@ func deleteBlueprintContent(endpoint, bpID, token, proxy string, restFunc util.R
 	visuals := &blueprintResults{}
 	json.Unmarshal(response, visuals)
 	for _, v := range visuals.Results {
-		response, status, err := restFunc(nil, v.URL, http.MethodDelete, token, proxy, nil)
+		urlString, err := v.getURL(envURL)
+		if err != nil {
+			return err
+		}
+		response, status, err := restFunc(nil, urlString, http.MethodDelete, token, proxy, nil)
 		if err != nil {
 			return err
 		}
@@ -431,11 +456,15 @@ func deleteBlueprintContent(endpoint, bpID, token, proxy string, restFunc util.R
 	if status != 200 {
 		return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
 	}
+
 	externalApps := &blueprintResults{}
 	json.Unmarshal(response, externalApps)
-
 	for _, e := range externalApps.Results {
-		response, status, err := restFunc(nil, e.URL, http.MethodDelete, token, proxy, nil)
+		urlString, err := e.getURL(envURL)
+		if err != nil {
+			return err
+		}
+		response, status, err := restFunc(nil, urlString, http.MethodDelete, token, proxy, nil)
 		if err != nil {
 			return err
 		}

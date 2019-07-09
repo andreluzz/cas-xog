@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"strconv"
 
 	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/model"
@@ -26,18 +25,12 @@ type team struct {
 }
 
 type teamDefAllocations struct {
-	TeamID     int     `json:"teamId"`
 	ResourceID int     `json:"resourceId"`
 	Allocation float64 `json:"allocation"`
 }
 
 type teamDefAllocationsResults struct {
 	Results []result `json:"_results"`
-}
-
-type result struct {
-	ID  int    `json:"_internalId"`
-	URL string `json:"_self"`
 }
 
 func readTeam(file *model.DriverFile, outputFolder string, environments *model.Environments, restFunc util.Rest) error {
@@ -57,7 +50,7 @@ func readTeam(file *model.DriverFile, outputFolder string, environments *model.E
 		return err
 	}
 	if status != 200 {
-		return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+		return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), url)
 	}
 
 	tr := &teamResults{}
@@ -67,24 +60,32 @@ func readTeam(file *model.DriverFile, outputFolder string, environments *model.E
 
 	for _, t := range tr.Results {
 		// GET Team details
-		response, status, err = restFunc(nil, t.URL, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
+		urlString, err := t.getURL(environments.Source.URL)
+		if err != nil {
+			return err
+		}
+		response, status, err = restFunc(nil, urlString, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
 		if err != nil {
 			return err
 		}
 		if status != 200 {
-			return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), urlString)
 		}
 
 		team := team{}
 		json.Unmarshal(response, &team)
 
 		// GET Allocations
-		response, status, err = restFunc(nil, t.URL+"/teamdefallocations", http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
+		response, status, err = restFunc(nil, urlString+"/teamdefallocations", http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
 		ar := &teamDefAllocationsResults{}
 		json.Unmarshal(response, ar)
 
 		for _, a := range ar.Results {
-			response, status, err = restFunc(nil, a.URL, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
+			urlString, err := a.getURL(environments.Source.URL)
+			if err != nil {
+				return err
+			}
+			response, status, err = restFunc(nil, urlString, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
 			teamAllocation := &teamDefAllocations{}
 			json.Unmarshal(response, teamAllocation)
 			team.TeamAllocations = append(team.TeamAllocations, teamAllocation)
@@ -123,7 +124,7 @@ func writeTeam(file *model.DriverFile, sourceFolder, outputFolder string, enviro
 			return err
 		}
 		if status != 200 {
-			return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), url)
 		}
 
 		newTeam := &team{}
@@ -142,18 +143,22 @@ func writeTeam(file *model.DriverFile, sourceFolder, outputFolder string, enviro
 				return err
 			}
 			if status != 200 {
-				return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+				return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), url)
 			}
 
 			res := &result{}
 			json.Unmarshal(response, res)
 			body = fmt.Sprintf(`{"allocation": %f}`, a.Allocation)
-			response, status, err = restFunc([]byte(body), res.URL, http.MethodPut, environments.Target.AuthToken, environments.Target.Proxy, nil)
+			urlString, err := res.getURL(environments.Target.URL)
+			if err != nil {
+				return err
+			}
+			response, status, err = restFunc([]byte(body), urlString, http.MethodPut, environments.Target.AuthToken, environments.Target.Proxy, nil)
 			if err != nil {
 				return err
 			}
 			if status != 200 {
-				return errors.New("status code " + strconv.Itoa(status) + " - response: " + string(response))
+				return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), urlString)
 			}
 		}
 	}

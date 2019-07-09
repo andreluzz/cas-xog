@@ -1,6 +1,8 @@
 package api
 
 import (
+	"net/url"
+
 	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/model"
 	"github.com/andreluzz/cas-xog/util"
@@ -30,4 +32,24 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 	}
 
 	return model.Output{Code: constant.OutputSuccess, Debug: constant.Undefined}
+}
+
+type result struct {
+	ID  int    `json:"_internalId"`
+	URL string `json:"_self"`
+}
+
+func (r *result) getURL(env string) (string, error) {
+	restURL, err := url.Parse(r.URL)
+	if err != nil {
+		return "", err
+	}
+	envURL, err := url.Parse(env)
+	if err != nil {
+		return "", err
+	}
+	if envURL.Host != restURL.Host {
+		restURL.Host = envURL.Host
+	}
+	return restURL.String(), nil
 }
