@@ -34,6 +34,7 @@ type EnvType struct {
 	Username     string `xml:"username"`
 	Password     string `xml:"password"`
 	Proxy        string `xml:"proxy"`
+	Cookie       string `xml:"cookie"`
 	Session      string
 	AuthToken    string
 	Copy         bool
@@ -49,6 +50,7 @@ func (e *EnvType) Init(envIndex int) {
 	e.Password = available.Password
 	e.URL = available.URL
 	e.Proxy = available.Proxy
+	e.Cookie = available.Cookie
 	e.RequestLogin = false
 
 	if e.Username == "" || e.Password == "" {
@@ -100,6 +102,7 @@ func (e *EnvType) copyEnv() *EnvType {
 		URL:      e.URL,
 		Session:  e.Session,
 		Proxy:    e.Proxy,
+		Cookie:   e.Cookie,
 		Copy:     true,
 	}
 	return ne
@@ -110,6 +113,8 @@ func (e *EnvType) clear() error {
 	e.Password = ""
 	e.URL = ""
 	e.Session = ""
+	e.Proxy = ""
+	e.Cookie = ""
 	e.Copy = false
 	return nil
 }
@@ -144,7 +149,7 @@ type apiLogin struct {
 }
 
 func loginAPI(env *EnvType) (string, error) {
-	response, err := util.APIPostLogin(env.URL+"/ppm/rest/v1/auth/login", env.Username, env.Password, env.Proxy)
+	response, err := util.APIPostLogin(env.URL+"/ppm/rest/v1/auth/login", env.Username, env.Password, env.Proxy, env.Cookie)
 	if err != nil {
 		return "", errors.New("Problems trying to get API Token from environment: " + env.Name + " | Debug: " + err.Error())
 	}

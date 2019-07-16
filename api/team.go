@@ -45,7 +45,7 @@ func readTeam(file *model.DriverFile, outputFolder string, environments *model.E
 	}
 
 	url := fmt.Sprintf("%steamdefinitions%s", endpoint, filter)
-	response, status, err := restFunc(nil, url, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
+	response, status, err := restFunc(nil, url, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, environments.Source.Cookie, nil)
 	if err != nil {
 		return err
 	}
@@ -64,7 +64,7 @@ func readTeam(file *model.DriverFile, outputFolder string, environments *model.E
 		if err != nil {
 			return err
 		}
-		response, status, err = restFunc(nil, urlString, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
+		response, status, err = restFunc(nil, urlString, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, environments.Source.Cookie, nil)
 		if err != nil {
 			return err
 		}
@@ -76,7 +76,7 @@ func readTeam(file *model.DriverFile, outputFolder string, environments *model.E
 		json.Unmarshal(response, &team)
 
 		// GET Allocations
-		response, status, err = restFunc(nil, urlString+"/teamdefallocations", http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
+		response, status, err = restFunc(nil, urlString+"/teamdefallocations", http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, environments.Source.Cookie, nil)
 		ar := &teamDefAllocationsResults{}
 		json.Unmarshal(response, ar)
 
@@ -85,7 +85,7 @@ func readTeam(file *model.DriverFile, outputFolder string, environments *model.E
 			if err != nil {
 				return err
 			}
-			response, status, err = restFunc(nil, urlString, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, nil)
+			response, status, err = restFunc(nil, urlString, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, environments.Source.Cookie, nil)
 			teamAllocation := &teamDefAllocations{}
 			json.Unmarshal(response, teamAllocation)
 			team.TeamAllocations = append(team.TeamAllocations, teamAllocation)
@@ -119,7 +119,7 @@ func writeTeam(file *model.DriverFile, sourceFolder, outputFolder string, enviro
 			"name": "%s",
 			"isActive": %t
 		}`, t.Code, t.Name, t.Active)
-		response, status, err := restFunc([]byte(body), url, http.MethodPost, environments.Target.AuthToken, environments.Target.Proxy, nil)
+		response, status, err := restFunc([]byte(body), url, http.MethodPost, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
 		if err != nil {
 			return err
 		}
@@ -138,7 +138,7 @@ func writeTeam(file *model.DriverFile, sourceFolder, outputFolder string, enviro
 				"teamId": %d
 			  }`, a.ResourceID, a.Allocation, newTeam.ID)
 
-			response, status, err := restFunc([]byte(body), url, http.MethodPost, environments.Target.AuthToken, environments.Target.Proxy, nil)
+			response, status, err := restFunc([]byte(body), url, http.MethodPost, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
 			if err != nil {
 				return err
 			}
@@ -153,7 +153,7 @@ func writeTeam(file *model.DriverFile, sourceFolder, outputFolder string, enviro
 			if err != nil {
 				return err
 			}
-			response, status, err = restFunc([]byte(body), urlString, http.MethodPut, environments.Target.AuthToken, environments.Target.Proxy, nil)
+			response, status, err = restFunc([]byte(body), urlString, http.MethodPut, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
 			if err != nil {
 				return err
 			}

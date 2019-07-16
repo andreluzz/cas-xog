@@ -10,10 +10,10 @@ import (
 )
 
 //Rest defines a rest interface to simplify the unit tests
-type Rest func(jsonString []byte, endpoint, method, token, proxy string, params map[string]string) ([]byte, int, error)
+type Rest func(jsonString []byte, endpoint, method, token, proxy, cookie string, params map[string]string) ([]byte, int, error)
 
 //RestCall executes a rest call to the defined environment executing a json
-func RestCall(jsonString []byte, endpoint, method, token, proxy string, params map[string]string) ([]byte, int, error) {
+func RestCall(jsonString []byte, endpoint, method, token, proxy, cookie string, params map[string]string) ([]byte, int, error) {
 	var body io.Reader
 	if jsonString != nil {
 		body = bytes.NewBuffer(jsonString)
@@ -25,6 +25,9 @@ func RestCall(jsonString []byte, endpoint, method, token, proxy string, params m
 	req.Header.Add("authToken", token)
 	req.Header.Add("content-type", "application/json")
 	req.Header.Add("x-api-force-patch", "true")
+	if cookie != "" {
+		req.Header.Add("Cookie", cookie)
+	}
 
 	q := req.URL.Query()
 	if params != nil {
@@ -59,12 +62,15 @@ func RestCall(jsonString []byte, endpoint, method, token, proxy string, params m
 }
 
 //APIPostLogin send a post to get the auth token
-func APIPostLogin(endpoint, username, password, proxy string) ([]byte, error) {
+func APIPostLogin(endpoint, username, password, proxy, cookie string) ([]byte, error) {
 	req, err := http.NewRequest(http.MethodPost, endpoint, nil)
 	if err != nil {
 		return nil, err
 	}
 	req.SetBasicAuth(username, password)
+	if cookie != "" {
+		req.Header.Add("Cookie", cookie)
+	}
 
 	client := &http.Client{
 		Timeout: time.Second * 60,
