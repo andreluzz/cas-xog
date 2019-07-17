@@ -113,6 +113,7 @@ type DriverFile struct {
 	OnlyStructure    bool          `xml:"onlyStructure,attr"`
 	PackageTransform bool          `xml:"packageTransform,attr"`
 	InstancesPerFile int           `xml:"instancesPerFile,attr"`
+	Action           string        `xml:"action,attr"`
 	NSQL             string        `xml:"nsql"`
 	Sections         []Section     `xml:"section"`
 	Elements         []Element     `xml:"element"`

@@ -58,6 +58,9 @@ func ProcessDriverFiles(driver *model.Driver, action string, environments *model
 		}
 
 		if f.RestAPI() {
+			if action == "w" && f.ExcelFile != "" {
+				sourceFolder = constant.FolderMigration
+			}
 			log.Info("\n[CAS-XOG][blue[%s]] %03d/%03d | [blue[%s]] | file: %s", processingString, i+1, total, formattedType, f.Path)
 			output := api.ProcessDriverFile(&f, action, sourceFolder, outputFolder, environments, util.RestCall)
 			status, color := util.GetStatusColorFromOutput(output.Code)

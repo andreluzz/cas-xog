@@ -382,15 +382,32 @@ Used to read only the selected links inside a section tag from the menu.
 
 ## Tag `api.team`
 
-| Attribute  | Description                                                                         | Required |
-| ---------- | ----------------------------------------------------------------------------------- | -------- |
-| `code`     | Source team code.                                                                   | yes      |
-| `path`     | Path where the file will be saved on the file system. The extension should be .json | yes      |
+| Attribute  | Description                                                                                               | Required |
+| ---------- | --------------------------------------------------------------------------------------------------------- | -------- |
+| `code`     | Source team code. Optional if using to migrate teams from excel.                                          | yes      |
+| `path`     | Path where the file will be saved on the file system. The extension should be .json                       | yes      |
+| `action`   | Used to define if is to update or insert api team. Default is insert.                                     | no       |
+| `excel`    | Path to the excel file with the data.                                                                     | yes      |
+| `startRow` | The line number in the excel file that we will start reading to create the instances. Default value is 1. | no       |  
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
 	<api.team code="TM000001" path="team01.json" />
+</xogdriver>
+```
+
+### Team migration
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <api.team path="teams.json" action="update" excel="drivers/dados.xlsx" startRow="2">
+        <match col="1" attribute="code" />
+        <match col="2" attribute="name" />
+        <match col="3" attribute="resourceId" />
+        <match col="4" attribute="allocation" />
+    </api.team>
 </xogdriver>
 ```
 

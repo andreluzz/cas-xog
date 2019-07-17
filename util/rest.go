@@ -2,6 +2,7 @@ package util
 
 import (
 	"bytes"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -14,6 +15,9 @@ type Rest func(jsonString []byte, endpoint, method, token, proxy, cookie string,
 
 //RestCall executes a rest call to the defined environment executing a json
 func RestCall(jsonString []byte, endpoint, method, token, proxy, cookie string, params map[string]string) ([]byte, int, error) {
+	if token == "" {
+		return nil, -1, fmt.Errorf("invalid token")
+	}
 	var body io.Reader
 	if jsonString != nil {
 		body = bytes.NewBuffer(jsonString)
