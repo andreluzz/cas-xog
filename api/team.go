@@ -23,7 +23,7 @@ type team struct {
 	Code            string                `json:"code"`
 	Name            string                `json:"name"`
 	Active          bool                  `json:"isActive"`
-	TeamAllocations []*teamDefAllocations `json:"teamdefallocations"`
+	TeamAllocations []*teamDefAllocations `json:"teamdefallocations,omitempty"`
 }
 
 type teamDefAllocations struct {
@@ -70,23 +70,25 @@ func migrateTeam(file *model.DriverFile, outputFolder string, environments *mode
 			}
 
 			if val, ok := rowMap["resourceId"]; ok {
-				resID, err := strconv.Atoi(val)
-				if err != nil {
-					return fmt.Errorf("migration - team code %s column resourceID is not a valid number. Debug: %s", rowMap["code"], err.Error())
-				}
-				alloc := teamDefAllocations{
-					ResourceID: resID,
-				}
-				if val, ok := rowMap["allocation"]; ok {
-					if allocationValue, err := strconv.ParseFloat(val, 64); err == nil {
-						alloc.Allocation = allocationValue
-					} else {
-						return fmt.Errorf("migration - team code %s column Allocation is not a valid number. Debug: %s", rowMap["code"], err.Error())
+				if val != "" {
+					resID, err := strconv.Atoi(val)
+					if err != nil {
+						return fmt.Errorf("migration - team code %s column resourceID (%s) is not a valid number. Debug: %s", rowMap["code"], val, err.Error())
 					}
-				} else {
-					alloc.Allocation = 1
+					alloc := teamDefAllocations{
+						ResourceID: resID,
+					}
+					if val, ok := rowMap["allocation"]; ok {
+						if allocationValue, err := strconv.ParseFloat(val, 64); err == nil {
+							alloc.Allocation = allocationValue
+						} else {
+							return fmt.Errorf("migration - team code %s column Allocation is not a valid number. Debug: %s", rowMap["code"], err.Error())
+						}
+					} else {
+						alloc.Allocation = 1
+					}
+					t.TeamAllocations = append(t.TeamAllocations, &alloc)
 				}
-				t.TeamAllocations = append(t.TeamAllocations, &alloc)
 			}
 
 			teams[rowMap["code"]] = t
@@ -209,8 +211,12 @@ func createTeam(t team, endpoint string, environments *model.Environments, restF
 	if err != nil {
 		return err
 	}
+	if status == 400 {
+		fmt.Printf("\nstatus code: %d | Code: %s | response: %s | url: %s\n", status, t.Code, string(response), url)
+		return nil
+	}
 	if status != 200 {
-		return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), url)
+		return fmt.Errorf("status code: %d | Code: %s | response: %s | url: %s", status, t.Code, string(response), url)
 	}
 
 	newTeam := &team{}
@@ -230,8 +236,12 @@ func createTeam(t team, endpoint string, environments *model.Environments, restF
 		if err != nil {
 			return err
 		}
+		if status == 400 {
+			fmt.Printf("\nstatus code: %d | resourceId: %d | response: %s | url: %s", status, a.ResourceID, string(response), url)
+			continue
+		}
 		if status != 200 {
-			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), url)
+			return fmt.Errorf("status code: %d | resourceId: %d | response: %s | url: %s", status, a.ResourceID, string(response), url)
 		}
 
 		res := &result{}
