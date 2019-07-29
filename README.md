@@ -38,17 +38,18 @@ If you like to read and write at once just put the attribute `autoWrite="true"` 
 
 ### Description of structure Driver tags
 
-| Tag                           | Description                                                   |
-| ----------------------------- | ------------------------------------------------------------- |
-| [`object`](#tag-object)       | Used to read and write objects attributes, actions and links. |
-| [`view`](#tag-view)           | Used to read and write views.                                 |
-| [`process`](#tag-process)     | Used to read and write processes.                             |
-| [`lookup`](#tag-lookup)       | Used to read and write lookups.                               |
-| [`portlet`](#tag-portlet)     | Used to read and write portlets.                              |
-| [`query`](#tag-query)         | Used to read and write queries.                               |
-| [`page`](#tag-page)           | Used to read and write pages.                                 |
-| [`menu`](#tag-menu)           | Used to read and write menus.                                 |
-| [`blueprint`](#tag-blueprint) | Used to read and write new UX blueprints.                     |
+| Tag                                   | Description                                                   |
+| ------------------------------------- | ------------------------------------------------------------- |
+| [`object`](#tag-object)               | Used to read and write objects attributes, actions and links. |
+| [`view`](#tag-view)                   | Used to read and write views.                                 |
+| [`process`](#tag-process)             | Used to read and write processes.                             |
+| [`lookup`](#tag-lookup)               | Used to read and write lookups.                               |
+| [`portlet`](#tag-portlet)             | Used to read and write portlets.                              |
+| [`query`](#tag-query)                 | Used to read and write queries.                               |
+| [`page`](#tag-page)                   | Used to read and write pages.                                 |
+| [`menu`](#tag-menu)                   | Used to read and write menus.                                 |
+| [`api.blueprint`](#tag-api.blueprint) | Used to read and write new UX blueprints.                     |
+| [`api.team`](#tag-api.team)           | Used to read and write new UX teams.                          |
 
 ### Description of instance Driver tags
 
@@ -364,7 +365,7 @@ Used to read only the selected links inside a section tag from the menu.
 </xogdriver>
 ```
 
-## Tag `blueprint`
+## Tag `api.blueprint`
 
 | Attribute  | Description                                                                         | Required |
 | ---------- | ----------------------------------------------------------------------------------- | -------- |
@@ -375,7 +376,38 @@ Used to read only the selected links inside a section tag from the menu.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-	<blueprint id="5000016" targetId="5023028" path="modern_business_management.json" />
+	<api.blueprint id="5000016" targetId="5023028" path="modern_business_management.json" />
+</xogdriver>
+```
+
+## Tag `api.team`
+
+| Attribute  | Description                                                                                               | Required |
+| ---------- | --------------------------------------------------------------------------------------------------------- | -------- |
+| `code`     | Source team code. Optional if using to migrate teams from excel.                                          | yes      |
+| `path`     | Path where the file will be saved on the file system. The extension should be .json                       | yes      |
+| `action`   | Used to define if is to update or insert api team. Default is insert.                                     | no       |
+| `excel`    | Path to the excel file with the data.                                                                     | yes      |
+| `startRow` | The line number in the excel file that we will start reading to create the instances. Default value is 1. | no       |  
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+	<api.team code="TM000001" path="team01.json" />
+</xogdriver>
+```
+
+### Team migration
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <api.team path="teams.json" action="update" excel="drivers/dados.xlsx" startRow="2">
+        <match col="1" attribute="code" />
+        <match col="2" attribute="name" />
+        <match col="3" attribute="resourceId" />
+        <match col="4" attribute="allocation" />
+    </api.team>
 </xogdriver>
 ```
 

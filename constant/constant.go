@@ -4,7 +4,10 @@ package constant
 const (
 	Version = 2.0
 
+	APIEndpoint = "/ppm/rest/v1/"
+
 	APITypeBlueprint = "Blueprints"
+	APITypeTeam      = "Teams"
 
 	TypeLookup    = "Lookups"
 	TypePortlet   = "Portlets"
