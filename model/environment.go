@@ -29,16 +29,23 @@ func LoadEnvironmentsList(path string) (*Environments, error) {
 
 //EnvType defines an environment attributes
 type EnvType struct {
-	Name         string `xml:"name,attr"`
-	URL          string `xml:"endpoint"`
-	Username     string `xml:"username"`
-	Password     string `xml:"password"`
-	Proxy        string `xml:"proxy"`
-	Cookie       string `xml:"cookie"`
+	Name         string         `xml:"name,attr"`
+	URL          string         `xml:"endpoint"`
+	Username     string         `xml:"username"`
+	Password     string         `xml:"password"`
+	Proxy        string         `xml:"proxy"`
+	Cookie       string         `xml:"cookie"`
+	API          apiEnvironment `xml:"api"`
 	Session      string
 	AuthToken    string
 	Copy         bool
 	RequestLogin bool
+}
+
+type apiEnvironment struct {
+	Token   string `xml:",chardata"`
+	Client  string `xml:"client,attr"`
+	Context string `xml:"context,attr"`
 }
 
 //Init loads a specific environment from user environments list
@@ -52,6 +59,13 @@ func (e *EnvType) Init(envIndex int) {
 	e.Proxy = available.Proxy
 	e.Cookie = available.Cookie
 	e.RequestLogin = false
+	e.API.Client = available.API.Client
+	e.API.Context = available.API.Context
+	e.API.Token = available.API.Token
+
+	if available.API.Context == "" {
+		e.API.Context = "/ppm"
+	}
 
 	if e.Username == "" || e.Password == "" {
 		e.RequestLogin = true
@@ -104,6 +118,11 @@ func (e *EnvType) copyEnv() *EnvType {
 		Proxy:    e.Proxy,
 		Cookie:   e.Cookie,
 		Copy:     true,
+		API: apiEnvironment{
+			Token:   e.API.Token,
+			Client:  e.API.Client,
+			Context: e.API.Context,
+		},
 	}
 	return ne
 }
@@ -149,7 +168,11 @@ type apiLogin struct {
 }
 
 func loginAPI(env *EnvType) (string, error) {
-	response, err := util.APIPostLogin(env.URL+"/ppm/rest/v1/auth/login", env.Username, env.Password, env.Proxy, env.Cookie)
+	if env.API.Token != "" {
+		return "", nil
+	}
+
+	response, err := util.APIPostLogin(env.URL+env.API.Context+"/rest/v1/auth/login", env.Username, env.Password, env.Proxy, env.Cookie)
 	if err != nil {
 		return "", errors.New("Problems trying to get API Token from environment: " + env.Name + " | Debug: " + err.Error())
 	}

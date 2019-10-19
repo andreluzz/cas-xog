@@ -142,19 +142,32 @@ func writeBlueprint(file *model.DriverFile, sourceFolder, outputFolder string, e
 		return err
 	}
 
-	endpoint := environments.Target.URL + constant.APIEndpoint
+	endpoint := environments.Target.URL + environments.Target.API.Context + constant.APIEndpoint
+
+	targetConfig := util.APIConfig{
+		Client: environments.Target.API.Client,
+		Cookie: environments.Target.Cookie,
+		Proxy:  environments.Target.Proxy,
+	}
+
+	targetConfig.Token = environments.Target.API.Token
+	if environments.Target.AuthToken != "" {
+		targetConfig.Token = environments.Target.AuthToken
+	}
 
 	bp := &blueprint{}
 	json.Unmarshal(jsonFile, bp)
 
 	if file.TargetID != constant.Undefined {
 		//Get target blueprint code
-		response, status, err := restFunc(nil, endpoint+"private/blueprints/"+file.TargetID, http.MethodGet, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+		targetConfig.Endpoint = endpoint + "private/blueprints/" + file.TargetID
+		targetConfig.Method = http.MethodGet
+		response, status, err := restFunc(nil, targetConfig, nil)
 		if err != nil {
 			return err
 		}
 		if status != 200 {
-			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), endpoint+"private/blueprints/"+file.TargetID)
+			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), targetConfig.Endpoint)
 		}
 		resp := &blueprintResponse{}
 		json.Unmarshal(response, resp)
@@ -163,36 +176,42 @@ func writeBlueprint(file *model.DriverFile, sourceFolder, outputFolder string, e
 			"source": "` + resp.Code + `",
 			"action": "edit"
 		}`
-		response, status, err = restFunc([]byte(body), endpoint+"private/copyBlueprint", http.MethodPost, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+		targetConfig.Endpoint = endpoint + "private/copyBlueprint"
+		targetConfig.Method = http.MethodPost
+		response, status, err = restFunc([]byte(body), targetConfig, nil)
 		if err != nil {
 			return err
 		}
 		if status != 200 {
-			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), endpoint+"private/copyBlueprint")
+			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), targetConfig.Endpoint)
 		}
 		resp = &blueprintResponse{}
 		json.Unmarshal(response, resp)
 		bp.ID = resp.ID
 		//Update blueprint
-		response, status, err = restFunc(bp.getNewBlueprintBody(), endpoint+"private/blueprints/"+strconv.Itoa(bp.ID), http.MethodPatch, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+		targetConfig.Endpoint = endpoint + "private/blueprints/" + strconv.Itoa(bp.ID)
+		targetConfig.Method = http.MethodPatch
+		response, status, err = restFunc(bp.getNewBlueprintBody(), targetConfig, nil)
 		if err != nil {
 			return err
 		}
 		if status != 200 {
-			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), endpoint+"private/blueprints/"+strconv.Itoa(bp.ID))
+			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), targetConfig.Endpoint)
 		}
 		//Delete editable blueprint content
-		err = deleteBlueprintContent(endpoint, strconv.Itoa(bp.ID), environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, environments.Target.URL, restFunc)
+		err = deleteBlueprintContent(environments, strconv.Itoa(bp.ID), restFunc)
 		if err != nil {
 			return err
 		}
 	} else {
-		response, status, err := restFunc(bp.getNewBlueprintBody(), endpoint+"private/blueprints", http.MethodPost, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+		targetConfig.Endpoint = endpoint + "private/blueprints"
+		targetConfig.Method = http.MethodPost
+		response, status, err := restFunc(bp.getNewBlueprintBody(), targetConfig, nil)
 		if err != nil {
 			return err
 		}
 		if status != 200 {
-			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), endpoint+"private/blueprints")
+			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), targetConfig.Endpoint)
 		}
 
 		json.Unmarshal(response, bp)
@@ -201,7 +220,9 @@ func writeBlueprint(file *model.DriverFile, sourceFolder, outputFolder string, e
 	//post sections
 	url := endpoint + "private/blueprints/" + strconv.Itoa(bp.ID) + "/sections"
 	for _, s := range bp.Sections {
-		response, status, err := restFunc(s.getNewSectionBody(bp.ID), url, http.MethodPost, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+		targetConfig.Endpoint = url
+		targetConfig.Method = http.MethodPost
+		response, status, err := restFunc(s.getNewSectionBody(bp.ID), targetConfig, nil)
 		if err != nil {
 			return err
 		}
@@ -212,7 +233,9 @@ func writeBlueprint(file *model.DriverFile, sourceFolder, outputFolder string, e
 		json.Unmarshal(response, resp)
 
 		for _, f := range s.Fields {
-			response, status, err := restFunc(f.getNewFieldBody(resp.ID), url+"/"+strconv.Itoa(resp.ID)+"/fields", http.MethodPost, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+			targetConfig.Endpoint = url + "/" + strconv.Itoa(resp.ID) + "/fields"
+			targetConfig.Method = http.MethodPost
+			response, status, err := restFunc(f.getNewFieldBody(resp.ID), targetConfig, nil)
 			if err != nil {
 				return err
 			}
@@ -223,32 +246,36 @@ func writeBlueprint(file *model.DriverFile, sourceFolder, outputFolder string, e
 	}
 
 	//post visuals
-	url = endpoint + "private/blueprints/" + strconv.Itoa(bp.ID) + "/visuals"
 	for _, v := range bp.Visuals {
-		response, status, err := restFunc(v.getNewVisualBody(), url, http.MethodPost, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+		targetConfig.Endpoint = endpoint + "private/blueprints/" + strconv.Itoa(bp.ID) + "/visuals"
+		targetConfig.Method = http.MethodPost
+		response, status, err := restFunc(v.getNewVisualBody(), targetConfig, nil)
 		if err != nil {
 			return err
 		}
 		if status != 200 {
-			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), url)
+			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), targetConfig.Endpoint)
 		}
 	}
 
 	//post externalApps
-	url = endpoint + "externalApps"
 	for _, e := range bp.ExternalApps {
-		response, status, err := restFunc(e.getNewExternalApp(bp.ID), url, http.MethodPost, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+		targetConfig.Endpoint = endpoint + "externalApps"
+		targetConfig.Method = http.MethodPost
+		response, status, err := restFunc(e.getNewExternalApp(bp.ID), targetConfig, nil)
 		if err != nil {
 			return err
 		}
 		if status != 200 {
-			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), url)
+			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), targetConfig.Endpoint)
 		}
 	}
 
 	//publish edited blueprint
 	body := `{"mode": "PUBLISHED"}`
-	response, status, err := restFunc([]byte(body), endpoint+"private/blueprints/"+strconv.Itoa(bp.ID), http.MethodPut, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+	targetConfig.Endpoint = endpoint + "private/blueprints/" + strconv.Itoa(bp.ID)
+	targetConfig.Method = http.MethodPut
+	response, status, err := restFunc([]byte(body), targetConfig, nil)
 	if err != nil {
 		return err
 	}
@@ -264,9 +291,22 @@ func readBlueprint(file *model.DriverFile, outputFolder string, environments *mo
 		return errors.New("Required attribute id not found")
 	}
 
-	endpoint := environments.Source.URL + constant.APIEndpoint
+	endpoint := environments.Source.URL + environments.Source.API.Context + constant.APIEndpoint
 
-	response, status, err := restFunc(nil, endpoint+"private/blueprints/"+file.ID, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, environments.Source.Cookie, nil)
+	sourceConfig := util.APIConfig{
+		Client: environments.Source.API.Client,
+		Cookie: environments.Source.Cookie,
+		Proxy:  environments.Source.Proxy,
+	}
+
+	sourceConfig.Token = environments.Source.API.Token
+	if environments.Source.AuthToken != "" {
+		sourceConfig.Token = environments.Source.AuthToken
+	}
+
+	sourceConfig.Endpoint = endpoint + "private/blueprints/" + file.ID
+	sourceConfig.Method = http.MethodGet
+	response, status, err := restFunc(nil, sourceConfig, nil)
 	if err != nil {
 		return err
 	}
@@ -278,7 +318,9 @@ func readBlueprint(file *model.DriverFile, outputFolder string, environments *mo
 	json.Unmarshal(response, bp)
 
 	//read bp sections
-	response, status, err = restFunc(nil, endpoint+"private/blueprints/"+file.ID+"/sections", http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, environments.Source.Cookie, nil)
+	sourceConfig.Endpoint = endpoint + "private/blueprints/" + file.ID + "/sections"
+	sourceConfig.Method = http.MethodGet
+	response, status, err = restFunc(nil, sourceConfig, nil)
 	if err != nil {
 		return err
 	}
@@ -288,11 +330,13 @@ func readBlueprint(file *model.DriverFile, outputFolder string, environments *mo
 	sections := &blueprintResults{}
 	json.Unmarshal(response, sections)
 	for sectionIndex, s := range sections.Results {
-		urlString, err := s.getURL(environments.Source.URL)
+		urlString, err := s.getURL(environments.Source.URL, environments.Source.API.Context)
 		if err != nil {
 			return err
 		}
-		response, status, err = restFunc(nil, urlString, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, environments.Source.Cookie, nil)
+		sourceConfig.Endpoint = urlString
+		sourceConfig.Method = http.MethodGet
+		response, status, err = restFunc(nil, sourceConfig, nil)
 		if err != nil {
 			return err
 		}
@@ -304,11 +348,13 @@ func readBlueprint(file *model.DriverFile, outputFolder string, environments *mo
 		bp.Sections = append(bp.Sections, section)
 
 		// read bp section fields
-		urlString, err = section.FieldsAddr.getURL(environments.Source.URL)
+		urlString, err = section.FieldsAddr.getURL(environments.Source.URL, environments.Source.API.Context)
 		if err != nil {
 			return err
 		}
-		response, status, err = restFunc(nil, urlString, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, environments.Source.Cookie, nil)
+		sourceConfig.Endpoint = urlString
+		sourceConfig.Method = http.MethodGet
+		response, status, err = restFunc(nil, sourceConfig, nil)
 		if err != nil {
 			return err
 		}
@@ -318,11 +364,13 @@ func readBlueprint(file *model.DriverFile, outputFolder string, environments *mo
 		fields := &blueprintResults{}
 		json.Unmarshal(response, fields)
 		for _, f := range fields.Results {
-			urlString, err = f.getURL(environments.Source.URL)
+			urlString, err = f.getURL(environments.Source.URL, environments.Source.API.Context)
 			if err != nil {
 				return err
 			}
-			response, status, err = restFunc(nil, urlString, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, environments.Source.Cookie, nil)
+			sourceConfig.Endpoint = urlString
+			sourceConfig.Method = http.MethodGet
+			response, status, err = restFunc(nil, sourceConfig, nil)
 			if err != nil {
 				return err
 			}
@@ -336,7 +384,9 @@ func readBlueprint(file *model.DriverFile, outputFolder string, environments *mo
 	}
 
 	//read bp visuals
-	response, status, err = restFunc(nil, endpoint+"private/blueprints/"+file.ID+"/visuals", http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, environments.Source.Cookie, nil)
+	sourceConfig.Endpoint = endpoint + "private/blueprints/" + file.ID + "/visuals"
+	sourceConfig.Method = http.MethodGet
+	response, status, err = restFunc(nil, sourceConfig, nil)
 	if err != nil {
 		return err
 	}
@@ -346,11 +396,13 @@ func readBlueprint(file *model.DriverFile, outputFolder string, environments *mo
 	visuals := &blueprintResults{}
 	json.Unmarshal(response, visuals)
 	for _, v := range visuals.Results {
-		urlString, err := v.getURL(environments.Source.URL)
+		urlString, err := v.getURL(environments.Source.URL, environments.Source.API.Context)
 		if err != nil {
 			return err
 		}
-		response, status, err = restFunc(nil, urlString, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, environments.Source.Cookie, nil)
+		sourceConfig.Endpoint = endpoint + "private/blueprints/" + file.ID + "/visuals"
+		sourceConfig.Method = http.MethodGet
+		response, status, err = restFunc(nil, sourceConfig, nil)
 		if err != nil {
 			return err
 		}
@@ -365,7 +417,9 @@ func readBlueprint(file *model.DriverFile, outputFolder string, environments *mo
 	//read bp external apps
 	param := make(map[string]string)
 	param["filter"] = "(blueprintId = " + file.ID + ")"
-	response, status, err = restFunc(nil, endpoint+"externalApps", http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, environments.Source.Cookie, param)
+	sourceConfig.Endpoint = endpoint + "externalApps"
+	sourceConfig.Method = http.MethodGet
+	response, status, err = restFunc(nil, sourceConfig, param)
 	if err != nil {
 		return err
 	}
@@ -376,11 +430,13 @@ func readBlueprint(file *model.DriverFile, outputFolder string, environments *mo
 	json.Unmarshal(response, externalApps)
 
 	for _, e := range externalApps.Results {
-		urlString, err := e.getURL(environments.Source.URL)
+		urlString, err := e.getURL(environments.Source.URL, environments.Source.API.Context)
 		if err != nil {
 			return err
 		}
-		response, status, err = restFunc(nil, urlString, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, environments.Source.Cookie, nil)
+		sourceConfig.Endpoint = urlString
+		sourceConfig.Method = http.MethodGet
+		response, status, err = restFunc(nil, sourceConfig, nil)
 		if err != nil {
 			return err
 		}
@@ -399,9 +455,24 @@ func readBlueprint(file *model.DriverFile, outputFolder string, environments *mo
 	return nil
 }
 
-func deleteBlueprintContent(endpoint, bpID, token, proxy, cookie, envURL string, restFunc util.Rest) error {
+func deleteBlueprintContent(envs *model.Environments, bpID string, restFunc util.Rest) error {
+	env := envs.Target
+	endpoint := env.URL + env.API.Context + constant.APIEndpoint
+
+	config := util.APIConfig{
+		Client: env.API.Client,
+		Cookie: env.Cookie,
+		Proxy:  env.Proxy,
+	}
+
+	config.Token = env.API.Token
+	if env.AuthToken != "" {
+		config.Token = env.AuthToken
+	}
 	//delete sections
-	response, status, err := restFunc(nil, endpoint+"private/blueprints/"+bpID+"/sections", http.MethodGet, token, proxy, cookie, nil)
+	config.Endpoint = endpoint + "private/blueprints/" + bpID + "/sections"
+	config.Method = http.MethodGet
+	response, status, err := restFunc(nil, config, nil)
 	if err != nil {
 		return err
 	}
@@ -411,11 +482,13 @@ func deleteBlueprintContent(endpoint, bpID, token, proxy, cookie, envURL string,
 	sections := &blueprintResults{}
 	json.Unmarshal(response, sections)
 	for _, s := range sections.Results {
-		urlString, err := s.getURL(envURL)
+		urlString, err := s.getURL(env.URL, env.API.Context)
 		if err != nil {
 			return err
 		}
-		response, status, err := restFunc(nil, urlString, http.MethodDelete, token, proxy, cookie, nil)
+		config.Endpoint = urlString
+		config.Method = http.MethodDelete
+		response, status, err = restFunc(nil, config, nil)
 		if err != nil {
 			return err
 		}
@@ -424,7 +497,9 @@ func deleteBlueprintContent(endpoint, bpID, token, proxy, cookie, envURL string,
 		}
 	}
 	//delete visuals
-	response, status, err = restFunc(nil, endpoint+"private/blueprints/"+bpID+"/visuals", http.MethodGet, token, proxy, cookie, nil)
+	config.Endpoint = endpoint + "private/blueprints/" + bpID + "/visuals"
+	config.Method = http.MethodGet
+	response, status, err = restFunc(nil, config, nil)
 	if err != nil {
 		return err
 	}
@@ -434,11 +509,13 @@ func deleteBlueprintContent(endpoint, bpID, token, proxy, cookie, envURL string,
 	visuals := &blueprintResults{}
 	json.Unmarshal(response, visuals)
 	for _, v := range visuals.Results {
-		urlString, err := v.getURL(envURL)
+		urlString, err := v.getURL(env.URL, env.API.Context)
 		if err != nil {
 			return err
 		}
-		response, status, err := restFunc(nil, urlString, http.MethodDelete, token, proxy, cookie, nil)
+		config.Endpoint = urlString
+		config.Method = http.MethodDelete
+		response, status, err := restFunc(nil, config, nil)
 		if err != nil {
 			return err
 		}
@@ -449,7 +526,9 @@ func deleteBlueprintContent(endpoint, bpID, token, proxy, cookie, envURL string,
 	//delete externalApps
 	param := make(map[string]string)
 	param["filter"] = "(blueprintId = " + bpID + ")"
-	response, status, err = restFunc(nil, endpoint+"externalApps", http.MethodGet, token, proxy, cookie, param)
+	config.Endpoint = endpoint + "externalApps"
+	config.Method = http.MethodGet
+	response, status, err = restFunc(nil, config, param)
 	if err != nil {
 		return err
 	}
@@ -460,11 +539,13 @@ func deleteBlueprintContent(endpoint, bpID, token, proxy, cookie, envURL string,
 	externalApps := &blueprintResults{}
 	json.Unmarshal(response, externalApps)
 	for _, e := range externalApps.Results {
-		urlString, err := e.getURL(envURL)
+		urlString, err := e.getURL(env.URL, env.API.Context)
 		if err != nil {
 			return err
 		}
-		response, status, err := restFunc(nil, urlString, http.MethodDelete, token, proxy, cookie, nil)
+		config.Endpoint = urlString
+		config.Method = http.MethodGet
+		response, status, err = restFunc(nil, config, nil)
 		if err != nil {
 			return err
 		}

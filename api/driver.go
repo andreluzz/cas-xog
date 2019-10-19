@@ -48,7 +48,7 @@ type result struct {
 	URL string `json:"_self"`
 }
 
-func (r *result) getURL(env string) (string, error) {
+func (r *result) getURL(env, context string) (string, error) {
 	restURL, err := url.Parse(r.URL)
 	if err != nil {
 		return "", err

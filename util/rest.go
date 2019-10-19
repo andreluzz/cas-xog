@@ -11,26 +11,43 @@ import (
 )
 
 //Rest defines a rest interface to simplify the unit tests
-type Rest func(jsonString []byte, endpoint, method, token, proxy, cookie string, params map[string]string) ([]byte, int, error)
+type Rest func(jsonString []byte, config APIConfig, params map[string]string) ([]byte, int, error)
+
+// APIConfig definitions to realize rest api requests
+type APIConfig struct {
+	Endpoint string
+	Method   string
+	Token    string
+	Proxy    string
+	Cookie   string
+	Client   string
+}
 
 //RestCall executes a rest call to the defined environment executing a json
-func RestCall(jsonString []byte, endpoint, method, token, proxy, cookie string, params map[string]string) ([]byte, int, error) {
-	if token == "" {
+func RestCall(jsonString []byte, endpoint, config APIConfig, params map[string]string) ([]byte, int, error) {
+	if config.Token == "" {
 		return nil, -1, fmt.Errorf("invalid token")
 	}
 	var body io.Reader
 	if jsonString != nil {
 		body = bytes.NewBuffer(jsonString)
 	}
-	req, err := http.NewRequest(method, endpoint, body)
+	req, err := http.NewRequest(config.Method, config.Endpoint, body)
 	if err != nil {
 		return nil, -1, err
 	}
-	req.Header.Add("authToken", token)
+
+	if config.Client != "" {
+		req.Header.Add("x-api-ppm-client", config.Client)
+		req.Header.Add("Authorization", config.Token)
+	} else {
+		req.Header.Add("authToken", config.Token)
+	}
+
 	req.Header.Add("content-type", "application/json")
 	req.Header.Add("x-api-force-patch", "true")
-	if cookie != "" {
-		req.Header.Add("Cookie", cookie)
+	if config.Cookie != "" {
+		req.Header.Add("Cookie", config.Cookie)
 	}
 
 	q := req.URL.Query()
@@ -46,8 +63,8 @@ func RestCall(jsonString []byte, endpoint, method, token, proxy, cookie string, 
 		Timeout: time.Second * 60,
 	}
 
-	if proxy != "" {
-		proxyURL, err := url.Parse(proxy)
+	if config.Proxy != "" {
+		proxyURL, err := url.Parse(config.Proxy)
 		if err != nil {
 			return nil, -1, err
 		}

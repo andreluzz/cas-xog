@@ -110,7 +110,18 @@ func readTeam(file *model.DriverFile, outputFolder string, environments *model.E
 	if file.Code == constant.Undefined {
 		return errors.New("Required attribute code not found")
 	}
-	endpoint := environments.Source.URL + constant.APIEndpoint
+	endpoint := environments.Target.URL + environments.Target.API.Context + constant.APIEndpoint
+
+	sourceConfig := util.APIConfig{
+		Client: environments.Source.API.Client,
+		Cookie: environments.Source.Cookie,
+		Proxy:  environments.Source.Proxy,
+	}
+
+	sourceConfig.Token = environments.Source.API.Token
+	if environments.Source.AuthToken != "" {
+		sourceConfig.Token = environments.Source.AuthToken
+	}
 
 	filter := ""
 	if file.Code != "*" {
@@ -118,7 +129,9 @@ func readTeam(file *model.DriverFile, outputFolder string, environments *model.E
 	}
 
 	url := fmt.Sprintf("%steamdefinitions%s", endpoint, filter)
-	response, status, err := restFunc(nil, url, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, environments.Source.Cookie, nil)
+	sourceConfig.Endpoint = url
+	sourceConfig.Method = http.MethodGet
+	response, status, err := restFunc(nil, sourceConfig, nil)
 	if err != nil {
 		return err
 	}
@@ -133,11 +146,13 @@ func readTeam(file *model.DriverFile, outputFolder string, environments *model.E
 
 	for _, t := range tr.Results {
 		// GET Team details
-		urlString, err := t.getURL(environments.Source.URL)
+		urlString, err := t.getURL(environments.Source.URL, environments.Source.API.Context)
 		if err != nil {
 			return err
 		}
-		response, status, err = restFunc(nil, urlString, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, environments.Source.Cookie, nil)
+		sourceConfig.Endpoint = urlString
+		sourceConfig.Method = http.MethodGet
+		response, status, err = restFunc(nil, sourceConfig, nil)
 		if err != nil {
 			return err
 		}
@@ -149,16 +164,20 @@ func readTeam(file *model.DriverFile, outputFolder string, environments *model.E
 		json.Unmarshal(response, &team)
 
 		// GET Allocations
-		response, status, err = restFunc(nil, urlString+"/teamdefallocations", http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, environments.Source.Cookie, nil)
+		sourceConfig.Endpoint = urlString + "/teamdefallocations"
+		sourceConfig.Method = http.MethodGet
+		response, status, err = restFunc(nil, sourceConfig, nil)
 		ar := &teamDefAllocationsResults{}
 		json.Unmarshal(response, ar)
 
 		for _, a := range ar.Results {
-			urlString, err := a.getURL(environments.Source.URL)
+			urlString, err := a.getURL(environments.Source.URL, environments.Source.API.Context)
 			if err != nil {
 				return err
 			}
-			response, status, err = restFunc(nil, urlString, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, environments.Source.Cookie, nil)
+			sourceConfig.Endpoint = urlString
+			sourceConfig.Method = http.MethodGet
+			response, status, err = restFunc(nil, sourceConfig, nil)
 			teamAllocation := &teamDefAllocations{}
 			json.Unmarshal(response, teamAllocation)
 			team.TeamAllocations = append(team.TeamAllocations, teamAllocation)
@@ -180,7 +199,7 @@ func writeTeam(file *model.DriverFile, sourceFolder, outputFolder string, enviro
 		return err
 	}
 
-	endpoint := environments.Target.URL + constant.APIEndpoint
+	endpoint := environments.Target.URL + environments.Target.API.Context + constant.APIEndpoint
 
 	tm := []team{}
 	json.Unmarshal(jsonFile, &tm)
@@ -201,13 +220,28 @@ func writeTeam(file *model.DriverFile, sourceFolder, outputFolder string, enviro
 }
 
 func createTeam(t team, endpoint string, environments *model.Environments, restFunc util.Rest) error {
+
+	targetConfig := util.APIConfig{
+		Client: environments.Target.API.Client,
+		Cookie: environments.Target.Cookie,
+		Proxy:  environments.Target.Proxy,
+	}
+
+	targetConfig.Token = environments.Target.API.Token
+	if environments.Target.AuthToken != "" {
+		targetConfig.Token = environments.Target.AuthToken
+	}
+
 	url := fmt.Sprintf("%steamdefinitions", endpoint)
 	body := fmt.Sprintf(`{
 			"code": "%s",
 			"name": "%s",
 			"isActive": %t
 		}`, t.Code, t.Name, t.Active)
-	response, status, err := restFunc([]byte(body), url, http.MethodPost, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+
+	targetConfig.Endpoint = url
+	targetConfig.Method = http.MethodPost
+	response, status, err := restFunc([]byte(body), targetConfig, nil)
 	if err != nil {
 		return err
 	}
@@ -232,7 +266,9 @@ func createTeam(t team, endpoint string, environments *model.Environments, restF
 				"teamId": %d
 			  }`, a.ResourceID, a.Allocation, newTeam.ID)
 
-		response, status, err := restFunc([]byte(body), url, http.MethodPost, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+		targetConfig.Endpoint = url
+		targetConfig.Method = http.MethodPost
+		response, status, err := restFunc([]byte(body), targetConfig, nil)
 		if err != nil {
 			return err
 		}
@@ -247,12 +283,14 @@ func createTeam(t team, endpoint string, environments *model.Environments, restF
 		res := &result{}
 		json.Unmarshal(response, res)
 		body = fmt.Sprintf(`{"allocation": %f}`, a.Allocation)
-		urlString, err := res.getURL(environments.Target.URL)
+		urlString, err := res.getURL(environments.Target.URL, environments.Target.API.Context)
 		if err != nil {
 			return err
 		}
 
-		response, status, err = restFunc([]byte(body), urlString, http.MethodPut, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+		targetConfig.Endpoint = urlString
+		targetConfig.Method = http.MethodPut
+		response, status, err = restFunc([]byte(body), targetConfig, nil)
 		if err != nil {
 			return err
 		}
@@ -265,10 +303,23 @@ func createTeam(t team, endpoint string, environments *model.Environments, restF
 
 func updateTeam(t team, endpoint string, environments *model.Environments, restFunc util.Rest) error {
 
+	targetConfig := util.APIConfig{
+		Client: environments.Target.API.Client,
+		Cookie: environments.Target.Cookie,
+		Proxy:  environments.Target.Proxy,
+	}
+
+	targetConfig.Token = environments.Target.API.Token
+	if environments.Target.AuthToken != "" {
+		targetConfig.Token = environments.Target.AuthToken
+	}
+
 	filter := fmt.Sprintf("?filter=(code =  '%s')", t.Code)
 
 	url := fmt.Sprintf("%steamdefinitions%s", endpoint, filter)
-	response, status, err := restFunc(nil, url, http.MethodGet, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+	targetConfig.Endpoint = url
+	targetConfig.Method = http.MethodGet
+	response, status, err := restFunc(nil, targetConfig, nil)
 	if err != nil {
 		return err
 	}
@@ -292,7 +343,10 @@ func updateTeam(t team, endpoint string, environments *model.Environments, restF
 			"name": "%s",
 			"isActive": %t
 		}`, t.Name, t.Active)
-	response, status, err = restFunc([]byte(body), url, http.MethodPut, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+
+	targetConfig.Endpoint = url
+	targetConfig.Method = http.MethodPut
+	response, status, err = restFunc([]byte(body), targetConfig, nil)
 	if err != nil {
 		return err
 	}
@@ -307,17 +361,22 @@ func updateTeam(t team, endpoint string, environments *model.Environments, restF
 	}
 
 	// GET Allocations
-	response, status, err = restFunc(nil, url+"/teamdefallocations", http.MethodGet, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+	targetConfig.Endpoint = url + "/teamdefallocations"
+	targetConfig.Method = http.MethodGet
+	response, status, err = restFunc(nil, targetConfig, nil)
 	ar := &teamDefAllocationsResults{}
 	json.Unmarshal(response, ar)
 
 	teamCurrentAllocations := []*teamDefAllocations{}
 	for _, a := range ar.Results {
-		urlString, err := a.getURL(environments.Target.URL)
+		urlString, err := a.getURL(environments.Target.URL, environments.Target.API.Context)
 		if err != nil {
 			return err
 		}
-		response, status, err = restFunc(nil, urlString, http.MethodGet, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+
+		targetConfig.Endpoint = urlString
+		targetConfig.Method = http.MethodGet
+		response, status, err = restFunc(nil, targetConfig, nil)
 		teamAllocation := &teamDefAllocations{}
 		json.Unmarshal(response, teamAllocation)
 		teamCurrentAllocations = append(teamCurrentAllocations, teamAllocation)
@@ -327,7 +386,9 @@ func updateTeam(t team, endpoint string, environments *model.Environments, restF
 			url := fmt.Sprintf("%steamdefinitions/%d/teamdefallocations/%d", endpoint, newTeam.ID, teamAllocation.ID)
 			body = fmt.Sprintf(`{"allocation": %f}`, updateTeam.Allocation)
 
-			response, status, err := restFunc([]byte(body), url, http.MethodPut, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+			targetConfig.Endpoint = url
+			targetConfig.Method = http.MethodGet
+			response, status, err = restFunc([]byte(body), targetConfig, nil)
 			if err != nil {
 				return err
 			}
@@ -347,7 +408,9 @@ func updateTeam(t team, endpoint string, environments *model.Environments, restF
 				"teamId": %d
 			  }`, team.ResourceID, team.Allocation, newTeam.ID)
 
-			response, status, err := restFunc([]byte(body), url, http.MethodPost, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+			targetConfig.Endpoint = url
+			targetConfig.Method = http.MethodPost
+			response, status, err = restFunc([]byte(body), targetConfig, nil)
 			if err != nil {
 				return err
 			}
@@ -358,12 +421,14 @@ func updateTeam(t team, endpoint string, environments *model.Environments, restF
 			res := &result{}
 			json.Unmarshal(response, res)
 			body = fmt.Sprintf(`{"allocation": %f}`, team.Allocation)
-			urlString, err := res.getURL(environments.Target.URL)
+			urlString, err := res.getURL(environments.Target.URL, environments.Target.API.Context)
 			if err != nil {
 				return err
 			}
 
-			response, status, err = restFunc([]byte(body), urlString, http.MethodPut, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+			targetConfig.Endpoint = urlString
+			targetConfig.Method = http.MethodPut
+			response, status, err = restFunc([]byte(body), targetConfig, nil)
 			if err != nil {
 				return err
 			}
