@@ -3,6 +3,7 @@ package api
 import (
 	"fmt"
 	"net/url"
+	"strings"
 
 	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/model"
@@ -60,5 +61,16 @@ func (r *result) getURL(env, context string) (string, error) {
 	if envURL.Host != restURL.Host {
 		restURL.Host = envURL.Host
 	}
+
+	if envURL.Scheme != restURL.Scheme {
+		restURL.Scheme = envURL.Scheme
+	}
+	
+	if !strings.HasPrefix(restURL.Path, context ) {
+		index := strings.Index(restURL.Path, "/rest")
+		pathWithoutContext := restURL.Path[index:len(restURL.Path)]
+		restURL.Path = context + pathWithoutContext 
+	}
+
 	return restURL.String(), nil
 }

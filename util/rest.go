@@ -24,7 +24,7 @@ type APIConfig struct {
 }
 
 //RestCall executes a rest call to the defined environment executing a json
-func RestCall(jsonString []byte, endpoint, config APIConfig, params map[string]string) ([]byte, int, error) {
+func RestCall(jsonString []byte, config APIConfig, params map[string]string) ([]byte, int, error) {
 	if config.Token == "" {
 		return nil, -1, fmt.Errorf("invalid token")
 	}

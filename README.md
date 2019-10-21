@@ -36,6 +36,13 @@ If you like to read and write at once just put the attribute `autoWrite="true"` 
 - [Package creation and deploy](#package-creation-and-deploy)
 - [Data migration](#data-migration)
 
+### Description of Rest API Driver tags
+
+| Tag                                   | Description                                                   |
+| ------------------------------------- | ------------------------------------------------------------- |
+| [`api.blueprint`](#tag-api.blueprint) | Used to read and write new UX blueprints.                     |
+| [`api.team`](#tag-api.team)           | Used to read, write and migrate new UX teams.                 |
+
 ### Description of structure Driver tags
 
 | Tag                                   | Description                                                   |
@@ -48,8 +55,6 @@ If you like to read and write at once just put the attribute `autoWrite="true"` 
 | [`query`](#tag-query)                 | Used to read and write queries.                               |
 | [`page`](#tag-page)                   | Used to read and write pages.                                 |
 | [`menu`](#tag-menu)                   | Used to read and write menus.                                 |
-| [`api.blueprint`](#tag-api.blueprint) | Used to read and write new UX blueprints.                     |
-| [`api.team`](#tag-api.team)           | Used to read and write new UX teams.                          |
 
 ### Description of instance Driver tags
 
