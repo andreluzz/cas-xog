@@ -2,16 +2,16 @@ package transform
 
 import (
 	"errors"
+	"regexp"
+	"strings"
+
 	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/model"
 	"github.com/beevik/etree"
-	"regexp"
-	"strings"
 )
 
 //Execute runs the transformation rules over the xog xml
 func Execute(xog, aux *etree.Document, file *model.DriverFile) error {
-
 	headerElement := xog.FindElement("//NikuDataBus/Header")
 	if headerElement == nil {
 		return errors.New("transform error - no header element")

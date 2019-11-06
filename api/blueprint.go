@@ -260,7 +260,7 @@ func writeBlueprint(file *model.DriverFile, sourceFolder, outputFolder string, e
 
 	//post externalApps
 	for _, e := range bp.ExternalApps {
-		targetConfig.Endpoint = endpoint + "externalApps"
+		targetConfig.Endpoint = endpoint + "private/externalApps"
 		targetConfig.Method = http.MethodPost
 		response, status, err := restFunc(e.getNewExternalApp(bp.ID), targetConfig, nil)
 		if err != nil {
@@ -400,7 +400,7 @@ func readBlueprint(file *model.DriverFile, outputFolder string, environments *mo
 		if err != nil {
 			return err
 		}
-		sourceConfig.Endpoint = endpoint + "private/blueprints/" + file.ID + "/visuals"
+		sourceConfig.Endpoint = urlString
 		sourceConfig.Method = http.MethodGet
 		response, status, err = restFunc(nil, sourceConfig, nil)
 		if err != nil {
@@ -417,14 +417,14 @@ func readBlueprint(file *model.DriverFile, outputFolder string, environments *mo
 	//read bp external apps
 	param := make(map[string]string)
 	param["filter"] = "(blueprintId = " + file.ID + ")"
-	sourceConfig.Endpoint = endpoint + "externalApps"
+	sourceConfig.Endpoint = endpoint + "private/externalApps"
 	sourceConfig.Method = http.MethodGet
 	response, status, err = restFunc(nil, sourceConfig, param)
 	if err != nil {
 		return err
 	}
 	if status != 200 {
-		return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), endpoint+"externalApps")
+		return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), endpoint+"private/externalApps")
 	}
 	externalApps := &blueprintResults{}
 	json.Unmarshal(response, externalApps)
@@ -526,7 +526,7 @@ func deleteBlueprintContent(envs *model.Environments, bpID string, restFunc util
 	//delete externalApps
 	param := make(map[string]string)
 	param["filter"] = "(blueprintId = " + bpID + ")"
-	config.Endpoint = endpoint + "externalApps"
+	config.Endpoint = endpoint + "private/externalApps"
 	config.Method = http.MethodGet
 	response, status, err = restFunc(nil, config, param)
 	if err != nil {

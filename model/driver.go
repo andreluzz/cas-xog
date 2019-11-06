@@ -111,6 +111,7 @@ type DriverFile struct {
 	InstanceTag      string        `xml:"instance,attr"`
 	ExportToExcel    bool          `xml:"exportToExcel,attr"`
 	OnlyStructure    bool          `xml:"onlyStructure,attr"`
+	OnlyElements     bool          `xml:"onlyElements,attr"`
 	PackageTransform bool          `xml:"packageTransform,attr"`
 	InstancesPerFile int           `xml:"instancesPerFile,attr"`
 	Action           string        `xml:"action,attr"`

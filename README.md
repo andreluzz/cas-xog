@@ -87,7 +87,7 @@ If you like to read and write at once just put the attribute `autoWrite="true"` 
 | `partitionModel`  | Used when you need to set a new partitionModel or change the current one.                                                                            | no       |
 | `targetPartition` | Used to change elements partition code to the defined value. When uses alone without sourcePartition replaces the tag partitionCode on all elements. | no       |
 | `sourcePartition` | Used to read only elements from this partition code.                                                                                                 | no       |
-
+| `onlyElements` | Used to read only the defined elements and remove everything else. Default is false.  | no       |
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
@@ -105,7 +105,7 @@ Used to read only the selected elements from the object.
 | Attribute | Description                                                                       | Required |
 | --------- | --------------------------------------------------------------------------------- | -------- |
 | `type`    | Defines what element to read. Availables types: `attribute`, `action` and `link`. | yes      |
-| `code`    | Code of the element that you want to include.                                     | yes      |
+| `code`    | Code of the element that you want to include. Can be used * to set a wildcard and get all attributes with the defined prefix. Wildcards only work to type: `attribute`.                               | yes      |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -115,6 +115,13 @@ Used to read only the selected elements from the object.
         <element type="attribute" code="novo_atr" />
         <element type="action" code="tst_run_proc_lnk" />
         <element type="link" code="test_subobj.link_test" />
+    </object>
+</xogdriver>
+
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <object code="test_subobj" path="test_subobj.xml" onlyElements="true">
+        <element type="attribute" code="acme_*" />
     </object>
 </xogdriver>
 ```

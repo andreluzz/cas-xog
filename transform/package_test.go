@@ -1,13 +1,14 @@
 package transform
 
 import (
+	"io/ioutil"
+	"strings"
+	"testing"
+
 	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/model"
 	"github.com/andreluzz/cas-xog/util"
 	"github.com/beevik/etree"
-	"io/ioutil"
-	"strings"
-	"testing"
 )
 
 func TestProcessPackageToReplaceTargetPartitionModel(t *testing.T) {
@@ -209,7 +210,8 @@ func TestProcessPackageToTransform(t *testing.T) {
 			},
 		},
 	}
-	soapMock := func(request, endpoint string) (string, error) {
+
+	soapMock := func(request, endpoint, proxy string) (string, error) {
 		file, _ := ioutil.ReadFile("../mock/transform/package_transform_view_target.xml")
 		return util.BytesToString(file), nil
 	}
@@ -229,7 +231,7 @@ func TestProcessPackageToReturnErrorTransformValidate(t *testing.T) {
 		Path:             "package_transform_view_source.xml",
 		PackageTransform: true,
 	}
-	soapMock := func(request, endpoint string) (string, error) {
+	soapMock := func(request, endpoint, proxy string) (string, error) {
 		return "", nil
 	}
 	file.RunAuxXML(&model.EnvType{}, soapMock)
@@ -257,7 +259,7 @@ func TestProcessPackageToReturnErrorTransformExecute(t *testing.T) {
 			},
 		},
 	}
-	soapMock := func(request, endpoint string) (string, error) {
+	soapMock := func(request, endpoint, proxy string) (string, error) {
 		file, _ := ioutil.ReadFile("../mock/transform/package_transform_view_target.xml")
 		return util.BytesToString(file), nil
 	}
