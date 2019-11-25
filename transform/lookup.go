@@ -13,6 +13,14 @@ func specificLookupTransformations(xog *etree.Document, file *model.DriverFile) 
 		return
 	}
 
+	if file.OnlyActive {
+		removeInactive := model.Element {
+			Action: "remove",
+			XPath: "//lookupValue[@status='inactive']",
+		}
+		file.Elements = append(file.Elements, removeInactive) 
+	}
+
 	if file.TargetPartition != "" {
 		elems := xog.FindElements("//lookupValue")
 		for _, e := range elems {

@@ -112,6 +112,7 @@ type DriverFile struct {
 	ExportToExcel    bool          `xml:"exportToExcel,attr"`
 	OnlyStructure    bool          `xml:"onlyStructure,attr"`
 	OnlyElements     bool          `xml:"onlyElements,attr"`
+	OnlyActive       bool          `xml:"onlyActive,attr"`
 	PackageTransform bool          `xml:"packageTransform,attr"`
 	InstancesPerFile int           `xml:"instancesPerFile,attr"`
 	Action           string        `xml:"action,attr"`
