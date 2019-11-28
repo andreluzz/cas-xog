@@ -240,6 +240,7 @@ Used to read view actions and actions group.
 | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
 | `code`            | Lookup code.                                                                                                                                                                         | yes      |
 | `path`            | Path where the file will be saved on the file system.                                                                                                                                | yes      |
+| `onlyActive`      | Used to read only active options from a static lookup.                                                                                                                               | no       |
 | `onlyStructure`   | Used to create a lookup with a fake query to prevent error of attributes that have not yet been imported. Only available for dynamic lookups.                                        | no       |
 | `sourcePartition` | When defined changes only elements from this partition code. Should be used together with targetPartition tag. Only available for static lookups.                                    | no       |
 | `targetPartition` | Used to change the partition code. Used alone without sourcePartition replaces the tag partitionCode of all lookup values with the defined value. Only available for static lookups. | no       |
@@ -249,7 +250,7 @@ Used to read view actions and actions group.
 <xogdriver version="2.0">
     <lookup code="INV_APPLICATION_CATEGORY_TYPE" path="INV_APPLICATION_CATEGORY_TYPE.xml" />
     <lookup code="LOOKUP_FIN_CHARGECODES" path="LOOKUP_FIN_CHARGECODES.xml" onlyStructure="true" />
-    <lookup code="LOOKUP_CAS_XOG_1" path="LOOKUP_CAS_XOG_1.xml" targetPartition="NIKU.ROOT" />
+    <lookup code="LOOKUP_CAS_XOG_1" path="LOOKUP_CAS_XOG_1.xml" targetPartition="NIKU.ROOT" onlyActive="true" />
     <lookup code="LOOKUP_CAS_XOG_2" path="LOOKUP_CAS_XOG_2.xml" sourcePartition="IT" targetPartition="NIKU.ROOT" />
 </xogdriver>
 ```
