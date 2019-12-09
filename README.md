@@ -38,10 +38,10 @@ If you like to read and write at once just put the attribute `autoWrite="true"` 
 
 ### Description of Rest API Driver tags
 
-| Tag                                   | Description                                   |
-| ------------------------------------- | --------------------------------------------- |
-| [`api.blueprint`](#tag-api.blueprint) | Used to read and write new UX blueprints.     |
-| [`api.team`](#tag-api.team)           | Used to read, write and migrate new UX teams. |
+| Tag                                  | Description                                   |
+| ------------------------------------ | --------------------------------------------- |
+| [`api.blueprint`](#tag-apiblueprint) | Used to read and write new UX blueprints.     |
+| [`api.team`](#tag-apiteam)           | Used to read, write and migrate new UX teams. |
 
 ### Description of structure Driver tags
 
@@ -77,6 +77,7 @@ If you like to read and write at once just put the attribute `autoWrite="true"` 
 | [`obsInstance`](#tag-obsinstance)                           | Used to read and write OBS instances.              |
 | [`themeInstance`](#tag-themeinstance)                       | Used to read and write UI Theme instances.         |
 | [`groupInstance`](#tag-groupinstance)                       | Used to read and write groups.                     |
+| [`departmentInstance`](#tag-departmentInstance)             | Used to read and entity department instances.      |
 
 ## Tag `object`
 
@@ -695,6 +696,24 @@ This file should hava one line to each OBS unit with all it´s parents. Can be u
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
     <groupInstance code="cop.systemAdministrator" path="systemAdministrator.xml" />
+</xogdriver>
+```
+
+## Tag `departmentInstance`
+
+| Attribute  | Description                                                           | Required |
+| ---------- | --------------------------------------------------------------------- | -------- |
+| `code`     | Department code. When migratin from excel any code can be used.       | yes      |
+| `path`     | Path where the file will be saved on the file system.                 | yes      |
+| `excel`    | Path to the excel you want to migrate PPM.                            | no       |
+| `startRow` | The number of the row to start processing. Default 1.                 | no       |
+| `entity`   | The entity to load the excel data. Required when using the tag excel. | no       |
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <departmentInstance code="*" path="systemAdministrator.xml" />
+    <departmentInstance code="dummy" excel="drivers/obs_template.xlsx" startRow="2" entity="B3" path="departments.xml" />
 </xogdriver>
 ```
 

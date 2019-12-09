@@ -5,15 +5,15 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/beevik/etree"
-	"github.com/tealeg/xlsx"
-
 	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/model"
 	"github.com/andreluzz/cas-xog/util"
+	"github.com/beevik/etree"
+	"github.com/tealeg/xlsx"
 )
 
-func specificObsTransformations(xog *etree.Document, file *model.DriverFile) error {
+func specificDepartmentTransformations(xog *etree.Document, file *model.DriverFile) error {
+
 	if file.ExcelFile == constant.Undefined {
 		return nil
 	}
@@ -39,12 +39,15 @@ func specificObsTransformations(xog *etree.Document, file *model.DriverFile) err
 			node := Node{}
 			for index, cell := range row.Cells {
 				if cell.Value == constant.Undefined || index == len(row.Cells)-1 {
-					i := strings.LastIndex(node.xpath, "/unit")
+					i := strings.LastIndex(node.xpath, "/Department")
 					node.xpath = node.xpath[0:i]
+					if cell.Value != constant.Undefined {
+						node.name = cell.Value
+					}
 					break
 				}
 				if index%2 == 0 {
-					node.xpath += "/unit[@code='" + cell.Value + "']"
+					node.xpath += "/Department[@department_code='" + cell.Value + "']"
 					node.id = cell.Value
 				} else {
 					node.name = cell.Value
@@ -54,20 +57,34 @@ func specificObsTransformations(xog *etree.Document, file *model.DriverFile) err
 		}
 	}
 
-	removeElementsFromParent(xog, "//unit")
-	removeElementsFromParent(xog, "//associatedObject")
+	removeElementsFromParent(xog, "//Department")
 
-	obs := xog.FindElement("//obs")
+	departments := xog.FindElement("//Departments")
+
+	errs := []string{}
 
 	for _, n := range nodes {
-		unitElement := etree.NewElement("unit")
-		unitElement.CreateAttr("code", n.id)
-		unitElement.CreateAttr("name", n.name)
+		departmentElement := etree.NewElement("Department")
+		departmentElement.CreateAttr("department_code", n.id)
+		departmentElement.CreateAttr("entity", file.Entity)
+		departmentElement.CreateAttr("short_description", n.name)
+		descriptionElement := etree.NewElement("Description")
+		descriptionElement.CreateText(n.name)
+		departmentElement.AddChild(descriptionElement)
 		if n.xpath == "" {
-			obs.AddChild(unitElement)
+			departments.AddChild(departmentElement)
 		} else {
-			obs.FindElement("/" + n.xpath).AddChild(unitElement)
+			parent := departments.FindElement("/" + n.xpath)
+			if parent != nil {
+				parent.AddChild(departmentElement)
+			} else {
+				errs = append(errs, n.id)
+			}
 		}
+	}
+
+	if len(errs) > 0 {
+		return errors.New("ids:  " + strings.Join(errs, ","))
 	}
 
 	return nil

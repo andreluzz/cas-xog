@@ -106,6 +106,7 @@ type DriverFile struct {
 	PartitionModel   string        `xml:"partitionModel,attr"`
 	CopyPermissions  string        `xml:"copyPermissions,attr"`
 	Template         string        `xml:"template,attr"`
+	Entity           string        `xml:"entity,attr"`
 	ExcelFile        string        `xml:"excel,attr"`
 	ExcelStartRow    string        `xml:"startRow,attr"`
 	InstanceTag      string        `xml:"instance,attr"`
@@ -297,7 +298,7 @@ func (d *DriverFile) GetXMLType() string {
 		"ResourceInstances", "UserInstances", "ProjectInstances", "IdeaInstances", "ApplicationInstances", "AssetInstances", "OtherInvestmentInstances",
 		"ProductInstances", "ServiceInstances", "BenefitPlanInstances", "BudgetPlanInstances", "CategoryInstances", "ChangeInstances",
 		"ChargeCodeInstances", "CompanyClassInstances", "CostPlanInstances", "CostPlusCodeInstances", "DepartmentInstances", "EntityInstances",
-		"GroupInstances", "IncidentInstances", "IssueInstances", "PortfolioInstances", "ProgramInstances", "ReleaseInstances",
+		"GroupInstances", "IncidentInstances", "IssueInstances", "PortfolioInstances", "ProgramInstances", "ReleaseInstances", "LocationInstances",
 		"ReleasePlanInstances", "RequirementInstances", "RequisitionInstances", "RiskInstances", "RoleInstances", "ThemeInstances", "VendorInstances", "DocumentInstances", "Migrations":
 		return strings.ToLower(d.Type[:1]) + d.Type[1:len(d.Type)-1]
 	}
@@ -487,6 +488,7 @@ func initInstancesTagByType() {
 	instancesTag["CostPlanInstances"] = "CostPlan"
 	instancesTag["CostPlusCodeInstances"] = "costPlusCode"
 	instancesTag["DepartmentInstances"] = "Department"
+	instancesTag["LocationInstances"] = "Location"
 	instancesTag["EntityInstances"] = "Entity"
 	instancesTag["GroupInstances"] = "group"
 	instancesTag["IncidentInstances"] = "incident"
@@ -596,6 +598,7 @@ type DriverTypesPattern struct {
 	ThemeInstances            []DriverFile `xml:"themeInstance"`
 	VendorInstances           []DriverFile `xml:"vendorInstance"`
 	DocumentInstances         []DriverFile `xml:"documentInstance"`
+	LocationInstances         []DriverFile `xml:"locationInstance"`
 	APIBlueprints             []DriverFile `xml:"api.blueprint"`
 	APITeams                  []DriverFile `xml:"api.team"`
 }

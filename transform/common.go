@@ -10,6 +10,13 @@ import (
 	"github.com/beevik/etree"
 )
 
+// Node represents a obs unit
+type Node struct {
+	name  string
+	id    string
+	xpath string
+}
+
 //Execute runs the transformation rules over the xog xml
 func Execute(xog, aux *etree.Document, file *model.DriverFile) error {
 	headerElement := xog.FindElement("//NikuDataBus/Header")
@@ -115,6 +122,11 @@ func transformXMLByType(headerElement *etree.Element, xog, aux *etree.Document, 
 		headerElement.CreateAttr("version", "13.0")
 	case constant.TypeOBSInstance:
 		err := specificObsTransformations(xog, file)
+		if err != nil {
+			return errors.New("transform error - " + err.Error())
+		}
+	case constant.TypeDepartmentInstance:
+		err := specificDepartmentTransformations(xog, file)
 		if err != nil {
 			return errors.New("transform error - " + err.Error())
 		}
