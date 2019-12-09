@@ -32,6 +32,8 @@ const (
 	TypeOBSInstance              = "OBSInstances"
 	TypeThemeInstance            = "ThemeInstances"
 	TypeDocumentInstance         = "DocumentInstances"
+	TypeDepartmentInstance       = "DepartmentInstances"
+	TypeLocationInstance         = "LocationInstances"
 
 	ActionReplace         = "replace"
 	ActionUpdate          = "update"

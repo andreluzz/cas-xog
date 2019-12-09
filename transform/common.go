@@ -113,6 +113,11 @@ func transformXMLByType(headerElement *etree.Element, xog, aux *etree.Document, 
 		headerElement.CreateAttr("version", "14.1")
 	case constant.TypeThemeInstance:
 		headerElement.CreateAttr("version", "13.0")
+	case constant.TypeOBSInstance:
+		err := specificObsTransformations(xog, file)
+		if err != nil {
+			return errors.New("transform error - " + err.Error())
+		}
 	}
 
 	return nil

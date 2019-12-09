@@ -38,23 +38,23 @@ If you like to read and write at once just put the attribute `autoWrite="true"` 
 
 ### Description of Rest API Driver tags
 
-| Tag                                   | Description                                                   |
-| ------------------------------------- | ------------------------------------------------------------- |
-| [`api.blueprint`](#tag-api.blueprint) | Used to read and write new UX blueprints.                     |
-| [`api.team`](#tag-api.team)           | Used to read, write and migrate new UX teams.                 |
+| Tag                                   | Description                                   |
+| ------------------------------------- | --------------------------------------------- |
+| [`api.blueprint`](#tag-api.blueprint) | Used to read and write new UX blueprints.     |
+| [`api.team`](#tag-api.team)           | Used to read, write and migrate new UX teams. |
 
 ### Description of structure Driver tags
 
-| Tag                                   | Description                                                   |
-| ------------------------------------- | ------------------------------------------------------------- |
-| [`object`](#tag-object)               | Used to read and write objects attributes, actions and links. |
-| [`view`](#tag-view)                   | Used to read and write views.                                 |
-| [`process`](#tag-process)             | Used to read and write processes.                             |
-| [`lookup`](#tag-lookup)               | Used to read and write lookups.                               |
-| [`portlet`](#tag-portlet)             | Used to read and write portlets.                              |
-| [`query`](#tag-query)                 | Used to read and write queries.                               |
-| [`page`](#tag-page)                   | Used to read and write pages.                                 |
-| [`menu`](#tag-menu)                   | Used to read and write menus.                                 |
+| Tag                       | Description                                                   |
+| ------------------------- | ------------------------------------------------------------- |
+| [`object`](#tag-object)   | Used to read and write objects attributes, actions and links. |
+| [`view`](#tag-view)       | Used to read and write views.                                 |
+| [`process`](#tag-process) | Used to read and write processes.                             |
+| [`lookup`](#tag-lookup)   | Used to read and write lookups.                               |
+| [`portlet`](#tag-portlet) | Used to read and write portlets.                              |
+| [`query`](#tag-query)     | Used to read and write queries.                               |
+| [`page`](#tag-page)       | Used to read and write pages.                                 |
+| [`menu`](#tag-menu)       | Used to read and write menus.                                 |
 
 ### Description of instance Driver tags
 
@@ -87,7 +87,8 @@ If you like to read and write at once just put the attribute `autoWrite="true"` 
 | `partitionModel`  | Used when you need to set a new partitionModel or change the current one.                                                                            | no       |
 | `targetPartition` | Used to change elements partition code to the defined value. When uses alone without sourcePartition replaces the tag partitionCode on all elements. | no       |
 | `sourcePartition` | Used to read only elements from this partition code.                                                                                                 | no       |
-| `onlyElements` | Used to read only the defined elements and remove everything else. Default is false.  | no       |
+| `onlyElements`    | Used to read only the defined elements and remove everything else. Default is false.                                                                 | no       |
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
@@ -102,10 +103,10 @@ If you like to read and write at once just put the attribute `autoWrite="true"` 
 
 Used to read only the selected elements from the object.
 
-| Attribute | Description                                                                       | Required |
-| --------- | --------------------------------------------------------------------------------- | -------- |
-| `type`    | Defines what element to read. Availables types: `attribute`, `action` and `link`. | yes      |
-| `code`    | Code of the element that you want to include. Can be used * to set a wildcard and get all attributes with the defined prefix. Wildcards only work to type: `attribute`.                               | yes      |
+| Attribute | Description                                                                                                                                                              | Required |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| `type`    | Defines what element to read. Availables types: `attribute`, `action` and `link`.                                                                                        | yes      |
+| `code`    | Code of the element that you want to include. Can be used \* to set a wildcard and get all attributes with the defined prefix. Wildcards only work to type: `attribute`. | yes      |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -401,7 +402,7 @@ Used to read only the selected links inside a section tag from the menu.
 | `path`     | Path where the file will be saved on the file system. The extension should be .json                       | yes      |
 | `action`   | Used to define if is to update or insert api team. Default is insert.                                     | no       |
 | `excel`    | Path to the excel file with the data.                                                                     | yes      |
-| `startRow` | The line number in the excel file that we will start reading to create the instances. Default value is 1. | no       |  
+| `startRow` | The line number in the excel file that we will start reading to create the instances. Default value is 1. | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -637,17 +638,37 @@ Used to read only the selected links inside a section tag from the menu.
 
 ## Tag `obsInstance`
 
-| Attribute | Description                                           | Required |
-| --------- | ----------------------------------------------------- | -------- |
-| `code`    | OBS code.                                             | yes      |
-| `path`    | Path where the file will be saved on the file system. | yes      |
+| Attribute  | Description                                                                                               | Required |
+| ---------- | --------------------------------------------------------------------------------------------------------- | -------- |
+| `code`     | OBS code.                                                                                                 | yes      |
+| `path`     | Path where the file will be saved on the file system.                                                     | yes      |
+| `excel`    | Path to the excel file with the data.                                                                     | no       |
+| `startRow` | The line number in the excel file that we will start reading to create the instances. Default value is 1. | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
     <obsInstance code="department" path="obs_department.xml" />
+    <obsInstance code="department" path="obs_department.xml" excel="obs_data.xlsx" startRow="2" />
 </xogdriver>
 ```
+
+### Excel wit OBS data structure
+
+This file should hava one line to each OBS unit with all it´s parents. Can be used anything as code but for the import to be sucessfull it should not be empty or be duplicated.
+
+| Level1 Code | Level1 Name | Level2 Code | Level2 Name | Level3 Code | Level3 Name | Level4 Code | Level4 Name      |
+| ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ---------------- |
+| N1.001      | Company     |             |             |             |             |             |                  |
+| N1.001      | Company     | N2.001      | Site 1      |             |             |             |                  |
+| N1.001      | Company     | N2.001      | Site 1      | N3.001      | Sub-Group 1 |             |                  |
+| N1.001      | Company     | N2.001      | Site 1      | N3.001      | Sub-Group 1 | N4.001      | Bussiness Unit 1 |
+| N1.001      | Company     | N2.001      | Site 1      | N3.002      | Sub-Group 2 |             |                  |
+| N1.001      | Company     | N2.001      | Site 1      | N3.002      | Sub-Group 2 | N4.002      | Bussiness Unit 2 |
+| N1.001      | Company     | N2.001      | Site 1      | N3.002      | Sub-Group 2 | N4.003      | Bussiness Unit 3 |
+| N1.001      | Company     | N2.002      | Site 2      |             |             |             |                  |
+| N1.001      | Company     | N2.002      | Site 2      | N3.001      | Sub-Group 3 |             |                  |
+| N1.001      | Company     | N2.002      | Site 2      | N3.002      | Sub-Group 3 | N4.004      | Bussiness Unit 4 |
 
 ## Tag `themeInstance`
 
@@ -1009,12 +1030,12 @@ This information is stored in memory and will be requested again only if the sys
 
 If the URL has a non-default port (80/443) it should be informed as follows: `http://development.server.com:8888`
 
-| Attribute  | Description                                                                                   | Required |
-| ---------- | --------------------------------------------------------------------------------------------- | -------- |
-| `name`     | Defines an unique identifier that will be displayed in the application for choice of actions. | yes      |
-| `username` | Username with permission to execute XOG in the environment.                                   | no       |
-| `password` | Password associated with username.                                                            | no       |
-| `endpoint` | Defines the environment's URL.                                                                | yes      |
+| Attribute  | Description                                                                                                                                                                                                                | Required |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `name`     | Defines an unique identifier that will be displayed in the application for choice of actions.                                                                                                                              | yes      |
+| `username` | Username with permission to execute XOG in the environment.                                                                                                                                                                | no       |
+| `password` | Password associated with username.                                                                                                                                                                                         | no       |
+| `endpoint` | Defines the environment's URL.                                                                                                                                                                                             | yes      |
 | `api`      | Used to specify the Rest API token. Use the <b>client attribute</b> to set the token client. The <b>context attribute</b> is used if you are in a SaaS environment with the onDemand Portal, the default context is "/ppm" | no       |
 
 ```xml
