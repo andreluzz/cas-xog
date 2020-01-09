@@ -284,7 +284,7 @@ func (d *DriverFile) GetInstanceTag() string {
 //GetXMLType returns the constant value according to the type of driver
 func (d *DriverFile) GetXMLType() string {
 	switch d.Type {
-	case "APIBlueprints", "APITeams":
+	case "APIBlueprints", "APITeams", "APITasks":
 		return "api." + strings.ToLower(d.Type[3:len(d.Type)-1])
 	case "Files", "Objects", "Views", "Lookups", "Portlets", "Pages", "Menus":
 		return strings.ToLower(d.Type[:len(d.Type)-1])
@@ -601,4 +601,5 @@ type DriverTypesPattern struct {
 	LocationInstances         []DriverFile `xml:"locationInstance"`
 	APIBlueprints             []DriverFile `xml:"api.blueprint"`
 	APITeams                  []DriverFile `xml:"api.team"`
+	APITasks                  []DriverFile `xml:"api.task"`
 }
