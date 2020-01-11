@@ -431,32 +431,52 @@ Used to read only the selected links inside a section tag from the menu.
 
 | Attribute  | Description                                                                                               | Required |
 | ---------- | --------------------------------------------------------------------------------------------------------- | -------- |
-| `code`     | Source team code. Optional if using to migrate teams from excel.                                          | yes      |
 | `path`     | Path where the file will be saved on the file system. The extension should be .json                       | yes      |
 | `excel`    | Path to the excel file with the data.                                                                     | yes      |
 | `startRow` | The line number in the excel file that we will start reading to create the instances. Default value is 1. | no       |
 
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<xogdriver version="2.0">
-	<api.task code="TM000001" name="" path="team01.json" />
-</xogdriver>
-```
+Only migration from excel is available.
 
 ### Task migration
 
+Required attributes to migrate tasks: **projectCode, taskname, taskCode, taskStart, taskFinish, percentComplete**.
+
+If you want to assign resources to the tasks the folowing attributes are required: **resourceId, segmentStart, segmentFinish, segmentValue**.
+
+To migrate any other field you just have to add the attribute to the match list. There is no support for **multi valued lookups**.
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <api.team path="teams.json" action="update" excel="drivers/dados.xlsx" startRow="2">
-        <match col="1" attribute="code" />
+    <api.task path="tasks.json" excel="drivers/tasks.xlsx" startRow="2">
+        <match col="1" attribute="project" />
         <match col="2" attribute="name" />
-        <match col="2" attribute="name" />
-        <match col="3" attribute="resourceId" />
-        <match col="4" attribute="allocation" />
-    </api.team>
+        <match col="3" attribute="code" />
+        <match col="4" attribute="start" />
+        <match col="5" attribute="finish" />
+        <match col="6" attribute="percentComplete" />
+        <match col="7" attribute="resourceId" />
+        <match col="8" attribute="segmentStart" />
+        <match col="9" attribute="segmentFinish" />
+        <match col="10" attribute="segmentValue" />
+        <match col="11" attribute="p_cstCategory" />
+    </api.task>
 </xogdriver>
 ```
+
+### Task migration excel example
+
+Use date in the format YYYY-MM-DDTHH:MM:SS and as a string cell in the excel file.
+
+| Project | Name          | Code     | Start               | Finish              | Percent Complete | Resource | Segment Start       | Segment Finish      | Segment Value | Custom Category |
+| ------- | ------------- | -------- | ------------------- | ------------------- | ---------------- | -------- | ------------------- | ------------------- | ------------- | --------------- |
+| PR1173  | Nova Tarefa 1 | TSK.0001 | 2020-04-01T08:00:00 | 2020-06-30T00:00:00 | 0                | 5038001  | 2020-04-01T00:00:00 | 2020-04-30T00:00:00 | 120           |
+| PR1173  | Nova Tarefa 1 | TSK.0001 | 2020-04-01T08:00:00 | 2020-06-30T00:00:00 | 0                | 5038001  | 2020-05-01T00:00:00 | 2020-05-31T00:00:00 | 120           |
+| PR1173  | Nova Tarefa 1 | TSK.0001 | 2020-04-01T08:00:00 | 2020-06-30T00:00:00 | 0                | 5038001  | 2020-06-01T00:00:00 | 2020-06-30T00:00:00 | 120           |
+| PR1173  | Nova Tarefa 1 | TSK.0001 | 2020-04-01T08:00:00 | 2020-06-30T00:00:00 | 0                | 5035001  | 2020-04-01T00:00:00 | 2020-04-30T00:00:00 | 120           |
+| PR1173  | Nova Tarefa 1 | TSK.0001 | 2020-04-01T08:00:00 | 2020-06-30T00:00:00 | 0                | 5035001  | 2020-05-01T00:00:00 | 2020-05-31T00:00:00 | 120           |
+| PR1173  | Nova Tarefa 1 | TSK.0001 | 2020-04-01T08:00:00 | 2020-06-30T00:00:00 | 0                | 5035001  | 2020-06-01T00:00:00 | 2020-06-30T00:00:00 | 120           |
+| PR1173  | Nova Tarefa 2 | TSK.0002 | 2020-04-01T08:00:00 | 2020-06-30T00:00:00 | 0.5              |          |                     |                     |               | Testing         |
 
 ## Tag `customObjectInstance`
 

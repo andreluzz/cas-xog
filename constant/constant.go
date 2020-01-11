@@ -8,6 +8,7 @@ const (
 
 	APITypeBlueprint = "Blueprints"
 	APITypeTeam      = "Teams"
+	APITypeTask      = "Tasks"
 
 	TypeLookup    = "Lookups"
 	TypePortlet   = "Portlets"

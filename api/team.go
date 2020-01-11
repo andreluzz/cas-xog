@@ -14,10 +14,6 @@ import (
 	"github.com/tealeg/xlsx"
 )
 
-type teamResults struct {
-	Results []result `json:"_results"`
-}
-
 type team struct {
 	ID              int                   `json:"_internalId,omitempty"`
 	Code            string                `json:"code"`
@@ -139,7 +135,7 @@ func readTeam(file *model.DriverFile, outputFolder string, environments *model.E
 		return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), url)
 	}
 
-	tr := &teamResults{}
+	tr := &results{}
 	json.Unmarshal(response, tr)
 
 	teams := []team{}
@@ -327,7 +323,7 @@ func updateTeam(t team, endpoint string, environments *model.Environments, restF
 		return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), url)
 	}
 
-	tr := &teamResults{}
+	tr := &results{}
 	err = json.Unmarshal(response, tr)
 	if err != nil {
 		return fmt.Errorf("status code: %d | response: %s | url: %s | error: %s", status, string(response), url, err.Error())
