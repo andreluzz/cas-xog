@@ -42,7 +42,7 @@ If you like to read and write at once just put the attribute `autoWrite="true"` 
 | ------------------------------------ | --------------------------------------------- |
 | [`api.blueprint`](#tag-apiblueprint) | Used to read and write new UX blueprints.     |
 | [`api.team`](#tag-apiteam)           | Used to read, write and migrate new UX teams. |
-| [`api.task`](#tag-apitask)           | Used to read, write and migrate taks.         |
+| [`api.task`](#tag-apitask)           | Used to migrate taks.                         |
 
 ### Description of structure Driver tags
 

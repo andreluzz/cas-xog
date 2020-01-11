@@ -96,7 +96,7 @@ func migrateTeam(file *model.DriverFile, outputFolder string, environments *mode
 		teamSlice = append(teamSlice, value)
 	}
 
-	data, _ := json.Marshal(teamSlice)
+	data, _ := json.MarshalIndent(teamSlice, "", "    ")
 	teamsPath := outputFolder + file.Type + "/" + file.Path
 	ioutil.WriteFile(teamsPath, util.JSONAvoidEscapeText(data), 0644)
 	return nil
@@ -182,7 +182,7 @@ func readTeam(file *model.DriverFile, outputFolder string, environments *model.E
 		teams = append(teams, team)
 	}
 
-	data, _ := json.Marshal(teams)
+	data, _ := json.MarshalIndent(teams, "", "    ")
 	teamsPath := outputFolder + file.Type + "/" + file.Path
 	ioutil.WriteFile(teamsPath, util.JSONAvoidEscapeText(data), 0644)
 	return nil

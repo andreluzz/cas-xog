@@ -126,6 +126,13 @@ func (field *blueprintField) getNewFieldBody(sectionID int) []byte {
 	return []byte(body)
 }
 
+type targetVisualsResults struct {
+	Results []struct {
+		ID   int    `json:"_internalId"`
+		Name string `json:"attributeName"`
+	} `json:"_results"`
+}
+
 type blueprintResults struct {
 	Results []result `json:"_results"`
 }
@@ -298,10 +305,19 @@ func readBlueprint(file *model.DriverFile, outputFolder string, environments *mo
 		Cookie: environments.Source.Cookie,
 		Proxy:  environments.Source.Proxy,
 	}
-
 	sourceConfig.Token = environments.Source.API.Token
 	if environments.Source.AuthToken != "" {
 		sourceConfig.Token = environments.Source.AuthToken
+	}
+
+	targetConfig := util.APIConfig{
+		Client: environments.Target.API.Client,
+		Cookie: environments.Target.Cookie,
+		Proxy:  environments.Target.Proxy,
+	}
+	targetConfig.Token = environments.Target.API.Token
+	if environments.Target.AuthToken != "" {
+		targetConfig.Token = environments.Target.AuthToken
 	}
 
 	sourceConfig.Endpoint = endpoint + "private/blueprints/" + file.ID
@@ -395,6 +411,41 @@ func readBlueprint(file *model.DriverFile, outputFolder string, environments *mo
 	}
 	visuals := &blueprintResults{}
 	json.Unmarshal(response, visuals)
+	targetVisuals := make(map[string]int)
+	if len(visuals.Results) > 0 {
+		targetEndpoint := environments.Target.URL + environments.Target.API.Context + constant.APIEndpoint
+		// read target environment available modules
+		targetConfig.Endpoint = targetEndpoint + "private/availableVisuals?filter=((blueprintType = '" + bp.Type.ID + "') and ( category = 'MODULE'))"
+		targetConfig.Method = http.MethodGet
+		response, status, err = restFunc(nil, targetConfig, nil)
+		if err != nil {
+			return err
+		}
+		if status != 200 {
+			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), targetConfig.Endpoint)
+		}
+		modules := &targetVisualsResults{}
+		json.Unmarshal(response, modules)
+		for _, m := range modules.Results {
+			targetVisuals[m.Name] = m.ID
+		}
+		// read target environment available visuals
+		targetConfig.Endpoint = targetEndpoint + "private/availableVisuals?filter=((blueprintType = '" + bp.Type.ID + "') and ( category = 'VISUAL'))"
+		targetConfig.Method = http.MethodGet
+		response, status, err = restFunc(nil, targetConfig, nil)
+		if err != nil {
+			return err
+		}
+		if status != 200 {
+			return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), targetConfig.Endpoint)
+		}
+		visuals := &targetVisualsResults{}
+		json.Unmarshal(response, visuals)
+		for _, v := range visuals.Results {
+			targetVisuals[v.Name] = v.ID
+		}
+	}
+
 	for _, v := range visuals.Results {
 		urlString, err := v.getURL(environments.Source.URL, environments.Source.API.Context)
 		if err != nil {
@@ -411,7 +462,12 @@ func readBlueprint(file *model.DriverFile, outputFolder string, environments *mo
 		}
 		visual := &blueprintVisual{}
 		json.Unmarshal(response, visual)
-		bp.Visuals = append(bp.Visuals, visual)
+		//validate visual exists in target environment
+		targetVisualID, ok := targetVisuals[visual.AttributeName]
+		if ok {
+			visual.VisualID = targetVisualID
+			bp.Visuals = append(bp.Visuals, visual)
+		}
 	}
 
 	//read bp external apps
@@ -448,7 +504,7 @@ func readBlueprint(file *model.DriverFile, outputFolder string, environments *mo
 		bp.ExternalApps = append(bp.ExternalApps, externalApp)
 	}
 
-	data, _ := json.Marshal(bp)
+	data, _ := json.MarshalIndent(bp, "", "    ")
 	bpPath := outputFolder + file.Type + "/" + file.Path
 	ioutil.WriteFile(bpPath, util.JSONAvoidEscapeText(data), 0644)
 
