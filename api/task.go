@@ -188,7 +188,8 @@ func writeTask(file *model.DriverFile, sourceFolder, outputFolder string, enviro
 	errors := []string{}
 
 	for _, p := range projects {
-		url := endpoint + "/projects?filter=(code = '" + p.Code + "')"
+		fmt.Println("endpoint: " + endpoint)
+		url := endpoint + "projects?filter=(code = '" + p.Code + "')"
 		targetConfig.Endpoint = url
 		targetConfig.Method = http.MethodGet
 		// get project id from project code
@@ -211,7 +212,7 @@ func writeTask(file *model.DriverFile, sourceFolder, outputFolder string, enviro
 
 		for _, t := range p.Tasks {
 			// check if task exists
-			url := endpoint + "/projects/" + strconv.Itoa(p.ID) + "/tasks?filter=(code = '" + t.Code + "')"
+			url := endpoint + "projects/" + strconv.Itoa(p.ID) + "/tasks?filter=(code = '" + t.Code + "')"
 			targetConfig.Endpoint = url
 			targetConfig.Method = http.MethodGet
 			response, status, err := restFunc(nil, targetConfig, nil)
@@ -220,7 +221,7 @@ func writeTask(file *model.DriverFile, sourceFolder, outputFolder string, enviro
 				newTask = true
 			}
 
-			url = endpoint + "/projects/" + strconv.Itoa(p.ID) + "/tasks"
+			url = endpoint + "projects/" + strconv.Itoa(p.ID) + "/tasks"
 			targetConfig.Endpoint = url
 			targetConfig.Method = http.MethodPost
 
@@ -228,7 +229,7 @@ func writeTask(file *model.DriverFile, sourceFolder, outputFolder string, enviro
 			json.Unmarshal(response, existingTask)
 			if !newTask && len(existingTask.Results) > 0 {
 				t.ID = existingTask.Results[0].ID
-				url = endpoint + "/projects/" + strconv.Itoa(p.ID) + "/tasks/" + strconv.Itoa(t.ID)
+				url = endpoint + "projects/" + strconv.Itoa(p.ID) + "/tasks/" + strconv.Itoa(t.ID)
 				targetConfig.Endpoint = url
 				targetConfig.Method = http.MethodPut
 			}

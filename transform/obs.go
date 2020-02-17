@@ -40,6 +40,9 @@ func specificObsTransformations(xog *etree.Document, file *model.DriverFile) err
 			for index, cell := range row.Cells {
 				if cell.Value == constant.Undefined || index == len(row.Cells)-1 {
 					i := strings.LastIndex(node.xpath, "/unit")
+					if i < 0 {
+						break
+					}
 					node.xpath = node.xpath[0:i]
 					break
 				}
@@ -66,7 +69,10 @@ func specificObsTransformations(xog *etree.Document, file *model.DriverFile) err
 		if n.xpath == "" {
 			obs.AddChild(unitElement)
 		} else {
-			obs.FindElement("/" + n.xpath).AddChild(unitElement)
+			node := obs.FindElement("/" + n.xpath)
+			if node != nil {
+				node.AddChild(unitElement)
+			}
 		}
 	}
 

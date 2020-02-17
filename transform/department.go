@@ -40,6 +40,9 @@ func specificDepartmentTransformations(xog *etree.Document, file *model.DriverFi
 			for index, cell := range row.Cells {
 				if cell.Value == constant.Undefined || index == len(row.Cells)-1 {
 					i := strings.LastIndex(node.xpath, "/Department")
+					if i < 0 {
+						break
+					}
 					node.xpath = node.xpath[0:i]
 					if cell.Value != constant.Undefined {
 						node.name = cell.Value
@@ -78,7 +81,8 @@ func specificDepartmentTransformations(xog *etree.Document, file *model.DriverFi
 			if parent != nil {
 				parent.AddChild(departmentElement)
 			} else {
-				errs = append(errs, n.id)
+				errString := "[" + n.id + " - " + n.name + "] \n " + n.xpath + "\n"
+				errs = append(errs, errString)
 			}
 		}
 	}
