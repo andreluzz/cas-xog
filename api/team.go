@@ -23,8 +23,10 @@ type team struct {
 }
 
 type teamDefAllocations struct {
-	ID         int     `json:"_internalId,omitempty"`
-	ResourceID int     `json:"resourceId"`
+	ID         int `json:"_internalId,omitempty"`
+	ResourceID struct {
+		ID string `json:"id"`
+	} `json:"resourceId"`
 	Allocation float64 `json:"allocation"`
 }
 
@@ -67,13 +69,11 @@ func migrateTeam(file *model.DriverFile, outputFolder string, environments *mode
 
 			if val, ok := rowMap["resourceId"]; ok {
 				if val != "" {
-					resID, err := strconv.Atoi(val)
 					if err != nil {
 						return fmt.Errorf("migration - team code %s column resourceID (%s) is not a valid number. Debug: %s", rowMap["code"], val, err.Error())
 					}
-					alloc := teamDefAllocations{
-						ResourceID: resID,
-					}
+					alloc := teamDefAllocations{}
+					alloc.ResourceID.ID = val
 					if val, ok := rowMap["allocation"]; ok {
 						if allocationValue, err := strconv.ParseFloat(val, 64); err == nil {
 							alloc.Allocation = allocationValue
@@ -257,10 +257,10 @@ func createTeam(t team, endpoint string, environments *model.Environments, restF
 	for _, a := range t.TeamAllocations {
 		url := fmt.Sprintf("%steamdefinitions/%d/teamdefallocations", endpoint, newTeam.ID)
 		body := fmt.Sprintf(`{
-				"resourceId": %d,
+				"resourceId": %s,
 				"totalAllocation": %f,
 				"teamId": %d
-			  }`, a.ResourceID, a.Allocation, newTeam.ID)
+			  }`, a.ResourceID.ID, a.Allocation, newTeam.ID)
 
 		targetConfig.Endpoint = url
 		targetConfig.Method = http.MethodPost
@@ -269,11 +269,11 @@ func createTeam(t team, endpoint string, environments *model.Environments, restF
 			return err
 		}
 		if status == 400 {
-			fmt.Printf("\nstatus code: %d | resourceId: %d | response: %s | url: %s", status, a.ResourceID, string(response), url)
+			fmt.Printf("\nstatus code: %d | resourceId: %s | response: %s | url: %s", status, a.ResourceID.ID, string(response), url)
 			continue
 		}
 		if status != 200 {
-			return fmt.Errorf("status code: %d | resourceId: %d | response: %s | url: %s", status, a.ResourceID, string(response), url)
+			return fmt.Errorf("status code: %d | resourceId: %s | response: %s | url: %s", status, a.ResourceID.ID, string(response), url)
 		}
 
 		res := &result{}
@@ -389,7 +389,7 @@ func updateTeam(t team, endpoint string, environments *model.Environments, restF
 				return err
 			}
 			if status != 200 {
-				return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), url)
+				return fmt.Errorf("Get teamdefallocations[%s] status code: %d | response: %s | url: %s", t.Code, status, string(response), url)
 			}
 		}
 	}
@@ -399,10 +399,10 @@ func updateTeam(t team, endpoint string, environments *model.Environments, restF
 		if index == -1 {
 			url := fmt.Sprintf("%steamdefinitions/%d/teamdefallocations", endpoint, newTeam.ID)
 			body := fmt.Sprintf(`{
-				"resourceId": %d,
+				"resourceId": %s,
 				"totalAllocation": %f,
 				"teamId": %d
-			  }`, team.ResourceID, team.Allocation, newTeam.ID)
+			  }`, team.ResourceID.ID, team.Allocation, newTeam.ID)
 
 			targetConfig.Endpoint = url
 			targetConfig.Method = http.MethodPost
@@ -410,8 +410,11 @@ func updateTeam(t team, endpoint string, environments *model.Environments, restF
 			if err != nil {
 				return err
 			}
-			if status != 200 {
-				return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), url)
+			if status == 400 {
+				fmt.Printf("\n[%s] status code: %d | response: %s | url: %s", t.Code, status, string(response), url)
+				continue
+			} else if status != 200 {
+				return fmt.Errorf("Post teamdefallocations [%s] status code: %d | response: %s | url: %s", t.Code, status, string(response), url)
 			}
 
 			res := &result{}
@@ -429,7 +432,7 @@ func updateTeam(t team, endpoint string, environments *model.Environments, restF
 				return err
 			}
 			if status != 200 {
-				return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), urlString)
+				return fmt.Errorf("[%s] status code: %d | response: %s | url: %s", t.Code, status, string(response), url)
 			}
 		}
 	}
@@ -439,7 +442,7 @@ func updateTeam(t team, endpoint string, environments *model.Environments, restF
 
 func getIndex(alloc *teamDefAllocations, slice []*teamDefAllocations) int {
 	for i, a := range slice {
-		if a.ResourceID == alloc.ResourceID {
+		if a.ResourceID.ID == alloc.ResourceID.ID {
 			return i
 		}
 	}
