@@ -109,6 +109,7 @@ type DriverFile struct {
 	Entity           string        `xml:"entity,attr"`
 	ExcelFile        string        `xml:"excel,attr"`
 	ExcelStartRow    string        `xml:"startRow,attr"`
+	ExcelEndRow      string        `xml:"endRow,attr"`
 	InstanceTag      string        `xml:"instance,attr"`
 	ExportToExcel    bool          `xml:"exportToExcel,attr"`
 	OnlyStructure    bool          `xml:"onlyStructure,attr"`

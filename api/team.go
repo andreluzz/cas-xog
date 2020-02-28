@@ -51,7 +51,18 @@ func migrateTeam(file *model.DriverFile, outputFolder string, environments *mode
 
 	teams := make(map[string]team, len(xlFile.Sheets[0].Rows))
 
+	excelEndRowIndex := 0
+	if file.ExcelStartRow != constant.Undefined {
+		excelEndRowIndex, err = strconv.Atoi(file.ExcelEndRow)
+		if err != nil {
+			return fmt.Errorf("migration - tag 'endRow' not a number. Debug: %s", err.Error())
+		}
+	}
+
 	for index, row := range xlFile.Sheets[0].Rows {
+		if excelEndRowIndex != 0 && excelEndRowIndex == index {
+			break
+		}
 		if index >= excelStartRowIndex {
 			rowMap := make(map[string]string, len(file.MatchExcel))
 			for _, match := range file.MatchExcel {
