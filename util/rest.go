@@ -74,10 +74,11 @@ func RestCall(jsonString []byte, config APIConfig, params map[string]string) ([]
 	}
 
 	resp, err := client.Do(req)
+
 	if err != nil {
 		return nil, -1, err
 	}
-
+	defer resp.Body.Close()
 	data, err := ioutil.ReadAll(resp.Body)
 	return data, resp.StatusCode, err
 }
@@ -108,6 +109,10 @@ func APIPostLogin(endpoint, username, password, proxy, cookie string) ([]byte, e
 	}
 
 	resp, err := client.Do(req)
-
-	return ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	data, err := ioutil.ReadAll(resp.Body)
+	return data, err
 }

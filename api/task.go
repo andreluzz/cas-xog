@@ -188,7 +188,6 @@ func writeTask(file *model.DriverFile, sourceFolder, outputFolder string, enviro
 	errors := []string{}
 
 	for _, p := range projects {
-		fmt.Println("endpoint: " + endpoint)
 		url := endpoint + "projects?filter=(code = '" + p.Code + "')"
 		targetConfig.Endpoint = url
 		targetConfig.Method = http.MethodGet
