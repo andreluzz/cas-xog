@@ -1,0 +1,364 @@
+<NikuDataBus>
+    <Header action="write" externalSource="NIKU" objectType="contentPack" version="15.2.0.213"/>
+    <contentPack update="true">
+        <lookups update="true">
+            <staticLookup autoSuggestEnabled="true" autoSuggestMaxSuggestions="10" code="LOOKUP_CAS_XOG" hiddenAttributeName="lookup_code" sortStyle="alphanumeric" source="niku.com" status="active" update="true">
+                <nls description="" languageCode="ca" name="Lookup cas-xog"/>
+                <nls description="" languageCode="cs" name="Lookup cas-xog"/>
+                <nls description="" languageCode="da" name="Lookup cas-xog"/>
+                <nls description="" languageCode="de" name="Lookup cas-xog"/>
+                <nls description="" languageCode="en" name="Lookup cas-xog"/>
+                <nls description="" languageCode="es" name="Lookup cas-xog"/>
+                <nls description="" languageCode="fi" name="Lookup cas-xog"/>
+                <nls description="" languageCode="fr" name="Lookup cas-xog"/>
+                <nls description="" languageCode="hu" name="Lookup cas-xog"/>
+                <nls description="" languageCode="it" name="Lookup cas-xog"/>
+                <nls description="" languageCode="ja" name="Lookup cas-xog"/>
+                <nls description="" languageCode="ko" name="Lookup cas-xog"/>
+                <nls description="" languageCode="nl" name="Lookup cas-xog"/>
+                <nls description="" languageCode="no" name="Lookup cas-xog"/>
+                <nls description="" languageCode="pl" name="Lookup cas-xog"/>
+                <nls description="" languageCode="pt" name="Lookup cas-xog"/>
+                <nls description="" languageCode="ru" name="Lookup cas-xog"/>
+                <nls description="" languageCode="sv" name="Lookup cas-xog"/>
+                <nls description="" languageCode="tr" name="Lookup cas-xog"/>
+                <nls description="" languageCode="zh" name="Lookup cas-xog"/>
+                <nls description="" languageCode="zh_TW" name="Lookup cas-xog"/>
+                <lookupValue code="valor_it" enum="0" partitionCode="partition10" partitionModeCode="PARTITION_AND_ANSTRS_DESDNTS" sortOrder="0" status="active">
+                    <nls description="" languageCode="ca" name="Teste Valor IT"/>
+                    <nls description="" languageCode="cs" name="Teste Valor IT"/>
+                    <nls description="" languageCode="da" name="Teste Valor IT"/>
+                    <nls description="" languageCode="de" name="Teste Valor IT"/>
+                    <nls description="" languageCode="en" name="Teste Valor IT"/>
+                    <nls description="" languageCode="es" name="Teste Valor IT"/>
+                    <nls description="" languageCode="fi" name="Teste Valor IT"/>
+                    <nls description="" languageCode="fr" name="Teste Valor IT"/>
+                    <nls description="" languageCode="hu" name="Teste Valor IT"/>
+                    <nls description="" languageCode="it" name="Teste Valor IT"/>
+                    <nls description="" languageCode="ja" name="Teste Valor IT"/>
+                    <nls description="" languageCode="ko" name="Teste Valor IT"/>
+                    <nls description="" languageCode="nl" name="Teste Valor IT"/>
+                    <nls description="" languageCode="no" name="Teste Valor IT"/>
+                    <nls description="" languageCode="pl" name="Teste Valor IT"/>
+                    <nls description="" languageCode="pt" name="Teste Valor IT"/>
+                    <nls description="" languageCode="ru" name="Teste Valor IT"/>
+                    <nls description="" languageCode="sv" name="Teste Valor IT"/>
+                    <nls description="" languageCode="tr" name="Teste Valor IT"/>
+                    <nls description="" languageCode="zh" name="Teste Valor IT"/>
+                    <nls description="" languageCode="zh_TW" name="Teste Valor IT"/>
+                </lookupValue>
+                <lookupValue code="valor_npd" enum="0" partitionCode="partition20" partitionModeCode="PARTITION_AND_ANSTRS_DESDNTS" sortOrder="0" status="inactive">
+                    <nls description="" languageCode="ca" name="Teste valor NPD"/>
+                    <nls description="" languageCode="cs" name="Teste valor NPD"/>
+                    <nls description="" languageCode="da" name="Teste valor NPD"/>
+                    <nls description="" languageCode="de" name="Teste valor NPD"/>
+                    <nls description="" languageCode="en" name="Teste valor NPD"/>
+                    <nls description="" languageCode="es" name="Teste valor NPD"/>
+                    <nls description="" languageCode="fi" name="Teste valor NPD"/>
+                    <nls description="" languageCode="fr" name="Teste valor NPD"/>
+                    <nls description="" languageCode="hu" name="Teste valor NPD"/>
+                    <nls description="" languageCode="it" name="Teste valor NPD"/>
+                    <nls description="" languageCode="ja" name="Teste valor NPD"/>
+                    <nls description="" languageCode="ko" name="Teste valor NPD"/>
+                    <nls description="" languageCode="nl" name="Teste valor NPD"/>
+                    <nls description="" languageCode="no" name="Teste valor NPD"/>
+                    <nls description="" languageCode="pl" name="Teste valor NPD"/>
+                    <nls description="" languageCode="pt" name="Teste valor NPD"/>
+                    <nls description="" languageCode="ru" name="Teste valor NPD"/>
+                    <nls description="" languageCode="sv" name="Teste valor NPD"/>
+                    <nls description="" languageCode="tr" name="Teste valor NPD"/>
+                    <nls description="" languageCode="zh" name="Teste valor NPD"/>
+                    <nls description="" languageCode="zh_TW" name="Teste valor NPD"/>
+                </lookupValue>
+                <lookupValue code="valor_niku_root" enum="0" sortOrder="0" status="active">
+                    <nls description="" languageCode="ca" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="cs" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="da" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="de" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="en" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="es" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="fi" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="fr" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="hu" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="it" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="ja" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="ko" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="nl" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="no" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="pl" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="pt" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="ru" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="sv" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="tr" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="zh" name="Teste valor Sistema"/>
+                    <nls description="" languageCode="zh_TW" name="Teste valor Sistema"/>
+                </lookupValue>
+                <displayedSuggestionAttributes>
+                    <displayedSuggestionAttribute value="name"/>
+                </displayedSuggestionAttributes>
+                <searchedSuggestionAttributes>
+                    <searchedSuggestionAttribute value="name"/>
+                </searchedSuggestionAttributes>
+            </staticLookup>
+        </lookups>
+        <partitionModels>
+            <partitionModel code="partitionModel1" isActive="true">
+                <nls description="Organization" languageCode="ca" name="Organization"/>
+                <nls description="Organization" languageCode="cs" name="Organization"/>
+                <nls description="Organization" languageCode="da" name="Organization"/>
+                <nls description="Organization" languageCode="de" name="Organization"/>
+                <nls description="Organization" languageCode="en" name="Organization"/>
+                <nls description="Organization" languageCode="es" name="Organization"/>
+                <nls description="Organization" languageCode="fi" name="Organization"/>
+                <nls description="Organization" languageCode="fr" name="Organization"/>
+                <nls description="Organization" languageCode="hu" name="Organization"/>
+                <nls description="Organization" languageCode="it" name="Organization"/>
+                <nls description="Organization" languageCode="ja" name="Organization"/>
+                <nls description="Organization" languageCode="ko" name="Organization"/>
+                <nls description="Organization" languageCode="nl" name="Organization"/>
+                <nls description="Organization" languageCode="no" name="Organization"/>
+                <nls description="Organization" languageCode="pl" name="Organization"/>
+                <nls description="Organization" languageCode="pt" name="Organization"/>
+                <nls description="Organization" languageCode="ru" name="Organization"/>
+                <nls description="Organization" languageCode="sv" name="Organization"/>
+                <nls description="Organization" languageCode="tr" name="Organization"/>
+                <nls description="Organization" languageCode="zh" name="Organization"/>
+                <nls description="Organization" languageCode="zh_TW" name="Organization"/>
+                <partition code="partition1" isActive="true" uiThemeCode="strat_ui">
+                    <nls description="All Organizations" languageCode="ca" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="cs" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="da" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="de" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="en" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="es" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="fi" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="fr" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="hu" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="it" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="ja" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="ko" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="nl" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="no" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="pl" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="pt" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="ru" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="sv" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="tr" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="zh" name="All Organizations"/>
+                    <nls description="All Organizations" languageCode="zh_TW" name="All Organizations"/>
+                    <partitionMembers>
+                        <groupMember groupCode="roleAdministrator"/>
+                    </partitionMembers>
+                    <partition code="partition10" isActive="true" uiThemeCode="strat_ui">
+                        <nls description="Information Technology" languageCode="ca" name="IT"/>
+                        <nls description="Information Technology" languageCode="cs" name="IT"/>
+                        <nls description="Information Technology" languageCode="da" name="IT"/>
+                        <nls description="Information Technology" languageCode="de" name="IT"/>
+                        <nls description="Information Technology" languageCode="en" name="IT"/>
+                        <nls description="Information Technology" languageCode="es" name="IT"/>
+                        <nls description="Information Technology" languageCode="fi" name="IT"/>
+                        <nls description="Information Technology" languageCode="fr" name="IT"/>
+                        <nls description="Information Technology" languageCode="hu" name="IT"/>
+                        <nls description="Information Technology" languageCode="it" name="IT"/>
+                        <nls description="Information Technology" languageCode="ja" name="IT"/>
+                        <nls description="Information Technology" languageCode="ko" name="IT"/>
+                        <nls description="Information Technology" languageCode="nl" name="IT"/>
+                        <nls description="Information Technology" languageCode="no" name="IT"/>
+                        <nls description="Information Technology" languageCode="pl" name="IT"/>
+                        <nls description="Information Technology" languageCode="pt" name="IT"/>
+                        <nls description="Information Technology" languageCode="ru" name="IT"/>
+                        <nls description="Information Technology" languageCode="sv" name="IT"/>
+                        <nls description="Information Technology" languageCode="tr" name="IT"/>
+                        <nls description="Information Technology" languageCode="zh" name="IT"/>
+                        <nls description="Information Technology" languageCode="zh_TW" name="IT"/>
+                        <partitionMembers>
+                            <groupMember groupCode="partitionIT"/>
+                        </partitionMembers>
+                        <partition code="partition11" isActive="true" uiThemeCode="strat_ui">
+                            <nls description="SAFe" languageCode="ca" name="SAFe"/>
+                            <nls description="SAFe" languageCode="cs" name="SAFe"/>
+                            <nls description="SAFe" languageCode="da" name="SAFe"/>
+                            <nls description="SAFe" languageCode="de" name="SAFe"/>
+                            <nls description="SAFe" languageCode="en" name="SAFe"/>
+                            <nls description="SAFe" languageCode="es" name="SAFe"/>
+                            <nls description="SAFe" languageCode="fi" name="SAFe"/>
+                            <nls description="SAFe" languageCode="fr" name="SAFe"/>
+                            <nls description="SAFe" languageCode="hu" name="SAFe"/>
+                            <nls description="SAFe" languageCode="it" name="SAFe"/>
+                            <nls description="SAFe" languageCode="ja" name="SAFe"/>
+                            <nls description="SAFe" languageCode="ko" name="SAFe"/>
+                            <nls description="SAFe" languageCode="nl" name="SAFe"/>
+                            <nls description="SAFe" languageCode="no" name="SAFe"/>
+                            <nls description="SAFe" languageCode="pl" name="SAFe"/>
+                            <nls description="SAFe" languageCode="pt" name="SAFe"/>
+                            <nls description="SAFe" languageCode="ru" name="SAFe"/>
+                            <nls description="SAFe" languageCode="sv" name="SAFe"/>
+                            <nls description="SAFe" languageCode="tr" name="SAFe"/>
+                            <nls description="SAFe" languageCode="zh" name="SAFe"/>
+                            <nls description="SAFe" languageCode="zh_TW" name="SAFe"/>
+                            <partitionMembers>
+                                <groupMember groupCode="partitionSAFe"/>
+                            </partitionMembers>
+                        </partition>
+                        <partition code="partition12" isActive="true" uiThemeCode="strat_ui">
+                            <nls description="Agile" languageCode="ca" name="Agile"/>
+                            <nls description="Agile" languageCode="cs" name="Agile"/>
+                            <nls description="Agile" languageCode="da" name="Agile"/>
+                            <nls description="Agile" languageCode="de" name="Agile"/>
+                            <nls description="Agile" languageCode="en" name="Agile"/>
+                            <nls description="Agile" languageCode="es" name="Agile"/>
+                            <nls description="Agile" languageCode="fi" name="Agile"/>
+                            <nls description="Agile" languageCode="fr" name="Agile"/>
+                            <nls description="Agile" languageCode="hu" name="Agile"/>
+                            <nls description="Agile" languageCode="it" name="Agile"/>
+                            <nls description="Agile" languageCode="ja" name="Agile"/>
+                            <nls description="Agile" languageCode="ko" name="Agile"/>
+                            <nls description="Agile" languageCode="nl" name="Agile"/>
+                            <nls description="Agile" languageCode="no" name="Agile"/>
+                            <nls description="Agile" languageCode="pl" name="Agile"/>
+                            <nls description="Agile" languageCode="pt" name="Agile"/>
+                            <nls description="Agile" languageCode="ru" name="Agile"/>
+                            <nls description="Agile" languageCode="sv" name="Agile"/>
+                            <nls description="Agile" languageCode="tr" name="Agile"/>
+                            <nls description="Agile" languageCode="zh" name="Agile"/>
+                            <nls description="Agile" languageCode="zh_TW" name="Agile"/>
+                            <partitionMembers>
+                                <groupMember groupCode="partitionAgile"/>
+                            </partitionMembers>
+                        </partition>
+                    </partition>
+                    <partition code="partition20" isActive="true" uiThemeCode="strat_ui">
+                        <nls description="NPD" languageCode="ca" name="NPD"/>
+                        <nls description="NPD" languageCode="cs" name="NPD"/>
+                        <nls description="NPD" languageCode="da" name="NPD"/>
+                        <nls description="NPD" languageCode="de" name="NPD"/>
+                        <nls description="NPD" languageCode="en" name="NPD"/>
+                        <nls description="NPD" languageCode="es" name="NPD"/>
+                        <nls description="NPD" languageCode="fi" name="NPD"/>
+                        <nls description="NPD" languageCode="fr" name="NPD"/>
+                        <nls description="NPD" languageCode="hu" name="NPD"/>
+                        <nls description="NPD" languageCode="it" name="NPD"/>
+                        <nls description="NPD" languageCode="ja" name="NPD"/>
+                        <nls description="NPD" languageCode="ko" name="NPD"/>
+                        <nls description="NPD" languageCode="nl" name="NPD"/>
+                        <nls description="NPD" languageCode="no" name="NPD"/>
+                        <nls description="NPD" languageCode="pl" name="NPD"/>
+                        <nls description="NPD" languageCode="pt" name="NPD"/>
+                        <nls description="NPD" languageCode="ru" name="NPD"/>
+                        <nls description="NPD" languageCode="sv" name="NPD"/>
+                        <nls description="NPD" languageCode="tr" name="NPD"/>
+                        <nls description="NPD" languageCode="zh" name="NPD"/>
+                        <nls description="NPD" languageCode="zh_TW" name="NPD"/>
+                        <partitionMembers>
+                            <groupMember groupCode="partitionNPD"/>
+                        </partitionMembers>
+                        <partition code="partition21" isActive="true" uiThemeCode="strat_ui">
+                            <nls description="Business Transformation" languageCode="ca" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="cs" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="da" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="de" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="en" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="es" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="fi" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="fr" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="hu" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="it" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="ja" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="ko" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="nl" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="no" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="pl" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="pt" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="ru" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="sv" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="tr" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="zh" name="Business Transformation"/>
+                            <nls description="Business Transformation" languageCode="zh_TW" name="Business Transformation"/>
+                            <partitionMembers>
+                                <groupMember groupCode="partitionBT"/>
+                            </partitionMembers>
+                        </partition>
+                    </partition>
+                    <partition code="partition30" isActive="true" uiThemeCode="strat_ui">
+                        <nls description="Professional Services" languageCode="ca" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="cs" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="da" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="de" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="en" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="es" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="fi" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="fr" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="hu" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="it" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="ja" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="ko" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="nl" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="no" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="pl" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="pt" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="ru" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="sv" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="tr" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="zh" name="Professional Services"/>
+                        <nls description="Professional Services" languageCode="zh_TW" name="Professional Services"/>
+                        <partitionMembers>
+                            <groupMember groupCode="partitionPS"/>
+                        </partitionMembers>
+                    </partition>
+                    <partition code="partition40" isActive="false" uiThemeCode="strat_ui">
+                        <nls description="Business Transformation" languageCode="ca" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="cs" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="da" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="de" name="Business Transformation"/>
+                        <nls description="TBD" languageCode="en" name="TBD"/>
+                        <nls description="Business Transformation" languageCode="es" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="fi" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="fr" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="hu" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="it" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="ja" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="ko" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="nl" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="no" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="pl" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="pt" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="ru" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="sv" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="tr" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="zh" name="Business Transformation"/>
+                        <nls description="Business Transformation" languageCode="zh_TW" name="Business Transformation"/>
+                        <partitionMembers>
+                            <resourceMember userName="admin"/>
+                        </partitionMembers>
+                    </partition>
+                    <partition code="todo" isActive="true" uiThemeCode="strat_ui">
+                        <nls languageCode="ca" name="ToDo"/>
+                        <nls languageCode="cs" name="ToDo"/>
+                        <nls languageCode="da" name="ToDo"/>
+                        <nls languageCode="de" name="ToDo"/>
+                        <nls description="To Do" languageCode="en" name="To Do"/>
+                        <nls languageCode="es" name="ToDo"/>
+                        <nls languageCode="fi" name="ToDo"/>
+                        <nls languageCode="fr" name="ToDo"/>
+                        <nls languageCode="hu" name="ToDo"/>
+                        <nls languageCode="it" name="ToDo"/>
+                        <nls languageCode="ja" name="ToDo"/>
+                        <nls languageCode="ko" name="ToDo"/>
+                        <nls languageCode="nl" name="ToDo"/>
+                        <nls languageCode="no" name="ToDo"/>
+                        <nls languageCode="pl" name="ToDo"/>
+                        <nls languageCode="pt" name="ToDo"/>
+                        <nls languageCode="ru" name="ToDo"/>
+                        <nls languageCode="sv" name="ToDo"/>
+                        <nls languageCode="tr" name="ToDo"/>
+                        <nls languageCode="zh" name="ToDo"/>
+                        <nls languageCode="zh_TW" name="ToDo"/>
+                        <partitionMembers>
+                            <groupMember groupCode="SystemAdminRl"/>
+                        </partitionMembers>
+                    </partition>
+                </partition>
+            </partitionModel>
+        </partitionModels>
+    </contentPack>
+</NikuDataBus>

@@ -1,16 +1,36 @@
 package transform
 
 import (
+	"strings"
+
 	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/model"
 	"github.com/beevik/etree"
 )
+
+func getWildcardAttributesElements(xog *etree.Document, file *model.DriverFile) {
+	for index, f := range file.Elements {
+		if f.Type == constant.ElementTypeAttribute && strings.Contains(f.Code, "*") {
+			for _, e := range xog.FindElements("//customAttribute") {
+				code := e.SelectAttrValue("code", constant.Undefined)
+				if strings.HasPrefix(code, f.Code[:len(f.Code)-1]) {
+					file.Elements = append(file.Elements, model.Element{
+						Code: code,
+						Type: constant.ElementTypeAttribute,
+					})
+				}
+			}
+			file.Elements = append(file.Elements[:index], file.Elements[index+1:]...)
+		}
+	}
+}
 
 func specificObjectTransformations(xog, aux *etree.Document, file *model.DriverFile) {
 
 	removeChildObjects(xog)
 
 	if hasElementsToProcess(file) {
+		getWildcardAttributesElements(xog, file)
 		objectProcessElements(xog, aux, file)
 	}
 
@@ -56,6 +76,17 @@ func hasElementsToProcess(file *model.DriverFile) bool {
 
 func objectProcessElements(xog, aux *etree.Document, file *model.DriverFile) {
 	removeChildObjects(aux)
+
+	if file.OnlyElements {
+		removeElementsFromParent(aux, "//customAttribute")
+		removeElementsFromParent(aux, "//action")
+		removeElementsFromParent(aux, "//attributeAutonumbering")
+		removeElementsFromParent(aux, "//attributeDefault")
+		removeElementsFromParent(aux, "//link")
+		removeElementsFromParent(aux, "//displayMapping")
+		removeElementsFromParent(aux, "//scoreContributions")
+		removeElementsFromParent(aux, "//capabilities")
+	}
 
 	for _, f := range file.Elements {
 		if f.Code != constant.Undefined && (f.Type == constant.ElementTypeAction || f.Type == constant.ElementTypeLink || f.Type == constant.ElementTypeAttribute) {

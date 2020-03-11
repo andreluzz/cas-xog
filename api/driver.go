@@ -3,6 +3,7 @@ package api
 import (
 	"fmt"
 	"net/url"
+	"strings"
 
 	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/model"
@@ -19,6 +20,8 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 			err = readBlueprint(file, outputFolder, environments, restFunc)
 		case constant.APITypeTeam:
 			err = readTeam(file, outputFolder, environments, restFunc)
+		default:
+			err = fmt.Errorf("invalid action for %s", file.APIType())
 		}
 	case "w":
 		switch file.APIType() {
@@ -26,11 +29,17 @@ func ProcessDriverFile(file *model.DriverFile, action, sourceFolder, outputFolde
 			err = writeBlueprint(file, sourceFolder, outputFolder, environments, restFunc)
 		case constant.APITypeTeam:
 			err = writeTeam(file, sourceFolder, outputFolder, environments, restFunc)
+		case constant.APITypeTask:
+			err = writeTask(file, sourceFolder, outputFolder, environments, restFunc)
+		default:
+			err = fmt.Errorf("invalid action for %s", file.APIType())
 		}
 	case "m":
 		switch file.APIType() {
 		case constant.APITypeTeam:
 			err = migrateTeam(file, outputFolder, environments, restFunc)
+		case constant.APITypeTask:
+			err = migrateTask(file, outputFolder, environments, restFunc)
 		default:
 			err = fmt.Errorf("invalid action for %s", file.APIType())
 		}
@@ -48,7 +57,11 @@ type result struct {
 	URL string `json:"_self"`
 }
 
-func (r *result) getURL(env string) (string, error) {
+type results struct {
+	Results []result `json:"_results"`
+}
+
+func (r *result) getURL(env, context string) (string, error) {
 	restURL, err := url.Parse(r.URL)
 	if err != nil {
 		return "", err
@@ -60,5 +73,16 @@ func (r *result) getURL(env string) (string, error) {
 	if envURL.Host != restURL.Host {
 		restURL.Host = envURL.Host
 	}
+
+	if envURL.Scheme != restURL.Scheme {
+		restURL.Scheme = envURL.Scheme
+	}
+
+	if !strings.HasPrefix(restURL.Path, context) {
+		index := strings.Index(restURL.Path, "/rest")
+		pathWithoutContext := restURL.Path[index:len(restURL.Path)]
+		restURL.Path = context + pathWithoutContext
+	}
+
 	return restURL.String(), nil
 }

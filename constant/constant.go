@@ -4,10 +4,11 @@ package constant
 const (
 	Version = 2.0
 
-	APIEndpoint = "/ppm/rest/v1/"
+	APIEndpoint = "/rest/v1/"
 
 	APITypeBlueprint = "Blueprints"
 	APITypeTeam      = "Teams"
+	APITypeTask      = "Tasks"
 
 	TypeLookup    = "Lookups"
 	TypePortlet   = "Portlets"
@@ -32,6 +33,8 @@ const (
 	TypeOBSInstance              = "OBSInstances"
 	TypeThemeInstance            = "ThemeInstances"
 	TypeDocumentInstance         = "DocumentInstances"
+	TypeDepartmentInstance       = "DepartmentInstances"
+	TypeLocationInstance         = "LocationInstances"
 
 	ActionReplace         = "replace"
 	ActionUpdate          = "update"

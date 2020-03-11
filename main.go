@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/andreluzz/cas-xog/view"
 	"os"
 	"strings"
+
+	"github.com/andreluzz/cas-xog/view"
 )
 
-var version = "Development"
+var version = "Development Build"
 
 func main() {
 	if len(os.Args) > 1 {

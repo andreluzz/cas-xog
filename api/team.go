@@ -14,10 +14,6 @@ import (
 	"github.com/tealeg/xlsx"
 )
 
-type teamResults struct {
-	Results []result `json:"_results"`
-}
-
 type team struct {
 	ID              int                   `json:"_internalId,omitempty"`
 	Code            string                `json:"code"`
@@ -27,8 +23,10 @@ type team struct {
 }
 
 type teamDefAllocations struct {
-	ID         int     `json:"_internalId,omitempty"`
-	ResourceID int     `json:"resourceId"`
+	ID         int `json:"_internalId,omitempty"`
+	ResourceID struct {
+		ID string `json:"id"`
+	} `json:"resourceId"`
 	Allocation float64 `json:"allocation"`
 }
 
@@ -53,7 +51,18 @@ func migrateTeam(file *model.DriverFile, outputFolder string, environments *mode
 
 	teams := make(map[string]team, len(xlFile.Sheets[0].Rows))
 
+	excelEndRowIndex := 0
+	if file.ExcelStartRow != constant.Undefined {
+		excelEndRowIndex, err = strconv.Atoi(file.ExcelEndRow)
+		if err != nil {
+			return fmt.Errorf("migration - tag 'endRow' not a number. Debug: %s", err.Error())
+		}
+	}
+
 	for index, row := range xlFile.Sheets[0].Rows {
+		if excelEndRowIndex != 0 && excelEndRowIndex == index {
+			break
+		}
 		if index >= excelStartRowIndex {
 			rowMap := make(map[string]string, len(file.MatchExcel))
 			for _, match := range file.MatchExcel {
@@ -71,13 +80,11 @@ func migrateTeam(file *model.DriverFile, outputFolder string, environments *mode
 
 			if val, ok := rowMap["resourceId"]; ok {
 				if val != "" {
-					resID, err := strconv.Atoi(val)
 					if err != nil {
 						return fmt.Errorf("migration - team code %s column resourceID (%s) is not a valid number. Debug: %s", rowMap["code"], val, err.Error())
 					}
-					alloc := teamDefAllocations{
-						ResourceID: resID,
-					}
+					alloc := teamDefAllocations{}
+					alloc.ResourceID.ID = val
 					if val, ok := rowMap["allocation"]; ok {
 						if allocationValue, err := strconv.ParseFloat(val, 64); err == nil {
 							alloc.Allocation = allocationValue
@@ -100,7 +107,7 @@ func migrateTeam(file *model.DriverFile, outputFolder string, environments *mode
 		teamSlice = append(teamSlice, value)
 	}
 
-	data, _ := json.Marshal(teamSlice)
+	data, _ := json.MarshalIndent(teamSlice, "", "    ")
 	teamsPath := outputFolder + file.Type + "/" + file.Path
 	ioutil.WriteFile(teamsPath, util.JSONAvoidEscapeText(data), 0644)
 	return nil
@@ -110,7 +117,18 @@ func readTeam(file *model.DriverFile, outputFolder string, environments *model.E
 	if file.Code == constant.Undefined {
 		return errors.New("Required attribute code not found")
 	}
-	endpoint := environments.Source.URL + constant.APIEndpoint
+	endpoint := environments.Target.URL + environments.Target.API.Context + constant.APIEndpoint
+
+	sourceConfig := util.APIConfig{
+		Client: environments.Source.API.Client,
+		Cookie: environments.Source.Cookie,
+		Proxy:  environments.Source.Proxy,
+	}
+
+	sourceConfig.Token = environments.Source.API.Token
+	if environments.Source.AuthToken != "" {
+		sourceConfig.Token = environments.Source.AuthToken
+	}
 
 	filter := ""
 	if file.Code != "*" {
@@ -118,7 +136,9 @@ func readTeam(file *model.DriverFile, outputFolder string, environments *model.E
 	}
 
 	url := fmt.Sprintf("%steamdefinitions%s", endpoint, filter)
-	response, status, err := restFunc(nil, url, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, environments.Source.Cookie, nil)
+	sourceConfig.Endpoint = url
+	sourceConfig.Method = http.MethodGet
+	response, status, err := restFunc(nil, sourceConfig, nil)
 	if err != nil {
 		return err
 	}
@@ -126,18 +146,20 @@ func readTeam(file *model.DriverFile, outputFolder string, environments *model.E
 		return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), url)
 	}
 
-	tr := &teamResults{}
+	tr := &results{}
 	json.Unmarshal(response, tr)
 
 	teams := []team{}
 
 	for _, t := range tr.Results {
 		// GET Team details
-		urlString, err := t.getURL(environments.Source.URL)
+		urlString, err := t.getURL(environments.Source.URL, environments.Source.API.Context)
 		if err != nil {
 			return err
 		}
-		response, status, err = restFunc(nil, urlString, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, environments.Source.Cookie, nil)
+		sourceConfig.Endpoint = urlString
+		sourceConfig.Method = http.MethodGet
+		response, status, err = restFunc(nil, sourceConfig, nil)
 		if err != nil {
 			return err
 		}
@@ -149,16 +171,20 @@ func readTeam(file *model.DriverFile, outputFolder string, environments *model.E
 		json.Unmarshal(response, &team)
 
 		// GET Allocations
-		response, status, err = restFunc(nil, urlString+"/teamdefallocations", http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, environments.Source.Cookie, nil)
+		sourceConfig.Endpoint = urlString + "/teamdefallocations"
+		sourceConfig.Method = http.MethodGet
+		response, status, err = restFunc(nil, sourceConfig, nil)
 		ar := &teamDefAllocationsResults{}
 		json.Unmarshal(response, ar)
 
 		for _, a := range ar.Results {
-			urlString, err := a.getURL(environments.Source.URL)
+			urlString, err := a.getURL(environments.Source.URL, environments.Source.API.Context)
 			if err != nil {
 				return err
 			}
-			response, status, err = restFunc(nil, urlString, http.MethodGet, environments.Source.AuthToken, environments.Source.Proxy, environments.Source.Cookie, nil)
+			sourceConfig.Endpoint = urlString
+			sourceConfig.Method = http.MethodGet
+			response, status, err = restFunc(nil, sourceConfig, nil)
 			teamAllocation := &teamDefAllocations{}
 			json.Unmarshal(response, teamAllocation)
 			team.TeamAllocations = append(team.TeamAllocations, teamAllocation)
@@ -167,7 +193,7 @@ func readTeam(file *model.DriverFile, outputFolder string, environments *model.E
 		teams = append(teams, team)
 	}
 
-	data, _ := json.Marshal(teams)
+	data, _ := json.MarshalIndent(teams, "", "    ")
 	teamsPath := outputFolder + file.Type + "/" + file.Path
 	ioutil.WriteFile(teamsPath, util.JSONAvoidEscapeText(data), 0644)
 	return nil
@@ -180,7 +206,7 @@ func writeTeam(file *model.DriverFile, sourceFolder, outputFolder string, enviro
 		return err
 	}
 
-	endpoint := environments.Target.URL + constant.APIEndpoint
+	endpoint := environments.Target.URL + environments.Target.API.Context + constant.APIEndpoint
 
 	tm := []team{}
 	json.Unmarshal(jsonFile, &tm)
@@ -201,13 +227,28 @@ func writeTeam(file *model.DriverFile, sourceFolder, outputFolder string, enviro
 }
 
 func createTeam(t team, endpoint string, environments *model.Environments, restFunc util.Rest) error {
+
+	targetConfig := util.APIConfig{
+		Client: environments.Target.API.Client,
+		Cookie: environments.Target.Cookie,
+		Proxy:  environments.Target.Proxy,
+	}
+
+	targetConfig.Token = environments.Target.API.Token
+	if environments.Target.AuthToken != "" {
+		targetConfig.Token = environments.Target.AuthToken
+	}
+
 	url := fmt.Sprintf("%steamdefinitions", endpoint)
 	body := fmt.Sprintf(`{
 			"code": "%s",
 			"name": "%s",
 			"isActive": %t
 		}`, t.Code, t.Name, t.Active)
-	response, status, err := restFunc([]byte(body), url, http.MethodPost, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+
+	targetConfig.Endpoint = url
+	targetConfig.Method = http.MethodPost
+	response, status, err := restFunc([]byte(body), targetConfig, nil)
 	if err != nil {
 		return err
 	}
@@ -227,32 +268,36 @@ func createTeam(t team, endpoint string, environments *model.Environments, restF
 	for _, a := range t.TeamAllocations {
 		url := fmt.Sprintf("%steamdefinitions/%d/teamdefallocations", endpoint, newTeam.ID)
 		body := fmt.Sprintf(`{
-				"resourceId": %d,
+				"resourceId": %s,
 				"totalAllocation": %f,
 				"teamId": %d
-			  }`, a.ResourceID, a.Allocation, newTeam.ID)
+			  }`, a.ResourceID.ID, a.Allocation, newTeam.ID)
 
-		response, status, err := restFunc([]byte(body), url, http.MethodPost, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+		targetConfig.Endpoint = url
+		targetConfig.Method = http.MethodPost
+		response, status, err := restFunc([]byte(body), targetConfig, nil)
 		if err != nil {
 			return err
 		}
 		if status == 400 {
-			fmt.Printf("\nstatus code: %d | resourceId: %d | response: %s | url: %s", status, a.ResourceID, string(response), url)
+			fmt.Printf("\nstatus code: %d | resourceId: %s | response: %s | url: %s", status, a.ResourceID.ID, string(response), url)
 			continue
 		}
 		if status != 200 {
-			return fmt.Errorf("status code: %d | resourceId: %d | response: %s | url: %s", status, a.ResourceID, string(response), url)
+			return fmt.Errorf("status code: %d | resourceId: %s | response: %s | url: %s", status, a.ResourceID.ID, string(response), url)
 		}
 
 		res := &result{}
 		json.Unmarshal(response, res)
 		body = fmt.Sprintf(`{"allocation": %f}`, a.Allocation)
-		urlString, err := res.getURL(environments.Target.URL)
+		urlString, err := res.getURL(environments.Target.URL, environments.Target.API.Context)
 		if err != nil {
 			return err
 		}
 
-		response, status, err = restFunc([]byte(body), urlString, http.MethodPut, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+		targetConfig.Endpoint = urlString
+		targetConfig.Method = http.MethodPut
+		response, status, err = restFunc([]byte(body), targetConfig, nil)
 		if err != nil {
 			return err
 		}
@@ -265,10 +310,23 @@ func createTeam(t team, endpoint string, environments *model.Environments, restF
 
 func updateTeam(t team, endpoint string, environments *model.Environments, restFunc util.Rest) error {
 
+	targetConfig := util.APIConfig{
+		Client: environments.Target.API.Client,
+		Cookie: environments.Target.Cookie,
+		Proxy:  environments.Target.Proxy,
+	}
+
+	targetConfig.Token = environments.Target.API.Token
+	if environments.Target.AuthToken != "" {
+		targetConfig.Token = environments.Target.AuthToken
+	}
+
 	filter := fmt.Sprintf("?filter=(code =  '%s')", t.Code)
 
 	url := fmt.Sprintf("%steamdefinitions%s", endpoint, filter)
-	response, status, err := restFunc(nil, url, http.MethodGet, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+	targetConfig.Endpoint = url
+	targetConfig.Method = http.MethodGet
+	response, status, err := restFunc(nil, targetConfig, nil)
 	if err != nil {
 		return err
 	}
@@ -276,7 +334,7 @@ func updateTeam(t team, endpoint string, environments *model.Environments, restF
 		return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), url)
 	}
 
-	tr := &teamResults{}
+	tr := &results{}
 	err = json.Unmarshal(response, tr)
 	if err != nil {
 		return fmt.Errorf("status code: %d | response: %s | url: %s | error: %s", status, string(response), url, err.Error())
@@ -292,12 +350,15 @@ func updateTeam(t team, endpoint string, environments *model.Environments, restF
 			"name": "%s",
 			"isActive": %t
 		}`, t.Name, t.Active)
-	response, status, err = restFunc([]byte(body), url, http.MethodPut, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+
+	targetConfig.Endpoint = url
+	targetConfig.Method = http.MethodPut
+	response, status, err = restFunc([]byte(body), targetConfig, nil)
 	if err != nil {
 		return err
 	}
 	if status != 200 {
-		return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), url)
+		return fmt.Errorf("update status code: %d | response: %s | url: %s", status, string(response), url)
 	}
 
 	newTeam := &team{}
@@ -307,32 +368,39 @@ func updateTeam(t team, endpoint string, environments *model.Environments, restF
 	}
 
 	// GET Allocations
-	response, status, err = restFunc(nil, url+"/teamdefallocations", http.MethodGet, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+	targetConfig.Endpoint = url + "/teamdefallocations"
+	targetConfig.Method = http.MethodGet
+	response, status, err = restFunc(nil, targetConfig, nil)
 	ar := &teamDefAllocationsResults{}
 	json.Unmarshal(response, ar)
 
 	teamCurrentAllocations := []*teamDefAllocations{}
 	for _, a := range ar.Results {
-		urlString, err := a.getURL(environments.Target.URL)
+		urlString, err := a.getURL(environments.Target.URL, environments.Target.API.Context)
 		if err != nil {
 			return err
 		}
-		response, status, err = restFunc(nil, urlString, http.MethodGet, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+
+		targetConfig.Endpoint = urlString
+		targetConfig.Method = http.MethodGet
+		response, status, err = restFunc(nil, targetConfig, nil)
 		teamAllocation := &teamDefAllocations{}
 		json.Unmarshal(response, teamAllocation)
 		teamCurrentAllocations = append(teamCurrentAllocations, teamAllocation)
 		index := getIndex(teamAllocation, t.TeamAllocations)
-		if index != -1 {
+		if index >= 0 {
 			updateTeam := t.TeamAllocations[index]
 			url := fmt.Sprintf("%steamdefinitions/%d/teamdefallocations/%d", endpoint, newTeam.ID, teamAllocation.ID)
 			body = fmt.Sprintf(`{"allocation": %f}`, updateTeam.Allocation)
 
-			response, status, err := restFunc([]byte(body), url, http.MethodPut, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+			targetConfig.Endpoint = url
+			targetConfig.Method = http.MethodGet
+			response, status, err = restFunc([]byte(body), targetConfig, nil)
 			if err != nil {
 				return err
 			}
 			if status != 200 {
-				return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), url)
+				return fmt.Errorf("Get teamdefallocations[%s] status code: %d | response: %s | url: %s", t.Code, status, string(response), url)
 			}
 		}
 	}
@@ -342,33 +410,53 @@ func updateTeam(t team, endpoint string, environments *model.Environments, restF
 		if index == -1 {
 			url := fmt.Sprintf("%steamdefinitions/%d/teamdefallocations", endpoint, newTeam.ID)
 			body := fmt.Sprintf(`{
-				"resourceId": %d,
+				"resourceId": %s,
 				"totalAllocation": %f,
 				"teamId": %d
-			  }`, team.ResourceID, team.Allocation, newTeam.ID)
+			  }`, team.ResourceID.ID, team.Allocation, newTeam.ID)
 
-			response, status, err := restFunc([]byte(body), url, http.MethodPost, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+			targetConfig.Endpoint = url
+			targetConfig.Method = http.MethodPost
+			response, status, err = restFunc([]byte(body), targetConfig, nil)
 			if err != nil {
 				return err
 			}
-			if status != 200 {
-				return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), url)
+			if status == 400 {
+				fmt.Printf("\n[%s] status code: %d | response: %s | url: %s", t.Code, status, string(response), url)
+				continue
+			} else if status != 200 {
+				return fmt.Errorf("Post teamdefallocations [%s] status code: %d | response: %s | url: %s", t.Code, status, string(response), url)
 			}
 
 			res := &result{}
 			json.Unmarshal(response, res)
 			body = fmt.Sprintf(`{"allocation": %f}`, team.Allocation)
-			urlString, err := res.getURL(environments.Target.URL)
+			urlString, err := res.getURL(environments.Target.URL, environments.Target.API.Context)
 			if err != nil {
 				return err
 			}
 
-			response, status, err = restFunc([]byte(body), urlString, http.MethodPut, environments.Target.AuthToken, environments.Target.Proxy, environments.Target.Cookie, nil)
+			targetConfig.Endpoint = urlString
+			targetConfig.Method = http.MethodPut
+			response, status, err = restFunc([]byte(body), targetConfig, nil)
 			if err != nil {
 				return err
 			}
 			if status != 200 {
-				return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), urlString)
+				return fmt.Errorf("[%s] status code: %d | response: %s | url: %s", t.Code, status, string(response), url)
+			}
+		} else if index == -2 {
+			url := fmt.Sprintf("%steamdefinitions/%d/teamdefallocations/%d", endpoint, newTeam.ID, team.ID)
+			body = fmt.Sprintf(`{"allocation": %f}`, team.Allocation)
+
+			targetConfig.Endpoint = url
+			targetConfig.Method = http.MethodPut
+			response, status, err = restFunc([]byte(body), targetConfig, nil)
+			if err != nil {
+				return err
+			}
+			if status != 200 {
+				return fmt.Errorf("[%s] status code: %d | response: %s | url: %s", t.Code, status, string(response), url)
 			}
 		}
 	}
@@ -378,8 +466,11 @@ func updateTeam(t team, endpoint string, environments *model.Environments, restF
 
 func getIndex(alloc *teamDefAllocations, slice []*teamDefAllocations) int {
 	for i, a := range slice {
-		if a.ResourceID == alloc.ResourceID {
+		if a.ResourceID.ID == alloc.ResourceID.ID {
 			return i
+		}
+		if a.Allocation != alloc.Allocation {
+			return -2
 		}
 	}
 	return -1

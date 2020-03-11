@@ -14,7 +14,7 @@ type Soap func(request, endpoint, proxy string) (string, error)
 //SoapCall executes a soap call to the defined environment executing the xog xml
 func SoapCall(request, endpoint, proxy string) (string, error) {
 	client := &http.Client{
-		Timeout: time.Second * 60,
+		Timeout: time.Second * 600,
 	}
 
 	if proxy != "" {

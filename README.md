@@ -36,20 +36,26 @@ If you like to read and write at once just put the attribute `autoWrite="true"` 
 - [Package creation and deploy](#package-creation-and-deploy)
 - [Data migration](#data-migration)
 
+### Description of Rest API Driver tags
+
+| Tag                                  | Description                                   |
+| ------------------------------------ | --------------------------------------------- |
+| [`api.blueprint`](#tag-apiblueprint) | Used to read and write new UX blueprints.     |
+| [`api.team`](#tag-apiteam)           | Used to read, write and migrate new UX teams. |
+| [`api.task`](#tag-apitask)           | Used to migrate taks.                         |
+
 ### Description of structure Driver tags
 
-| Tag                                   | Description                                                   |
-| ------------------------------------- | ------------------------------------------------------------- |
-| [`object`](#tag-object)               | Used to read and write objects attributes, actions and links. |
-| [`view`](#tag-view)                   | Used to read and write views.                                 |
-| [`process`](#tag-process)             | Used to read and write processes.                             |
-| [`lookup`](#tag-lookup)               | Used to read and write lookups.                               |
-| [`portlet`](#tag-portlet)             | Used to read and write portlets.                              |
-| [`query`](#tag-query)                 | Used to read and write queries.                               |
-| [`page`](#tag-page)                   | Used to read and write pages.                                 |
-| [`menu`](#tag-menu)                   | Used to read and write menus.                                 |
-| [`api.blueprint`](#tag-api.blueprint) | Used to read and write new UX blueprints.                     |
-| [`api.team`](#tag-api.team)           | Used to read and write new UX teams.                          |
+| Tag                       | Description                                                   |
+| ------------------------- | ------------------------------------------------------------- |
+| [`object`](#tag-object)   | Used to read and write objects attributes, actions and links. |
+| [`view`](#tag-view)       | Used to read and write views.                                 |
+| [`process`](#tag-process) | Used to read and write processes.                             |
+| [`lookup`](#tag-lookup)   | Used to read and write lookups.                               |
+| [`portlet`](#tag-portlet) | Used to read and write portlets.                              |
+| [`query`](#tag-query)     | Used to read and write queries.                               |
+| [`page`](#tag-page)       | Used to read and write pages.                                 |
+| [`menu`](#tag-menu)       | Used to read and write menus.                                 |
 
 ### Description of instance Driver tags
 
@@ -69,9 +75,13 @@ If you like to read and write at once just put the attribute `autoWrite="true"` 
 | [`otherInvestmentInstance`](#tag-otherinvestmentinstance)   | Used to read and write otherInvestment instances.  |
 | [`productInstance`](#tag-productinstance)                   | Used to read and write product instances.          |
 | [`serviceInstance`](#tag-serviceinstance)                   | Used to read and write service instances.          |
+| [`benefitPlanInstance`](#tag-benefitplaninstance)           | Used to read and write benefit plan instances.     |
+| [`budgetPlanInstance`](#tag-budgetplaninstance)             | Used to read and write budget plan instances.      |
+| [`costPlanInstance`](#tag-costplaninstance)                 | Used to read and write cost plan instances.        |
 | [`obsInstance`](#tag-obsinstance)                           | Used to read and write OBS instances.              |
 | [`themeInstance`](#tag-themeinstance)                       | Used to read and write UI Theme instances.         |
 | [`groupInstance`](#tag-groupinstance)                       | Used to read and write groups.                     |
+| [`departmentInstance`](#tag-departmentInstance)             | Used to read and write department instances.       |
 
 ## Tag `object`
 
@@ -82,6 +92,7 @@ If you like to read and write at once just put the attribute `autoWrite="true"` 
 | `partitionModel`  | Used when you need to set a new partitionModel or change the current one.                                                                            | no       |
 | `targetPartition` | Used to change elements partition code to the defined value. When uses alone without sourcePartition replaces the tag partitionCode on all elements. | no       |
 | `sourcePartition` | Used to read only elements from this partition code.                                                                                                 | no       |
+| `onlyElements`    | Used to read only the defined elements and remove everything else. Default is false.                                                                 | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -97,10 +108,10 @@ If you like to read and write at once just put the attribute `autoWrite="true"` 
 
 Used to read only the selected elements from the object.
 
-| Attribute | Description                                                                       | Required |
-| --------- | --------------------------------------------------------------------------------- | -------- |
-| `type`    | Defines what element to read. Availables types: `attribute`, `action` and `link`. | yes      |
-| `code`    | Code of the element that you want to include.                                     | yes      |
+| Attribute | Description                                                                                                                                                              | Required |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| `type`    | Defines what element to read. Availables types: `attribute`, `action` and `link`.                                                                                        | yes      |
+| `code`    | Code of the element that you want to include. Can be used \* to set a wildcard and get all attributes with the defined prefix. Wildcards only work to type: `attribute`. | yes      |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -110,6 +121,13 @@ Used to read only the selected elements from the object.
         <element type="attribute" code="novo_atr" />
         <element type="action" code="tst_run_proc_lnk" />
         <element type="link" code="test_subobj.link_test" />
+    </object>
+</xogdriver>
+
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <object code="test_subobj" path="test_subobj.xml" onlyElements="true">
+        <element type="attribute" code="acme_*" />
     </object>
 </xogdriver>
 ```
@@ -228,6 +246,7 @@ Used to read view actions and actions group.
 | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
 | `code`            | Lookup code.                                                                                                                                                                         | yes      |
 | `path`            | Path where the file will be saved on the file system.                                                                                                                                | yes      |
+| `onlyActive`      | Used to read only active options from a static lookup.                                                                                                                               | no       |
 | `onlyStructure`   | Used to create a lookup with a fake query to prevent error of attributes that have not yet been imported. Only available for dynamic lookups.                                        | no       |
 | `sourcePartition` | When defined changes only elements from this partition code. Should be used together with targetPartition tag. Only available for static lookups.                                    | no       |
 | `targetPartition` | Used to change the partition code. Used alone without sourcePartition replaces the tag partitionCode of all lookup values with the defined value. Only available for static lookups. | no       |
@@ -237,7 +256,7 @@ Used to read view actions and actions group.
 <xogdriver version="2.0">
     <lookup code="INV_APPLICATION_CATEGORY_TYPE" path="INV_APPLICATION_CATEGORY_TYPE.xml" />
     <lookup code="LOOKUP_FIN_CHARGECODES" path="LOOKUP_FIN_CHARGECODES.xml" onlyStructure="true" />
-    <lookup code="LOOKUP_CAS_XOG_1" path="LOOKUP_CAS_XOG_1.xml" targetPartition="NIKU.ROOT" />
+    <lookup code="LOOKUP_CAS_XOG_1" path="LOOKUP_CAS_XOG_1.xml" targetPartition="NIKU.ROOT" onlyActive="true" />
     <lookup code="LOOKUP_CAS_XOG_2" path="LOOKUP_CAS_XOG_2.xml" sourcePartition="IT" targetPartition="NIKU.ROOT" />
 </xogdriver>
 ```
@@ -382,13 +401,14 @@ Used to read only the selected links inside a section tag from the menu.
 
 ## Tag `api.team`
 
-| Attribute  | Description                                                                                               | Required |
-| ---------- | --------------------------------------------------------------------------------------------------------- | -------- |
-| `code`     | Source team code. Optional if using to migrate teams from excel.                                          | yes      |
-| `path`     | Path where the file will be saved on the file system. The extension should be .json                       | yes      |
-| `action`   | Used to define if is to update or insert api team. Default is insert.                                     | no       |
-| `excel`    | Path to the excel file with the data.                                                                     | yes      |
-| `startRow` | The line number in the excel file that we will start reading to create the instances. Default value is 1. | no       |  
+| Attribute  | Description                                                                                                           | Required |
+| ---------- | --------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`     | Source team code. Optional if using to migrate teams from excel.                                                      | yes      |
+| `path`     | Path where the file will be saved on the file system. The extension should be .json                                   | yes      |
+| `action`   | Used to define if is to update or insert api team. Default is insert.                                                 | no       |
+| `excel`    | Path to the excel file with the data.                                                                                 | yes      |
+| `startRow` | The line number in the excel file that we will start reading to create the instances. Default value is 1.             | no       |
+| `endRow`   | The line number in the excel file that we will end reading to create the instances. Default value is the total lines. | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -402,7 +422,7 @@ Used to read only the selected links inside a section tag from the menu.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <api.team path="teams.json" action="update" excel="drivers/dados.xlsx" startRow="2">
+    <api.team path="teams.json" action="update" excel="drivers/dados.xlsx" startRow="2" endRow="100">
         <match col="1" attribute="code" />
         <match col="2" attribute="name" />
         <match col="3" attribute="resourceId" />
@@ -410,6 +430,57 @@ Used to read only the selected links inside a section tag from the menu.
     </api.team>
 </xogdriver>
 ```
+
+## Tag `api.task`
+
+| Attribute  | Description                                                                                               | Required |
+| ---------- | --------------------------------------------------------------------------------------------------------- | -------- |
+| `path`     | Path where the file will be saved on the file system. The extension should be .json                       | yes      |
+| `excel`    | Path to the excel file with the data.                                                                     | yes      |
+| `startRow` | The line number in the excel file that we will start reading to create the instances. Default value is 1. | no       |
+
+Only migration from excel is available.
+
+### Task migration
+
+Required attributes to migrate tasks: **projectCode, taskname, taskCode, taskStart, taskFinish, percentComplete**.
+
+If you want to assign resources to the tasks the folowing attributes are required: **resourceId, segmentStart, segmentFinish, segmentValue**.
+
+To migrate any other field you just have to add the attribute to the match list. There is no support for **multi valued lookups**.
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <api.task path="tasks.json" excel="drivers/tasks.xlsx" startRow="2">
+        <match col="1" attribute="project" />
+        <match col="2" attribute="name" />
+        <match col="3" attribute="code" />
+        <match col="4" attribute="start" />
+        <match col="5" attribute="finish" />
+        <match col="6" attribute="percentComplete" />
+        <match col="7" attribute="resourceId" />
+        <match col="8" attribute="segmentStart" />
+        <match col="9" attribute="segmentFinish" />
+        <match col="10" attribute="segmentValue" />
+        <match col="11" attribute="p_cstCategory" />
+    </api.task>
+</xogdriver>
+```
+
+### Task migration excel example
+
+Use date in the format YYYY-MM-DDTHH:MM:SS and as a string cell in the excel file.
+
+| Project | Name          | Code     | Start               | Finish              | Percent Complete | Resource | Segment Start       | Segment Finish      | Segment Value | Custom Category |
+| ------- | ------------- | -------- | ------------------- | ------------------- | ---------------- | -------- | ------------------- | ------------------- | ------------- | --------------- |
+| PR1173  | Nova Tarefa 1 | TSK.0001 | 2020-04-01T08:00:00 | 2020-06-30T00:00:00 | 0                | 5038001  | 2020-04-01T00:00:00 | 2020-04-30T00:00:00 | 120           |
+| PR1173  | Nova Tarefa 1 | TSK.0001 | 2020-04-01T08:00:00 | 2020-06-30T00:00:00 | 0                | 5038001  | 2020-05-01T00:00:00 | 2020-05-31T00:00:00 | 120           |
+| PR1173  | Nova Tarefa 1 | TSK.0001 | 2020-04-01T08:00:00 | 2020-06-30T00:00:00 | 0                | 5038001  | 2020-06-01T00:00:00 | 2020-06-30T00:00:00 | 120           |
+| PR1173  | Nova Tarefa 1 | TSK.0001 | 2020-04-01T08:00:00 | 2020-06-30T00:00:00 | 0                | 5035001  | 2020-04-01T00:00:00 | 2020-04-30T00:00:00 | 120           |
+| PR1173  | Nova Tarefa 1 | TSK.0001 | 2020-04-01T08:00:00 | 2020-06-30T00:00:00 | 0                | 5035001  | 2020-05-01T00:00:00 | 2020-05-31T00:00:00 | 120           |
+| PR1173  | Nova Tarefa 1 | TSK.0001 | 2020-04-01T08:00:00 | 2020-06-30T00:00:00 | 0                | 5035001  | 2020-06-01T00:00:00 | 2020-06-30T00:00:00 | 120           |
+| PR1173  | Nova Tarefa 2 | TSK.0002 | 2020-04-01T08:00:00 | 2020-06-30T00:00:00 | 0.5              |          |                     |                     |               | Testing         |
 
 ## Tag `customObjectInstance`
 
@@ -622,19 +693,84 @@ Used to read only the selected links inside a section tag from the menu.
 </xogdriver>
 ```
 
+## Tag `benefitPlanInstance`
+
+| Attribute          | Description                                                                                                               | Required |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`             | Instance codes. Use code equals \* to get all instances.                                                                  | yes      |
+| `path`             | Path where the file will be saved on the file system.                                                                     | yes      |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no       |
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <benefitPlanInstance code="*" path="instances.xml" />
+</xogdriver>
+```
+
+## Tag `budgetPlanInstance`
+
+| Attribute          | Description                                                                                                               | Required |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`             | Instance codes. Use code equals \* to get all instances.                                                                  | yes      |
+| `path`             | Path where the file will be saved on the file system.                                                                     | yes      |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no       |
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <budgetPlanInstance code="*" path="instances.xml" />
+</xogdriver>
+```
+
+## Tag `costPlanInstance`
+
+| Attribute          | Description                                                                                                               | Required |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`             | Instance codes. Use code equals \* to get all instances.                                                                  | yes      |
+| `path`             | Path where the file will be saved on the file system.                                                                     | yes      |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no       |
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <costPlanInstance code="*" path="instances.xml" />
+</xogdriver>
+```
+
 ## Tag `obsInstance`
 
-| Attribute | Description                                           | Required |
-| --------- | ----------------------------------------------------- | -------- |
-| `code`    | OBS code.                                             | yes      |
-| `path`    | Path where the file will be saved on the file system. | yes      |
+| Attribute  | Description                                                                                               | Required |
+| ---------- | --------------------------------------------------------------------------------------------------------- | -------- |
+| `code`     | OBS code.                                                                                                 | yes      |
+| `path`     | Path where the file will be saved on the file system.                                                     | yes      |
+| `excel`    | Path to the excel file with the data.                                                                     | no       |
+| `startRow` | The line number in the excel file that we will start reading to create the instances. Default value is 1. | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
     <obsInstance code="department" path="obs_department.xml" />
+    <obsInstance code="department" path="obs_department.xml" excel="obs_data.xlsx" startRow="2" />
 </xogdriver>
 ```
+
+### Excel wit OBS data structure
+
+This file should hava one line to each OBS unit with all it´s parents. Can be used anything as code but for the import to be sucessfull it should not be empty or be duplicated.
+
+| Level1 Code | Level1 Name | Level2 Code | Level2 Name | Level3 Code | Level3 Name | Level4 Code | Level4 Name      |
+| ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ---------------- |
+| N1.001      | Company     |             |             |             |             |             |                  |
+| N1.001      | Company     | N2.001      | Site 1      |             |             |             |                  |
+| N1.001      | Company     | N2.001      | Site 1      | N3.001      | Sub-Group 1 |             |                  |
+| N1.001      | Company     | N2.001      | Site 1      | N3.001      | Sub-Group 1 | N4.001      | Bussiness Unit 1 |
+| N1.001      | Company     | N2.001      | Site 1      | N3.002      | Sub-Group 2 |             |                  |
+| N1.001      | Company     | N2.001      | Site 1      | N3.002      | Sub-Group 2 | N4.002      | Bussiness Unit 2 |
+| N1.001      | Company     | N2.001      | Site 1      | N3.002      | Sub-Group 2 | N4.003      | Bussiness Unit 3 |
+| N1.001      | Company     | N2.002      | Site 2      |             |             |             |                  |
+| N1.001      | Company     | N2.002      | Site 2      | N3.001      | Sub-Group 3 |             |                  |
+| N1.001      | Company     | N2.002      | Site 2      | N3.002      | Sub-Group 3 | N4.004      | Bussiness Unit 4 |
 
 ## Tag `themeInstance`
 
@@ -661,6 +797,24 @@ Used to read only the selected links inside a section tag from the menu.
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
     <groupInstance code="cop.systemAdministrator" path="systemAdministrator.xml" />
+</xogdriver>
+```
+
+## Tag `departmentInstance`
+
+| Attribute  | Description                                                           | Required |
+| ---------- | --------------------------------------------------------------------- | -------- |
+| `code`     | Department code. When migratin from excel any code can be used.       | yes      |
+| `path`     | Path where the file will be saved on the file system.                 | yes      |
+| `excel`    | Path to the excel you want to migrate PPM.                            | no       |
+| `startRow` | The number of the row to start processing. Default 1.                 | no       |
+| `entity`   | The entity to load the excel data. Required when using the tag excel. | no       |
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <departmentInstance code="*" path="systemAdministrator.xml" />
+    <departmentInstance code="dummy" excel="drivers/obs_template.xlsx" startRow="2" entity="B3" path="departments.xml" />
 </xogdriver>
 ```
 
@@ -950,7 +1104,7 @@ This tag is required for export to excel data.
 | `attribute`    | Defines which attribute in the element will receive the data. If no xpath is defined then we set this attribute in the main element instance. | no       |
 | `xpath`        | A string representing the path to the element you want to set the data. If no attribute value is defined then we set the value as a tag text. | no       |
 | `removeIfNull` | If set to true and the value in excel is null, the element associated with xpath is removed.                                                  | no       |
-| `multiValued`  | If set to true this element will be treated as multi-valued.                                                                                  | no       |
+| `multiValued`  | If set to true this element will be treated as multi-valued. This also can be used to create custom multiple elements inside a tag.           | no       |
 | `separator`    | Defines what character is being used to separate the options in the multi-valued data. Default value is ';'.                                  | no       |
 
 ```xml
@@ -986,6 +1140,56 @@ This tag is required for export to excel data.
 </NikuDataBus>
 ```
 
+### Custom multivalued
+
+This should be used to create multiple elements inside a defined element with custom attributes.
+
+#### Driver
+
+```xml
+<xogdriver version="2.0">
+    <migration path="ow.xml" template="drivers/ow_template.xml" instance="OtherInvestment" excel="drivers/ow.xlsx" startRow="3" instancesPerFile="30">
+        <match col="1" attribute="objectID" />
+        <match col="2" attribute="name" />
+        <match col="6" xpath="//InvestmentResources" multiValued="true" separator="|" element="Resource" attr="resourceID">
+            <attr name="openForTimeEntry" value="true" />
+            <attr name="defaultAllocation" value="0" />
+            <attr name="bookingStatus" value="15" />
+        </match>
+    </migration>
+</xogdriver>
+```
+
+#### Template
+
+```xml
+<NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_otherInvestment.xsd">
+    <Header action="write" externalSource="NIKU" objectType="otherInvestment" version="8.0"/>
+    <OtherInvestments>
+        <OtherInvestment objectID="B3.001040" name="Atender backlog">
+            <InvestmentResources />
+        </OtherInvestment>
+    </OtherInvestments>
+</NikuDataBus>
+```
+
+#### Result after executing the driver
+
+```xml
+<NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_otherInvestment.xsd">
+    <Header action="write" externalSource="NIKU" objectType="otherInvestment" version="8.0"/>
+    <OtherInvestments>
+        <OtherInvestment objectID="B3.001040" name="Atender backlog">
+            <InvestmentResources>
+                <Resource resourceID="500000" openForTimeEntry="true" defaultAllocation="0" bookingStatus="15" />
+                <Resource resourceID="500001" openForTimeEntry="true" defaultAllocation="0" bookingStatus="15" />
+                <Resource resourceID="500002" openForTimeEntry="true" defaultAllocation="0" bookingStatus="15" />
+            </InvestmentResources>
+        </OtherInvestment>
+    </OtherInvestments>
+</NikuDataBus>
+```
+
 # XOG Environment example:
 
 This is an example of configuring the environments file.
@@ -996,12 +1200,13 @@ This information is stored in memory and will be requested again only if the sys
 
 If the URL has a non-default port (80/443) it should be informed as follows: `http://development.server.com:8888`
 
-| Attribute  | Description                                                                                   | Required |
-| ---------- | --------------------------------------------------------------------------------------------- | -------- |
-| `name`     | Defines an unique identifier that will be displayed in the application for choice of actions. | yes      |
-| `username` | Username with permission to execute XOG in the environment.                                   | no       |
-| `password` | Password associated with username.                                                            | no       |
-| `endpoint` | Defines the environment's URL.                                                                | yes      |
+| Attribute  | Description                                                                                                                                                                                                                | Required |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `name`     | Defines an unique identifier that will be displayed in the application for choice of actions.                                                                                                                              | yes      |
+| `username` | Username with permission to execute XOG in the environment.                                                                                                                                                                | no       |
+| `password` | Password associated with username.                                                                                                                                                                                         | no       |
+| `endpoint` | Defines the environment's URL.                                                                                                                                                                                             | yes      |
+| `api`      | Used to specify the Rest API token. Use the <b>client attribute</b> to set the token client. The <b>context attribute</b> is used if you are in a SaaS environment with the onDemand Portal, the default context is "/ppm" | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -1010,6 +1215,7 @@ If the URL has a non-default port (80/443) it should be informed as follows: `ht
         <username>username</username>
         <password>12345</password>
         <endpoint>http://development.server.com</endpoint>
+        <api context="/tokens" client="acme">rest-api-token</api>
     </env>
     <env name="Quality">
         <username>username</username>

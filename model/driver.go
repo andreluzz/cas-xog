@@ -69,12 +69,21 @@ type FileReplace struct {
 
 //MatchExcel defines the fields to map the cols on an excel file to attributes and data on the xog xml
 type MatchExcel struct {
-	Col           int    `xml:"col,attr"`
-	XPath         string `xml:"xpath,attr"`
-	AttributeName string `xml:"attribute,attr"`
-	MultiValued   bool   `xml:"multiValued,attr"`
-	RemoveIfNull  bool   `xml:"removeIfNull,attr"`
-	Separator     string `xml:"separator,attr"`
+	Col           int                     `xml:"col,attr"`
+	XPath         string                  `xml:"xpath,attr"`
+	AttributeName string                  `xml:"attribute,attr"`
+	MultiValued   bool                    `xml:"multiValued,attr"`
+	RemoveIfNull  bool                    `xml:"removeIfNull,attr"`
+	Separator     string                  `xml:"separator,attr"`
+	Element       string                  `xml:"element,attr"`
+	Attr          string                  `xml:"attr,attr"`
+	Attrs         []AttrMultiValueElement `xml:"attr"`
+}
+
+//AttrMultiValueElement defines the attributes to include in a multivalue
+type AttrMultiValueElement struct {
+	Name  string `xml:"name,attr"`
+	Value string `xml:"value,attr"`
 }
 
 //Filter defines the fields to filter the XOG read
@@ -106,11 +115,15 @@ type DriverFile struct {
 	PartitionModel   string        `xml:"partitionModel,attr"`
 	CopyPermissions  string        `xml:"copyPermissions,attr"`
 	Template         string        `xml:"template,attr"`
+	Entity           string        `xml:"entity,attr"`
 	ExcelFile        string        `xml:"excel,attr"`
 	ExcelStartRow    string        `xml:"startRow,attr"`
+	ExcelEndRow      string        `xml:"endRow,attr"`
 	InstanceTag      string        `xml:"instance,attr"`
 	ExportToExcel    bool          `xml:"exportToExcel,attr"`
 	OnlyStructure    bool          `xml:"onlyStructure,attr"`
+	OnlyElements     bool          `xml:"onlyElements,attr"`
+	OnlyActive       bool          `xml:"onlyActive,attr"`
 	PackageTransform bool          `xml:"packageTransform,attr"`
 	InstancesPerFile int           `xml:"instancesPerFile,attr"`
 	Action           string        `xml:"action,attr"`
@@ -281,7 +294,7 @@ func (d *DriverFile) GetInstanceTag() string {
 //GetXMLType returns the constant value according to the type of driver
 func (d *DriverFile) GetXMLType() string {
 	switch d.Type {
-	case "APIBlueprints", "APITeams":
+	case "APIBlueprints", "APITeams", "APITasks":
 		return "api." + strings.ToLower(d.Type[3:len(d.Type)-1])
 	case "Files", "Objects", "Views", "Lookups", "Portlets", "Pages", "Menus":
 		return strings.ToLower(d.Type[:len(d.Type)-1])
@@ -295,7 +308,7 @@ func (d *DriverFile) GetXMLType() string {
 		"ResourceInstances", "UserInstances", "ProjectInstances", "IdeaInstances", "ApplicationInstances", "AssetInstances", "OtherInvestmentInstances",
 		"ProductInstances", "ServiceInstances", "BenefitPlanInstances", "BudgetPlanInstances", "CategoryInstances", "ChangeInstances",
 		"ChargeCodeInstances", "CompanyClassInstances", "CostPlanInstances", "CostPlusCodeInstances", "DepartmentInstances", "EntityInstances",
-		"GroupInstances", "IncidentInstances", "IssueInstances", "PortfolioInstances", "ProgramInstances", "ReleaseInstances",
+		"GroupInstances", "IncidentInstances", "IssueInstances", "PortfolioInstances", "ProgramInstances", "ReleaseInstances", "LocationInstances",
 		"ReleasePlanInstances", "RequirementInstances", "RequisitionInstances", "RiskInstances", "RoleInstances", "ThemeInstances", "VendorInstances", "DocumentInstances", "Migrations":
 		return strings.ToLower(d.Type[:1]) + d.Type[1:len(d.Type)-1]
 	}
@@ -485,6 +498,7 @@ func initInstancesTagByType() {
 	instancesTag["CostPlanInstances"] = "CostPlan"
 	instancesTag["CostPlusCodeInstances"] = "costPlusCode"
 	instancesTag["DepartmentInstances"] = "Department"
+	instancesTag["LocationInstances"] = "Location"
 	instancesTag["EntityInstances"] = "Entity"
 	instancesTag["GroupInstances"] = "group"
 	instancesTag["IncidentInstances"] = "incident"
@@ -594,6 +608,8 @@ type DriverTypesPattern struct {
 	ThemeInstances            []DriverFile `xml:"themeInstance"`
 	VendorInstances           []DriverFile `xml:"vendorInstance"`
 	DocumentInstances         []DriverFile `xml:"documentInstance"`
+	LocationInstances         []DriverFile `xml:"locationInstance"`
 	APIBlueprints             []DriverFile `xml:"api.blueprint"`
 	APITeams                  []DriverFile `xml:"api.team"`
+	APITasks                  []DriverFile `xml:"api.task"`
 }

@@ -1,10 +1,11 @@
 package transform
 
 import (
+	"testing"
+
 	"github.com/andreluzz/cas-xog/constant"
 	"github.com/andreluzz/cas-xog/model"
 	"github.com/beevik/etree"
-	"testing"
 )
 
 func TestExecuteToReturnObjectFull(t *testing.T) {
@@ -191,6 +192,64 @@ func TestExecuteToReturnObjectRemoveAttribute(t *testing.T) {
 	}
 
 	if readMockResultAndCompare(xog, "object_remove_attribute_result.xml") == false {
+		t.Errorf("Error transforming object XOG file. Invalid result XML.")
+	}
+}
+
+func TestGetWildcardAttributesElements(t *testing.T) {
+	file := model.DriverFile{
+		Code: "obj_sistema",
+		Type: constant.TypeObject,
+		Elements: []model.Element{
+			{
+				Code: "acme_*",
+				Type: constant.ElementTypeAttribute,
+			},
+			{
+				Code: "status",
+				Type: constant.ElementTypeAttribute,
+			},
+		},
+	}
+
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "object_full_xog_elements_wc.xml")
+	getWildcardAttributesElements(xog, &file)
+
+	totalElements := len(file.Elements)
+	if totalElements != 4 {
+		t.Errorf("Error getting wildcard attribute element. Should have 4 return %d", totalElements)
+	}
+}
+
+func TestExecuteToReturnCompleteAsFalse(t *testing.T) {
+	file := model.DriverFile{
+		Code:         "obj_sistema",
+		OnlyElements: true,
+		Type:         constant.TypeObject,
+		Elements: []model.Element{
+			{
+				Code: "acme_*",
+				Type: constant.ElementTypeAttribute,
+			},
+			{
+				Code: "status",
+				Type: constant.ElementTypeAttribute,
+			},
+		},
+	}
+
+	xog := etree.NewDocument()
+	xog.ReadFromFile(packageMockFolder + "object_full_xog_elements_wc.xml")
+	aux := etree.NewDocument()
+	aux.ReadFromFile(packageMockFolder + "object_full_aux.xml")
+	err := Execute(xog, aux, &file)
+
+	if err != nil {
+		t.Fatalf("Error transforming object XOG file. Debug: %s", err.Error())
+	}
+
+	if readMockResultAndCompare(xog, "object_elements_result_wc.xml") == false {
 		t.Errorf("Error transforming object XOG file. Invalid result XML.")
 	}
 }
