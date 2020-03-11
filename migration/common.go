@@ -75,9 +75,20 @@ func fillMultiValued(match model.MatchExcel, value string, e *etree.Element) {
 	if match.Separator != constant.Undefined {
 		separator = match.Separator
 	}
+	elemName := "Value"
+	if match.Element != constant.Undefined {
+		elemName = match.Element
+	}
 	for _, val := range strings.Split(value, separator) {
-		v := e.CreateElement("Value")
-		v.SetText(strings.TrimSpace(val))
+		v := e.CreateElement(elemName)
+		if match.Attr != constant.Undefined {
+			v.CreateAttr(match.Attr, strings.TrimSpace(val))
+		} else {
+			v.SetText(strings.TrimSpace(val))
+		}
+		for _, a := range match.Attrs {
+			v.CreateAttr(a.Name, a.Value)
+		}
 	}
 }
 

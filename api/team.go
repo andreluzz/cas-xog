@@ -358,7 +358,7 @@ func updateTeam(t team, endpoint string, environments *model.Environments, restF
 		return err
 	}
 	if status != 200 {
-		return fmt.Errorf("status code: %d | response: %s | url: %s", status, string(response), url)
+		return fmt.Errorf("update status code: %d | response: %s | url: %s", status, string(response), url)
 	}
 
 	newTeam := &team{}
@@ -388,7 +388,7 @@ func updateTeam(t team, endpoint string, environments *model.Environments, restF
 		json.Unmarshal(response, teamAllocation)
 		teamCurrentAllocations = append(teamCurrentAllocations, teamAllocation)
 		index := getIndex(teamAllocation, t.TeamAllocations)
-		if index != -1 {
+		if index >= 0 {
 			updateTeam := t.TeamAllocations[index]
 			url := fmt.Sprintf("%steamdefinitions/%d/teamdefallocations/%d", endpoint, newTeam.ID, teamAllocation.ID)
 			body = fmt.Sprintf(`{"allocation": %f}`, updateTeam.Allocation)
@@ -445,6 +445,19 @@ func updateTeam(t team, endpoint string, environments *model.Environments, restF
 			if status != 200 {
 				return fmt.Errorf("[%s] status code: %d | response: %s | url: %s", t.Code, status, string(response), url)
 			}
+		} else if index == -2 {
+			url := fmt.Sprintf("%steamdefinitions/%d/teamdefallocations/%d", endpoint, newTeam.ID, team.ID)
+			body = fmt.Sprintf(`{"allocation": %f}`, team.Allocation)
+
+			targetConfig.Endpoint = url
+			targetConfig.Method = http.MethodPut
+			response, status, err = restFunc([]byte(body), targetConfig, nil)
+			if err != nil {
+				return err
+			}
+			if status != 200 {
+				return fmt.Errorf("[%s] status code: %d | response: %s | url: %s", t.Code, status, string(response), url)
+			}
 		}
 	}
 
@@ -455,6 +468,9 @@ func getIndex(alloc *teamDefAllocations, slice []*teamDefAllocations) int {
 	for i, a := range slice {
 		if a.ResourceID.ID == alloc.ResourceID.ID {
 			return i
+		}
+		if a.Allocation != alloc.Allocation {
+			return -2
 		}
 	}
 	return -1

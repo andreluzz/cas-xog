@@ -69,12 +69,21 @@ type FileReplace struct {
 
 //MatchExcel defines the fields to map the cols on an excel file to attributes and data on the xog xml
 type MatchExcel struct {
-	Col           int    `xml:"col,attr"`
-	XPath         string `xml:"xpath,attr"`
-	AttributeName string `xml:"attribute,attr"`
-	MultiValued   bool   `xml:"multiValued,attr"`
-	RemoveIfNull  bool   `xml:"removeIfNull,attr"`
-	Separator     string `xml:"separator,attr"`
+	Col           int                     `xml:"col,attr"`
+	XPath         string                  `xml:"xpath,attr"`
+	AttributeName string                  `xml:"attribute,attr"`
+	MultiValued   bool                    `xml:"multiValued,attr"`
+	RemoveIfNull  bool                    `xml:"removeIfNull,attr"`
+	Separator     string                  `xml:"separator,attr"`
+	Element       string                  `xml:"element,attr"`
+	Attr          string                  `xml:"attr,attr"`
+	Attrs         []AttrMultiValueElement `xml:"attr"`
+}
+
+//AttrMultiValueElement defines the attributes to include in a multivalue
+type AttrMultiValueElement struct {
+	Name  string `xml:"name,attr"`
+	Value string `xml:"value,attr"`
 }
 
 //Filter defines the fields to filter the XOG read

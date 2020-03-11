@@ -75,10 +75,13 @@ If you like to read and write at once just put the attribute `autoWrite="true"` 
 | [`otherInvestmentInstance`](#tag-otherinvestmentinstance)   | Used to read and write otherInvestment instances.  |
 | [`productInstance`](#tag-productinstance)                   | Used to read and write product instances.          |
 | [`serviceInstance`](#tag-serviceinstance)                   | Used to read and write service instances.          |
+| [`benefitPlanInstance`](#tag-benefitplaninstance)           | Used to read and write benefit plan instances.     |
+| [`budgetPlanInstance`](#tag-budgetplaninstance)             | Used to read and write budget plan instances.      |
+| [`costPlanInstance`](#tag-costplaninstance)                 | Used to read and write cost plan instances.        |
 | [`obsInstance`](#tag-obsinstance)                           | Used to read and write OBS instances.              |
 | [`themeInstance`](#tag-themeinstance)                       | Used to read and write UI Theme instances.         |
 | [`groupInstance`](#tag-groupinstance)                       | Used to read and write groups.                     |
-| [`departmentInstance`](#tag-departmentInstance)             | Used to read and entity department instances.      |
+| [`departmentInstance`](#tag-departmentInstance)             | Used to read and write department instances.       |
 
 ## Tag `object`
 
@@ -398,13 +401,14 @@ Used to read only the selected links inside a section tag from the menu.
 
 ## Tag `api.team`
 
-| Attribute  | Description                                                                                               | Required |
-| ---------- | --------------------------------------------------------------------------------------------------------- | -------- |
-| `code`     | Source team code. Optional if using to migrate teams from excel.                                          | yes      |
-| `path`     | Path where the file will be saved on the file system. The extension should be .json                       | yes      |
-| `action`   | Used to define if is to update or insert api team. Default is insert.                                     | no       |
-| `excel`    | Path to the excel file with the data.                                                                     | yes      |
-| `startRow` | The line number in the excel file that we will start reading to create the instances. Default value is 1. | no       |
+| Attribute  | Description                                                                                                           | Required |
+| ---------- | --------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`     | Source team code. Optional if using to migrate teams from excel.                                                      | yes      |
+| `path`     | Path where the file will be saved on the file system. The extension should be .json                                   | yes      |
+| `action`   | Used to define if is to update or insert api team. Default is insert.                                                 | no       |
+| `excel`    | Path to the excel file with the data.                                                                                 | yes      |
+| `startRow` | The line number in the excel file that we will start reading to create the instances. Default value is 1.             | no       |
+| `endRow`   | The line number in the excel file that we will end reading to create the instances. Default value is the total lines. | no       |
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -418,7 +422,7 @@ Used to read only the selected links inside a section tag from the menu.
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
-    <api.team path="teams.json" action="update" excel="drivers/dados.xlsx" startRow="2">
+    <api.team path="teams.json" action="update" excel="drivers/dados.xlsx" startRow="2" endRow="100">
         <match col="1" attribute="code" />
         <match col="2" attribute="name" />
         <match col="3" attribute="resourceId" />
@@ -686,6 +690,51 @@ Use date in the format YYYY-MM-DDTHH:MM:SS and as a string cell in the excel fil
 <?xml version="1.0" encoding="utf-8"?>
 <xogdriver version="2.0">
     <serviceInstance code="*" path="instances.xml" />
+</xogdriver>
+```
+
+## Tag `benefitPlanInstance`
+
+| Attribute          | Description                                                                                                               | Required |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`             | Instance codes. Use code equals \* to get all instances.                                                                  | yes      |
+| `path`             | Path where the file will be saved on the file system.                                                                     | yes      |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no       |
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <benefitPlanInstance code="*" path="instances.xml" />
+</xogdriver>
+```
+
+## Tag `budgetPlanInstance`
+
+| Attribute          | Description                                                                                                               | Required |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`             | Instance codes. Use code equals \* to get all instances.                                                                  | yes      |
+| `path`             | Path where the file will be saved on the file system.                                                                     | yes      |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no       |
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <budgetPlanInstance code="*" path="instances.xml" />
+</xogdriver>
+```
+
+## Tag `costPlanInstance`
+
+| Attribute          | Description                                                                                                               | Required |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `code`             | Instance codes. Use code equals \* to get all instances.                                                                  | yes      |
+| `path`             | Path where the file will be saved on the file system.                                                                     | yes      |
+| `instancesPerFile` | Defines the amout of instances in each write xog file. If not defined only one file should be created with all instances. | no       |
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<xogdriver version="2.0">
+    <costPlanInstance code="*" path="instances.xml" />
 </xogdriver>
 ```
 
@@ -1055,7 +1104,7 @@ This tag is required for export to excel data.
 | `attribute`    | Defines which attribute in the element will receive the data. If no xpath is defined then we set this attribute in the main element instance. | no       |
 | `xpath`        | A string representing the path to the element you want to set the data. If no attribute value is defined then we set the value as a tag text. | no       |
 | `removeIfNull` | If set to true and the value in excel is null, the element associated with xpath is removed.                                                  | no       |
-| `multiValued`  | If set to true this element will be treated as multi-valued.                                                                                  | no       |
+| `multiValued`  | If set to true this element will be treated as multi-valued. This also can be used to create custom multiple elements inside a tag.           | no       |
 | `separator`    | Defines what character is being used to separate the options in the multi-valued data. Default value is ';'.                                  | no       |
 
 ```xml
@@ -1088,6 +1137,56 @@ This tag is required for export to excel data.
             </CustomInformation>
         </instance>
     </customObjectInstances>
+</NikuDataBus>
+```
+
+### Custom multivalued
+
+This should be used to create multiple elements inside a defined element with custom attributes.
+
+#### Driver
+
+```xml
+<xogdriver version="2.0">
+    <migration path="ow.xml" template="drivers/ow_template.xml" instance="OtherInvestment" excel="drivers/ow.xlsx" startRow="3" instancesPerFile="30">
+        <match col="1" attribute="objectID" />
+        <match col="2" attribute="name" />
+        <match col="6" xpath="//InvestmentResources" multiValued="true" separator="|" element="Resource" attr="resourceID">
+            <attr name="openForTimeEntry" value="true" />
+            <attr name="defaultAllocation" value="0" />
+            <attr name="bookingStatus" value="15" />
+        </match>
+    </migration>
+</xogdriver>
+```
+
+#### Template
+
+```xml
+<NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_otherInvestment.xsd">
+    <Header action="write" externalSource="NIKU" objectType="otherInvestment" version="8.0"/>
+    <OtherInvestments>
+        <OtherInvestment objectID="B3.001040" name="Atender backlog">
+            <InvestmentResources />
+        </OtherInvestment>
+    </OtherInvestments>
+</NikuDataBus>
+```
+
+#### Result after executing the driver
+
+```xml
+<NikuDataBus xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../xsd/nikuxog_otherInvestment.xsd">
+    <Header action="write" externalSource="NIKU" objectType="otherInvestment" version="8.0"/>
+    <OtherInvestments>
+        <OtherInvestment objectID="B3.001040" name="Atender backlog">
+            <InvestmentResources>
+                <Resource resourceID="500000" openForTimeEntry="true" defaultAllocation="0" bookingStatus="15" />
+                <Resource resourceID="500001" openForTimeEntry="true" defaultAllocation="0" bookingStatus="15" />
+                <Resource resourceID="500002" openForTimeEntry="true" defaultAllocation="0" bookingStatus="15" />
+            </InvestmentResources>
+        </OtherInvestment>
+    </OtherInvestments>
 </NikuDataBus>
 ```
 
