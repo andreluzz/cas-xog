@@ -37,8 +37,8 @@ test_script:
 
       Invoke-WebRequest -Uri 'https://codecov.io/bash' -OutFile codecov.sh
 
-      bash codecov.sh -f "coverage.txt" -t 5ce12fda-909d-42fd-8842-9a7970dd36f0
-
+      bash codecov.sh -f "coverage.txt" -U "-s" -A "-s"
+      
 artifacts:
   - path: _buildOutput\cas-xog.exe
     name: binary
