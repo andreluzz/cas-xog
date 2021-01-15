@@ -29,17 +29,18 @@ func LoadEnvironmentsList(path string) (*Environments, error) {
 
 //EnvType defines an environment attributes
 type EnvType struct {
-	Name         string         `xml:"name,attr"`
-	URL          string         `xml:"endpoint"`
-	Username     string         `xml:"username"`
-	Password     string         `xml:"password"`
-	Proxy        string         `xml:"proxy"`
-	Cookie       string         `xml:"cookie"`
-	API          apiEnvironment `xml:"api"`
-	Session      string
-	AuthToken    string
-	Copy         bool
-	RequestLogin bool
+	Name               string         `xml:"name,attr"`
+	URL                string         `xml:"endpoint"`
+	Username           string         `xml:"username"`
+	Password           string         `xml:"password"`
+	Proxy              string         `xml:"proxy"`
+	Cookie             string         `xml:"cookie"`
+	API                apiEnvironment `xml:"api"`
+	InsecureSkipVerify bool           `xml:"insecureSkipVerify,attr"`
+	Session            string
+	AuthToken          string
+	Copy               bool
+	RequestLogin       bool
 }
 
 type apiEnvironment struct {
@@ -58,6 +59,7 @@ func (e *EnvType) Init(envIndex int) {
 	e.URL = available.URL
 	e.Proxy = available.Proxy
 	e.Cookie = available.Cookie
+	e.InsecureSkipVerify = available.InsecureSkipVerify
 	e.RequestLogin = false
 	e.API.Client = available.API.Client
 	e.API.Context = available.API.Context
@@ -110,14 +112,15 @@ func (e *EnvType) logout(soapFunc util.Soap) error {
 
 func (e *EnvType) copyEnv() *EnvType {
 	ne := &EnvType{
-		Name:     e.Name,
-		Username: e.Username,
-		Password: e.Password,
-		URL:      e.URL,
-		Session:  e.Session,
-		Proxy:    e.Proxy,
-		Cookie:   e.Cookie,
-		Copy:     true,
+		Name:               e.Name,
+		Username:           e.Username,
+		Password:           e.Password,
+		URL:                e.URL,
+		Session:            e.Session,
+		Proxy:              e.Proxy,
+		Cookie:             e.Cookie,
+		InsecureSkipVerify: e.InsecureSkipVerify,
+		Copy:               true,
 		API: apiEnvironment{
 			Token:   e.API.Token,
 			Client:  e.API.Client,
@@ -135,6 +138,7 @@ func (e *EnvType) clear() error {
 	e.Proxy = ""
 	e.Cookie = ""
 	e.Copy = false
+	e.InsecureSkipVerify = false
 	return nil
 }
 
@@ -197,7 +201,7 @@ func login(env *EnvType, soapFunc util.Soap) (string, error) {
 		return "", errors.New("Problems getting login xml: " + err.Error())
 	}
 
-	response, err := soapFunc(body, env.URL, env.Proxy)
+	response, err := soapFunc(body, env.URL, env.Proxy, util.SoapOptions{InsecureSkipVerify: env.InsecureSkipVerify})
 	resp := etree.NewDocument()
 	resp.ReadFromString(response)
 
@@ -227,7 +231,7 @@ func logout(env *EnvType, soapFunc util.Soap) error {
 		return errors.New("Problems getting logout xml: " + err.Error())
 	}
 
-	_, err = soapFunc(body, env.URL, env.Proxy)
+	_, err = soapFunc(body, env.URL, env.Proxy, util.SoapOptions{InsecureSkipVerify: env.InsecureSkipVerify})
 
 	if err != nil {
 		return errors.New("Problems trying to logout from environment: " + env.Name + " | Debug: " + err.Error())

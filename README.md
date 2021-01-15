@@ -1206,6 +1206,7 @@ If the URL has a non-default port (80/443) it should be informed as follows: `ht
 | `username` | Username with permission to execute XOG in the environment.                                                                                                                                                                | no       |
 | `password` | Password associated with username.                                                                                                                                                                                         | no       |
 | `endpoint` | Defines the environment's URL.                                                                                                                                                                                             | yes      |
+| `insecureSkipVerify` | Defines if should skip certified validation.                                                                                                                                                                                             | no      |
 | `api`      | Used to specify the Rest API token. Use the <b>client attribute</b> to set the token client. The <b>context attribute</b> is used if you are in a SaaS environment with the onDemand Portal, the default context is "/ppm" | no       |
 
 ```xml
@@ -1217,7 +1218,7 @@ If the URL has a non-default port (80/443) it should be informed as follows: `ht
         <endpoint>http://development.server.com</endpoint>
         <api context="/tokens" client="acme">rest-api-token</api>
     </env>
-    <env name="Quality">
+    <env name="Quality" insecureSkipVerify="true">
         <username>username</username>
         <password>12345</password>
         <endpoint>http://quality.server.com</endpoint>
