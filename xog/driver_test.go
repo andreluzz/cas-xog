@@ -199,7 +199,7 @@ func TestProcessDriverFileWrite(t *testing.T) {
 		},
 	}
 
-	soapMock := func(request, endpoint string) (string, error) {
+	soapMock := func(request, endpoint, proxy string, opts ...interface{}) (string, error) {
 		file, _ := ioutil.ReadFile("../mock/xog/soap/soap_success_write_response.xml")
 		return util.BytesToString(file), nil
 	}
@@ -239,7 +239,7 @@ func TestProcessDriverFileActionReadSplitFiles(t *testing.T) {
 		},
 	}
 
-	soapMock := func(request, endpoint string) (string, error) {
+	soapMock := func(request, endpoint, proxy string, opts ...interface{}) (string, error) {
 		file, _ := ioutil.ReadFile("../mock/xog/soap/soap_read_resources_instance_response.xml")
 		return util.BytesToString(file), nil
 	}
@@ -326,7 +326,7 @@ func TestProcessDriverFileActionExportToExcel(t *testing.T) {
 		},
 	}
 
-	soapMock := func(request, endpoint string) (string, error) {
+	soapMock := func(request, endpoint, proxy string, opts ...interface{}) (string, error) {
 		file, _ := ioutil.ReadFile("../mock/xog/soap/soap_read_resources_instance_response.xml")
 		return util.BytesToString(file), nil
 	}
@@ -439,7 +439,7 @@ func TestProcessDriverFileReturnRunXMLError(t *testing.T) {
 		Path: "test.xml",
 	}
 
-	soapMock := func(request, endpoint string) (string, error) {
+	soapMock := func(request, endpoint, proxy string, opts ...interface{}) (string, error) {
 		return "", errors.New("soap mock error")
 	}
 
@@ -463,7 +463,7 @@ func TestProcessDriverFileReturnValidateXMLError(t *testing.T) {
 		Path: "test.xml",
 	}
 
-	soapMock := func(request, endpoint string) (string, error) {
+	soapMock := func(request, endpoint, proxy string, opts ...interface{}) (string, error) {
 		return "", nil
 	}
 
@@ -522,7 +522,7 @@ func TestProcessDriverFileActionRead(t *testing.T) {
 	outputFolder := constant.FolderDebug
 	util.ValidateFolder(outputFolder + file.Type)
 
-	soapMock := func(request, endpoint string) (string, error) {
+	soapMock := func(request, endpoint, proxy string, opts ...interface{}) (string, error) {
 		file, _ := ioutil.ReadFile("../mock/xog/soap/soap_success_read_response.xml")
 		return util.BytesToString(file), nil
 	}
@@ -561,7 +561,7 @@ func TestProcessDriverFileActionReadNeedAux(t *testing.T) {
 	outputFolder := constant.FolderDebug
 	util.ValidateFolder(outputFolder + file.Type)
 
-	soapMock := func(request, endpoint string) (string, error) {
+	soapMock := func(request, endpoint, proxy string, opts ...interface{}) (string, error) {
 		file, _ := ioutil.ReadFile("../mock/xog/soap/soap_success_read_process_response.xml")
 		return util.BytesToString(file), nil
 	}
@@ -600,7 +600,7 @@ func TestProcessDriverFileActionReadNeedAuxErrorInvalidCheck(t *testing.T) {
 	outputFolder := constant.FolderDebug
 	util.ValidateFolder(outputFolder + file.Type)
 
-	soapMock := func(request, endpoint string) (string, error) {
+	soapMock := func(request, endpoint, proxy string, opts ...interface{}) (string, error) {
 		if endpoint == "Aux_Mock_URL" {
 			return "", nil
 		}
@@ -642,7 +642,7 @@ func TestProcessDriverFileActionReadAuxValidateError(t *testing.T) {
 	outputFolder := constant.FolderDebug
 	util.ValidateFolder(outputFolder + file.Type)
 
-	soapMock := func(request, endpoint string) (string, error) {
+	soapMock := func(request, endpoint, proxy string, opts ...interface{}) (string, error) {
 		file, _ := ioutil.ReadFile("../mock/xog/soap/soap_read_process_no_output_response.xml")
 		return util.BytesToString(file), nil
 	}
@@ -677,7 +677,7 @@ func TestProcessDriverFileActionReadTransformError(t *testing.T) {
 	outputFolder := constant.FolderDebug
 	util.ValidateFolder(outputFolder + file.Type)
 
-	soapMock := func(request, endpoint string) (string, error) {
+	soapMock := func(request, endpoint, proxy string, opts ...interface{}) (string, error) {
 		return `<XOGOutput>
         	<Object type="contentPack"/>
         	<Status elapsedTime="0.789 seconds" state="SUCCESS"/>

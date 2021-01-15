@@ -317,7 +317,7 @@ func (d *DriverFile) GetXMLType() string {
 
 func executeSoapCall(body string, env *EnvType, soapFunc util.Soap) (string, error) {
 	bodyWithSession := strings.Replace(body, "<xog:SessionID/>", "<xog:SessionID>"+env.Session+"</xog:SessionID>", -1)
-	return soapFunc(bodyWithSession, env.URL, env.Proxy, util.SoapOptions{ InsecureSkipVerify: env.InsecureSkipVerify })
+	return soapFunc(bodyWithSession, env.URL, env.Proxy, env.InsecureSkipVerify)
 }
 
 func getAuxDriverFile(d *DriverFile) *DriverFile {

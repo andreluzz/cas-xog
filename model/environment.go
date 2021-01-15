@@ -201,7 +201,7 @@ func login(env *EnvType, soapFunc util.Soap) (string, error) {
 		return "", errors.New("Problems getting login xml: " + err.Error())
 	}
 
-	response, err := soapFunc(body, env.URL, env.Proxy, util.SoapOptions{InsecureSkipVerify: env.InsecureSkipVerify})
+	response, err := soapFunc(body, env.URL, env.Proxy, env.InsecureSkipVerify)
 	resp := etree.NewDocument()
 	resp.ReadFromString(response)
 
@@ -231,7 +231,7 @@ func logout(env *EnvType, soapFunc util.Soap) error {
 		return errors.New("Problems getting logout xml: " + err.Error())
 	}
 
-	_, err = soapFunc(body, env.URL, env.Proxy, util.SoapOptions{InsecureSkipVerify: env.InsecureSkipVerify})
+	_, err = soapFunc(body, env.URL, env.Proxy, env.InsecureSkipVerify)
 
 	if err != nil {
 		return errors.New("Problems trying to logout from environment: " + env.Name + " | Debug: " + err.Error())

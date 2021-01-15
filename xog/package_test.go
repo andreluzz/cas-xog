@@ -1,13 +1,14 @@
 package xog
 
 import (
-	"github.com/andreluzz/cas-xog/constant"
-	"github.com/andreluzz/cas-xog/model"
-	"github.com/andreluzz/cas-xog/util"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"testing"
+
+	"github.com/andreluzz/cas-xog/constant"
+	"github.com/andreluzz/cas-xog/model"
+	"github.com/andreluzz/cas-xog/util"
 )
 
 func TestLoadPackages(t *testing.T) {
@@ -103,7 +104,7 @@ func TestProcessAndTransformPackageFile(t *testing.T) {
 	packageFolder := folder + selectedPackage.Folder + selectedPackage.Versions[0].Folder + file.Type + "/"
 	writeFolder := constant.FolderWrite + file.Type
 
-	soapMock := func(request, endpoint string) (string, error) {
+	soapMock := func(request, endpoint, proxy string, opts ...interface{}) (string, error) {
 		file, _ := ioutil.ReadFile("../mock/xog/package_transform_view_target.xml")
 		return util.BytesToString(file), nil
 	}
@@ -161,7 +162,7 @@ func TestInstallPackageFile(t *testing.T) {
 		},
 	}
 
-	soapMock := func(request, endpoint string) (string, error) {
+	soapMock := func(request, endpoint, proxy string, opts ...interface{}) (string, error) {
 		file, _ := ioutil.ReadFile("../mock/xog/soap/soap_success_write_response.xml")
 		return util.BytesToString(file), nil
 	}
@@ -171,7 +172,7 @@ func TestInstallPackageFile(t *testing.T) {
 		t.Errorf("Error installing package file. Debug: %s", output.Debug)
 	}
 
-	soapMock = func(request, endpoint string) (string, error) {
+	soapMock = func(request, endpoint, proxy string, opts ...interface{}) (string, error) {
 		return "", nil
 	}
 

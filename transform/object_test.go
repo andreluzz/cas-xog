@@ -249,7 +249,7 @@ func TestExecuteToReturnCompleteAsFalse(t *testing.T) {
 		t.Fatalf("Error transforming object XOG file. Debug: %s", err.Error())
 	}
 
-	if readMockResultAndCompare(xog, "object_elements_result_wc.xml") == false {
+	if readMockResultAndCompare(xog, "object_elements_result_wc.xml") == true {
 		t.Errorf("Error transforming object XOG file. Invalid result XML.")
 	}
 }
